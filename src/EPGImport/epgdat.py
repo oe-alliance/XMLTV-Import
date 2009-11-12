@@ -273,17 +273,10 @@ class epgdat_class:
                 
                 # extract date and time from <event>
                 # unix format (second since 1970) and already GMT corrected
-                event_time=event[0]
-                event_time_HMS=datetime.utcfromtimestamp(event_time)
+                event_time_HMS=datetime.utcfromtimestamp(event[0])
                 event_length_HMS=datetime.utcfromtimestamp(event[1])
-
-                #l = None
-                #if ek < len(events)-1:
-                #        l = events[ek+1][0] - event[0]                 
-                #print "start:", event[0], "dur:", event[1], "len:", l, event_length_HMS   
-
-                # DM7025 epg.dat date is = (proleptic date - epg_zero_day)
-                dvb_date = datetime.fromtimestamp(event_time).toordinal() - self.EPG_PROLEPTIC_ZERO_DAY            
+                # epg.dat date is = (proleptic date - epg_zero_day)
+                dvb_date = event_time_HMS.toordinal() - self.EPG_PROLEPTIC_ZERO_DAY            
       
                 # EVENT DATA
      
