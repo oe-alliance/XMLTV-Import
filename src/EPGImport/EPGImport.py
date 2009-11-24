@@ -66,7 +66,7 @@ class EPGImport:
         self.onDone = None
       	self.epgcache = epgcache
     
-    def beginImport(self):
+    def beginImport(self, longDescUntil = None):
     	'Starts importing using Enigma reactor. Set self.sources before calling this.'
       	if hasattr(self.epgcache, 'importEvents'):
       	    self.storage = self.epgcache
@@ -77,6 +77,11 @@ class EPGImport:
             import epgdat_importer
             self.storage = epgdat_importer.epgdatclass()
 	self.eventCount = 0
+	if longDescUntil is None:
+            # default to 7 days ahead
+            self.longDescUntil = time.time() + 24*3600*7
+	else:
+            self.longDescUntil = longDescUntil;
         self.nextImport()
 
     def nextImport(self):
@@ -119,7 +124,11 @@ class EPGImport:
     		if data is not None:
     		    self.eventCount += 1
 	            try:
-	            	self.storage.importEvents(data[0], (data[1],))
+                        r,d = data
+                        if d[0] > self.longDescUntil:
+                                # Remove long description (save RAM memory)
+                                d = d[:4] + ('',) + d[5:]
+	            	self.storage.importEvents(r, (d,))
 	            except Exception, e:
 	        	print "[EPGImport] importEvents exception:", e
     	except StopIteration:

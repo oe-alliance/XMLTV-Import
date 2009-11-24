@@ -8,6 +8,7 @@
 # 
 import os
 import sys
+import time
 import EPGConfig
 import EPGImport
 
@@ -26,7 +27,7 @@ class FakeEnigma:
 
 def importFrom(epgimport, sourceXml):
 	# Hack to make this test run on Windows (where the reactor cannot handle files)
-	if sys.platform.startswith('win'):	
+	if sys.platform.startswith('win'):
   	    class FakeReactor:
 		def addReader(self, r):
 		      self.r = r
@@ -47,7 +48,7 @@ def importFrom(epgimport, sourceXml):
 	sources.reverse()
 	epgimport.sources = sources
 	epgimport.onDone = done
-	epgimport.beginImport()
+	epgimport.beginImport(longDescUntil = time.time() + (5*24*3600))
 	EPGImport.reactor.run()
 
 #----------------------------------------------

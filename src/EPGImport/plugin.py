@@ -7,7 +7,7 @@ import enigma
 # Config
 from Components.config import config, ConfigEnableDisable, ConfigSubsection, \
 			 ConfigYesNo, ConfigClock, getConfigListEntry, \
-			 ConfigSelection
+			 ConfigSelection, ConfigNumber
 import Screens.Standby
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
@@ -27,6 +27,7 @@ config.plugins.epgimport.deepstandby = ConfigSelection(default = "skip", choices
 #		("later", _("Import on next boot")),
 		("skip", _("Skip the import")) 
 		])
+config.plugins.epgimport.longDescDays = ConfigNumber(default = 5)
 
 # Plugin
 import EPGImport
@@ -76,7 +77,8 @@ class Config(ConfigListScreen,Screen):
 			getConfigListEntry(_("Daily automatic import"), cfg.enabled),
 			getConfigListEntry(_("Automatic start time"), cfg.wakeup),
 			getConfigListEntry(_("When in deep standby"), cfg.deepstandby),
-			getConfigListEntry(_("Show in extensions"), cfg.showinextensions)
+			getConfigListEntry(_("Show in extensions"), cfg.showinextensions),
+			getConfigListEntry(_("Load long descriptions up to X days"), cfg.longDescDays)
 			]
 		ConfigListScreen.__init__(self, self.list)
 		self["status"] = Label()
@@ -146,7 +148,7 @@ class Config(ConfigListScreen,Screen):
       			return
       		try:
       			epgimport.onDone = doneImport
-			epgimport.beginImport()
+			epgimport.beginImport(longDescUntil = config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
       		except Exception, e:
         		print "[EPGImport] Error at start:", e 
         		self.session.open(MessageBox, _("EPGImport Plugin\nFailed to start:\n") + str(e), MessageBox.TYPE_ERROR, timeout = 15, close_on_any_key = True)
@@ -302,7 +304,7 @@ class AutoStartTimer:
 				sources.reverse()
 				epgimport.sources = sources
 				epgimport.onDone = doneImport
-				epgimport.beginImport()
+				epgimport.beginImport(longDescUntil = config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
 			atLeast = 60
 	        self.update(atLeast)
 
