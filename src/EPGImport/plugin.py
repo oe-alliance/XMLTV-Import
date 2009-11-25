@@ -133,8 +133,8 @@ class Config(ConfigListScreen,Screen):
   	    		print "[EPGImport] Already running, won't start again"
                 	self.session.open(MessageBox, _("EPGImport Plugin\nImport of epg data is still in progress. Please wait."), MessageBox.TYPE_ERROR, timeout = 10, close_on_any_key = True)
 			return
-		config = EPGConfig.loadUserSettings()
-    		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = config["sources"]) ]
+		cfg = EPGConfig.loadUserSettings()
+    		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = cfg["sources"]) ]
     		if not sources:
     			self.session.open(MessageBox, _("No active EPG sources found, nothing to do"), MessageBox.TYPE_INFO, timeout = 10, close_on_any_key = True)
 	    		return
@@ -191,8 +191,8 @@ class EPGImportSources(Screen):
 		self["key_green"] = Button(_("Ok"))
 		self["key_yellow"] = Button() # _("Import now"))
 		self["key_blue"] = Button()
-		config = EPGConfig.loadUserSettings()
-		filter = config["sources"]
+		cfg = EPGConfig.loadUserSettings()
+		filter = cfg["sources"]
 		sources = [
 			# (description, value, index, selected)
 			SelectionEntryComponent(x.description, x.description, 0, (filter is None) or (x.description in filter))
@@ -298,8 +298,8 @@ class AutoStartTimer:
 		# If we're close enough, we're okay...
 		atLeast = 0
 		if wake - now < 60: 
-			config = EPGConfig.loadUserSettings()
-			sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = config["sources"]) ]
+			cfg = EPGConfig.loadUserSettings()
+			sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = cfg["sources"]) ]
 			if sources:
 				sources.reverse()
 				epgimport.sources = sources
