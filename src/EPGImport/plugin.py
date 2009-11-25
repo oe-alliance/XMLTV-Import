@@ -16,6 +16,7 @@ from Components.ActionMap import ActionMap
 from Components.Button import Button
 from Components.Label import Label
 from Components.SelectionList import SelectionList, SelectionEntryComponent
+from Tools.FuzzyDate import FuzzyTime
 
 #Set default configuration
 config.plugins.epgimport = ConfigSubsection()
@@ -44,6 +45,8 @@ autoStartTimer = None
 _session = None
 epgimport = EPGImport.EPGImport(enigma.eEPGCache.getInstance())
 
+lastImportResult = None
+
 ##################################
 # Configuration GUI
 
@@ -60,12 +63,13 @@ class Config(ConfigListScreen,Screen):
 	<widget name="key_yellow" position="280,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
 	<widget name="key_blue" position="420,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
 
+	<widget name="config" position="10,40" size="540,240" scrollbarMode="showOnDemand" />
+
 	<ePixmap alphatest="on" pixmap="skin_default/icons/clock.png" position="480,383" size="14,14" zPosition="3"/>
 	<widget font="Regular;18" halign="left" position="505,380" render="Label" size="55,20" source="global.CurrentTime" transparent="1" valign="center" zPosition="3">
 		<convert type="ClockToText">Default</convert>
 	</widget>
-	
-	<widget name="config" position="10,40" size="540,240" scrollbarMode="showOnDemand" />
+	<widget name="statusbar" position="10,380" size="470,20" font="Regular;18" />
 	<widget name="status" position="10,300" size="540,60" font="Regular;20" />
 </screen>"""
 		
@@ -82,6 +86,7 @@ class Config(ConfigListScreen,Screen):
 			]
 		ConfigListScreen.__init__(self, self.list)
 		self["status"] = Label()
+		self["statusbar"] = Label()
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("Ok"))
 		self["key_yellow"] = Button(_("Manual"))
@@ -96,9 +101,11 @@ class Config(ConfigListScreen,Screen):
 			"cancel": self.cancel,
 			"ok": self.save,
 		}, -2)
+		self.lastImportResult = None
 		self.updateTimer = enigma.eTimer()
 	    	self.updateTimer.callback.append(self.updateStatus)
 		self.updateTimer.start(2000)
+		self.updateStatus()
 	
 	def save(self):
 		#print "saving"
@@ -119,15 +126,13 @@ class Config(ConfigListScreen,Screen):
 			text = _("Importing:")
 			src = epgimport.source
 			text += " %s\n%s events" % (src.description, epgimport.eventCount)
-		# test
-		#ec = enigma.eEPGCache.getInstance()
-		#text += "\nOudeis patch: " + str(hasattr(ec, 'importEvent'))
-		#text += "\nLoad() patch: " + str(hasattr(ec, 'load'))
-		#text += "\nMiLo patch: "   + str(hasattr(ec, 'importEvents'))
-		# end test
-		#print "Status:", text
 		self["status"].setText(text)
-		
+		if lastImportResult and (lastImportResult != self.lastImportResult):
+			start, count = lastImportResult
+			d, t = FuzzyTime(start, inPast=True)
+			self["statusbar"].setText(_("Last: %s %s, %d events") % (d,t,count))
+			self.lastImportResult = lastImportResult 
+
 	def doimport(self):
         	if epgimport.isImportRunning():
   	    		print "[EPGImport] Already running, won't start again"
@@ -231,13 +236,11 @@ def doneConfiguring(session, retval):
         autoStartTimer.update()
 
 def doneImport(reboot=False, epgfile=None):
-	global _session
-	msg = _("EPG Import finished, %d events" % epgimport.eventCount)
+	global _session, lastImportResult
+	lastImportResult = (time.time(), epgimport.eventCount)
 	if reboot:
-		msg += "\n" + _("You must restart Enigma2 to load the EPG data,\nis this OK?")
+		msg = _("EPG Import finished, %d events") % epgimport.eventCount + "\n" + _("You must restart Enigma2 to load the EPG data,\nis this OK?")
 		_session.openWithCallback(restartEnigma, MessageBox, msg, MessageBox.TYPE_YESNO, timeout = 15, default = True)
-	else:
-		_session.open(MessageBox, msg, MessageBox.TYPE_INFO, timeout = 10, close_on_any_key = True)
 
       
 def restartEnigma(confirmed):
