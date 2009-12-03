@@ -103,6 +103,7 @@ class EPGImport:
             self.fd = gzip.open(filename, 'rb')
         else:
             self.fd = open(filename, 'rb')
+	self.source.channels.update()
 	self.iterator = self.parser.iterator(self.fd, self.source.channels.items)
 	reactor.addReader(self)
 	if deleteFile:

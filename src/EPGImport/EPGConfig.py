@@ -29,7 +29,6 @@ class EPGChannel:
 		self.mtime = None
 		self.filename = filename
 		self.items = None
-		self.update()
 	def parse(self):
 		self.items = {}
 		for event, elem in iterparse(open(self.filename, 'rb')):
