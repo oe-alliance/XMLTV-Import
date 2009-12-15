@@ -206,10 +206,13 @@ class EPGImport:
         return filename
 
     def bigStorage(self, default, *candidates):
-   	mounts = os.popen('mount').read()
-    	for candidate in candidates:
-    	    if "on " + candidate in mounts:
-    	    	return candidate
+        try:
+            mounts = os.popen('mount').read()
+            for candidate in candidates:
+                if "on " + candidate in mounts:
+                    return candidate
+        except Exception, e:
+            print "[EPGImport] mount failed:", e
     	return default
     
 # Test code moved to OfflineImport.py
