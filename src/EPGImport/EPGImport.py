@@ -10,8 +10,9 @@ import gzip
 
 HDD_EPG_DAT = "/hdd/epg.dat" 
 
-from twisted.internet import reactor
+from twisted.internet import reactor, threads
 from twisted.web.client import downloadPage
+import twisted.python.runtime
 
 PARSERS = {
 #	'radiotimes': 'uk_radiotimes',
@@ -85,6 +86,7 @@ class EPGImport:
         self.nextImport()
 
     def nextImport(self):
+    	self.closeReader()
     	if not self.sources:
     	    self.closeImport()
     	    return
@@ -105,7 +107,11 @@ class EPGImport:
             self.fd = open(filename, 'rb')
 	self.source.channels.update()
 	self.iterator = self.parser.iterator(self.fd, self.source.channels.items)
-	reactor.addReader(self)
+	if twisted.python.runtime.platform.supportsThreads():
+		print "[EPGImport] Using twisted thread!"
+		threads.deferToThread(self.doThreadRead).addCallback(lambda ignore: self.nextImport())
+	else:
+		reactor.addReader(self)
 	if deleteFile:
 		try:
 			print "[EPGImport] unlink", filename
@@ -116,7 +122,22 @@ class EPGImport:
     def fileno(self):
     	if self.fd is not None:
     		return self.fd.fileno()
-    	
+    		
+    def doThreadRead(self):
+    	'This is used on PLi with threading'
+    	for data in self.iterator:
+    		if data is not None:
+    		    self.eventCount += 1
+	            try:
+                        r,d = data
+                        if d[0] > self.longDescUntil:
+                                # Remove long description (save RAM memory)
+                                d = d[:4] + ('',) + d[5:]
+	            	self.storage.importEvents(r, (d,))
+	            except Exception, e:
+	        	print "[EPGImport] ### importEvents exception:", e
+	print "[EPGImport] ### thread is ready ### Events:", self.eventCount 
+
     def doRead(self):
     	'called from reactor to read some data'
     	try:
@@ -133,7 +154,6 @@ class EPGImport:
 	            except Exception, e:
 	        	print "[EPGImport] importEvents exception:", e
     	except StopIteration:
-	    	self.closeReader()
     		self.nextImport()
 
     def connectionLost(self, failure):
@@ -143,7 +163,6 @@ class EPGImport:
 
     def downloadFail(self, failure):
     	print "[EPGImport] download failed:", failure
-	self.closeReader()
 	self.nextImport()
     	
     def logPrefix(self):
