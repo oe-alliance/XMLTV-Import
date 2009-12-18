@@ -129,7 +129,11 @@ class Config(ConfigListScreen,Screen):
 		self["status"].setText(text)
 		if lastImportResult and (lastImportResult != self.lastImportResult):
 			start, count = lastImportResult
-			d, t = FuzzyTime(start, inPast=True)
+			try:
+				d, t = FuzzyTime(start, inPast=True)
+			except:
+				# Not all images have inPast
+				d, t = FuzzyTime(start)
 			self["statusbar"].setText(_("Last: %s %s, %d events") % (d,t,count))
 			self.lastImportResult = lastImportResult 
 
