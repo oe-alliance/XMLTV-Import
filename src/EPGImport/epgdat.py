@@ -123,7 +123,6 @@ class epgdat_class:
     
     EPG_HEADER1_channel_count=0
     EPG_HEADER2_description_count=0
-    EPG_EVENT_DATA_id=0
     EPG_TOTAL_EVENTS=0
     
     EXCLUDED_SID=[]
@@ -198,6 +197,7 @@ class epgdat_class:
 
 
     def preprocess_events_channel(self, services):
+        EPG_EVENT_DATA_id = 0
         for service in services:
             # prepare and write CHANNEL INFO record
             ssid = service.split(":")
@@ -281,9 +281,10 @@ class epgdat_class:
                 # EVENT DATA
      
                 # simply create an incremental ID,  starting from '1'
-                self.EPG_EVENT_DATA_id += 1
+                # event_id appears to be per channel, so this should be okay.
+                EPG_EVENT_DATA_id += 1
 
-                pack_1 = self.s_b_HH.pack(self.EPG_EVENT_DATA_id,dvb_date) # ID and DATE , always in BIG_ENDIAN
+                pack_1 = self.s_b_HH.pack(EPG_EVENT_DATA_id,dvb_date) # ID and DATE , always in BIG_ENDIAN
                 pack_2 = s_BBB.pack(*TL_hexconv(event_time_HMS)) # START TIME
                 pack_3 = s_BBB.pack(*TL_hexconv(event_length_HMS)) # LENGTH 
                 
