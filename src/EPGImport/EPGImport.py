@@ -61,7 +61,6 @@ class EPGImport:
         self.sources = []
         self.source = None
         self.epgsource = None
-        self.parser = None
         self.fd = None
         self.iterator = None
         self.onDone = None
@@ -92,26 +91,67 @@ class EPGImport:
     	    return
     	self.source = self.sources.pop()
         print "[EPGImport] nextImport, source=", self.source.description
-        self.parser = getParser(self.source.parser)
  	filename = self.source.url
 	if filename.startswith('http:') or filename.startswith('ftp:'):
 	    self.do_download(filename)
 	else:
 	    self.afterDownload(None, filename, deleteFile=False)
 
+    def createIterator(self):
+	self.source.channels.update()
+	return getParser(self.source.parser).iterator(self.fd, self.source.channels.items)
+
+    def readEpgDatFile(self, filename, deleteFile=False):
+    	if not hasattr(self.epgcache, 'load'):
+            print "[EPGImport] Cannot load EPG.DAT files on unpatched enigma. Need CrossEPG patch."
+            return
+	try:
+	    os.unlink(HDD_EPG_DAT)
+	except:
+	    pass # ignore...
+        try:
+            if filename.endswith('.gz'):
+                print "[EPGImport] Uncompressing", filename
+                import shutil
+                fd = gzip.open(filename, 'rb')
+                epgdat = open(HDD_EPG_DAT, 'wb')
+                shutil.copyfileobj(fd, epgdat)
+                del fd
+                epgdat.close()
+                del epgdat
+            else:
+                if filename != HDD_EPG_DAT:
+       	    	    os.symlink(filename, HDD_EPG_DAT)
+            print "[EPGImport] Importing", HDD_EPG_DAT
+            self.epgcache.load()
+            if deleteFile:
+        	    try:
+        	        os.unlink(filename)
+        	    except:
+        	        pass # ignore...
+        except Exception, e:
+            print "[EPGImport] Failed to import %s:" % filename, e
+
+
     def afterDownload(self, result, filename, deleteFile=False):
         print "[EPGImport] afterDownload", filename
+        if self.source.parser == 'epg.dat':
+	    if twisted.python.runtime.platform.supportsThreads():
+		print "[EPGImport] Using twisted thread for DAT file"
+		threads.deferToThread(self.readEpgDatFile, filename, deleteFile).addCallback(lambda ignore: self.nextImport())
+            else:
+                self.readEpgDatFile(filename, deleteFile)
+            return
         if filename.endswith('.gz'):
             self.fd = gzip.open(filename, 'rb')
         else:
             self.fd = open(filename, 'rb')
-	self.source.channels.update()
-	self.iterator = self.parser.iterator(self.fd, self.source.channels.items)
 	if twisted.python.runtime.platform.supportsThreads():
 		print "[EPGImport] Using twisted thread!"
 		threads.deferToThread(self.doThreadRead).addCallback(lambda ignore: self.nextImport())
 	else:
-		reactor.addReader(self)
+		self.iterator = createIterator(self)
+                reactor.addReader(self)
 	if deleteFile:
 		try:
 			print "[EPGImport] unlink", filename
@@ -125,7 +165,7 @@ class EPGImport:
     		
     def doThreadRead(self):
     	'This is used on PLi with threading'
-    	for data in self.iterator:
+    	for data in self.createIterator():
     		if data is not None:
     		    self.eventCount += 1
 	            try:
@@ -178,7 +218,6 @@ class EPGImport:
     def closeImport(self):
     	self.closeReader()
 	self.iterator = None
-        self.parser = None
         self.source = None
         if hasattr(self.storage, 'epgfile'):
         	needLoad = self.storage.epgfile

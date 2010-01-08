@@ -161,8 +161,7 @@ class epgdat_class:
         self.s_IIII = struct.Struct(self.LB_ENDIAN+"IIII")     
         self.s_B3sBBB = struct.Struct("B3sBBB")     
         self.s_3sBB = struct.Struct("3sBB")     
-        print "init epgdat"
-       
+
     def set_endian(self,endian):
         self.LB_ENDIAN=endian
         self.s_I = struct.Struct(self.LB_ENDIAN+"I")
@@ -299,7 +298,6 @@ class epgdat_class:
         self.events=[]
 
     def final_process(self):
-        print "epgdat final process"
         if self.EPG_TOTAL_EVENTS > 0:
             self.EPG_TMP_FD.close()
 
@@ -318,7 +316,6 @@ class epgdat_class:
                 epgdat_fd.write(pack_1)
             EPG_TMP_FD.close()
 
-            print "epgdat final process stage 2"
             # HEADER 2
             s_ii = self.s_II     
             pack_1=self.s_I.pack(self.EPG_HEADER2_description_count)

@@ -22,7 +22,6 @@ class epgdatclass:
     	path='/media/usb'
     if self.checkPath('/media/hdd'):
     	path='/media/hdd'
-    print "init epgdat class preffered path=", path
     self.epgfile = os.path.join(path, 'epg_new.dat')
     self.epg = epgdat.epgdat_class(path, settingspath, self.epgfile)
     
