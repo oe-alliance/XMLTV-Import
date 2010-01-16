@@ -75,6 +75,7 @@ class Config(ConfigListScreen,Screen):
 		
 	def __init__(self, session, args = 0):
 		self.session = session
+		self.setup_title = _("EPG Import Configuration")
 		Screen.__init__(self, session)
 		cfg = config.plugins.epgimport
 		self.list = [
@@ -84,7 +85,7 @@ class Config(ConfigListScreen,Screen):
 			getConfigListEntry(_("Show in extensions"), cfg.showinextensions),
 			getConfigListEntry(_("Load long descriptions up to X days"), cfg.longDescDays)
 			]
-		ConfigListScreen.__init__(self, self.list)
+		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
 		self["status"] = Label()
 		self["statusbar"] = Label()
 		self["key_red"] = Button(_("Cancel"))
@@ -102,11 +103,24 @@ class Config(ConfigListScreen,Screen):
 			"ok": self.save,
 		}, -2)
 		self.lastImportResult = None
+		self.onChangedEntry = []
 		self.updateTimer = enigma.eTimer()
 	    	self.updateTimer.callback.append(self.updateStatus)
 		self.updateTimer.start(2000)
 		self.updateStatus()
 	
+	# for summary:
+	def changedEntry(self):
+		for x in self.onChangedEntry:
+			x()
+	def getCurrentEntry(self):
+		return self["config"].getCurrent()[0]
+	def getCurrentValue(self):
+		return str(self["config"].getCurrent()[1].getText())
+	def createSummary(self):
+		from Screens.Setup import SetupSummary
+		return SetupSummary
+
 	def save(self):
 		#print "saving"
 		self.updateTimer.stop()

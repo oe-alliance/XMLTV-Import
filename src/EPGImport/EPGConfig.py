@@ -73,11 +73,17 @@ def enumSourcesFile(sourcefile, filter=None):
                 yield s
 
 def enumSources(path, filter=None):
-	for sourcefile in os.listdir(path):
-		if sourcefile.endswith('.sources.xml'):
-			sourcefile = os.path.join(path, sourcefile) 
-			for s in enumSourcesFile(sourcefile, filter):
-				yield s
+	try:
+		for sourcefile in os.listdir(path):
+			if sourcefile.endswith('.sources.xml'):
+				sourcefile = os.path.join(path, sourcefile)
+				try: 
+					for s in enumSourcesFile(sourcefile, filter):
+						yield s
+				except Exception, e:
+					print "[EPGImport] failed to open", sourcefile, "Error:", e
+	except Exception, e:
+		print "[EPGImport] failed to list", path, "Error:", e
 
 
 def loadUserSettings(filename = SETTINGS_FILE):
@@ -85,7 +91,7 @@ def loadUserSettings(filename = SETTINGS_FILE):
 		return pickle.load(open(filename, 'rb'))
 	except Exception, e:
 		print "[EPGImport] No settings", e
-		return {"sources": None}
+		return {"sources": []}
 	
 def storeUserSettings(filename = SETTINGS_FILE, sources = None):
 	container = {"sources": sources}
