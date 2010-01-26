@@ -150,7 +150,7 @@ class EPGImport:
 		print "[EPGImport] Using twisted thread!"
 		threads.deferToThread(self.doThreadRead).addCallback(lambda ignore: self.nextImport())
 	else:
-		self.iterator = createIterator(self)
+		self.iterator = self.createIterator()
                 reactor.addReader(self)
 	if deleteFile:
 		try:
