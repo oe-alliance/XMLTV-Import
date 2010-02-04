@@ -41,6 +41,22 @@ def getTimeFromHourAndMinutes(hour, minute):
                       hour, minute, 0, now.tm_wday, now.tm_yday, now.tm_isdst)))
 	return begin
 
+def bigStorage(self, minFree, default, *candidates):
+        mounts = open('/proc/mounts', 'rb').readlines()
+	# format: device mountpoint fstype options #
+        mountpoints = [x.split(' ', 2)[1] for x in mounts]
+        for candidate in candidates:
+            if candidate in mountpoints:
+                try:
+                    diskstat = os.statvfs(candidate)
+		    free = diskstat.f_bfree * diskstat.f_bsize
+		    if free > minFree: 
+                        return candidate
+                except:
+                    pass
+    	return default
+    
+
 class OudeisImporter:
 	'Wrapper to convert original patch to new one that accepts multiple services'
 	def __init__(self, epgcache):
@@ -253,23 +269,11 @@ class EPGImport:
     	return self.source is not None
         
     def do_download(self,sourcefile):
-        path = self.bigStorage('/tmp', '/media/hdd', '/media/cf', '/media/usb')
-        print "do_download path:", path
+        path = bigStorage(9000000, '/tmp', '/media/cf', '/media/usb', '/media/hdd')
         filename = os.path.join(path, 'epgimport')
         if sourcefile.endswith('.gz'):
             filename += '.gz'
         sourcefile = sourcefile.encode('utf-8')
-        print "Downloading: " + sourcefile + " To local path: " + filename
+        print "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
         downloadPage(sourcefile, filename).addCallbacks(self.afterDownload, self.downloadFail, callbackArgs=(filename,True))
         return filename
-
-    def bigStorage(self, default, *candidates):
-        mounts = open('/proc/mounts', 'rb').readlines()
-	# format: device mountpoint fstype options #
-        mountpoints = [x.split(' ', 2)[1] for x in mounts]
-        for candidate in candidates:
-            if candidate in mountpoints:
-                return candidate
-    	return default
-    
-# Test code moved to OfflineImport.py
