@@ -29,7 +29,7 @@ class EPGChannel:
 		self.mtime = None
 		self.filename = filename
 		self.items = None
-	def parse(self):
+	def parse(self, filterCallback):
 		self.items = {}
 		for event, elem in iterparse(open(self.filename, 'rb')):
 			if elem.tag == 'channel':
@@ -37,16 +37,17 @@ class EPGChannel:
 				ref = elem.text
 				if id and ref:
 					ref = ref.encode('latin-1')
-					if self.items.has_key(id):
-						self.items[id].append(ref)
-					else:
-						self.items[id] = [ref]
+					if filterCallback(ref):
+						if self.items.has_key(id):
+							self.items[id].append(ref)
+						else:
+							self.items[id] = [ref]
 				elem.clear()
-	def update(self):
+	def update(self, filterCallback = lambda x: True):
 		try:
 			mtime = os.path.getmtime(self.filename)
 			if (not self.mtime) or (self.mtime < mtime):
-				self.parse()
+				self.parse(filterCallback)
 				self.mtime = mtime
 		except Exception, e:
 			print "[EPGImport] Failed to parse channels'%s':" % self.filename, e

@@ -17,6 +17,7 @@ from Components.Button import Button
 from Components.Label import Label
 from Components.SelectionList import SelectionList, SelectionEntryComponent
 from Tools.FuzzyDate import FuzzyTime
+import NavigationInstance
 
 #Set default configuration
 config.plugins.epgimport = ConfigSubsection()
@@ -43,7 +44,17 @@ CONFIG_PATH = '/etc/epgimport'
 # Global variable
 autoStartTimer = None
 _session = None
-epgimport = EPGImport.EPGImport(enigma.eEPGCache.getInstance())
+
+# Filter servicerefs that this box can display by starting a fake recording.
+def channelFilter(ref):
+	fakeRecService = NavigationInstance.instance.recordService(enigma.eServiceReference(ref), True)
+	if fakeRecService:
+		fakeRecResult = fakeRecService.start(True)
+		NavigationInstance.instance.stopRecordService(fakeRecService)
+		return fakeRecResult == 0
+	return False
+
+epgimport = EPGImport.EPGImport(enigma.eEPGCache.getInstance(), channelFilter)
 
 lastImportResult = None
 

@@ -70,7 +70,7 @@ class OudeisImporter:
 class EPGImport:
     """Simple Class to import EPGData"""
 
-    def __init__(self, epgcache):
+    def __init__(self, epgcache, channelFilter):
     	self.eventCount = None
         self.epgcache = None
         self.storage = None
@@ -81,6 +81,7 @@ class EPGImport:
         self.iterator = None
         self.onDone = None
       	self.epgcache = epgcache
+      	self.channelFilter = channelFilter
     
     def beginImport(self, longDescUntil = None):
     	'Starts importing using Enigma reactor. Set self.sources before calling this.'
@@ -114,7 +115,7 @@ class EPGImport:
 	    self.afterDownload(None, filename, deleteFile=False)
 
     def createIterator(self):
-	self.source.channels.update()
+	self.source.channels.update(self.channelFilter)
 	return getParser(self.source.parser).iterator(self.fd, self.source.channels.items)
 
     def readEpgDatFile(self, filename, deleteFile=False):

@@ -60,6 +60,6 @@ def done(reboot=False, epgfile=None):
 
 if len(sys.argv) <= 1:
 	print "Usage: %s source.xml [...]" % sys.argv[0]
-epgimport = EPGImport.EPGImport(FakeEnigma())
+epgimport = EPGImport.EPGImport(FakeEnigma(), lambda x: True)
 for xml in sys.argv[1:]:
 	importFrom(epgimport, xml)
