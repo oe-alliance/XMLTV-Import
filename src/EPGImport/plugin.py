@@ -4,6 +4,8 @@ from random import random
 
 import enigma
 
+import log
+
 # Config
 from Components.config import config, ConfigEnableDisable, ConfigSubsection, \
 			 ConfigYesNo, ConfigClock, getConfigListEntry, \
@@ -16,6 +18,7 @@ from Components.ActionMap import ActionMap
 from Components.Button import Button
 from Components.Label import Label
 from Components.SelectionList import SelectionList, SelectionEntryComponent
+from Components.ScrollLabel import ScrollLabel
 from Tools.FuzzyDate import FuzzyTime
 import NavigationInstance
 
@@ -51,7 +54,9 @@ def channelFilter(ref):
 	if fakeRecService:
 		fakeRecResult = fakeRecService.start(True)
 		NavigationInstance.instance.stopRecordService(fakeRecService)
-		return fakeRecResult == 0
+		# -7 (errNoSourceFound) occurs when tuner is disconnected. 
+		return fakeRecResult not in (0, -7)
+	print>>log, "Invalid serviceref string:", ref
 	return False
 
 epgimport = EPGImport.EPGImport(enigma.eEPGCache.getInstance(), channelFilter)
@@ -103,7 +108,7 @@ class Config(ConfigListScreen,Screen):
 		self["key_green"] = Button(_("Ok"))
 		self["key_yellow"] = Button(_("Manual"))
 		self["key_blue"] = Button(_("Sources"))
-		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],
+		self["setupActions"] = ActionMap(["SetupActions", "ColorActions", "TimerEditActions"],
 		{
 			"red": self.cancel,
 			"green": self.save,
@@ -112,6 +117,7 @@ class Config(ConfigListScreen,Screen):
 			"save": self.save,
 			"cancel": self.cancel,
 			"ok": self.save,
+			"log": self.showLog,
 		}, -2)
 		self.lastImportResult = None
 		self.onChangedEntry = []
@@ -164,7 +170,7 @@ class Config(ConfigListScreen,Screen):
 
 	def doimport(self):
         	if epgimport.isImportRunning():
-  	    		print "[EPGImport] Already running, won't start again"
+  	    		print>>log, "[EPGImport] Already running, won't start again"
                 	self.session.open(MessageBox, _("EPGImport Plugin\nImport of epg data is still in progress. Please wait."), MessageBox.TYPE_ERROR, timeout = 10, close_on_any_key = True)
 			return
 		cfg = EPGConfig.loadUserSettings()
@@ -184,7 +190,7 @@ class Config(ConfigListScreen,Screen):
       			epgimport.onDone = doneImport
 			epgimport.beginImport(longDescUntil = config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
       		except Exception, e:
-        		print "[EPGImport] Error at start:", e 
+        		print>>log, "[EPGImport] Error at start:", e 
         		self.session.open(MessageBox, _("EPGImport Plugin\nFailed to start:\n") + str(e), MessageBox.TYPE_ERROR, timeout = 15, close_on_any_key = True)
 		self.updateStatus()
 		
@@ -193,8 +199,11 @@ class Config(ConfigListScreen,Screen):
 		
 	def sourcesDone(self, confirmed, sources):
 		# Called with True and list of config items on Okay.
-		print "sourcesDone(): ", confirmed, sources
+		print>>log, "sourcesDone(): ", confirmed, sources
 		pass
+		
+	def showLog(self):
+		self.session.open(EPGImportLog)
 		
 class EPGImportSources(Screen):
 	"Pick sources from config"
@@ -215,7 +224,7 @@ class EPGImportSources(Screen):
 		<convert type="ClockToText">Default</convert>
 	</widget>
 	
-	<widget name="list" position="10,40" size="540,240" scrollbarMode="showOnDemand" />
+	<widget name="list" position="10,40" size="540,340" scrollbarMode="showOnDemand" />
 </screen>"""
 		
 	def __init__(self, session):
@@ -245,7 +254,7 @@ class EPGImportSources(Screen):
 		
 	def save(self):
 		sources = [ item[0][1] for item in self["list"].list if item[0][3] ]
-		print "[EPGImport] Selected sources:", sources
+		print>>log, "[EPGImport] Selected sources:", sources
 		EPGConfig.storeUserSettings(sources=sources)
 		self.close(True, sources)
 		
@@ -254,6 +263,61 @@ class EPGImportSources(Screen):
 		
 	def doimport(self):
 		pass
+
+class EPGImportLog(Screen):
+	skin = """
+<screen position="center,center" size="560,400" title="EPG Import Log" >
+	<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
+	<ePixmap name="green"  position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
+	<ePixmap name="yellow" position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
+	<ePixmap name="blue"   position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" /> 
+
+	<widget name="key_red" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" /> 
+	<widget name="key_green" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" /> 
+	<widget name="key_yellow" position="280,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+	<widget name="key_blue" position="420,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+
+	<ePixmap alphatest="on" pixmap="skin_default/icons/clock.png" position="480,383" size="14,14" zPosition="3"/>
+	<widget font="Regular;18" halign="left" position="505,380" render="Label" size="55,20" source="global.CurrentTime" transparent="1" valign="center" zPosition="3">
+		<convert type="ClockToText">Default</convert>
+	</widget>
+	<widget name="list" position="10,40" size="540,340" />
+</screen>"""
+	def __init__(self, session):
+		self.session = session
+		Screen.__init__(self, session)
+		self["key_red"] = Button(_("Clear"))
+		self["key_green"] = Button()
+		self["key_yellow"] = Button()
+		self["key_blue"] = Button(_("Save"))
+		self["list"] = ScrollLabel(log.getvalue())
+		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],
+		{
+			"red": self.clear,
+			"green": self.cancel,
+			"yellow": self.cancel,
+			"save": self.save,
+			"blue": self.save,
+			"cancel": self.cancel,
+			"ok": self.cancel,
+		}, -2)
+		
+	def save(self):
+		try:
+			f = open('/tmp/epgimport.log', 'w')
+			f.write(log.getvalue())
+			f.close()
+		except Exception, e:
+			self["list"].setText("Failed to write /tmp/epgimport.log:str" + str(e))
+		self.close(True)
+
+	def cancel(self):
+		self.close(False)
+
+	def clear(self):
+		log.logfile.reset()
+		log.logfile.truncate()
+		self.close(False)
 
 
 def main(session, **kwargs):
@@ -280,7 +344,7 @@ def restartEnigma(confirmed):
        	    try:
                 open('/tmp/enigmastandby', 'wb').close()
             except:
-                print "Failed to create /tmp/enigmastandby"
+                print>>log, "Failed to create /tmp/enigmastandby"
        	else:
        	    try:
        	        os.remove("/tmp/enigmastandby")
@@ -320,12 +384,12 @@ class AutoStartTimer:
 		self.timer.startLongTimer(next)
 	    else:
 	    	wake = -1
-	    print "[EPGImport] WakeUpTime now set to", wake, "(now=%s)" % now
+	    print>>log, "[EPGImport] WakeUpTime now set to", wake, "(now=%s)" % now
 	    return wake
 	def onTimer(self):
 		self.timer.stop()
 		now = int(time.time())
-		print "[EPGImport] onTimer occured at", now
+		print>>log, "[EPGImport] onTimer occured at", now
 		wake = self.getWakeTime()
 		# If we're close enough, we're okay...
 		atLeast = 0
@@ -344,7 +408,7 @@ def autostart(reason, session=None, **kwargs):
     "called with reason=1 to during shutdown, with reason=0 at startup?"
     global autoStartTimer
     global _session
-    print "[EPGImport] autostart (%s) occured at" % reason, time.time()
+    print>>log, "[EPGImport] autostart (%s) occured at" % reason, time.time()
     if reason == 0:
     	if session is not None:
 		_session = session
@@ -352,7 +416,7 @@ def autostart(reason, session=None, **kwargs):
 	    		autoStartTimer = AutoStartTimer(session)
 	# If WE caused the reboot, put the box back in standby.
 	if os.path.exists("/tmp/enigmastandby"):
-	    print "[EPGImport] Returning to standby"
+	    print>>log, "[EPGImport] Returning to standby"
 	    from Tools import Notifications
 	    Notifications.AddNotification(Screens.Standby.Standby)
        	    try:
@@ -360,7 +424,7 @@ def autostart(reason, session=None, **kwargs):
             except:
 	        pass	
     else:
-        print "[EPGImport] Stop"
+        print>>log, "[EPGImport] Stop"
         #if autoStartTimer:
 	#	autoStartTimer.stop()        
 
@@ -368,7 +432,7 @@ def getNextWakeup():
     "returns timestamp of next time when autostart should be called"
     if autoStartTimer:
     	if config.plugins.epgimport.deepstandby.value == 'wakeup':
-		print "[EPGImport] Will wake up from deep sleep"
+		print>>log, "[EPGImport] Will wake up from deep sleep"
 		return autoStartTimer.update()
     return -1
 

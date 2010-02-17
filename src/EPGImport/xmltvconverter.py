@@ -1,5 +1,6 @@
 import time
 import calendar
+import log
 #from pprint import pprint
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
 
@@ -61,13 +62,13 @@ class XMLTVConverter:
         	self.dateParser = lambda x: time.strptime(x, dateformat) 
 
     def enumFile(self, fileobj):
-        print "[XMLTVConverter] Enumerating programme information"
+        print>>log, "[XMLTVConverter] Enumerating event information"
         lastUnknown = None
         for elem in enumerateProgrammes(fileobj):
             channel = elem.get('channel')
             if not channel in self.channels:
             	if lastUnknown!=channel:
-            		print "Unknown channel: ", channel
+            		print>>log, "Unknown channel: ", channel
                 	lastUnknown=channel
                 # return a None object to give up time to the reactor.
                 yield None 

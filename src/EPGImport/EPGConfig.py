@@ -1,5 +1,5 @@
 import os.path
-
+import log
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
 import cPickle as pickle
 
@@ -50,7 +50,7 @@ class EPGChannel:
 				self.parse(filterCallback)
 				self.mtime = mtime
 		except Exception, e:
-			print "[EPGImport] Failed to parse channels'%s':" % self.filename, e
+			print>>log, "[EPGImport] Failed to parse channels'%s':" % self.filename, e
 	def __repr__(self):
 		return "EPGChannel(file=%s, channels=%s, mtime=%s)" % (self.filename, self.items and len(self.items), self.mtime) 
 	
@@ -82,16 +82,16 @@ def enumSources(path, filter=None):
 					for s in enumSourcesFile(sourcefile, filter):
 						yield s
 				except Exception, e:
-					print "[EPGImport] failed to open", sourcefile, "Error:", e
+					print>>log, "[EPGImport] failed to open", sourcefile, "Error:", e
 	except Exception, e:
-		print "[EPGImport] failed to list", path, "Error:", e
+		print>>log, "[EPGImport] failed to list", path, "Error:", e
 
 
 def loadUserSettings(filename = SETTINGS_FILE):
 	try:
 		return pickle.load(open(filename, 'rb'))
 	except Exception, e:
-		print "[EPGImport] No settings", e
+		print>>log, "[EPGImport] No settings", e
 		return {"sources": []}
 	
 def storeUserSettings(filename = SETTINGS_FILE, sources = None):
