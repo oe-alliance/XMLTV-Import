@@ -55,7 +55,10 @@ def channelFilter(ref):
 		fakeRecResult = fakeRecService.start(True)
 		NavigationInstance.instance.stopRecordService(fakeRecService)
 		# -7 (errNoSourceFound) occurs when tuner is disconnected. 
-		return fakeRecResult not in (0, -7)
+		r = fakeRecResult in (0, -7)
+		#if not r:
+		#	print>>log, "Rejected (%d): %s" % (fakeRecResult, ref) 			
+		return r
 	print>>log, "Invalid serviceref string:", ref
 	return False
 
