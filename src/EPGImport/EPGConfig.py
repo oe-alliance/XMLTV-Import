@@ -1,18 +1,27 @@
-import os.path
+import os
 import log
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
 import cPickle as pickle
+import gzip
+import time
 
 # User selection stored here, so it goes into a user settings backup
 SETTINGS_FILE = '/etc/enigma2/epgimport.conf'
 
 channelCache = {}
 
+def isLocalFile(filename):
+	# we check on a '://' as a silly way to check local file
+	return '://' not in filename
+
 def getChannels(path, name):
 	global channelCache
 	dirname, filename = os.path.split(path)
 	if name:
-		channelfile = os.path.join(dirname, name)
+		if isLocalFile(name):
+			channelfile = os.path.join(dirname, name)
+		else:
+			channelfile = name
 	else:
 		channelfile = os.path.join(dirname, filename.split('.', 1)[0] + '.channels.xml')
 	try:
@@ -29,9 +38,23 @@ class EPGChannel:
 		self.mtime = None
 		self.filename = filename
 		self.items = None
+	def openStream(self):
+		if not isLocalFile(self.filename):
+			# just returning urlopen() does not work, parser needs 'tell'
+			import urllib
+			filename,headers = urllib.urlretrieve(self.filename)
+		else:
+			filename = self.filename
+		fd = open(filename, 'rb')
+        	if self.filename.endswith('.gz'):
+            		fd = gzip.GzipFile(fileobj = fd, mode = 'rb')
+            	if filename != self.filename:
+            		os.unlink(filename)
+		return fd
 	def parse(self, filterCallback):
+		print>>log,"[EPGImport] Parsing channels from '%s'" % self.filename
 		self.items = {}
-		for event, elem in iterparse(open(self.filename, 'rb')):
+		for event, elem in iterparse(self.openStream()):
 			if elem.tag == 'channel':
 				id = elem.get('id')
 				ref = elem.text
@@ -45,12 +68,19 @@ class EPGChannel:
 				elem.clear()
 	def update(self, filterCallback = lambda x: True):
 		try:
-			mtime = os.path.getmtime(self.filename)
-			if (not self.mtime) or (self.mtime < mtime):
-				self.parse(filterCallback)
-				self.mtime = mtime
+			if isLocalFile(self.filename):
+				mtime = os.path.getmtime(self.filename)
+				if (not self.mtime) or (self.mtime < mtime):
+					self.parse(filterCallback)
+					self.mtime = mtime
+			else:
+				# Check at most once a day
+				now = time.time()
+				if (not self.mtime) or (self.mtime + 86400 < now):
+					self.mtime = now
+					self.parse(filterCallback)
 		except Exception, e:
-			print>>log, "[EPGImport] Failed to parse channels'%s':" % self.filename, e
+			print>>log, "[EPGImport] Failed to parse channels from '%s':" % self.filename, e
 	def __repr__(self):
 		return "EPGChannel(file=%s, channels=%s, mtime=%s)" % (self.filename, self.items and len(self.items), self.mtime) 
 	
