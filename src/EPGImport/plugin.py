@@ -19,6 +19,7 @@ from Components.Button import Button
 from Components.Label import Label
 from Components.SelectionList import SelectionList, SelectionEntryComponent
 from Components.ScrollLabel import ScrollLabel
+import Components.PluginComponent
 from Tools.FuzzyDate import FuzzyTime
 import NavigationInstance
 
@@ -440,12 +441,25 @@ def getNextWakeup():
     return -1
 
 
+# we need this helper function to identify the descriptor
+def extensionsmenu(session, **kwargs):
+	main(session, **kwargs)
+
+def housekeepingExtensionsmenu(el):
+	try:
+		if el.value:
+			Components.PluginComponent.plugins.addPlugin(extDescriptor)
+		else:
+			Components.PluginComponent.plugins.removePlugin(extDescriptor)
+	except Exception, e:
+		print "[EPGImport] Failed to update extensions menu:", e
+
+description = _("Automated EPG Importer")
+config.plugins.epgimport.showinextensions.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = False)
+extDescriptor = PluginDescriptor(name="EPGImport", description = description, where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu)
+
 def Plugins(**kwargs):
-    description = _("Automated EPG Importer")
-    where = [PluginDescriptor.WHERE_PLUGINMENU]
-    if config.plugins.epgimport.showinextensions.value:
-    	where.append(PluginDescriptor.WHERE_EXTENSIONSMENU)
-    return [
+    result = [
         PluginDescriptor(
             name="EPGImport",
             description = description,
@@ -460,8 +474,11 @@ def Plugins(**kwargs):
         PluginDescriptor(
             name="EPGImport",
             description = description,
-            where = where,
+            where = PluginDescriptor.WHERE_PLUGINMENU,
             icon = 'plugin.png',
             fnc = main
         ),
     ]
+    if config.plugins.epgimport.showinextensions.value:
+    	result.append(extDescriptor)
+    return result
