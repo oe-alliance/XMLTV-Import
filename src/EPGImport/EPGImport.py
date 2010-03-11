@@ -42,7 +42,7 @@ def getTimeFromHourAndMinutes(hour, minute):
                       hour, minute, 0, now.tm_wday, now.tm_yday, now.tm_isdst)))
 	return begin
 
-def bigStorage(self, minFree, default, *candidates):
+def bigStorage(minFree, default, *candidates):
         mounts = open('/proc/mounts', 'rb').readlines()
 	# format: device mountpoint fstype options #
         mountpoints = [x.split(' ', 2)[1] for x in mounts]
