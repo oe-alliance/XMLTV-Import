@@ -21,13 +21,15 @@ class FakeEnigma:
 #	def load(self):
 #		print "...load..."
 #	def importEvents(self, *args):
-#		print args		
+#		print args
 
 
 
 def importFrom(epgimport, sourceXml):
 	# Hack to make this test run on Windows (where the reactor cannot handle files)
 	if sys.platform.startswith('win'):
+            import twisted.python.runtime
+            twisted.python.runtime.platform.supportsThreads = lambda: False
   	    class FakeReactor:
 		def addReader(self, r):
 		      self.r = r
