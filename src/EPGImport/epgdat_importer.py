@@ -31,15 +31,24 @@ class epgdatclass:
         self.commitService()
     	self.services = services
     for program in dataTupleList:
-        self.epg.add_event(program[0], program[1], program[2], program[4])
+        if program[3]:
+            desc = program[3] + '\n' + program[4]
+        else:
+            desc = program[4]
+        self.epg.add_event(program[0], program[1], program[2], desc)
 
   def commitService(self):
         if self.services is not None:
                 self.epg.preprocess_events_channel(self.services)  
           
   def epg_done(self):
-    self.commitService()
-    self.epg.final_process()
+    try:
+      self.commitService()
+      self.epg.final_process()
+    except:
+      print "[EPGImport] Failure in epg_done"
+      import traceback
+      traceback.print_exc()
     self.epg = None
 
     

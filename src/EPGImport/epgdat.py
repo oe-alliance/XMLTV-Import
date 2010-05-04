@@ -192,7 +192,7 @@ class epgdat_class:
 
     def add_event(self, starttime, duration, title, description):
     	#print "add event : ",event_starttime_unix_gmt, "title : " ,event_title
-        self.events.append((starttime, duration, self.short_desc(title), self.long_desc(description)))
+        self.events.append((starttime, duration, self.short_desc(title[:240]), self.long_desc(description)))
 
 
     def preprocess_events_channel(self, services):
