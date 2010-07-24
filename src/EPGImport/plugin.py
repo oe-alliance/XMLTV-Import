@@ -295,7 +295,7 @@ class EPGImportLog(Screen):
 		self["key_yellow"] = Button()
 		self["key_blue"] = Button(_("Save"))
 		self["list"] = ScrollLabel(log.getvalue())
-		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],
+		self["actions"] = ActionMap(["DirectionActions", "OkCancelActions", "ColorActions"],
 		{
 			"red": self.clear,
 			"green": self.cancel,
@@ -304,6 +304,12 @@ class EPGImportLog(Screen):
 			"blue": self.save,
 			"cancel": self.cancel,
 			"ok": self.cancel,
+			"left": self["list"].pageUp,
+			"right": self["list"].pageDown,
+			"up": self["list"].pageUp,
+			"down": self["list"].pageDown,
+			"pageUp": self["list"].pageUp,
+			"pageDown": self["list"].pageDown
 		}, -2)
 		
 	def save(self):
