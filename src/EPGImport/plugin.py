@@ -26,6 +26,7 @@ import NavigationInstance
 #Set default configuration
 config.plugins.epgimport = ConfigSubsection()
 config.plugins.epgimport.enabled = ConfigEnableDisable(default = True)
+config.plugins.epgimport.runboot = ConfigEnableDisable(default = False)
 config.plugins.epgimport.wakeup = ConfigClock(default = ((4*60) + 45) * 60) # 4:45
 config.plugins.epgimport.showinextensions = ConfigYesNo(default = True)
 config.plugins.epgimport.deepstandby = ConfigSelection(default = "skip", choices = [
@@ -100,9 +101,10 @@ class Config(ConfigListScreen,Screen):
 		cfg = config.plugins.epgimport
 		self.list = [
 			getConfigListEntry(_("Daily automatic import"), cfg.enabled),
-			getConfigListEntry(_("Automatic start time"), cfg.wakeup),
+			getConfigListEntry(_("Automatic start time"), cfg.wakeup),   
 			getConfigListEntry(_("When in deep standby"), cfg.deepstandby),
 			getConfigListEntry(_("Show in extensions"), cfg.showinextensions),
+			getConfigListEntry(_("Start import after booting up"), cfg.runboot),
 			getConfigListEntry(_("Load long descriptions up to X days"), cfg.longDescDays)
 			]
 		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
@@ -396,6 +398,14 @@ class AutoStartTimer:
 	    	wake = -1
 	    print>>log, "[EPGImport] WakeUpTime now set to", wake, "(now=%s)" % now
 	    return wake
+	def runImport(self):
+		cfg = EPGConfig.loadUserSettings()
+		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = cfg["sources"]) ]
+		if sources:
+			sources.reverse()
+			epgimport.sources = sources
+			epgimport.onDone = doneImport
+			epgimport.beginImport(longDescUntil = config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
 	def onTimer(self):
 		self.timer.stop()
 		now = int(time.time())
@@ -403,14 +413,8 @@ class AutoStartTimer:
 		wake = self.getWakeTime()
 		# If we're close enough, we're okay...
 		atLeast = 0
-		if wake - now < 60: 
-			cfg = EPGConfig.loadUserSettings()
-			sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = cfg["sources"]) ]
-			if sources:
-				sources.reverse()
-				epgimport.sources = sources
-				epgimport.onDone = doneImport
-				epgimport.beginImport(longDescUntil = config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
+		if wake - now < 60:
+			self.runImport() 
 			atLeast = 60
 	        self.update(atLeast)
 
@@ -424,6 +428,14 @@ def autostart(reason, session=None, **kwargs):
 		_session = session
 		if autoStartTimer is None:
 	    		autoStartTimer = AutoStartTimer(session)
+		if config.plugins.epgimport.runboot.value:
+			now = int(time.time())
+			wake = autoStartTimer.getWakeTime()
+			if (wake<0) or (wake - now > 600):
+				print>>log, "[EPGImport] starting import because auto-run on boot is enabled"
+				autoStartTimer.runImport()
+			else:
+				print>>log, "[EPGImport] import to start in less than 10 minutes"
 	# If WE caused the reboot, put the box back in standby.
 	if os.path.exists("/tmp/enigmastandby"):
 	    print>>log, "[EPGImport] Returning to standby"
