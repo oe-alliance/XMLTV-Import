@@ -1,9 +1,6 @@
 import time
 import os
-from random import random
-
 import enigma
-
 import log
 
 # Config
@@ -380,8 +377,11 @@ class AutoStartTimer:
 	        clock = config.plugins.epgimport.wakeup.value
 	        nowt = time.time()
 		now = time.localtime(nowt)
-		return int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday,  
-	                      clock[0], clock[1], 0, now.tm_wday, now.tm_yday, now.tm_isdst)))
+		wake = int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday,  
+	                      clock[0], clock[1], 0, 0, now.tm_yday, now.tm_isdst)))
+	        if wake < now:
+	        	wake += (24*3600) # tomorrow...
+	        return wake
 	    else:
 	        return -1 
 	def update(self, atLeast = 0):
@@ -418,6 +418,18 @@ class AutoStartTimer:
 			atLeast = 60
 	        self.update(atLeast)
 
+def onBootStartCheck():
+	global autoStartTimer
+	print>>log, "[EPGImport] onBootStartCheck"
+	now = int(time.time())
+	wake = autoStartTimer.getWakeTime()
+	print>>log, "[EPGImport] now=%d wake=%d wake-now=%d" % (now, wake, wake-now)
+	if (wake < 0) or (wake - now > 600):
+		print>>log, "[EPGImport] starting import because auto-run on boot is enabled"
+		autoStartTimer.runImport()
+	else:
+		print>>log, "[EPGImport] import to start in less than 10 minutes anyway, skipping..."
+
 def autostart(reason, session=None, **kwargs):
     "called with reason=1 to during shutdown, with reason=0 at startup?"
     global autoStartTimer
@@ -429,13 +441,8 @@ def autostart(reason, session=None, **kwargs):
 		if autoStartTimer is None:
 	    		autoStartTimer = AutoStartTimer(session)
 		if config.plugins.epgimport.runboot.value:
-			now = int(time.time())
-			wake = autoStartTimer.getWakeTime()
-			if (wake<0) or (wake - now > 600):
-				print>>log, "[EPGImport] starting import because auto-run on boot is enabled"
-				autoStartTimer.runImport()
-			else:
-				print>>log, "[EPGImport] import to start in less than 10 minutes"
+			# timer isn't reliable here, damn
+			onBootStartCheck()
 	# If WE caused the reboot, put the box back in standby.
 	if os.path.exists("/tmp/enigmastandby"):
 	    print>>log, "[EPGImport] Returning to standby"
