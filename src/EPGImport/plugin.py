@@ -377,11 +377,8 @@ class AutoStartTimer:
 	        clock = config.plugins.epgimport.wakeup.value
 	        nowt = time.time()
 		now = time.localtime(nowt)
-		wake = int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday,  
-	                      clock[0], clock[1], 0, 0, now.tm_yday, now.tm_isdst)))
-	        if wake < now:
-	        	wake += (24*3600) # tomorrow...
-	        return wake
+		return int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday,  
+	                   clock[0], clock[1], 0, 0, now.tm_yday, now.tm_isdst)))
 	    else:
 	        return -1 
 	def update(self, atLeast = 0):
@@ -422,7 +419,7 @@ def onBootStartCheck():
 	global autoStartTimer
 	print>>log, "[EPGImport] onBootStartCheck"
 	now = int(time.time())
-	wake = autoStartTimer.getWakeTime()
+	wake = autoStartTimer.update()
 	print>>log, "[EPGImport] now=%d wake=%d wake-now=%d" % (now, wake, wake-now)
 	if (wake < 0) or (wake - now > 600):
 		print>>log, "[EPGImport] starting import because auto-run on boot is enabled"
