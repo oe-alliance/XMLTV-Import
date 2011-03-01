@@ -22,10 +22,11 @@ import NavigationInstance
 
 #Set default configuration
 config.plugins.epgimport = ConfigSubsection()
-config.plugins.epgimport.enabled = ConfigEnableDisable(default = True)
+config.plugins.epgimport.enabled = ConfigEnableDisable(default = False)
 config.plugins.epgimport.runboot = ConfigEnableDisable(default = False)
+config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default = False)
 config.plugins.epgimport.wakeup = ConfigClock(default = ((4*60) + 45) * 60) # 4:45
-config.plugins.epgimport.showinextensions = ConfigYesNo(default = True)
+config.plugins.epgimport.showinextensions = ConfigYesNo(default = False)
 config.plugins.epgimport.deepstandby = ConfigSelection(default = "skip", choices = [
 		("wakeup", _("Wake up and import")),
 #		("later", _("Import on next boot")),
@@ -68,7 +69,7 @@ lastImportResult = None
 ##################################
 # Configuration GUI
 
-class Config(ConfigListScreen,Screen):
+class EPGMainSetup(ConfigListScreen,Screen):
 	skin = """
 <screen position="center,center" size="560,400" title="EPG Import Configuration" >
 	<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
@@ -99,6 +100,7 @@ class Config(ConfigListScreen,Screen):
 		self.list = [
 			getConfigListEntry(_("Daily automatic import"), cfg.enabled),
 			getConfigListEntry(_("Automatic start time"), cfg.wakeup),   
+			getConfigListEntry(_("Standby at startup"), cfg.wakeupsleep),
 			getConfigListEntry(_("When in deep standby"), cfg.deepstandby),
 			getConfigListEntry(_("Show in extensions"), cfg.showinextensions),
 			getConfigListEntry(_("Start import after booting up"), cfg.runboot),
@@ -330,7 +332,7 @@ class EPGImportLog(Screen):
 
 
 def main(session, **kwargs):
-    session.openWithCallback(doneConfiguring, Config)
+    session.openWithCallback(doneConfiguring, EPGMainSetup)
 
 def doneConfiguring(session, retval):
     "user has closed configuration, check new values...."
