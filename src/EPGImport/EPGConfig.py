@@ -132,11 +132,11 @@ def enumSources(path, filter=None):
 						yield s
 					count = noofsources + 1
 				except Exception, e:
-						print>>log, "[EPGImport] source is unavailble"
-						sourcelist = [l for l in sourcelist if sourcefiletmp not in l]
-						count = count + 1
-			if count == 3:
-				print>>log, "[EPGImport] all online sources are unavailble."
+					print>>log, "[EPGImport] source is unavailble"
+					sourcelist = [l for l in sourcelist if sourcefiletmp not in l]
+					count = count + 1
+					if count == 3:
+						print>>log, "[EPGImport] all online sources are unavailble."
 	except Exception, e:
 		print>>log, "[EPGImport] failed to list", path, "Error:", e
 
