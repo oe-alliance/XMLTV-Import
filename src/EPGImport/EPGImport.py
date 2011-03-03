@@ -266,6 +266,9 @@ class EPGImport:
     		self.onDone(reboot=reboot, epgfile=needLoad)
     	self.eventCount = None
         print>>log, "[EPGImport] #### Finished ####"
+        import glob
+        for filename in glob.glob('/tmp/*.xml'):
+            os.remove(filename) 
 	
     def isImportRunning(self):
     	return self.source is not None
