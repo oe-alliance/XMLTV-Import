@@ -14,6 +14,7 @@ HDD_EPG_DAT = "/hdd/epg.dat"
 from twisted.internet import reactor, threads
 from twisted.web.client import downloadPage
 import twisted.python.runtime
+from Screens.MessageBox import MessageBox
 
 PARSERS = {
 #	'radiotimes': 'uk_radiotimes',
@@ -150,30 +151,34 @@ class EPGImport:
 		    print>>log, "[EPGImport] Failed to import %s:" % filename, e
 
 	def afterDownload(self, result, filename, deleteFile=False):
-		print>>log, "[EPGImport] afterDownload", filename
-		if self.source.parser == 'epg.dat':
-			if twisted.python.runtime.platform.supportsThreads():
-				print>>log, "[EPGImport] Using twisted thread for DAT file"
-				threads.deferToThread(self.readEpgDatFile, filename, deleteFile).addCallback(lambda ignore: self.nextImport())
+		if os.path.getsize(filename) > 0:
+			print>>log, "[EPGImport] afterDownload", filename
+			if self.source.parser == 'epg.dat':
+				if twisted.python.runtime.platform.supportsThreads():
+					print>>log, "[EPGImport] Using twisted thread for DAT file"
+					threads.deferToThread(self.readEpgDatFile, filename, deleteFile).addCallback(lambda ignore: self.nextImport())
+				else:
+					self.readEpgDatFile(filename, deleteFile)
+				return
+			if filename.endswith('.gz'):
+				self.fd = gzip.open(filename, 'rb')
 			else:
-				self.readEpgDatFile(filename, deleteFile)
-			return
-		if filename.endswith('.gz'):
-			self.fd = gzip.open(filename, 'rb')
+				self.fd = open(filename, 'rb')
+			if twisted.python.runtime.platform.supportsThreads():
+				print>>log, "[EPGImport] Using twisted thread!"
+				threads.deferToThread(self.doThreadRead).addCallback(lambda ignore: self.nextImport())
+			else:
+				self.iterator = self.createIterator()
+				reactor.addReader(self)
+			if deleteFile:
+				try:
+					print>>log, "[EPGImport] unlink", filename
+					os.unlink(filename)
+				except Exception, e:
+					print>>log, "[EPGImport] warning: Could not remove '%s' intermediate" % filename, e
 		else:
-			self.fd = open(filename, 'rb')
-		if twisted.python.runtime.platform.supportsThreads():
-			print>>log, "[EPGImport] Using twisted thread!"
-			threads.deferToThread(self.doThreadRead).addCallback(lambda ignore: self.nextImport())
-		else:
-			self.iterator = self.createIterator()
-			reactor.addReader(self)
-		if deleteFile:
-			try:
-				print>>log, "[EPGImport] unlink", filename
-				os.unlink(filename)
-			except Exception, e:
-				print>>log, "[EPGImport] warning: Could not remove '%s' intermediate" % filename, e
+			failure = "File downloaded was zero bytes."
+			self.downloadFail(failure)
 
 
 	def fileno(self):
