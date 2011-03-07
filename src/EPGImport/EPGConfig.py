@@ -38,6 +38,7 @@ class EPGChannel:
 		self.mtime = None
 		self.filename = filename
 		self.items = None
+
 	def openStream(self):
 		if not isLocalFile(self.filename):
 			# just returning urlopen() does not work, parser needs 'tell'
@@ -46,11 +47,12 @@ class EPGChannel:
 		else:
 			filename = self.filename
 		fd = open(filename, 'rb')
-        	if self.filename.endswith('.gz'):
-            		fd = gzip.GzipFile(fileobj = fd, mode = 'rb')
-            	if filename != self.filename:
-            		os.unlink(filename)
+		if self.filename.endswith('.gz'):
+			fd = gzip.GzipFile(fileobj = fd, mode = 'rb')
+		if filename != self.filename:
+			os.unlink(filename)
 		return fd
+
 	def parse(self, filterCallback):
 		print>>log,"[EPGImport] Parsing channels from '%s'" % self.filename
 		self.items = {}
@@ -66,6 +68,7 @@ class EPGChannel:
 						else:
 							self.items[id] = [ref]
 				elem.clear()
+
 	def update(self, filterCallback = lambda x: True):
 		try:
 			if isLocalFile(self.filename):
@@ -81,9 +84,10 @@ class EPGChannel:
 					self.parse(filterCallback)
 		except Exception, e:
 			print>>log, "[EPGImport] Failed to parse channels from '%s':" % self.filename, e
+
 	def __repr__(self):
 		return "EPGChannel(file=%s, channels=%s, mtime=%s)" % (self.filename, self.items and len(self.items), self.mtime) 
-	
+
 class EPGSource:
 	def __init__(self, path, elem):
 		self.parser = elem.get('type')
@@ -94,15 +98,14 @@ class EPGSource:
 		self.format = elem.get('format', 'xml')
 		self.channels = getChannels(path, elem.get('channels'))
 
-
 def enumSourcesFile(sourcefile, filter=None):
-    result = ""
-    for event, elem in iterparse(open(sourcefile, 'rb')):
-        if elem.tag == 'source':
-            s = EPGSource(sourcefile, elem)
-            elem.clear()
-            if (filter is None) or (s.description in filter):
-                yield s
+	result = ""
+	for event, elem in iterparse(open(sourcefile, 'rb')):
+		if elem.tag == 'source':
+			s = EPGSource(sourcefile, elem)
+			elem.clear()
+			if (filter is None) or (s.description in filter):
+				yield s
 
 def enumSources(path, filter=None):
 	try:
@@ -147,30 +150,28 @@ def loadUserSettings(filename = SETTINGS_FILE):
 	except Exception, e:
 		print>>log, "[EPGImport] No settings", e
 		return {"sources": []}
-	
+
 def storeUserSettings(filename = SETTINGS_FILE, sources = None):
 	container = {"sources": sources}
 	pickle.dump(container, open(filename, 'wb'), pickle.HIGHEST_PROTOCOL)
 
-      
 if __name__ == '__main__':
-        import sys
+	import sys
 	x = []
 	l = []
 	path = '.'
 	if len(sys.argv) > 1:
-	       path = sys.argv[1]
+		path = sys.argv[1]
 	for p in enumSources(path):
-	    t = (p.description, p.url, p.parser, p.format, p.channels)
-            l.append(t)  
-	    print t
-	    x.append(p.description)
+		t = (p.description, p.url, p.parser, p.format, p.channels)
+		l.append(t)  
+		print t
+		x.append(p.description)
 	storeUserSettings('settings.pkl', [1,"twee"])
 	assert loadUserSettings('settings.pkl') == {"sources": [1,"twee"]}
 	os.remove('settings.pkl')
 	for p in enumSources(path, x):
-	    t = (p.description, p.url, p.parser, p.format, p.channels)
-	    assert t in l
-	    l.remove(t)
+		t = (p.description, p.url, p.parser, p.format, p.channels)
+		assert t in l
+		l.remove(t)
 	assert not l 	
-	

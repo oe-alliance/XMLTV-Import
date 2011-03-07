@@ -23,29 +23,26 @@ class FakeEnigma:
 #	def importEvents(self, *args):
 #		print args
 
-
-
 def importFrom(epgimport, sourceXml):
 	# Hack to make this test run on Windows (where the reactor cannot handle files)
 	if sys.platform.startswith('win'):
-            import twisted.python.runtime
-            twisted.python.runtime.platform.supportsThreads = lambda: False
-  	    class FakeReactor:
-		def addReader(self, r):
-		      self.r = r
-		def removeReader(self, r):
-			if self.r is r:
-				self.r = None
-			else:
-				raise Exception, "Removed reader without adding it"
-		def run(self):
-			while self.r is not None:
-				self.r.doRead()
-		def stop(self):
-			print "reactor stopped"
-			pass
-	    EPGImport.reactor = FakeReactor()
-	
+		import twisted.python.runtime
+		twisted.python.runtime.platform.supportsThreads = lambda: False
+		class FakeReactor:
+			def addReader(self, r):
+				self.r = r
+			def removeReader(self, r):
+				if self.r is r:
+					self.r = None
+				else:
+					raise Exception, "Removed reader without adding it"
+			def run(self):
+				while self.r is not None:
+					self.r.doRead()
+			def stop(self):
+				print "reactor stopped"
+				pass
+		EPGImport.reactor = FakeReactor()
 	sources = [ s for s in EPGConfig.enumSourcesFile(sourceXml, filter = None) ]
 	sources.reverse()
 	epgimport.sources = sources

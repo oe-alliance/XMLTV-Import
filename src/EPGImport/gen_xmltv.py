@@ -23,18 +23,17 @@ gen_categories = {
 
 
 def new():
-    'Factory method to return main class instance'
-    return Gen_Xmltv()
-    
-    
+	'Factory method to return main class instance'
+	return Gen_Xmltv()
+
 class Gen_Xmltv():
-    def iterator(self, fd, channelsDict):
-      try:        
-        xmltv_parser = xmltvconverter.XMLTVConverter(channelsDict, gen_categories, date_format)
-        for r in xmltv_parser.enumFile(fd):
-        	yield r
-      except Exception, e:
-        print "[gen_xmltv] Error:", e
-        import traceback
-        traceback.print_exc()
+	def iterator(self, fd, channelsDict):
+		try:
+			xmltv_parser = xmltvconverter.XMLTVConverter(channelsDict, gen_categories, date_format)
+			for r in xmltv_parser.enumFile(fd):
+				yield r
+		except Exception, e:
+			print "[gen_xmltv] Error:", e
+			import traceback
+			traceback.print_exc()
 

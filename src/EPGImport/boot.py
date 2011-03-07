@@ -29,10 +29,10 @@ def checkCrashLog():
 			dirList=os.listdir(path)
 			for fname in dirList:
 				if fname[0:13]=='enigma2_crash':
-			    		try:
-			    			crashtime=0
-			    			crashtime=int(fname[14:24])
-			    			howold=time.time()-crashtime
+					try:
+						crashtime=0
+						crashtime=int(fname[14:24])
+						howold=time.time()-crashtime
 					except:
 						print "no time found in filename"
 					if howold<120:
@@ -46,7 +46,7 @@ def checkCrashLog():
 		except:
 			pass
 	return False
-				
+
 def findNewEpg():
 	for path in MEDIA:
 		fn = os.path.join(path, 'epg_new.dat')
