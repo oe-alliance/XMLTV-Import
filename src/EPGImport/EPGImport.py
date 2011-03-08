@@ -14,7 +14,6 @@ HDD_EPG_DAT = "/hdd/epg.dat"
 from twisted.internet import reactor, threads
 from twisted.web.client import downloadPage
 import twisted.python.runtime
-from Screens.MessageBox import MessageBox
 
 PARSERS = {
 #	'radiotimes': 'uk_radiotimes',
