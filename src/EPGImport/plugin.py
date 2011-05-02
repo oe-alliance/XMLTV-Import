@@ -456,6 +456,12 @@ def autostart(reason, session=None, **kwargs):
 				os.remove("/tmp/enigmastandby")
 			except:
 				pass
+		else:
+			if config.plugins.epgimport.deepstandby.value == 'wakeup':
+				if config.plugins.epgimport.wakeupsleep.value:
+					print>>log, "[EPGImport] Returning to standby"
+					from Tools import Notifications
+					Notifications.AddNotification(Screens.Standby.Standby)
 	else:
 		print>>log, "[EPGImport] Stop"
 		#if autoStartTimer:
