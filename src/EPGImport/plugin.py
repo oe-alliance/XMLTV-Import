@@ -492,6 +492,12 @@ description = _("Automated EPG Importer")
 config.plugins.epgimport.showinextensions.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = False)
 extDescriptor = PluginDescriptor(name="EPGImport", description = description, where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu)
 
+def epgmenu(menuid, **kwargs):
+	if menuid == "epg":
+		return [("XMLTV-Importer", main, "xmltvimporter", 1002)]
+	else:
+		return []
+
 def Plugins(**kwargs):
 	result = [
 		PluginDescriptor(
@@ -510,6 +516,12 @@ def Plugins(**kwargs):
 			where = PluginDescriptor.WHERE_PLUGINMENU,
 			icon = 'plugin.png',
 			fnc = main
+		),
+		PluginDescriptor(
+			name="EPGImport",
+			description = description,
+			where = PluginDescriptor.WHERE_MENU,
+			fnc = epgmenu
 		),
 	]
 	if config.plugins.epgimport.showinextensions.value:
