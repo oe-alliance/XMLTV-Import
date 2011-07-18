@@ -5,6 +5,14 @@ from Tools.Directories import fileExists
 import cPickle as pickle
 import gzip
 import time
+import socket
+import urllib
+import urllib2
+
+# timeout in seconds
+timeout = 5
+socket.setdefaulttimeout(timeout)
+
 
 # User selection stored here, so it goes into a user settings backup
 SETTINGS_FILE = '/etc/enigma2/epgimport.conf'
@@ -42,7 +50,6 @@ class EPGChannel:
 	def openStream(self):
 		if not isLocalFile(self.filename):
 			# just returning urlopen() does not work, parser needs 'tell'
-			import urllib
 			filename,headers = urllib.urlretrieve(self.filename)
 		else:
 			filename = self.filename
@@ -127,16 +134,14 @@ def enumSources(path, filter=None):
 				try: 
 					sourcefile = random.choice(sourcelist)
 					sourcefile = sourcefile.replace("\n","")
-					sourcefiletmp = sourcefile.replace("\n","")
 					print>>log, "[EPGImport] using source",sourcefile
-					import urllib
 					sourcefile,headers = urllib.urlretrieve(sourcefile)
 					for s in enumSourcesFile(sourcefile, filter):
 						yield s
 					count = noofsources + 1
 				except Exception, e:
 					print>>log, "[EPGImport] source is unavailble"
-					sourcelist = [l for l in sourcelist if sourcefiletmp not in l]
+					sourcelist = [l for l in sourcelist if sourcefile not in l]
 					count = count + 1
 					if count == 3:
 						print>>log, "[EPGImport] all online sources are unavailble."
