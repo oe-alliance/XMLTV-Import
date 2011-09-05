@@ -32,10 +32,10 @@ dist-hook: $(LANGPO)
 install-data-local: $(LANGMO)
 	for lang in $(LANGS); do \
 		$(mkinstalldirs) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang/LC_MESSAGES; \
-		$(INSTALL_DATA) $$lang.mo $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang/LC_MESSAGES/xmltv.mo; \
+		$(INSTALL_DATA) $$lang.mo $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang/LC_MESSAGES/EPGImport.mo; \
 	done
 
 uninstall-local:
 	for lang in $(LANGS); do \
-		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang/LC_MESSAGES/xmltv.mo; \
+		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang/LC_MESSAGES/EPGImport.mo; \
 	done

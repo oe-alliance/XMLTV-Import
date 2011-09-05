@@ -3,7 +3,7 @@ from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
 import os,gettext
 
-PluginLanguageDomain = "XMLTV-Import"
+PluginLanguageDomain = "EPGImport"
 PluginLanguagePath = "Extensions/EPGImport/po"
 
 def localeInit():
@@ -16,7 +16,7 @@ def localeInit():
 def _(txt):
 	t = gettext.dgettext(PluginLanguageDomain, txt)
 	if t == txt:
-		#print "[CrossEPG] fallback to default translation for", txt
+		print "[EPGImport] fallback to default translation for", txt
 		t = gettext.dgettext('enigma2', txt)
 	return t
 
