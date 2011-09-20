@@ -4,16 +4,14 @@
 # you can supply a similar interface. See plugin.py and OfflineImport.py for
 # the contract. 
 # 
-import time
-import os
-import gzip
-import log
-
-HDD_EPG_DAT = "/hdd/epg.dat" 
-
+from Components.config import config
 from twisted.internet import reactor, threads
 from twisted.web.client import downloadPage
 import twisted.python.runtime
+
+import time, os, gzip, log
+
+HDD_EPG_DAT = config.misc.epgcache_filename.value
 
 PARSERS = {
 #	'radiotimes': 'uk_radiotimes',
