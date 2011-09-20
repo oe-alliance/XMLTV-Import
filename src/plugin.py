@@ -516,13 +516,6 @@ def Plugins(**kwargs):
 		PluginDescriptor(
 			name="EPGImport",
 			description = description,
-			where = PluginDescriptor.WHERE_PLUGINMENU,
-			icon = 'plugin.png',
-			fnc = main
-		),
-		PluginDescriptor(
-			name="EPGImport",
-			description = description,
 			where = PluginDescriptor.WHERE_MENU,
 			fnc = epgmenu
 		),
