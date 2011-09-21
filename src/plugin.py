@@ -106,7 +106,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 			getConfigListEntry(_("Automatic start time"), cfg.wakeup),   
 			getConfigListEntry(_("Standby at startup"), cfg.wakeupsleep),
 			getConfigListEntry(_("When in deep standby"), cfg.deepstandby),
-			getConfigListEntry(_("Show in plugins"), cfg.showinplugins),
+			getConfigListEntry(_("Show in plugin browser"), cfg.showinplugins),
 			getConfigListEntry(_("Show in extensions"), cfg.showinextensions),
 			getConfigListEntry(_("Start import after booting up"), cfg.runboot),
 			getConfigListEntry(_("Load long descriptions up to X days"), cfg.longDescDays)
