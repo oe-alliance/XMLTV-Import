@@ -29,6 +29,7 @@ config.plugins.epgimport.enabled = ConfigEnableDisable(default = False)
 config.plugins.epgimport.runboot = ConfigEnableDisable(default = False)
 config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default = False)
 config.plugins.epgimport.wakeup = ConfigClock(default = ((4*60) + 45) * 60) # 4:45
+config.plugins.epgimport.showinplugins = ConfigYesNo(default = False)
 config.plugins.epgimport.showinextensions = ConfigYesNo(default = False)
 config.plugins.epgimport.deepstandby = ConfigSelection(default = "skip", choices = [
 		("wakeup", _("Wake up and import")),
@@ -105,6 +106,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 			getConfigListEntry(_("Automatic start time"), cfg.wakeup),   
 			getConfigListEntry(_("Standby at startup"), cfg.wakeupsleep),
 			getConfigListEntry(_("When in deep standby"), cfg.deepstandby),
+			getConfigListEntry(_("Show in plugins"), cfg.showinplugins),
 			getConfigListEntry(_("Show in extensions"), cfg.showinextensions),
 			getConfigListEntry(_("Start import after booting up"), cfg.runboot),
 			getConfigListEntry(_("Load long descriptions up to X days"), cfg.longDescDays)
@@ -494,6 +496,8 @@ def housekeepingExtensionsmenu(el):
 description = _("Automated EPG Importer")
 config.plugins.epgimport.showinextensions.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = False)
 extDescriptor = PluginDescriptor(name="EPGImport", description = description, where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu)
+pluginlist = PluginDescriptor(name="EPGImport", description = description, where = PluginDescriptor.WHERE_PLUGINMENU, icon = 'plugin.png', fnc = main)
+
 
 def epgmenu(menuid, **kwargs):
 	if menuid == "epg":
@@ -522,4 +526,6 @@ def Plugins(**kwargs):
 	]
 	if config.plugins.epgimport.showinextensions.value:
 		result.append(extDescriptor)
+	if config.plugins.epgimport.showinplugins.value:
+		result.append(pluginlist)
 	return result
