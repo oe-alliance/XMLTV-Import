@@ -7,9 +7,7 @@ import enigma
 import log
 
 # Config
-from Components.config import config, ConfigEnableDisable, ConfigSubsection, \
-			 ConfigYesNo, ConfigClock, getConfigListEntry, \
-			 ConfigSelection, ConfigNumber
+from Components.config import config, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry,  ConfigSelection, ConfigNumber
 import Screens.Standby
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
@@ -22,6 +20,9 @@ from Components.ScrollLabel import ScrollLabel
 import Components.PluginComponent
 from Tools.FuzzyDate import FuzzyTime
 import NavigationInstance
+
+from Components.PluginComponent import plugins
+from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 #Set default configuration
 config.plugins.epgimport = ConfigSubsection()
@@ -75,7 +76,7 @@ lastImportResult = None
 
 class EPGMainSetup(ConfigListScreen,Screen):
 	skin = """
-<screen position="center,center" size="560,400" title="EPG Import Configuration" >
+<screen position="center,center" size="560,400" >
 	<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 	<ePixmap name="green"  position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 	<ePixmap name="yellow" position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
@@ -98,8 +99,8 @@ class EPGMainSetup(ConfigListScreen,Screen):
 		
 	def __init__(self, session, args = 0):
 		self.session = session
-		self.setup_title = _("EPG Import Configuration")
 		Screen.__init__(self, session)
+		self.setup_title = _("EPG Import Configuration")
 		cfg = config.plugins.epgimport
 		self.list = [
 			getConfigListEntry(_("Daily automatic import"), cfg.enabled),
@@ -131,11 +132,15 @@ class EPGMainSetup(ConfigListScreen,Screen):
 		}, -2)
 		self.lastImportResult = None
 		self.onChangedEntry = []
+		self.onLayoutFinish.append(self.layoutFinished)
 		self.updateTimer = enigma.eTimer()
 	    	self.updateTimer.callback.append(self.updateStatus)
 		self.updateTimer.start(2000)
 		self.updateStatus()
 	
+	def layoutFinished(self):
+		self.setTitle(_(self.setup_title))
+
 	# for summary:
 	def changedEntry(self):
 		for x in self.onChangedEntry:
@@ -143,7 +148,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 	def getCurrentEntry(self):
 		return self["config"].getCurrent()[0]
 	def getCurrentValue(self):
-		return str(self["config"].getCurrent()[1].getText())
+		return str(self["config"].getCurrent()[0])
 	def createSummary(self):
 		from Screens.Setup import SetupSummary
 		return SetupSummary
@@ -152,6 +157,17 @@ class EPGMainSetup(ConfigListScreen,Screen):
 		#print "saving"
 		self.updateTimer.stop()
 		self.saveAll()
+		if not config.plugins.epgimport.showinplugins.value:
+			for plugin in plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU):
+				if plugin.name == _("XMLTV-Importer"):
+					plugins.removePlugin(plugin)
+
+		if not config.plugins.epgimport.showinextensions.value:
+			for plugin in plugins.getPlugins(PluginDescriptor.WHERE_EXTENSIONSMENU):
+				if plugin.name == _("XMLTV-Importer"):
+					plugins.removePlugin(plugin)
+				
+		plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
 		self.close(True,self.session)
 
 	def cancel(self):
@@ -221,7 +237,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 class EPGImportSources(Screen):
 	"Pick sources from config"
 	skin = """
-		<screen position="center,center" size="560,400" title="EPG Import Sources" >
+		<screen position="center,center" size="560,400" >
 			<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 			<ePixmap name="green"  position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 			<ePixmap name="yellow" position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
@@ -243,6 +259,7 @@ class EPGImportSources(Screen):
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
+		self.setup_title = _("EPG Import Sources")
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("Ok"))
 		self["key_yellow"] = Button() # _("Import now"))
@@ -279,7 +296,7 @@ class EPGImportSources(Screen):
 
 class EPGImportLog(Screen):
 	skin = """
-		<screen position="center,center" size="560,400" title="EPG Import Log" >
+		<screen position="center,center" size="560,400" >
 			<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 			<ePixmap name="green"  position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 			<ePixmap name="yellow" position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" /> 
@@ -300,6 +317,7 @@ class EPGImportLog(Screen):
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
+		Screen.setTitle(self, _("EPG Import Log"))
 		self["key_red"] = Button(_("Clear"))
 		self["key_green"] = Button()
 		self["key_yellow"] = Button()
@@ -501,14 +519,14 @@ pluginlist = PluginDescriptor(name="EPGImport", description = description, where
 
 def epgmenu(menuid, **kwargs):
 	if menuid == "epg":
-		return [("XMLTV-Importer", main, "xmltvimporter", 1002)]
+		return [(_("XMLTV-Importer"), main, "xmltvimporter", 1002)]
 	else:
 		return []
 
 def Plugins(**kwargs):
 	result = [
 		PluginDescriptor(
-			name="EPGImport",
+			name=_("XMLTV-Importer"),
 			description = description,
 			where = [
 				PluginDescriptor.WHERE_AUTOSTART,
@@ -518,7 +536,7 @@ def Plugins(**kwargs):
 			wakeupfnc = getNextWakeup
 		),
 		PluginDescriptor(
-			name="EPGImport",
+			name=_("XMLTV-Importer"),
 			description = description,
 			where = PluginDescriptor.WHERE_MENU,
 			fnc = epgmenu
