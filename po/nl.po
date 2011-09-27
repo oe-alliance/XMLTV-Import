@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XMTV-Impoter for Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-04 16:14+0100\n"
+"POT-Creation-Date: 2011-09-27 19:08+0100\n"
 "PO-Revision-Date: 2011-09-05 16:35+0100\n"
 "Last-Translator: Andy Blackburn <andyblac@o2.co.uk>\n"
 "Language-Team: R.L. van der Does\n"
@@ -20,37 +20,34 @@ msgstr ""
 "X-Poedit-Country: NETHERLANDS\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../src/plugin.py:491
 msgid "Automated EPG Importer"
 msgstr "Automatische EPG importeur"
 
-#: ../src/plugin.py:102
 msgid "Automatic start time"
 msgstr "Automatische start tijd"
 
-#: ../src/plugin.py:112
-#: ../src/plugin.py:241
 msgid "Cancel"
 msgstr "Annuleer"
 
-#: ../src/plugin.py:298
 msgid "Clear"
 msgstr "Verwijder"
 
-#: ../src/plugin.py:101
 msgid "Daily automatic import"
 msgstr "Dagelijkse automatische import"
 
-#: ../src/plugin.py:97
 msgid "EPG Import Configuration"
 msgstr "EPG Import configuratie"
 
-#: ../src/plugin.py:349
+msgid "EPG Import Log"
+msgstr ""
+
+msgid "EPG Import Sources"
+msgstr ""
+
 #, python-format
 msgid "EPG Import finished, %d events"
 msgstr "EPG Import gereed, %d events"
 
-#: ../src/plugin.py:199
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -58,7 +55,6 @@ msgstr ""
 "EPGImport Plugin\n"
 "Starten mislukt:\n"
 
-#: ../src/plugin.py:179
 msgid ""
 "EPGImport Plugin\n"
 "Import of epg data is still in progress. Please wait."
@@ -66,7 +62,6 @@ msgstr ""
 "EPGImport Plugin\n"
 "Import van epg data is nog bezig: wacht."
 
-#: ../src/plugin.py:189
 msgid ""
 "EPGImport Plugin\n"
 "Import of epg data will start\n"
@@ -78,69 +73,58 @@ msgstr ""
 "Dit kan een paar minuten duren\n"
 "Is dat OK?"
 
-#: ../src/plugin.py:162
 msgid "Importing:"
 msgstr "Bezig met importeren:"
 
-#: ../src/plugin.py:173
 #, python-format
 msgid "Last: %s %s, %d events"
 msgstr "Laatste: %s %s, %d events"
 
-#: ../src/plugin.py:107
 msgid "Load long descriptions up to X days"
 msgstr "Importeeruitgebreide beschrijvingen voor X dagen"
 
-#: ../src/plugin.py:114
 msgid "Manual"
 msgstr "Handmatig"
 
-#: ../src/plugin.py:184
 msgid "No active EPG sources found, nothing to do"
 msgstr "Geen actieve EPG bronnen gevonden,; niets te doen"
 
-#: ../src/plugin.py:113
-#: ../src/plugin.py:242
 msgid "Ok"
 msgstr "Ok"
 
-#: ../src/plugin.py:301
 msgid "Save"
 msgstr "Sla op"
 
-#: ../src/plugin.py:105
 msgid "Show in extensions"
 msgstr "Toon in extensies"
 
-#: ../src/plugin.py:33
+msgid "Show in plugin browser"
+msgstr ""
+
 msgid "Skip the import"
 msgstr "Sla de import over"
 
-#: ../src/plugin.py:115
 msgid "Sources"
 msgstr "Bronnen"
 
-#: ../src/plugin.py:103
 msgid "Standby at startup"
 msgstr "Standby na opstarten"
 
-#: ../src/plugin.py:106
 msgid "Start import after booting up"
 msgstr "Start import na opstarten"
 
-#: ../src/plugin.py:31
 msgid "Wake up and import"
 msgstr "Wakker worden en importeren"
 
-#: ../src/plugin.py:104
 msgid "When in deep standby"
 msgstr "Indien in deep standby"
 
-#: ../src/plugin.py:349
+msgid "XMLTV-Importer"
+msgstr ""
+
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
 msgstr ""
 "U moet Enigma2 herstarten om de EPG data te laden,\n"
 "is dat OK?"
-
