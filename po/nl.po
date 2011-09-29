@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: XMTV-Impoter for Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-27 19:08+0100\n"
-"PO-Revision-Date: 2011-09-05 16:35+0100\n"
-"Last-Translator: Andy Blackburn <andyblac@o2.co.uk>\n"
-"Language-Team: R.L. van der Does\n"
+"PO-Revision-Date: 2011-09-28 14:38+0100\n"
+"Last-Translator: R.L. van der Does\n"
+"Language-Team: Andy Blackburn\nRob van der Does\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,10 +39,10 @@ msgid "EPG Import Configuration"
 msgstr "EPG Import configuratie"
 
 msgid "EPG Import Log"
-msgstr ""
+msgstr "EPG Import Log"
 
 msgid "EPG Import Sources"
-msgstr ""
+msgstr "EPG Import Bronnen"
 
 #, python-format
 msgid "EPG Import finished, %d events"
@@ -99,7 +99,7 @@ msgid "Show in extensions"
 msgstr "Toon in extensies"
 
 msgid "Show in plugin browser"
-msgstr ""
+msgstr "Toon in plugin browser"
 
 msgid "Skip the import"
 msgstr "Sla de import over"
@@ -120,7 +120,7 @@ msgid "When in deep standby"
 msgstr "Indien in deep standby"
 
 msgid "XMLTV-Importer"
-msgstr ""
+msgstr "XMLTV-Importeur"
 
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
@@ -128,3 +128,4 @@ msgid ""
 msgstr ""
 "U moet Enigma2 herstarten om de EPG data te laden,\n"
 "is dat OK?"
+
