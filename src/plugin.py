@@ -135,7 +135,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 		self.onChangedEntry = []
 		self.onLayoutFinish.append(self.layoutFinished)
 		self.updateTimer = enigma.eTimer()
-	    	self.updateTimer.callback.append(self.updateStatus)
+		self.updateTimer.callback.append(self.updateStatus)
 		self.updateTimer.start(2000)
 		self.updateStatus()
 	

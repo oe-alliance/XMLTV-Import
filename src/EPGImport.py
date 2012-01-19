@@ -4,6 +4,7 @@
 # you can supply a similar interface. See plugin.py and OfflineImport.py for
 # the contract. 
 # 
+from Components.Console import Console
 from Components.config import config
 from twisted.internet import reactor, threads
 from twisted.web.client import downloadPage
@@ -54,7 +55,6 @@ def bigStorage(minFree, default, *candidates):
 					pass
 		return default
 
-
 class OudeisImporter:
 	'Wrapper to convert original patch to new one that accepts multiple services'
 	def __init__(self, epgcache):
@@ -80,7 +80,7 @@ class EPGImport:
 		self.onDone = None
 		self.epgcache = epgcache
 		self.channelFilter = channelFilter
-	
+
 	def beginImport(self, longDescUntil = None):
 		'Starts importing using Enigma reactor. Set self.sources before calling this.'
 		if hasattr(self.epgcache, 'importEvents'):
@@ -110,7 +110,7 @@ class EPGImport:
 		if filename.startswith('http:') or filename.startswith('ftp:'):
 			self.do_download(filename)
 		else:
-			self.afterDownload(None, filename, deleteFile=False)
+			self.MemCheck1(None, filename, deleteFile=False)
 
 	def createIterator(self):
 		self.source.channels.update(self.channelFilter)
@@ -147,6 +147,50 @@ class EPGImport:
 		except Exception, e:
 		    print>>log, "[EPGImport] Failed to import %s:" % filename, e
 
+	def MemCheck1(self, result, filename, deleteFile=False):
+		self.Console = Console()
+		self.swapdevice = os.path.split(filename)
+		self.swapdevice = self.swapdevice[0]
+		if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
+			print>>log, "[EPGImport] Removing old swapfile."
+			self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
+		f = open('/proc/meminfo', 'r')
+		for line in f.readlines():
+			if line.find('MemFree') != -1:
+				parts = line.strip().split()
+				memfree = int(parts[1])
+			elif line.find('SwapFree') != -1:
+				parts = line.strip().split()
+				swapfree = int(parts[1])
+		f.close()
+		TotalFree = memfree + swapfree
+		print>>log, "[EPGImport] Free Mem",TotalFree
+		self.swapdevice = ""
+		if int(TotalFree) < 5000:
+			print>>log, "[EPGImport] Not Enough Ram"
+			self.MemCheck2(filename, deleteFile)
+		else:
+			print>>log, "[EPGImport] Found Enough Ram"
+			self.afterDownload(None, filename, deleteFile=False)
+
+	def MemCheck2(self, filename, deleteFile):
+		print>>log, "[EPGImport] Creating Swapfile."
+		self.Console.ePopen("dd if=/dev/zero of=" + self.swapdevice + "/swapfile_xmltv bs=1024 count=16440", self.MemCheck3, [filename, deleteFile])
+
+	def MemCheck3(self, result, retval, extra_args = None):
+		(filename, deleteFile) = extra_args
+		if retval == 0:
+			self.Console.ePopen("mkswap " + self.swapdevice + "/swapfile_xmltv", self.MemCheck4, [filename, deleteFile])
+
+	def MemCheck4(self, result, retval, extra_args = None):
+		(filename, deleteFile) = extra_args
+		if retval == 0:
+			self.Console.ePopen("swapon " + self.swapdevice + "/swapfile_xmltv", self.MemCheck5, [filename, deleteFile])
+
+	def MemCheck5(self, result, retval, extra_args = None):
+		(filename, deleteFile) = extra_args
+		self.afterDownload(None, filename, deleteFile)
+
 	def afterDownload(self, result, filename, deleteFile=False):
 		if os.path.getsize(filename) > 0:
 			print>>log, "[EPGImport] afterDownload", filename
@@ -176,7 +220,6 @@ class EPGImport:
 		else:
 			failure = "File downloaded was zero bytes."
 			self.downloadFail(failure)
-
 
 	def fileno(self):
 		if self.fd is not None:
@@ -270,6 +313,10 @@ class EPGImport:
 		import glob
 		for filename in glob.glob('/tmp/*.xml'):
 			os.remove(filename) 
+		print 'self.swapdevice',self.swapdevice + "/swapfile_xmltv"
+		if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
+			print>>log, "[EPGImport] Removing Swapfile."
+			self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
 
 	def isImportRunning(self):
 		return self.source is not None
@@ -281,5 +328,5 @@ class EPGImport:
 			filename += '.gz'
 		sourcefile = sourcefile.encode('utf-8')
 		print>>log, "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
-		downloadPage(sourcefile, filename).addCallbacks(self.afterDownload, self.downloadFail, callbackArgs=(filename,True))
+		downloadPage(sourcefile, filename).addCallbacks(self.MemCheck1, self.downloadFail, callbackArgs=(filename,True))
 		return filename
