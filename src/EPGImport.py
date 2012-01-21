@@ -110,7 +110,7 @@ class EPGImport:
 		if filename.startswith('http:') or filename.startswith('ftp:'):
 			self.do_download(filename)
 		else:
-			self.MemCheck1(None, filename, deleteFile=False)
+			self.MemCheck1(None, filename, deleteFile)
 
 	def createIterator(self):
 		self.source.channels.update(self.channelFilter)
