@@ -110,7 +110,7 @@ class EPGImport:
 		if filename.startswith('http:') or filename.startswith('ftp:'):
 			self.do_download(filename)
 		else:
-			self.MemCheck1(None, filename, deleteFile)
+			self.MemCheck1(None, filename, deleteFile=False)
 
 	def createIterator(self):
 		self.source.channels.update(self.channelFilter)
@@ -171,7 +171,7 @@ class EPGImport:
 			self.MemCheck2(filename, deleteFile)
 		else:
 			print>>log, "[EPGImport] Found Enough Ram"
-			self.afterDownload(None, filename, deleteFile=False)
+			self.afterDownload(None, filename, deleteFile)
 
 	def MemCheck2(self, filename, deleteFile):
 		print>>log, "[EPGImport] Creating Swapfile."
@@ -313,7 +313,6 @@ class EPGImport:
 		import glob
 		for filename in glob.glob('/tmp/*.xml'):
 			os.remove(filename) 
-		print 'self.swapdevice',self.swapdevice + "/swapfile_xmltv"
 		if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
 			print>>log, "[EPGImport] Removing Swapfile."
 			self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
@@ -322,7 +321,7 @@ class EPGImport:
 		return self.source is not None
 
 	def do_download(self,sourcefile):
-		path = bigStorage(9000000, '/tmp', '/media/cf', '/media/usb', '/media/hdd')
+		path = bigStorage(9000000, '/tmp', '/media/hdd', '/media/usb', '/media/cf')
 		filename = os.path.join(path, 'epgimport')
 		if sourcefile.endswith('.gz'):
 			filename += '.gz'
