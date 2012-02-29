@@ -15,6 +15,7 @@ from Components.ConfigList import ConfigListScreen
 from Components.ActionMap import ActionMap
 from Components.Button import Button
 from Components.Label import Label
+from Components.Sources.StaticText import StaticText
 from Components.SelectionList import SelectionList, SelectionEntryComponent
 from Components.ScrollLabel import ScrollLabel
 import Components.PluginComponent
@@ -101,6 +102,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 		self.session = session
 		Screen.__init__(self, session)
 		self.setup_title = _("EPG Import Configuration")
+		Screen.setTitle(self, self.setup_title)
 		cfg = config.plugins.epgimport
 		self.list = [
 			getConfigListEntry(_("Daily automatic import"), cfg.enabled),
@@ -133,15 +135,11 @@ class EPGMainSetup(ConfigListScreen,Screen):
 		}, -2)
 		self.lastImportResult = None
 		self.onChangedEntry = []
-		self.onLayoutFinish.append(self.layoutFinished)
 		self.updateTimer = enigma.eTimer()
 		self.updateTimer.callback.append(self.updateStatus)
 		self.updateTimer.start(2000)
 		self.updateStatus()
 	
-	def layoutFinished(self):
-		self.setTitle(_(self.setup_title))
-
 	# for summary:
 	def changedEntry(self):
 		for x in self.onChangedEntry:
@@ -149,7 +147,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 	def getCurrentEntry(self):
 		return self["config"].getCurrent()[0]
 	def getCurrentValue(self):
-		return str(self["config"].getCurrent()[0])
+		return str(self["config"].getCurrent()[1].getText())
 	def createSummary(self):
 		from Screens.Setup import SetupSummary
 		return SetupSummary
@@ -266,10 +264,12 @@ class EPGImportSources(Screen):
 		self.session = session
 		Screen.__init__(self, session)
 		self.setup_title = _("EPG Import Sources")
+		Screen.setTitle(self, self.setup_title)
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("Ok"))
 		self["key_yellow"] = Button() # _("Import now"))
 		self["key_blue"] = Button()
+		self.onChangedEntry = []
 		cfg = EPGConfig.loadUserSettings()
 		filter = cfg["sources"]
 		sources = [
@@ -288,6 +288,17 @@ class EPGImportSources(Screen):
 			"ok": self["list"].toggleSelection,
 			"menu": self.cancel,
 		}, -2)
+
+	# for summary:
+	def changedEntry(self):
+		for x in self.onChangedEntry:
+			x()
+	def getCurrentEntry(self):
+		return str(self["list"].getCurrent()[0][1])
+	def getCurrentValue(self):
+		return str(self["list"].getCurrent()[0][3])
+	def createSummary(self):
+		return SetupSummary
 
 	def save(self):
 		sources = [ item[0][1] for item in self["list"].list if item[0][3] ]
@@ -555,3 +566,26 @@ def Plugins(**kwargs):
 	if config.plugins.epgimport.showinplugins.value:
 		result.append(pluginlist)
 	return result
+
+class SetupSummary(Screen):
+	def __init__(self, session, parent):
+		Screen.__init__(self, session, parent = parent)
+		self["SetupTitle"] = StaticText(_(parent.setup_title))
+		self["SetupEntry"] = StaticText("")
+		self["SetupValue"] = StaticText("")
+		self.onShow.append(self.addWatcher)
+		self.onHide.append(self.removeWatcher)
+
+	def addWatcher(self):
+		self.parent.onChangedEntry.append(self.selectionChanged)
+		self.parent["list"].onSelectionChanged.append(self.selectionChanged)
+		self.selectionChanged()
+
+	def removeWatcher(self):
+		self.parent.onChangedEntry.remove(self.selectionChanged)
+		self.parent["list"].onSelectionChanged.remove(self.selectionChanged)
+
+	def selectionChanged(self):
+		self["SetupEntry"].text = self.parent.getCurrentEntry()
+		self["SetupValue"].text = self.parent.getCurrentValue()
+
