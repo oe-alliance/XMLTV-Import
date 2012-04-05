@@ -2,8 +2,8 @@
 #
 # This file no longer has a direct link to Enigma2, allowing its use anywhere
 # you can supply a similar interface. See plugin.py and OfflineImport.py for
-# the contract. 
-# 
+# the contract.
+#
 from Components.Console import Console
 from Components.config import config
 from twisted.internet import reactor, threads
@@ -49,7 +49,7 @@ def bigStorage(minFree, default, *candidates):
 				try:
 					diskstat = os.statvfs(candidate)
 					free = diskstat.f_bfree * diskstat.f_bsize
-					if free > minFree: 
+					if free > minFree:
 						return candidate
 				except:
 					pass
@@ -86,7 +86,7 @@ class EPGImport:
 		if hasattr(self.epgcache, 'importEvents'):
 			self.storage = self.epgcache
 		elif hasattr(self.epgcache, 'importEvent'):
-			self.storage = OudeisImporter(self.epgcache)             
+			self.storage = OudeisImporter(self.epgcache)
 		else:
 			print "[EPGImport] oudeis patch not detected, using epg.dat instead."
 			import epgdat_importer
@@ -148,9 +148,11 @@ class EPGImport:
 		    print>>log, "[EPGImport] Failed to import %s:" % filename, e
 
 	def MemCheck1(self, result, filename, deleteFile=False):
+		self.swapdevice = ""
 		self.Console = Console()
 		self.swapdevice = os.path.split(filename)
 		self.swapdevice = self.swapdevice[0]
+		print>>log, "[EPGImport] SwapFile location",self.swapdevice
 		if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
 			print>>log, "[EPGImport] Removing old swapfile."
 			self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
@@ -165,7 +167,6 @@ class EPGImport:
 		f.close()
 		TotalFree = memfree + swapfree
 		print>>log, "[EPGImport] Free Mem",TotalFree
-		self.swapdevice = ""
 		if int(TotalFree) < 5000:
 			print>>log, "[EPGImport] Not Enough Ram"
 			self.MemCheck2(filename, deleteFile)
@@ -238,7 +239,7 @@ class EPGImport:
 					self.storage.importEvents(r, (d,))
 				except Exception, e:
 					print>>log, "[EPGImport] ### importEvents exception:", e
-		print>>log, "[EPGImport] ### thread is ready ### Events:", self.eventCount 
+		print>>log, "[EPGImport] ### thread is ready ### Events:", self.eventCount
 
 	def doRead(self):
 		'called from reactor to read some data'
@@ -312,7 +313,7 @@ class EPGImport:
 		print>>log, "[EPGImport] #### Finished ####"
 		import glob
 		for filename in glob.glob('/tmp/*.xml'):
-			os.remove(filename) 
+			os.remove(filename)
 		if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
 			print>>log, "[EPGImport] Removing Swapfile."
 			self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
