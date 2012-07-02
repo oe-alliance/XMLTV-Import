@@ -33,11 +33,11 @@ install-data-local: $(LANGMO)
 	for lang in $(LANGS); do \
 		$(mkinstalldirs) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang/LC_MESSAGES; \
 		$(INSTALL_DATA) $$lang.mo $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang/LC_MESSAGES/EPGImport.mo; \
-		$(mkinstalldirs) $(DESTDIR)$(datadir)/enigma2/po; \
-		$(INSTALL_DATA) $$lang.po $(DESTDIR)$(datadir)/enigma2/po/EPGImport-$$lang.po; \
+		$(INSTALL_DATA) $$lang.po $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang.po; \
 	done
 
 uninstall-local:
 	for lang in $(LANGS); do \
 		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang/LC_MESSAGES/EPGImport.mo; \
+		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/EPGImport/po/$$lang.po; \
 	done
