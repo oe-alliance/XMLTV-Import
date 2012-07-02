@@ -1,0 +1,75 @@
+# Czech translations for enigma2-plugins package.
+# Copyright (C) 2012 THE enigma2-plugins'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the enigma2-plugins package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enigma2-plugins 3.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-15 14:10+0000\n"
+"PO-Revision-Date: 2012-05-17 14:10+0000\n"
+"Last-Translator: jerry\n"
+"Language-Team: jerry\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#
+msgid "EPG Import Configuration"
+msgstr "Nastavení importu EPG"
+
+#
+msgid "EPG Import Sources"
+msgstr "Zdroje importu EPG"
+
+#
+msgid "Manual"
+msgstr "Ručně"
+
+#
+msgid "Sources"
+msgstr "Zdroje"
+
+#
+msgid "Daily automatic import"
+msgstr "Denní automatický import"
+
+#
+msgid "Automatic start time"
+msgstr "Čas automatického spuštění"
+
+#
+msgid "Standby at startup"
+msgstr "Uspat po spuštění"
+
+#
+msgid "When in deep standby"
+msgstr "Při vypnutém stavu"
+
+#
+msgid "Skip the import"
+msgstr "Přeskočit import"
+
+#
+msgid "Wake up and import"
+msgstr "Probudit a stáhnout"
+
+#
+msgid "Show in plugin browser"
+msgstr "Zobrazit v prohlížeči pluginů"
+
+#
+msgid "Show in extensions"
+msgstr "Zobrazit v zozšířeních"
+
+#
+msgid "Start import after booting up"
+msgstr "Importovat po nabootování"
+
+#
+msgid "Load long descriptions up to X days"
+msgstr "Načíst dlouhé popisy po X dnech"
+

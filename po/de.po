@@ -1,0 +1,117 @@
+# German translations for plugins package.
+# Copyright (C) 2011 THE plugins'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the plugins package.
+# Automatically generated, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: plugins 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-27 19:08+0100\n"
+"PO-Revision-Date: 2011-09-04 16:14+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Automated EPG Importer"
+msgstr ""
+
+msgid "Automatic start time"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Daily automatic import"
+msgstr ""
+
+msgid "EPG Import Configuration"
+msgstr ""
+
+msgid "EPG Import Log"
+msgstr ""
+
+msgid "EPG Import Sources"
+msgstr ""
+
+#, python-format
+msgid "EPG Import finished, %d events"
+msgstr ""
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+
+msgid ""
+"EPGImport Plugin\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+
+msgid ""
+"EPGImport Plugin\n"
+"Import of epg data will start\n"
+"This may take a few minutes\n"
+"Is this ok?"
+msgstr ""
+
+msgid "Importing:"
+msgstr ""
+
+#, python-format
+msgid "Last: %s %s, %d events"
+msgstr ""
+
+msgid "Load long descriptions up to X days"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "No active EPG sources found, nothing to do"
+msgstr ""
+
+msgid "Ok"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Show in extensions"
+msgstr ""
+
+msgid "Show in plugin browser"
+msgstr ""
+
+msgid "Skip the import"
+msgstr ""
+
+msgid "Sources"
+msgstr ""
+
+msgid "Standby at startup"
+msgstr ""
+
+msgid "Start import after booting up"
+msgstr ""
+
+msgid "Wake up and import"
+msgstr ""
+
+msgid "When in deep standby"
+msgstr ""
+
+msgid "XMLTV-Importer"
+msgstr ""
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
