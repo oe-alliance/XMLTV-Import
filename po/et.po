@@ -1,0 +1,155 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: XMTV-Impoter for Enigma2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-20 22:36+0100\n"
+"PO-Revision-Date: 2012-09-25 15:35+0100\n"
+"Last-Translator: \n"
+"Language-Team: rimas\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.5.3\n"
+
+#: ../src/plugin.py:533
+msgid "Automated EPG Importer"
+msgstr "Automaatne EPG hankija"
+
+#: ../src/plugin.py:109
+msgid "Automatic start time"
+msgstr "Automaatse käivituse aeg"
+
+#: ../src/plugin.py:120 ../src/plugin.py:268
+msgid "Cancel"
+msgstr "Tühista"
+
+#: ../src/plugin.py:339
+msgid "Clear"
+msgstr "Kustuta"
+
+#: ../src/plugin.py:108
+msgid "Daily automatic import"
+msgstr "Automaatne EPG hankimine iga päev"
+
+#: ../src/plugin.py:104
+msgid "EPG Import Configuration"
+msgstr "Seadistamine"
+
+#: ../src/plugin.py:338
+msgid "EPG Import Log"
+msgstr "EPG importija logi"
+
+#: ../src/plugin.py:266
+msgid "EPG Import Sources"
+msgstr "EPG importija allikad"
+
+#: ../src/plugin.py:391
+#, python-format
+msgid "EPG Import finished, %d events"
+msgstr "EPG hankimine lõpetatud, %d saadet"
+
+#: ../src/plugin.py:224
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"EPGImport\n"
+"Käivitamine nurjus:\n"
+
+#: ../src/plugin.py:204
+msgid ""
+"EPGImport Plugin\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"EPGImport\n"
+"Epg hankimine on pooleli. Oota."
+
+#: ../src/plugin.py:214
+msgid ""
+"EPGImport Plugin\n"
+"Import of epg data will start\n"
+"This may take a few minutes\n"
+"Is this ok?"
+msgstr ""
+"EPGImport\n"
+"Algab epg hankimine \n"
+"See võib kesta mõne minuti\n"
+"Kas see sobib?"
+
+#: ../src/plugin.py:187
+msgid "Importing:"
+msgstr "Hankimisel:"
+
+#: ../src/plugin.py:198
+#, python-format
+msgid "Last: %s %s, %d events"
+msgstr "Viimane: %s %s, %d saadet"
+
+#: ../src/plugin.py:115
+msgid "Load long descriptions up to X days"
+msgstr "Pikk saatetutvustus X päevaks"
+
+#: ../src/plugin.py:122
+msgid "Manual"
+msgstr "Käsitsi"
+
+#: ../src/plugin.py:209
+msgid "No active EPG sources found, nothing to do"
+msgstr "EPG allikad on määramata. Midagi ei saa teha."
+
+#: ../src/plugin.py:121 ../src/plugin.py:269
+msgid "Ok"
+msgstr "Ok"
+
+#: ../src/plugin.py:342
+msgid "Save"
+msgstr "Salvesta"
+
+#: ../src/plugin.py:113
+msgid "Show in extensions"
+msgstr "Näita laienduste menüüs (sinine nupp)"
+
+#: ../src/plugin.py:112
+msgid "Show in plugin browser"
+msgstr "Näita laienduste lehitsejas"
+
+#: ../src/plugin.py:39
+msgid "Skip the import"
+msgstr "Ära hangi"
+
+#: ../src/plugin.py:123
+msgid "Sources"
+msgstr "Allikad"
+
+#: ../src/plugin.py:110
+msgid "Standby at startup"
+msgstr "Käivitamisel ooterežiimi"
+
+#: ../src/plugin.py:114
+msgid "Start import after booting up"
+msgstr "Hangi EPG pärast algkäivitust"
+
+#: ../src/plugin.py:37
+msgid "Wake up and import"
+msgstr "Käivita ja hangi epg"
+
+#: ../src/plugin.py:111
+msgid "When in deep standby"
+msgstr "Sügavooterežiimis"
+
+#: ../src/plugin.py:166 ../src/plugin.py:171 ../src/plugin.py:535
+#: ../src/plugin.py:536 ../src/plugin.py:541 ../src/plugin.py:548
+#: ../src/plugin.py:558
+msgid "XMLTV-Importer"
+msgstr "XMLTV import"
+
+#: ../src/plugin.py:391
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"EPG laadimiseks tuleb Enigma2 taaskäivitada.\n"
+"Kas see sobib?"
