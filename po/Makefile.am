@@ -7,15 +7,15 @@ EXTRA_DIST = $(LANGPO)
 if UPDATE_PO
 # the TRANSLATORS: allows putting translation comments before the to-be-translated line.
 xmltv-py.pot: $(top_srcdir)/src/*.py
-	$(XGETTEXT) -L Python --from-code=UTF-8 --add-comments="TRANSLATORS:" -d @PACKAGE_NAME@ -s -o $@ $^
+	$(XGETTEXT) --no-wrap -L Python --from-code=UTF-8 -kpgettext:1c,2 --add-comments="TRANSLATORS:" -d @PACKAGE_NAME@ -s -o $@ $^
 
 xmltv.pot: xmltv-py.pot
 	sed --in-place xmltv-py.pot --expression=s/CHARSET/UTF-8/
-	$(MSGUNIQ) $^ -o $@
+	$(MSGUNIQ) --no-wrap --no-location $^ -o $@
 
 %.po: xmltv.pot
 	if [ -f $@ ]; then \
-		$(MSGMERGE) --backup=none --no-location -s -N -U $@ $< && touch $@; \
+		$(MSGMERGE) --backup=none --no-wrap --no-location -s -N -U $@ $< && touch $@; \
 	else \
 		$(MSGINIT) -l $@ -o $@ -i $< --no-translator; \
 	fi
