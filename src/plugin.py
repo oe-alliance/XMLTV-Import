@@ -7,7 +7,7 @@ import enigma
 import log
 
 # Config
-from Components.config import config, configfile, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry,  ConfigSelection, ConfigNumber
+from Components.config import config, configfile, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry,  ConfigSelection, ConfigNumber, ConfigText
 import Screens.Standby
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
@@ -39,6 +39,7 @@ config.plugins.epgimport.deepstandby = ConfigSelection(default = "skip", choices
 		("skip", _("Skip the import")) 
 		])
 config.plugins.epgimport.longDescDays = ConfigNumber(default = 5)
+config.plugins.epgimport.sources = ConfigText("", False)
 
 # Plugin
 import EPGImport
@@ -203,8 +204,8 @@ class EPGMainSetup(ConfigListScreen,Screen):
 			print>>log, "[EPGImport] Already running, won't start again"
 			self.session.open(MessageBox, _("EPGImport Plugin\nImport of epg data is still in progress. Please wait."), MessageBox.TYPE_ERROR, timeout = 10, close_on_any_key = True)
 			return
-		cfg = EPGConfig.loadUserSettings()
-		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = cfg["sources"]) ]
+		cfg = config.plugins.epgimport.sources.getValue().split("|")
+		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = cfg) ]
 		if not sources:
 			self.session.open(MessageBox, _("No active EPG sources found, nothing to do"), MessageBox.TYPE_INFO, timeout = 10, close_on_any_key = True)
 			return
@@ -270,8 +271,7 @@ class EPGImportSources(Screen):
 		self["key_yellow"] = Button() # _("Import now"))
 		self["key_blue"] = Button()
 		self.onChangedEntry = []
-		cfg = EPGConfig.loadUserSettings()
-		filter = cfg["sources"]
+		filter = config.plugins.epgimport.sources.getValue().split("|")
 		sources = [
 			# (description, value, index, selected)
 			SelectionEntryComponent(x.description, x.description, 0, (filter is None) or (x.description in filter))
@@ -303,7 +303,14 @@ class EPGImportSources(Screen):
 	def save(self):
 		sources = [ item[0][1] for item in self["list"].list if item[0][3] ]
 		print>>log, "[EPGImport] Selected sources:", sources
-		EPGConfig.storeUserSettings(sources=sources)
+		config_string = ""
+		for source in sources:
+			if len(config_string) > 0:
+				config_string += "|"
+			config_string += source
+		config.plugins.epgimport.sources.setValue(config_string)
+		config.plugins.epgimport.sources.save()
+		configfile.save()
 		self.close(True, sources)
 
 	def cancel(self):
@@ -444,8 +451,8 @@ class AutoStartTimer:
 		return wake
 
 	def runImport(self):
-		cfg = EPGConfig.loadUserSettings()
-		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = cfg["sources"]) ]
+		cfg = config.plugins.epgimport.sources.getValue().split("|")
+		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter = cfg) ]
 		if sources:
 			sources.reverse()
 			epgimport.sources = sources
