@@ -151,14 +151,19 @@ def enumSources(path, filter=None):
 
 def loadUserSettings(filename = SETTINGS_FILE):
 	try:
-		return pickle.load(open(filename, 'rb'))
+		file = open(filename, 'rb')
+		picklefile = pickle.load(file)
+		file.close()
+		return picklefile
 	except Exception, e:
 		print>>log, "[EPGImport] No settings", e
 		return {"sources": []}
 
 def storeUserSettings(filename = SETTINGS_FILE, sources = None):
 	container = {"sources": sources}
-	pickle.dump(container, open(filename, 'wb'), pickle.HIGHEST_PROTOCOL)
+	file = open(filename, 'wb')
+	pickle.dump(container, file, pickle.HIGHEST_PROTOCOL)
+	file.close()
 
 if __name__ == '__main__':
 	import sys
