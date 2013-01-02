@@ -12,9 +12,9 @@ from datetime import datetime
 try:
 	import dreamcrc
 	crc32_dreambox = lambda d,t: dreamcrc.crc32(d,t) & 0xffffffff
-	print "[XLMTVImport] using C module, yay"
+	print "[XMLTVImport] using C module, yay"
 except:
-	print "[XLMTVImport] failed to load C implementation, sorry"
+	print "[XMLTVImport] failed to load C implementation, sorry"
 
 	# this table is used by CRC32 routine below (used by Dreambox for
 	# computing REF DESC value).

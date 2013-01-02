@@ -31,13 +31,13 @@ dist-hook: $(LANGPO)
 
 install-data-local: $(LANGMO)
 	for lang in $(LANGS); do \
-		$(mkinstalldirs) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XLMTVImport/locale/$$lang/LC_MESSAGES; \
-		$(INSTALL_DATA) $$lang.mo $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XLMTVImport/locale/$$lang/LC_MESSAGES/XLMTVImport.mo; \
-		$(INSTALL_DATA) $$lang.po $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XLMTVImport/locale/$$lang.po; \
+		$(mkinstalldirs) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XMLTVImport/locale/$$lang/LC_MESSAGES; \
+		$(INSTALL_DATA) $$lang.mo $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XMLTVImport/locale/$$lang/LC_MESSAGES/XMLTVImport.mo; \
+		$(INSTALL_DATA) $$lang.po $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XMLTVImport/locale/$$lang.po; \
 	done
 
 uninstall-local:
 	for lang in $(LANGS); do \
-		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XLMTVImport/locale/$$lang/LC_MESSAGES/XLMTVImport.mo; \
-		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XLMTVImport/locale/$$lang.po; \
+		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XMLTVImport/locale/$$lang/LC_MESSAGES/XMLTVImport.mo; \
+		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/Extensions/XMLTVImport/locale/$$lang.po; \
 	done

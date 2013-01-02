@@ -42,7 +42,7 @@ config.plugins.epgimport.longDescDays = ConfigNumber(default = 5)
 config.plugins.epgimport.sources = ConfigText("", False)
 
 # Plugin
-import XLMTVImport
+import XMLTVImport
 import XMLTVConfig
 
 # Plugin definition
@@ -69,7 +69,7 @@ def channelFilter(ref):
 	print>>log, "Invalid serviceref string:", ref
 	return False
 
-epgimport = XLMTVImport.XLMTVImport(enigma.eEPGCache.getInstance(), channelFilter)
+epgimport = XMLTVImport.XMLTVImport(enigma.eEPGCache.getInstance(), channelFilter)
 
 lastImportResult = None
 
@@ -201,8 +201,8 @@ class EPGMainSetup(ConfigListScreen,Screen):
 
 	def doimport(self):
 		if epgimport.isImportRunning():
-			print>>log, "[XLMTVImport] Already running, won't start again"
-			self.session.open(MessageBox, _("XLMTVImport Plugin\nImport of epg data is still in progress. Please wait."), MessageBox.TYPE_ERROR, timeout = 10, close_on_any_key = True)
+			print>>log, "[XMLTVImport] Already running, won't start again"
+			self.session.open(MessageBox, _("XMLTVImport Plugin\nImport of epg data is still in progress. Please wait."), MessageBox.TYPE_ERROR, timeout = 10, close_on_any_key = True)
 			return
 		cfg = config.plugins.epgimport.sources.getValue().split("|")
 		sources = [ s for s in XMLTVConfig.enumSources(CONFIG_PATH, filter = cfg) ]
@@ -212,7 +212,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 		# make it a stack, first on top.
 		sources.reverse()
 		epgimport.sources = sources
-		self.session.openWithCallback(self.do_import_callback, MessageBox, _("XLMTVImport Plugin\nImport of epg data will start\nThis may take a few minutes\nIs this ok?"), MessageBox.TYPE_YESNO, timeout = 15, default = True)
+		self.session.openWithCallback(self.do_import_callback, MessageBox, _("XMLTVImport Plugin\nImport of epg data will start\nThis may take a few minutes\nIs this ok?"), MessageBox.TYPE_YESNO, timeout = 15, default = True)
 
 	def do_import_callback(self, confirmed):
 		if not confirmed:
@@ -221,12 +221,12 @@ class EPGMainSetup(ConfigListScreen,Screen):
 			epgimport.onDone = doneImport
 			epgimport.beginImport(longDescUntil = config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
 		except Exception, e:
-			print>>log, "[XLMTVImport] Error at start:", e 
-			self.session.open(MessageBox, _("XLMTVImport Plugin\nFailed to start:\n") + str(e), MessageBox.TYPE_ERROR, timeout = 15, close_on_any_key = True)
+			print>>log, "[XMLTVImport] Error at start:", e 
+			self.session.open(MessageBox, _("XMLTVImport Plugin\nFailed to start:\n") + str(e), MessageBox.TYPE_ERROR, timeout = 15, close_on_any_key = True)
 		self.updateStatus()
 
 	def dosources(self):
-		self.session.openWithCallback(self.sourcesDone, XLMTVImportSources)
+		self.session.openWithCallback(self.sourcesDone, XMLTVImportSources)
 
 	def sourcesDone(self, confirmed, sources):
 		# Called with True and list of config items on Okay.
@@ -237,9 +237,9 @@ class EPGMainSetup(ConfigListScreen,Screen):
 			os.remove(filename) 
 
 	def showLog(self):
-		self.session.open(XLMTVImportLog)
+		self.session.open(XMLTVImportLog)
 
-class XLMTVImportSources(Screen):
+class XMLTVImportSources(Screen):
 	"Pick sources from config"
 	skin = """
 		<screen position="center,center" size="560,400" >
@@ -302,7 +302,7 @@ class XLMTVImportSources(Screen):
 
 	def save(self):
 		sources = [ item[0][1] for item in self["list"].list if item[0][3] ]
-		print>>log, "[XLMTVImport] Selected sources:", sources
+		print>>log, "[XMLTVImport] Selected sources:", sources
 		config_string = ""
 		for source in sources:
 			if len(config_string) > 0:
@@ -319,7 +319,7 @@ class XLMTVImportSources(Screen):
 	def doimport(self):
 		pass
 
-class XLMTVImportLog(Screen):
+class XMLTVImportLog(Screen):
 	skin = """
 		<screen position="center,center" size="560,400" >
 			<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
@@ -447,7 +447,7 @@ class AutoStartTimer:
 			self.timer.startLongTimer(next)
 		else:
 			wake = -1
-		print>>log, "[XLMTVImport] WakeUpTime now set to", wake, "(now=%s)" % now
+		print>>log, "[XMLTVImport] WakeUpTime now set to", wake, "(now=%s)" % now
 		return wake
 
 	def runImport(self):
@@ -462,7 +462,7 @@ class AutoStartTimer:
 	def onTimer(self):
 		self.timer.stop()
 		now = int(time.time())
-		print>>log, "[XLMTVImport] onTimer occured at", now
+		print>>log, "[XMLTVImport] onTimer occured at", now
 		wake = self.getWakeTime()
 		# If we're close enough, we're okay...
 		atLeast = 0
@@ -473,21 +473,21 @@ class AutoStartTimer:
 
 def onBootStartCheck():
 	global autoStartTimer
-	print>>log, "[XLMTVImport] onBootStartCheck"
+	print>>log, "[XMLTVImport] onBootStartCheck"
 	now = int(time.time())
 	wake = autoStartTimer.update()
-	print>>log, "[XLMTVImport] now=%d wake=%d wake-now=%d" % (now, wake, wake-now)
+	print>>log, "[XMLTVImport] now=%d wake=%d wake-now=%d" % (now, wake, wake-now)
 	if (wake < 0) or (wake - now > 600):
-		print>>log, "[XLMTVImport] starting import because auto-run on boot is enabled"
+		print>>log, "[XMLTVImport] starting import because auto-run on boot is enabled"
 		autoStartTimer.runImport()
 	else:
-		print>>log, "[XLMTVImport] import to start in less than 10 minutes anyway, skipping..."
+		print>>log, "[XMLTVImport] import to start in less than 10 minutes anyway, skipping..."
 
 def autostart(reason, session=None, **kwargs):
 	"called with reason=1 to during shutdown, with reason=0 at startup?"
 	global autoStartTimer
 	global _session
-	print>>log, "[XLMTVImport] autostart (%s) occured at" % reason, time.time()
+	print>>log, "[XMLTVImport] autostart (%s) occured at" % reason, time.time()
 	if reason == 0:
 		if session is not None:
 			_session = session
@@ -498,7 +498,7 @@ def autostart(reason, session=None, **kwargs):
 				onBootStartCheck()
 		# If WE caused the reboot, put the box back in standby.
 		if os.path.exists("/tmp/enigmastandby"):
-			print>>log, "[XLMTVImport] Returning to standby"
+			print>>log, "[XMLTVImport] Returning to standby"
 			from Tools import Notifications
 			Notifications.AddNotification(Screens.Standby.Standby)
 			try:
@@ -508,11 +508,11 @@ def autostart(reason, session=None, **kwargs):
 		else:
 			if config.plugins.epgimport.deepstandby.value == 'wakeup':
 				if config.plugins.epgimport.wakeupsleep.value:
-					print>>log, "[XLMTVImport] Returning to standby"
+					print>>log, "[XMLTVImport] Returning to standby"
 					from Tools import Notifications
 					Notifications.AddNotification(Screens.Standby.Standby)
 	else:
-		print>>log, "[XLMTVImport] Stop"
+		print>>log, "[XMLTVImport] Stop"
 		#if autoStartTimer:
 		#	autoStartTimer.stop()        
 
@@ -520,7 +520,7 @@ def getNextWakeup():
 	"returns timestamp of next time when autostart should be called"
 	if autoStartTimer:
 		if config.plugins.epgimport.deepstandby.value == 'wakeup':
-			print>>log, "[XLMTVImport] Will wake up from deep sleep"
+			print>>log, "[XMLTVImport] Will wake up from deep sleep"
 			return autoStartTimer.update()
 	return -1
 
@@ -535,7 +535,7 @@ def housekeepingExtensionsmenu(el):
 		else:
 			Components.PluginComponent.plugins.removePlugin(extDescriptor)
 	except Exception, e:
-		print "[XLMTVImport] Failed to update extensions menu:", e
+		print "[XMLTVImport] Failed to update extensions menu:", e
 
 description = _("Automated XMLTV Importer")
 config.plugins.epgimport.showinextensions.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = False)

@@ -65,7 +65,7 @@ class OudeisImporter:
 		for service in services:
 			self.epgcache.importEvent(service, events)
 
-class XLMTVImport:
+class XMLTVImport:
 	"""Simple Class to import EPGData"""
 
 	def __init__(self, epgcache, channelFilter):
@@ -88,7 +88,7 @@ class XLMTVImport:
 		elif hasattr(self.epgcache, 'importEvent'):
 			self.storage = OudeisImporter(self.epgcache)
 		else:
-			print "[XLMTVImport] oudeis patch not detected, using epg.dat instead."
+			print "[XMLTVImport] oudeis patch not detected, using epg.dat instead."
 			import epgdat_importer
 			self.storage = epgdat_importer.epgdatclass()
 		self.eventCount = 0
@@ -105,7 +105,7 @@ class XLMTVImport:
 			self.closeImport()
 			return
 		self.source = self.sources.pop()
-		print>>log, "[XLMTVImport] nextImport, source=", self.source.description
+		print>>log, "[XMLTVImport] nextImport, source=", self.source.description
 		filename = self.source.url
 		if filename.startswith('http:') or filename.startswith('ftp:'):
 			self.do_download(filename)
@@ -118,7 +118,7 @@ class XLMTVImport:
 
 	def readEpgDatFile(self, filename, deleteFile=False):
 		if not hasattr(self.epgcache, 'load'):
-			print>>log, "[XLMTVImport] Cannot load EPG.DAT files on unpatched enigma. Need CrossEPG patch."
+			print>>log, "[XMLTVImport] Cannot load EPG.DAT files on unpatched enigma. Need CrossEPG patch."
 			return
 		try:
 			os.unlink(HDD_EPG_DAT)
@@ -126,7 +126,7 @@ class XLMTVImport:
 			pass # ignore...
 		try:
 			if filename.endswith('.gz'):
-				print>>log, "[XLMTVImport] Uncompressing", filename
+				print>>log, "[XMLTVImport] Uncompressing", filename
 				import shutil
 				fd = gzip.open(filename, 'rb')
 				epgdat = open(HDD_EPG_DAT, 'wb')
@@ -137,7 +137,7 @@ class XLMTVImport:
 			else:
 				if filename != HDD_EPG_DAT:
 					os.symlink(filename, HDD_EPG_DAT)
-			print>>log, "[XLMTVImport] Importing", HDD_EPG_DAT
+			print>>log, "[XMLTVImport] Importing", HDD_EPG_DAT
 			self.epgcache.load()
 			if deleteFile:
 				try:
@@ -145,16 +145,16 @@ class XLMTVImport:
 				except:
 					pass # ignore...
 		except Exception, e:
-		    print>>log, "[XLMTVImport] Failed to import %s:" % filename, e
+		    print>>log, "[XMLTVImport] Failed to import %s:" % filename, e
 
 	def MemCheck1(self, result, filename, deleteFile=False):
 		self.swapdevice = ""
 		self.Console = Console()
 		self.swapdevice = os.path.split(filename)
 		self.swapdevice = self.swapdevice[0]
-		print>>log, "[XLMTVImport] SwapFile location",self.swapdevice
+		print>>log, "[XMLTVImport] SwapFile location",self.swapdevice
 		if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
-			print>>log, "[XLMTVImport] Removing old swapfile."
+			print>>log, "[XMLTVImport] Removing old swapfile."
 			self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
 		f = open('/proc/meminfo', 'r')
 		for line in f.readlines():
@@ -166,16 +166,16 @@ class XLMTVImport:
 				swapfree = int(parts[1])
 		f.close()
 		TotalFree = memfree + swapfree
-		print>>log, "[XLMTVImport] Free Mem",TotalFree
+		print>>log, "[XMLTVImport] Free Mem",TotalFree
 		if int(TotalFree) < 5000:
-			print>>log, "[XLMTVImport] Not Enough Ram"
+			print>>log, "[XMLTVImport] Not Enough Ram"
 			self.MemCheck2(filename, deleteFile)
 		else:
-			print>>log, "[XLMTVImport] Found Enough Ram"
+			print>>log, "[XMLTVImport] Found Enough Ram"
 			self.afterDownload(None, filename, deleteFile)
 
 	def MemCheck2(self, filename, deleteFile):
-		print>>log, "[XLMTVImport] Creating Swapfile."
+		print>>log, "[XMLTVImport] Creating Swapfile."
 		self.Console.ePopen("dd if=/dev/zero of=" + self.swapdevice + "/swapfile_xmltv bs=1024 count=16440", self.MemCheck3, [filename, deleteFile])
 
 	def MemCheck3(self, result, retval, extra_args = None):
@@ -194,10 +194,10 @@ class XLMTVImport:
 
 	def afterDownload(self, result, filename, deleteFile=False):
 		if os.path.getsize(filename) > 0:
-			print>>log, "[XLMTVImport] afterDownload", filename
+			print>>log, "[XMLTVImport] afterDownload", filename
 			if self.source.parser == 'epg.dat':
 				if twisted.python.runtime.platform.supportsThreads():
-					print>>log, "[XLMTVImport] Using twisted thread for DAT file"
+					print>>log, "[XMLTVImport] Using twisted thread for DAT file"
 					threads.deferToThread(self.readEpgDatFile, filename, deleteFile).addCallback(lambda ignore: self.nextImport())
 				else:
 					self.readEpgDatFile(filename, deleteFile)
@@ -207,17 +207,17 @@ class XLMTVImport:
 			else:
 				self.fd = open(filename, 'rb')
 			if twisted.python.runtime.platform.supportsThreads():
-				print>>log, "[XLMTVImport] Using twisted thread!"
+				print>>log, "[XMLTVImport] Using twisted thread!"
 				threads.deferToThread(self.doThreadRead).addCallback(lambda ignore: self.nextImport())
 			else:
 				self.iterator = self.createIterator()
 				reactor.addReader(self)
 			if deleteFile:
 				try:
-					print>>log, "[XLMTVImport] unlink", filename
+					print>>log, "[XMLTVImport] unlink", filename
 					os.unlink(filename)
 				except Exception, e:
-					print>>log, "[XLMTVImport] warning: Could not remove '%s' intermediate" % filename, e
+					print>>log, "[XMLTVImport] warning: Could not remove '%s' intermediate" % filename, e
 		else:
 			failure = "File downloaded was zero bytes."
 			self.downloadFail(failure)
@@ -238,8 +238,8 @@ class XLMTVImport:
 						d = d[:4] + ('',) + d[5:]
 					self.storage.importEvents(r, (d,))
 				except Exception, e:
-					print>>log, "[XLMTVImport] ### importEvents exception:", e
-		print>>log, "[XLMTVImport] ### thread is ready ### Events:", self.eventCount
+					print>>log, "[XMLTVImport] ### importEvents exception:", e
+		print>>log, "[XMLTVImport] ### thread is ready ### Events:", self.eventCount
 
 	def doRead(self):
 		'called from reactor to read some data'
@@ -255,21 +255,21 @@ class XLMTVImport:
 						d = d[:4] + ('',) + d[5:]
 					self.storage.importEvents(r, (d,))
 				except Exception, e:
-					print>>log, "[XLMTVImport] importEvents exception:", e
+					print>>log, "[XMLTVImport] importEvents exception:", e
 		except StopIteration:
 			self.nextImport()
 
 	def connectionLost(self, failure):
 		'called from reactor on lost connection'
 		# This happens because enigma calls us after removeReader
-		print>>log, "[XLMTVImport] connectionLost", failure
+		print>>log, "[XMLTVImport] connectionLost", failure
 
 	def downloadFail(self, failure):
-		print>>log, "[XLMTVImport] download failed:", failure
+		print>>log, "[XMLTVImport] download failed:", failure
 		self.nextImport()
 
 	def logPrefix(self):
-		return '[XLMTVImport]'
+		return '[XMLTVImport]'
 
 	def closeReader(self):
 		if self.fd is not None:
@@ -288,15 +288,15 @@ class XLMTVImport:
 			needLoad = None
 		self.storage = None
 		if self.eventCount is not None:
-			print>>log, "[XLMTVImport] imported %d events" % self.eventCount
+			print>>log, "[XMLTVImport] imported %d events" % self.eventCount
 			reboot = False
 			if self.eventCount:
 				if needLoad:
-					print>>log, "[XLMTVImport] no Oudeis patch, load(%s) required" % needLoad
+					print>>log, "[XMLTVImport] no Oudeis patch, load(%s) required" % needLoad
 					reboot = True
 					try:
 						if hasattr(self.epgcache, 'load'):
-							print>>log, "[XLMTVImport] attempt load() patch"
+							print>>log, "[XMLTVImport] attempt load() patch"
 							if needLoad != HDD_EPG_DAT:
 								os.symlink(needLoad, HDD_EPG_DAT)
 							self.epgcache.load()
@@ -306,16 +306,16 @@ class XLMTVImport:
 							except:
 								pass # ignore...
 					except Exception, e:
-						print>>log, "[XLMTVImport] load() failed:", e
+						print>>log, "[XMLTVImport] load() failed:", e
 			if self.onDone:
 				self.onDone(reboot=reboot, epgfile=needLoad)
 		self.eventCount = None
-		print>>log, "[XLMTVImport] #### Finished ####"
+		print>>log, "[XMLTVImport] #### Finished ####"
 		import glob
 		for filename in glob.glob('/tmp/*.xml'):
 			os.remove(filename)
 		if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
-			print>>log, "[XLMTVImport] Removing Swapfile."
+			print>>log, "[XMLTVImport] Removing Swapfile."
 			self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
 
 	def isImportRunning(self):
@@ -327,6 +327,6 @@ class XLMTVImport:
 		if sourcefile.endswith('.gz'):
 			filename += '.gz'
 		sourcefile = sourcefile.encode('utf-8')
-		print>>log, "[XLMTVImport] Downloading: " + sourcefile + " to local path: " + filename
+		print>>log, "[XMLTVImport] Downloading: " + sourcefile + " to local path: " + filename
 		downloadPage(sourcefile, filename).addCallbacks(self.MemCheck1, self.downloadFail, callbackArgs=(filename,True))
 		return filename

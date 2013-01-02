@@ -57,7 +57,7 @@ class EPGChannel:
 		return fd
 
 	def parse(self, filterCallback):
-		print>>log,"[XLMTVImport] Parsing channels from '%s'" % self.filename
+		print>>log,"[XMLTVImport] Parsing channels from '%s'" % self.filename
 		self.items = {}
 		file = self.openStream()
 		for event, elem in iterparse(file):
@@ -88,7 +88,7 @@ class EPGChannel:
 					self.mtime = now
 					self.parse(filterCallback)
 		except Exception, e:
-			print>>log, "[XLMTVImport] Failed to parse channels from '%s':" % self.filename, e
+			print>>log, "[XMLTVImport] Failed to parse channels from '%s':" % self.filename, e
 
 	def __repr__(self):
 		return "EPGChannel(file=%s, channels=%s, mtime=%s)" % (self.filename, self.items and len(self.items), self.mtime) 
@@ -119,12 +119,12 @@ def enumSources(path, filter=None):
 		for sourcefile in os.listdir(path):
 			if sourcefile.endswith('.sources.xml') and not sourcefile.startswith('rytec'):
 				sourcefile = os.path.join(path, sourcefile)	
-				print>>log, "[XLMTVImport] using source",sourcefile
+				print>>log, "[XMLTVImport] using source",sourcefile
 				try: 
 					for s in enumSourcesFile(sourcefile, filter):
 						yield s
 				except Exception, e:
-					print>>log, "[XLMTVImport] failed to open", sourcefile, "Error:", e
+					print>>log, "[XMLTVImport] failed to open", sourcefile, "Error:", e
 		if fileExists(os.path.join(path, 'sourcelist')):
 			import random
 			count = 0
@@ -136,16 +136,16 @@ def enumSources(path, filter=None):
 				try: 
 					sourcefile = random.choice(sourcelist)
 					sourcefile = sourcefile.replace("\n","")
-					print>>log, "[XLMTVImport] using source",sourcefile
+					print>>log, "[XMLTVImport] using source",sourcefile
 					sourcefile,headers = urllib.urlretrieve(sourcefile)
 					for s in enumSourcesFile(sourcefile, filter):
 						yield s
 					count = noofsources + 1
 				except Exception, e:
-					print>>log, "[XLMTVImport] source is unavailble"
+					print>>log, "[XMLTVImport] source is unavailble"
 					sourcelist = [l for l in sourcelist if sourcefile not in l]
 					count = count + 1
 					if count == 3:
-						print>>log, "[XLMTVImport] all online sources are unavailble."
+						print>>log, "[XMLTVImport] all online sources are unavailble."
 	except Exception, e:
-		print>>log, "[XLMTVImport] failed to list", path, "Error:", e
+		print>>log, "[XMLTVImport] failed to list", path, "Error:", e
