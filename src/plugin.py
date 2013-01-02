@@ -102,7 +102,7 @@ class EPGMainSetup(ConfigListScreen,Screen):
 	def __init__(self, session, args = 0):
 		self.session = session
 		Screen.__init__(self, session)
-		self.setup_title = _("EPG Import Configuration")
+		self.setup_title = _("XMLTV Import Configuration")
 		Screen.setTitle(self, self.setup_title)
 		cfg = config.plugins.epgimport
 		self.list = [
@@ -264,7 +264,7 @@ class XLMTVImportSources(Screen):
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
-		self.setup_title = _("EPG Import Sources")
+		self.setup_title = _("XMLTV Import Sources")
 		Screen.setTitle(self, self.setup_title)
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("Ok"))
@@ -342,7 +342,7 @@ class XLMTVImportLog(Screen):
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
-		Screen.setTitle(self, _("EPG Import Log"))
+		Screen.setTitle(self, _("XMLTV Import Log"))
 		self["key_red"] = Button(_("Clear"))
 		self["key_green"] = Button()
 		self["key_yellow"] = Button()
@@ -395,7 +395,7 @@ def doneImport(reboot=False, epgfile=None):
 	global _session, lastImportResult
 	lastImportResult = (time.time(), epgimport.eventCount)
 	if reboot:
-		msg = _("EPG Import finished, %d events") % epgimport.eventCount + "\n" + _("You must restart Enigma2 to load the EPG data,\nis this OK?")
+		msg = _("XMLTV Import finished, %d events") % epgimport.eventCount + "\n" + _("You must restart Enigma2 to load the EPG data,\nis this OK?")
 		_session.openWithCallback(restartEnigma, MessageBox, msg, MessageBox.TYPE_YESNO, timeout = 15, default = True)
 
       
@@ -537,7 +537,7 @@ def housekeepingExtensionsmenu(el):
 	except Exception, e:
 		print "[XLMTVImport] Failed to update extensions menu:", e
 
-description = _("Automated EPG Importer")
+description = _("Automated XMLTV Importer")
 config.plugins.epgimport.showinextensions.addNotifier(housekeepingExtensionsmenu, initial_call = False, immediate_feedback = False)
 extDescriptor = PluginDescriptor(name=_("XMLTV-Importer"), description = description, where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = extensionsmenu)
 pluginlist = PluginDescriptor(name=_("XMLTV-Importer"), description = description, where = PluginDescriptor.WHERE_PLUGINMENU, icon = 'plugin.png', fnc = main)

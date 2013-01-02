@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/plugin.py:533
-msgid "Automated EPG Importer"
-msgstr "Automated EPG Importer"
+msgid "Automated XMLTV Importer"
+msgstr "Automated XMLTV Importer"
 
 #: ../src/plugin.py:109
 msgid "Automatic start time"
@@ -38,21 +38,21 @@ msgid "Daily automatic import"
 msgstr "Daily automatic import"
 
 #: ../src/plugin.py:104
-msgid "EPG Import Configuration"
-msgstr "EPG Import Configuration"
+msgid "XMLTV Import Configuration"
+msgstr "XMLTV Import Configuration"
 
 #: ../src/plugin.py:338
-msgid "EPG Import Log"
-msgstr "EPG Import Log"
+msgid "XMLTV Import Log"
+msgstr "XMLTV Import Log"
 
 #: ../src/plugin.py:266
-msgid "EPG Import Sources"
-msgstr "EPG Import Sources"
+msgid "XMLTV Import Sources"
+msgstr "XMLTV Import Sources"
 
 #: ../src/plugin.py:391
 #, python-format
-msgid "EPG Import finished, %d events"
-msgstr "EPG Import finished, %d events"
+msgid "XMLTV Import finished, %d events"
+msgstr "XMLTV Import finished, %d events"
 
 #: ../src/plugin.py:224
 msgid ""

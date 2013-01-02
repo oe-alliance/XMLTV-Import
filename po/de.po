@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Automated EPG Importer"
+msgid "Automated XMLTV Importer"
 msgstr ""
 
 msgid "Automatic start time"
@@ -32,17 +32,17 @@ msgstr ""
 msgid "Daily automatic import"
 msgstr ""
 
-msgid "EPG Import Configuration"
+msgid "XMLTV Import Configuration"
 msgstr ""
 
-msgid "EPG Import Log"
+msgid "XMLTV Import Log"
 msgstr ""
 
-msgid "EPG Import Sources"
+msgid "XMLTV Import Sources"
 msgstr ""
 
 #, python-format
-msgid "EPG Import finished, %d events"
+msgid "XMLTV Import finished, %d events"
 msgstr ""
 
 msgid ""
