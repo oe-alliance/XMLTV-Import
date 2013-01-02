@@ -9,10 +9,10 @@
 import os
 import sys
 import time
-import EPGConfig
-import EPGImport
+import XMLTVConfig
+import XLMTVImport
 
-EPGImport.HDD_EPG_DAT = "./epg.dat.new" 
+XLMTVImport.HDD_EPG_DAT = "./epg.dat.new" 
 
 # Emulate an Enigma that has no patch whatsoever.
 class FakeEnigma:
@@ -42,23 +42,23 @@ def importFrom(epgimport, sourceXml):
 			def stop(self):
 				print "reactor stopped"
 				pass
-		EPGImport.reactor = FakeReactor()
-	sources = [ s for s in EPGConfig.enumSourcesFile(sourceXml, filter = None) ]
+		XLMTVImport.reactor = FakeReactor()
+	sources = [ s for s in XMLTVConfig.enumSourcesFile(sourceXml, filter = None) ]
 	sources.reverse()
 	epgimport.sources = sources
 	epgimport.onDone = done
 	epgimport.beginImport(longDescUntil = time.time() + (5*24*3600))
-	EPGImport.reactor.run()
+	XLMTVImport.reactor.run()
 
 #----------------------------------------------
 def done(reboot=False, epgfile=None):
-	EPGImport.reactor.stop()
+	XLMTVImport.reactor.stop()
 	print "Done, data is in", epgfile
-	### When code arrives here, EPG data is stored in filename EPGImport.HDD_EPG_DAT
+	### When code arrives here, EPG data is stored in filename XLMTVImport.HDD_EPG_DAT
 	### So to copy it to FTP or whatever, this is the place to add that code. 
 
 if len(sys.argv) <= 1:
 	print "Usage: %s source.xml [...]" % sys.argv[0]
-epgimport = EPGImport.EPGImport(FakeEnigma(), lambda x: True)
+epgimport = XLMTVImport.XLMTVImport(FakeEnigma(), lambda x: True)
 for xml in sys.argv[1:]:
 	importFrom(epgimport, xml)

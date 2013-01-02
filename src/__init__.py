@@ -3,8 +3,8 @@ from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
 import os, gettext
 
-PluginLanguageDomain = "EPGImport"
-PluginLanguagePath = "Extensions/EPGImport/po"
+PluginLanguageDomain = "XLMTVImport"
+PluginLanguagePath = "Extensions/XLMTVImport/locale"
 
 def localeInit():
 	gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))

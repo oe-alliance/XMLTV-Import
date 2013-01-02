@@ -46,7 +46,7 @@ class epgdatclass:
 			self.commitService()
 			self.epg.final_process()
 		except:
-			print "[EPGImport] Failure in epg_done"
+			print "[XLMTVImport] Failure in epg_done"
 			import traceback
 			traceback.print_exc()
 		self.epg = None
