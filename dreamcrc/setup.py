@@ -10,5 +10,5 @@ setup (name = 'enigma2-plugin-extensions-xmltvimport',
        description = 'C implementation of Dream CRC32 algorithm',
 #        packages = ['XMLTVImport'],
 # 	package_data = {'XMLTVImport': ['XMLTVImport/*.png']},
-#	data_files = [('etc/epgimport', ['*.xml'])],
+#	data_files = [('etc/xmltvimport', ['*.xml'])],
        ext_modules = [dreamcrc])

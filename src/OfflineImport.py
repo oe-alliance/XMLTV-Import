@@ -23,7 +23,7 @@ class FakeEnigma:
 #	def importEvents(self, *args):
 #		print args
 
-def importFrom(epgimport, sourceXml):
+def importFrom(xmltvimport, sourceXml):
 	# Hack to make this test run on Windows (where the reactor cannot handle files)
 	if sys.platform.startswith('win'):
 		import twisted.python.runtime
@@ -45,9 +45,9 @@ def importFrom(epgimport, sourceXml):
 		XMLTVImport.reactor = FakeReactor()
 	sources = [ s for s in XMLTVConfig.enumSourcesFile(sourceXml, filter = None) ]
 	sources.reverse()
-	epgimport.sources = sources
-	epgimport.onDone = done
-	epgimport.beginImport(longDescUntil = time.time() + (5*24*3600))
+	xmltvimport.sources = sources
+	xmltvimport.onDone = done
+	xmltvimport.beginImport(longDescUntil = time.time() + (5*24*3600))
 	XMLTVImport.reactor.run()
 
 #----------------------------------------------
@@ -59,6 +59,6 @@ def done(reboot=False, epgfile=None):
 
 if len(sys.argv) <= 1:
 	print "Usage: %s source.xml [...]" % sys.argv[0]
-epgimport = XMLTVImport.XMLTVImport(FakeEnigma(), lambda x: True)
+xmltvimport = XMLTVImport.XMLTVImport(FakeEnigma(), lambda x: True)
 for xml in sys.argv[1:]:
-	importFrom(epgimport, xml)
+	importFrom(xmltvimport, xml)

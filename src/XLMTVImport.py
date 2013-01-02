@@ -323,7 +323,7 @@ class XMLTVImport:
 
 	def do_download(self,sourcefile):
 		path = bigStorage(9000000, '/tmp', '/media/hdd', '/media/usb', '/media/cf')
-		filename = os.path.join(path, 'epgimport')
+		filename = os.path.join(path, 'xmltvimport')
 		if sourcefile.endswith('.gz'):
 			filename += '.gz'
 		sourcefile = sourcefile.encode('utf-8')
