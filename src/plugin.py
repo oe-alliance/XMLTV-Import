@@ -30,7 +30,7 @@ config.plugins.xmltvimport = ConfigSubsection()
 config.plugins.xmltvimport.enabled = ConfigEnableDisable(default = False)
 config.plugins.xmltvimport.runboot = ConfigEnableDisable(default = False)
 config.plugins.xmltvimport.wakeupsleep = ConfigEnableDisable(default = False)
-config.plugins.xmltvimport.wakeup = ConfigClock(default = ((4*60) + 45) * 60) # 4:45
+config.plugins.xmltvimport.wakeup = ConfigClock(default = 7*60 * 60) # 7:00
 config.plugins.xmltvimport.showinplugins = ConfigYesNo(default = False)
 config.plugins.xmltvimport.showinextensions = ConfigYesNo(default = False)
 config.plugins.xmltvimport.deepstandby = ConfigSelection(default = "skip", choices = [
