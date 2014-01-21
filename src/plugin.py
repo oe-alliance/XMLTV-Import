@@ -25,6 +25,8 @@ import NavigationInstance
 from Components.PluginComponent import plugins
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
+from boxbranding import getImageDistro
+
 #Set default configuration
 config.plugins.xmltvimport = ConfigSubsection()
 config.plugins.xmltvimport.enabled = ConfigEnableDisable(default = False)
@@ -544,10 +546,16 @@ pluginlist = PluginDescriptor(name=_("XMLTV-Importer"), description = descriptio
 
 
 def epgmenu(menuid, **kwargs):
-	if menuid == "epg":
-		return [(_("XMLTV-Importer"), main, "xmltvimporter", 1002)]
+	if getImageDistro() in ("openvix", "ventonsupport", "egami"):
+		if menuid == "epg":
+			return [(_("XMLTV-Importer"), main, "xmltvimporter", 1002)]
+		else:
+			return []
 	else:
-		return []
+		if menuid == "setup":
+			return [(_("XMLTV-Importer"), main, "xmltvimporter", 1002)]
+		else:
+			return []
 
 def Plugins(**kwargs):
 	result = [
