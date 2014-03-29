@@ -12,6 +12,12 @@ import twisted.python.runtime
 
 import time, os, gzip, log
 
+try:
+	from Components.SwapCheck import SwapCheck
+	swapcheckimport = True
+except:
+	swapcheckimport = False
+	
 HDD_EPG_DAT = config.misc.epgcache_filename.value
 
 PARSERS = {
@@ -110,7 +116,10 @@ class XMLTVImport:
 		if filename.startswith('http:') or filename.startswith('ftp:'):
 			self.do_download(filename)
 		else:
-			self.MemCheck1(None, filename, deleteFile=False)
+			if swapcheckimport:
+				self.MemCheck(None, filename, False)
+			else:
+				self.MemCheck1(None, filename, deleteFile=False)
 
 	def createIterator(self):
 		self.source.channels.update(self.channelFilter)
@@ -146,6 +155,13 @@ class XMLTVImport:
 					pass # ignore...
 		except Exception, e:
 		    print>>log, "[XMLTVImport] Failed to import %s:" % filename, e
+
+	def MemCheck(self, result, filename, deleteFile):
+		SwapCheck(self.MemCheckCallback, [result, filename, deleteFile])
+
+	def MemCheckCallback(self, callbackArgs):
+		(result, filename, deleteFile) = callbackArgs
+		self.afterDownload(result, filename, deleteFile)
 
 	def MemCheck1(self, result, filename, deleteFile=False):
 		self.swapdevice = ""
@@ -314,9 +330,12 @@ class XMLTVImport:
 		import glob
 		for filename in glob.glob('/tmp/*.xml'):
 			os.remove(filename)
-		if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
-			print>>log, "[XMLTVImport] Removing Swapfile."
-			self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
+		if swapcheckimport:
+			SwapCheck().RemoveSwap()
+		else:
+			if os.path.exists(self.swapdevice + "/swapfile_xmltv"):
+				print>>log, "[XMLTVImport] Removing Swapfile."
+				self.Console.ePopen("swapoff " + self.swapdevice + "/swapfile_xmltv && rm " + self.swapdevice + "/swapfile_xmltv")
 
 	def isImportRunning(self):
 		return self.source is not None
@@ -328,5 +347,8 @@ class XMLTVImport:
 			filename += '.gz'
 		sourcefile = sourcefile.encode('utf-8')
 		print>>log, "[XMLTVImport] Downloading: " + sourcefile + " to local path: " + filename
-		downloadPage(sourcefile, filename).addCallbacks(self.MemCheck1, self.downloadFail, callbackArgs=(filename,True))
+		if swapcheckimport:
+			downloadPage(sourcefile, filename).addCallbacks(self.MemCheck, self.downloadFail, callbackArgs=(filename,True))
+		else:
+			downloadPage(sourcefile, filename).addCallbacks(self.MemCheck1, self.downloadFail, callbackArgs=(filename,True))
 		return filename
