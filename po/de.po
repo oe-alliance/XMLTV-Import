@@ -7,53 +7,105 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-27 19:08+0100\n"
-"PO-Revision-Date: 2011-09-04 16:14+0100\n"
-"Last-Translator: Automatically generated\n"
+"POT-Creation-Date: 2014-09-10 22:00+0200\n"
+"PO-Revision-Date: 2014-09-18 12:43+0100\n"
+"Last-Translator: edcrane\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.9\n"
 
 msgid "Automated XMLTV Importer"
-msgstr ""
+msgstr "Automatisierter XMLTV Importer"
 
 msgid "Automatic start time"
-msgstr ""
+msgstr "Automatische Startzeit"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 msgid "Clear"
-msgstr ""
+msgstr "Löschen"
 
 msgid "Daily automatic import"
-msgstr ""
+msgstr "Täglicher automatischer Import"
+
+msgid "Importing:"
+msgstr "Importieren:"
+
+msgid "Last: %s %s, %d events"
+msgstr "Letzte: %s %s, %d Ereignisse"
+
+msgid "Load long descriptions up to X days"
+msgstr "Lade lange Beschreibungen bis zu X Tage"
+
+msgid "Manual"
+msgstr "Manuell"
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "Keine aktiven EPG Quellen gefunden, nichts zu tun"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Save"
+msgstr "Sichern"
+
+msgid "Show in extensions"
+msgstr "In Erweiterungen anzeigen"
+
+msgid "Show in plugin browser"
+msgstr "Im Plugin-Browser anzeigen"
+
+msgid "Skip the import"
+msgstr "Import überspringen"
+
+msgid "Sources"
+msgstr "Quellen"
+
+msgid "Standby at startup"
+msgstr "Standby beim Start"
+
+msgid "Start import after booting up"
+msgstr "Nach dem Booten, Import starten"
+
+msgid "Wake up and import"
+msgstr "Anschalten und importieren"
+
+msgid "When in deep standby"
+msgstr "Wenn Ausgeschaltet"
 
 msgid "XMLTV Import Configuration"
-msgstr ""
+msgstr "XMLTV Import Konfiguration"
 
 msgid "XMLTV Import Log"
-msgstr ""
+msgstr "XMLTV Import Log"
 
 msgid "XMLTV Import Sources"
-msgstr ""
+msgstr "XMLTV Import Quellen"
 
-#, python-format
 msgid "XMLTV Import finished, %d events"
-msgstr ""
+msgstr "XMLTV Import abgeschlossen, %d Ereignisse"
+
+msgid "XMLTV-Importer"
+msgstr "XMLTV-Importer"
 
 msgid ""
 "XMLTVImport Plugin\n"
 "Failed to start:\n"
 msgstr ""
+"XMLTVImport Plugin\n"
+"Nicht gestartet:\n"
 
 msgid ""
 "XMLTVImport Plugin\n"
 "Import of epg data is still in progress. Please wait."
 msgstr ""
+"XMLTVImport Plugin\n"
+"Import von EPG-Daten ist noch im Gange. Bitte warten."
 
 msgid ""
 "XMLTVImport Plugin\n"
@@ -61,57 +113,14 @@ msgid ""
 "This may take a few minutes\n"
 "Is this ok?"
 msgstr ""
-
-msgid "Importing:"
-msgstr ""
-
-#, python-format
-msgid "Last: %s %s, %d events"
-msgstr ""
-
-msgid "Load long descriptions up to X days"
-msgstr ""
-
-msgid "Manual"
-msgstr ""
-
-msgid "No active EPG sources found, nothing to do"
-msgstr ""
-
-msgid "Ok"
-msgstr ""
-
-msgid "Save"
-msgstr ""
-
-msgid "Show in extensions"
-msgstr ""
-
-msgid "Show in plugin browser"
-msgstr ""
-
-msgid "Skip the import"
-msgstr ""
-
-msgid "Sources"
-msgstr ""
-
-msgid "Standby at startup"
-msgstr ""
-
-msgid "Start import after booting up"
-msgstr ""
-
-msgid "Wake up and import"
-msgstr ""
-
-msgid "When in deep standby"
-msgstr ""
-
-msgid "XMLTV-Importer"
-msgstr ""
+"XMLTVImport Plugin\n"
+"Import von EPG-Daten wird beginnen\n"
+"Dies kann ein paar Minuten dauern\n"
+"Ist das ok?"
 
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
 msgstr ""
+"Sie müssen Enigma2 neu starten, um die EPG-Daten zu laden\n"
+"Ist das ok?"
