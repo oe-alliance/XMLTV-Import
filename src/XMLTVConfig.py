@@ -118,19 +118,25 @@ def enumSources(path, filter=None):
 	try:
 		for sourcefile in os.listdir(path):
 			if sourcefile.endswith('.sources.xml') and not sourcefile.startswith('rytec'):
-				sourcefile = os.path.join(path, sourcefile)	
+				sourcefile = os.path.join(path, sourcefile)
 				print>>log, "[XMLTVImport] using source",sourcefile
 				try: 
 					for s in enumSourcesFile(sourcefile, filter):
 						yield s
 				except Exception, e:
 					print>>log, "[XMLTVImport] failed to open", sourcefile, "Error:", e
-		if fileExists(os.path.join(path, 'sourcelist')):
-			import random
-			count = 0
-			f = open(os.path.join(path, 'sourcelist'))
-			sourcelist = f.readlines()
-			f.close()
+		try:
+			print "downloading source list from EPGalfasite"
+			filename,headers = urllib.urlretrieve('http://home.scarlet.be/epgalfasite/crossepgsources.gz')
+			fd = open(filename, 'rb')
+			sfd = gzip.GzipFile(fileobj = fd, mode = 'rb')
+			os.unlink(filename)
+		except Exception, e:
+			print e
+		import random
+		count = 0
+		if sfd:
+			sourcelist = sfd.readlines()
 			noofsources = int(len(sourcelist))
 			while (count < noofsources):
 				try: 
