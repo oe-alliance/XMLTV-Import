@@ -1,0 +1,128 @@
+# Finnish translations for plugins package.
+# Copyright (C) 2015 THE plugins'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the plugins package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: plugins 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-28 08:11+0000\n"
+"PO-Revision-Date: 2015-03-08 14:07+0200\n"
+"Last-Translator: Samzam <http://www.world-of-satellite.com/>\n"
+"Language-Team: none\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.7\n"
+
+msgid "Automated XMLTV Importer"
+msgstr "Automaattinen XMLTV EPG:n lataus"
+
+msgid "Automatic start time"
+msgstr "Aloitusaika"
+
+msgid "Cancel"
+msgstr "Poistu"
+
+msgid "Clear"
+msgstr "Tyhjennä"
+
+msgid "Daily automatic import"
+msgstr "Päivittäinen lataus"
+
+msgid "Importing:"
+msgstr "Ladataan:"
+
+#, python-format
+msgid "Last: %s %s, %d events"
+msgstr "Ladattu: %s %s, %d tapahtumaa"
+
+msgid "Load long descriptions up to X days"
+msgstr "Lataa ohjelmakuvaukset X päivälle"
+
+msgid "Manual"
+msgstr "Lataa nyt"
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "Ei löytynyt aktiivisia EPG lähteitä"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Save"
+msgstr "Tallenna"
+
+msgid "Show in extensions"
+msgstr "Näytä laajennusvalikossa"
+
+msgid "Show in plugin browser"
+msgstr "Näytä lisäosavalikossa"
+
+msgid "Skip the import"
+msgstr "Ohita lataus"
+
+msgid "Sources"
+msgstr "Lähteet"
+
+msgid "Standby at startup"
+msgstr "Valmiustilassa lataus"
+
+msgid "Start import after booting up"
+msgstr "Lataa uudelleenkäynnistyksen jälkeen"
+
+msgid "Wake up and import"
+msgstr "Herätä ja lataa"
+
+msgid "When in deep standby"
+msgstr "Virransäästötilassa lataus"
+
+msgid "XMLTV Import Configuration"
+msgstr "Asetukset"
+
+msgid "XMLTV Import Log"
+msgstr "Loki"
+
+msgid "XMLTV Import Sources"
+msgstr "Lähteet"
+
+#, python-format
+msgid "XMLTV Import finished, %d events"
+msgstr "Lataus valmis, %d tapahtumaa"
+
+msgid "XMLTV-Importer"
+msgstr "XMLTV EPG:n lataus"
+
+msgid ""
+"XMLTVImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"XMLTV lataus\n"
+"Käynnistys epäonnistui:\n"
+
+msgid ""
+"XMLTVImport Plugin\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"XMLTV lataus\n"
+"EPG tietojen lataus kesken. Odota."
+
+msgid ""
+"XMLTVImport Plugin\n"
+"Import of epg data will start\n"
+"This may take a few minutes\n"
+"Is this ok?"
+msgstr ""
+"XMLTV lataus\n"
+"EPG tietojen lataus alkaa\n"
+"Tämä voi kestää muutaman minuutin\n"
+"OK?"
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"Enigma2 on uudelleenkäynnistettävä,\n"
+"OK?"
