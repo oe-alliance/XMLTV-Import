@@ -546,7 +546,7 @@ pluginlist = PluginDescriptor(name=_("XMLTV-Importer"), description = descriptio
 
 
 def epgmenu(menuid, **kwargs):
-	if getImageDistro() in ("openvix", "ventonsupport", "egami"):
+	if getImageDistro() in ("openvix", "ventonsupport", "egami", "openatv"):
 		if menuid == "epg":
 			return [(_("XMLTV-Importer"), main, "xmltvimporter", 1002)]
 		else:
