@@ -127,7 +127,7 @@ def enumSources(path, filter=None):
 					print>>log, "[XMLTVImport] failed to open", sourcefile, "Error:", e
 		try:
 			print "downloading source list from EPGalfasite"
-			filename,headers = urllib.urlretrieve('http://home.scarlet.be/epgalfasite/crossepgsources.gz')
+			filename,headers = urllib.urlretrieve('http://epgalfasite.dyndns.tv/crossepgsources.gz')
 			fd = open(filename, 'rb')
 			sfd = gzip.GzipFile(fileobj = fd, mode = 'rb')
 			os.unlink(filename)
