@@ -1015,6 +1015,11 @@ def epgmenu(menuid, **kwargs):
 			return [(_("XMLTV-Importer"), main, "xmltvimporter", 1002)]
 		else:
 			return []
+	elif getImageDistro() in ("openmips"):
+		if menuid == "epg_menu":
+			return [(_("XMLTV-Importer"), main, "xmltvimporter", 95)]
+		else:
+			return []
 	else:
 		if menuid == "setup":
 			return [(_("XMLTV-Importer"), main, "xmltvimporter", 1002)]
