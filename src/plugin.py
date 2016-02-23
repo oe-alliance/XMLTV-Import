@@ -1046,7 +1046,7 @@ def Plugins(**kwargs):
 			fnc = main
 		),
 		PluginDescriptor(
-			name=_("XMLTV-importer"),
+			name=_("XMLTV-Importer"),
 			description = description,
 			where = PluginDescriptor.WHERE_MENU,
 			fnc = epgmenu
