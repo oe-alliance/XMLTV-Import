@@ -1010,7 +1010,7 @@ extDescriptor = PluginDescriptor(name= _("XMLTV-Importer"), description = descri
 pluginlist = PluginDescriptor(name=_("XMLTV-Importer"), description = description, where = PluginDescriptor.WHERE_PLUGINMENU, icon = 'plugin.png', fnc = main)
 
 def epgmenu(menuid, **kwargs):
-	if getImageDistro() in ("openvix", "ventonsupport", "egami", "openatv"):
+	if getImageDistro() in ("openvix", "openbh", "ventonsupport", "egami", "openatv"):
 		if menuid == "epg":
 			return [(_("XMLTV-Importer"), main, "xmltvimporter", 1002)]
 		else:
