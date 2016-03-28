@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-28 08:11+0000\n"
-"PO-Revision-Date: 2015-03-08 14:07+0200\n"
-"Last-Translator: Samzam <http://www.world-of-satellite.com/>\n"
+"POT-Creation-Date: 2016-03-19 00:49+0000\n"
+"PO-Revision-Date: 2016-03-27 21:14+0200\n"
+"Last-Translator: Samzam <http://www.world-of-satellite.com>\n"
 "Language-Team: none\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,8 +18,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.7\n"
 
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"EPG-tietojen lataus alkaa.\n"
+"Tämä voi kestää muutaman minuutin.\n"
+"Onko tämä OK?"
+
+msgid " events\n"
+msgstr " tapahtumia\n"
+
 msgid "Automated XMLTV Importer"
 msgstr "Automaattinen XMLTV EPG:n lataus"
+
+msgid "Automatic import EPG"
+msgstr "Automaattinen EPG lataus"
 
 msgid "Automatic start time"
 msgstr "Aloitusaika"
@@ -27,18 +44,48 @@ msgstr "Aloitusaika"
 msgid "Cancel"
 msgstr "Poistu"
 
+msgid "Choice days for start import"
+msgstr "Valitse latauspäivät"
+
 msgid "Clear"
 msgstr "Tyhjennä"
 
-msgid "Daily automatic import"
-msgstr "Päivittäinen lataus"
+msgid "Clearing current EPG before import"
+msgstr "Tyhjennä nykyinen EPG ennen latausta"
 
-msgid "Importing:"
-msgstr "Ladataan:"
+msgid "Consider setting \"Days Profile\""
+msgstr "Harkitse asetusta \"Valitse päivät\""
+
+msgid "Days Profile"
+msgstr "Valitse päivät"
+
+msgid "Friday"
+msgstr "Perjantai"
+
+msgid "Import current source"
+msgstr "Lataa tämä lähde"
+
+#, python-format
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+"Lataa: %s\n"
+"%s events"
+
+msgid "Last import: "
+msgstr "Viimeisin lataus: "
+
+#, python-format
+msgid "Last import: %s events"
+msgstr "Viimeisin lataus: %s tapahtumaa"
 
 #, python-format
 msgid "Last: %s %s, %d events"
 msgstr "Ladattu: %s %s, %d tapahtumaa"
+
+msgid "Load EPG only services in bouquets"
+msgstr "Lataa EPG vain suosikkilistojen kanaville"
 
 msgid "Load long descriptions up to X days"
 msgstr "Lataa ohjelmakuvaukset X päivälle"
@@ -46,23 +93,35 @@ msgstr "Lataa ohjelmakuvaukset X päivälle"
 msgid "Manual"
 msgstr "Lataa nyt"
 
+msgid "Monday"
+msgstr "Maanantai"
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Ei löytynyt aktiivisia EPG lähteitä"
 
-msgid "Ok"
-msgstr "Ok"
+msgid "Press OK"
+msgstr "Paina OK"
+
+msgid "Return to deep standby after import"
+msgstr "Palaa virransäästötilaan latauksen jälkeen"
+
+msgid "Run AutoTimer after import"
+msgstr "Käynnistä automaattiajastusten haku latauksen jälkeen"
+
+msgid "Saturday"
+msgstr "Lauantai"
 
 msgid "Save"
 msgstr "Tallenna"
 
-msgid "Show in extensions"
-msgstr "Näytä laajennusvalikossa"
+msgid "Show \"XMLTV Importer\" in main menu"
+msgstr "Näytä \"XMLTV EPG:n lataus\" päävalikossa"
 
-msgid "Show in plugin browser"
-msgstr "Näytä lisäosavalikossa"
+msgid "Show \"XMLTVImport\" in extensions"
+msgstr "Näytä \"XMLTV EPG:n lataus\" laajennusvalikossa"
 
-msgid "Skip the import"
-msgstr "Ohita lataus"
+msgid "Skip import on restart GUI"
+msgstr "Ohita lataus uudelleenkäynnistyksessä"
 
 msgid "Sources"
 msgstr "Lähteet"
@@ -73,11 +132,23 @@ msgstr "Valmiustilassa lataus"
 msgid "Start import after booting up"
 msgstr "Lataa uudelleenkäynnistyksen jälkeen"
 
-msgid "Wake up and import"
-msgstr "Herätä ja lataa"
+msgid "Sunday"
+msgstr "Sunnuntai"
+
+msgid "Thursday"
+msgstr "Torstai"
+
+msgid "Tuesday"
+msgstr "Tiistai"
+
+msgid "Wednesday"
+msgstr "Keskiviikko"
 
 msgid "When in deep standby"
 msgstr "Virransäästötilassa lataus"
+
+msgid "Write to /tmp/xmltvimport.log"
+msgstr "Kirjoita lokiin /tmp/xmltvimport.log"
 
 msgid "XMLTV Import Configuration"
 msgstr "Asetukset"
@@ -92,37 +163,107 @@ msgstr "Lähteet"
 msgid "XMLTV Import finished, %d events"
 msgstr "Lataus valmis, %d tapahtumaa"
 
+msgid "XMLTV Importer"
+msgstr "XMLTV EPG:n lataus"
+
 msgid "XMLTV-Importer"
 msgstr "XMLTV EPG:n lataus"
+
+msgid ""
+"XMLTVImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"XMLTV EPG:n lataus\n"
+"EPG:n lataus käynnissä. Odota."
+
+msgid ""
+"XMLTVImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"XMLTV EPG:n lataus\n"
+"EPG:n lataus alkaa.\n"
+"Tämä voi kestää muutaman minuutin.\n"
+"Onko tämä OK?"
 
 msgid ""
 "XMLTVImport Plugin\n"
 "Failed to start:\n"
 msgstr ""
 "XMLTV lataus\n"
-"Käynnistys epäonnistui:\n"
+" Käynnistys epäonnistui:\n"
 
 msgid ""
-"XMLTVImport Plugin\n"
-"Import of epg data is still in progress. Please wait."
+"You may not use this settings!\n"
+"At least one day a week should be included!"
 msgstr ""
-"XMLTV lataus\n"
-"EPG tietojen lataus kesken. Odota."
-
-msgid ""
-"XMLTVImport Plugin\n"
-"Import of epg data will start\n"
-"This may take a few minutes\n"
-"Is this ok?"
-msgstr ""
-"XMLTV lataus\n"
-"EPG tietojen lataus alkaa\n"
-"Tämä voi kestää muutaman minuutin\n"
-"OK?"
+"Et voi käyttää tätä asetusta!\n"
+"Vähintään yksi päivä pitää valita!"
 
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
 msgstr ""
 "Enigma2 on uudelleenkäynnistettävä,\n"
-"OK?"
+" OK?"
+
+msgid "always"
+msgstr "aina"
+
+msgid "never"
+msgstr "ei koskaan"
+
+msgid "none"
+msgstr "0"
+
+msgid "only automatic boot"
+msgstr "vain automaattisessa uudelleenkäynnistyksessä"
+
+msgid "only manual boot"
+msgstr "vain manuaalisessa uudelleenkäynnistyksessä"
+
+msgid "skip the import"
+msgstr "ohita lataus"
+
+msgid "wake up and import"
+msgstr "herätä ja lataa"
+
+#~ msgid "Daily automatic import"
+#~ msgstr "Päivittäinen lataus"
+
+#~ msgid "Importing:"
+#~ msgstr "Ladataan:"
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Show in extensions"
+#~ msgstr "Näytä laajennusvalikossa"
+
+#~ msgid "Show in plugin browser"
+#~ msgstr "Näytä lisäosavalikossa"
+
+#~ msgid "Skip the import"
+#~ msgstr "Ohita lataus"
+
+#~ msgid "Wake up and import"
+#~ msgstr "Herätä ja lataa"
+
+#~ msgid ""
+#~ "XMLTVImport Plugin\n"
+#~ "Import of epg data is still in progress. Please wait."
+#~ msgstr ""
+#~ "XMLTV lataus\n"
+#~ "EPG tietojen lataus kesken. Odota."
+
+#~ msgid ""
+#~ "XMLTVImport Plugin\n"
+#~ "Import of epg data will start\n"
+#~ "This may take a few minutes\n"
+#~ "Is this ok?"
+#~ msgstr ""
+#~ "XMLTV lataus\n"
+#~ "EPG tietojen lataus alkaa\n"
+#~ "Tämä voi kestää muutaman minuutin\n"
+#~ "OK?"
