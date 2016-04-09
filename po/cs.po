@@ -18,11 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #
-msgid "XMLTV Import Configuration"
+msgid "EPG Import Configuration"
 msgstr "Nastavení importu EPG"
 
 #
-msgid "XMLTV Import Sources"
+msgid "EPG Import Sources"
 msgstr "Zdroje importu EPG"
 
 #

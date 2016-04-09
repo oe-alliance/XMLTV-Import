@@ -1,0 +1,245 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: EPG Import\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: MCelliot_g <mcelliot_g@hotmail.com>\n"
+"Language-Team: \n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+
+msgid " events\n"
+msgstr ""
+
+msgid "Automated EPG Importer"
+msgstr "Αυτοματοποιημένη Eισαγωγή EPG"
+
+msgid "Automatic import EPG"
+msgstr ""
+
+msgid "Automatic start time"
+msgstr "Αυτόματη ώρα έναρξης"
+
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgid "Choice days for start import"
+msgstr ""
+
+msgid "Clear"
+msgstr "Καθαρισμός"
+
+msgid "Clearing current EPG before import"
+msgstr ""
+
+msgid "Consider setting \"Days Profile\""
+msgstr ""
+
+msgid "Days Profile"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Import current source"
+msgstr ""
+
+#, python-format
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+
+msgid "Last import: "
+msgstr ""
+
+#, python-format
+msgid "Last import: %s events"
+msgstr ""
+
+#, python-format
+msgid "Last: %s %s, %d events"
+msgstr "Τελευταίο: %s %s, %d προγράμματα"
+
+msgid "Load EPG only services in bouquets"
+msgstr ""
+
+msgid "Load long descriptions up to X days"
+msgstr "Φόρτωση εκτεταμένων περιγραφών έως και Χ ημέρες"
+
+msgid "Manual"
+msgstr "Χειροκίνητα"
+
+msgid "Monday"
+msgstr ""
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "Δεν βρέθηκαν ενεργές πηγές EPG, καμία ενέργεια"
+
+msgid "Press OK"
+msgstr ""
+
+msgid "Return to deep standby after import"
+msgstr ""
+
+msgid "Run AutoTimer after import"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgid "Show \"EPG Importer\" in main menu"
+msgstr ""
+
+msgid "Show \"EPGImport\" in extensions"
+msgstr ""
+
+msgid "Skip import on restart GUI"
+msgstr ""
+
+msgid "Sources"
+msgstr "Πηγές"
+
+msgid "Standby at startup"
+msgstr ""
+
+msgid "Start import after booting up"
+msgstr "Έναρξη εισαγωγής μετά την εκκίνηση"
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "When in deep standby"
+msgstr "Σε βαθιά αναμονή"
+
+msgid "Write to /tmp/EPGimport.log"
+msgstr ""
+
+msgid "EPG Import Configuration"
+msgstr "Ρυθμίσεις Εισαγωγής EPG"
+
+msgid "EPG Import Log"
+msgstr ""
+
+msgid "EPG Import Sources"
+msgstr ""
+
+#, python-format
+msgid "EPG Import finished, %d events"
+msgstr "Η εισαγωγή EPG ολοκληρώθηκε, %d προγράμματα"
+
+msgid "EPG Importer"
+msgstr ""
+
+msgid "EPG-Importer"
+msgstr ""
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"Πρόσθετο EPGImport\n"
+"Αδυναμία εκκίνησης:\n"
+
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"Το Enigma2 πρέπει να επανεκκινηθεί για να φορτωθούν\n"
+"τα δεδομένα EPG, είναι αυτό εντάξει;"
+
+msgid "always"
+msgstr ""
+
+msgid "never"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "only automatic boot"
+msgstr ""
+
+msgid "only manual boot"
+msgstr ""
+
+msgid "skip the import"
+msgstr ""
+
+msgid "wake up and import"
+msgstr ""
+
+#~ msgid "Wake up and import"
+#~ msgstr "Αφύπνιση και εισαγωγή"
+
+#~ msgid "Skip the import"
+#~ msgstr "Παράλειψη εισαγωγής"
+
+#~ msgid "Daily automatic import"
+#~ msgstr "Αυτόματη καθημερινή εισαγωγή"
+
+#~ msgid "Show in extensions"
+#~ msgstr "Εμφάνιση στις επεκτάσεις"
+
+#~ msgid "Ok"
+#~ msgstr "ΟΚ"
+
+#~ msgid "Importing:"
+#~ msgstr "Εισαγωγή:"
+
+#~ msgid ""
+#~ "EPGImport Plugin\n"
+#~ "Import of epg data is still in progress. Please wait."
+#~ msgstr ""
+#~ "Πρόσθετο EPGImport\n"
+#~ "Εκτελείται ακόμη η εισαγωγή δεδομένων epg. Παρακαλώ περιμένετε."
+
+#~ msgid ""
+#~ "EPGImport Plugin\n"
+#~ "Import of epg data will start\n"
+#~ "This may take a few minutes\n"
+#~ "Is this ok?"
+#~ msgstr ""
+#~ "Πρόσθετο EPGImport\n"
+#~ "Η εισαγωγή των δεδομένων epg θα ξεκινήσει\n"
+#~ "Αυτό μπορεί να χρειαστεί λίγο χρόνο\n"
+#~ "Είναι αυτό εντάξει;"

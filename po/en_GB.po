@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/plugin.py:533
-msgid "Automated XMLTV Importer"
-msgstr "Automated XMLTV Importer"
+msgid "Automated EPG Importer"
+msgstr "Automated EPG Importer"
 
 #: ../src/plugin.py:109
 msgid "Automatic start time"
@@ -38,46 +38,46 @@ msgid "Daily automatic import"
 msgstr "Daily automatic import"
 
 #: ../src/plugin.py:104
-msgid "XMLTV Import Configuration"
-msgstr "XMLTV Import Configuration"
+msgid "EPG Import Configuration"
+msgstr "EPG Import Configuration"
 
 #: ../src/plugin.py:338
-msgid "XMLTV Import Log"
-msgstr "XMLTV Import Log"
+msgid "EPG Import Log"
+msgstr "EPG Import Log"
 
 #: ../src/plugin.py:266
-msgid "XMLTV Import Sources"
-msgstr "XMLTV Import Sources"
+msgid "EPG Import Sources"
+msgstr "EPG Import Sources"
 
 #: ../src/plugin.py:391
 #, python-format
-msgid "XMLTV Import finished, %d events"
-msgstr "XMLTV Import finished, %d events"
+msgid "EPG Import finished, %d events"
+msgstr "EPG Import finished, %d events"
 
 #: ../src/plugin.py:224
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Failed to start:\n"
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Failed to start:\n"
 
 #: ../src/plugin.py:204
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import of epg data is still in progress. Please wait."
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import of epg data is still in progress. Please wait."
 
 #: ../src/plugin.py:214
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import of epg data will start\n"
 "This may take a few minutes\n"
 "Is this ok?"
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import of epg data will start\n"
 "This may take a few minutes\n"
 "Is this ok?"
@@ -146,8 +146,8 @@ msgstr "When in deep standby"
 #: ../src/plugin.py:166 ../src/plugin.py:171 ../src/plugin.py:535
 #: ../src/plugin.py:536 ../src/plugin.py:541 ../src/plugin.py:548
 #: ../src/plugin.py:558
-msgid "XMLTV-Importer"
-msgstr "XMLTV-Importer"
+msgid "EPG-Importer"
+msgstr "EPG-Importer"
 
 #: ../src/plugin.py:391
 msgid ""

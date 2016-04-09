@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-10 22:00+0200\n"
-"PO-Revision-Date: 2014-09-18 12:43+0100\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-04-09 19:09+0200\n"
 "Last-Translator: edcrane\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -16,28 +16,76 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.8.7\n"
 
-msgid "Automated XMLTV Importer"
-msgstr "Automatisierter XMLTV Importer"
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"EPG-Import wird gestartet, dies\n"
+"wird bis zu einigen Minuten dauern.\n"
+"Ist das OK?"
+
+msgid " events\n"
+msgstr " Ereignisse\n"
+
+msgid "Automated EPG Importer"
+msgstr "Automatisierter EPG-Import"
+
+msgid "Automatic import EPG"
+msgstr "EPG automatisch importieren"
 
 msgid "Automatic start time"
-msgstr "Automatische Startzeit"
+msgstr "Startzeit"
 
 msgid "Cancel"
 msgstr "Abbrechen"
 
+msgid "Choice days for start import"
+msgstr "Nur an bestimmten Tagen importieren"
+
 msgid "Clear"
 msgstr "Löschen"
 
-msgid "Daily automatic import"
-msgstr "Täglicher automatischer Import"
+msgid "Clearing current EPG before import"
+msgstr "EPG vor dem Import löschen"
 
-msgid "Importing:"
-msgstr "Importieren:"
+msgid "Consider setting \"Days Profile\""
+msgstr "Ausgewählte Tage berücksichtigen"
 
+msgid "Days Profile"
+msgstr "Import an bestimmten Tagen"
+
+msgid "Friday"
+msgstr "Freitag"
+
+msgid "Import current source"
+msgstr "Aktuelle Quelle importieren"
+
+#, python-format
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+"Importiere: %s\n"
+"%s Ereignisse"
+
+msgid "Last import: "
+msgstr "Letzter Import: "
+
+#, python-format
+msgid "Last import: %s events"
+msgstr "Letzter Import: %s Ereignisse"
+
+#, python-format
 msgid "Last: %s %s, %d events"
 msgstr "Letzte: %s %s, %d Ereignisse"
+
+msgid "Load EPG only services in bouquets"
+msgstr "EPG nur für Sender aus Favoritenlisten aktualisieren"
 
 msgid "Load long descriptions up to X days"
 msgstr "Lade lange Beschreibungen bis zu X Tage"
@@ -45,23 +93,35 @@ msgstr "Lade lange Beschreibungen bis zu X Tage"
 msgid "Manual"
 msgstr "Manuell"
 
-msgid "No active EPG sources found, nothing to do"
-msgstr "Keine aktiven EPG Quellen gefunden, nichts zu tun"
+msgid "Monday"
+msgstr "Montag"
 
-msgid "Ok"
-msgstr "Ok"
+msgid "No active EPG sources found, nothing to do"
+msgstr "Keine aktiven EPG-Quellen gefunden, nichts zu tun"
+
+msgid "Press OK"
+msgstr "OK drücken"
+
+msgid "Return to deep standby after import"
+msgstr "Nach Import in den Tiefschlaf zurückkehren"
+
+msgid "Run AutoTimer after import"
+msgstr "Nach Import AutoTimer starten"
+
+msgid "Saturday"
+msgstr "Samstag"
 
 msgid "Save"
 msgstr "Sichern"
 
-msgid "Show in extensions"
-msgstr "In Erweiterungen anzeigen"
+msgid "Show \"EPG Importer\" in main menu"
+msgstr "\"EPG-Importer\" im Hauptmenü anzeigen"
 
-msgid "Show in plugin browser"
-msgstr "Im Plugin-Browser anzeigen"
+msgid "Show \"EPGImport\" in extensions"
+msgstr "\"EPG-Import\" unter Erweiterungen anzeigen"
 
-msgid "Skip the import"
-msgstr "Import überspringen"
+msgid "Skip import on restart GUI"
+msgstr "Import bei GUI-Neustart überspringen"
 
 msgid "Sources"
 msgstr "Quellen"
@@ -70,53 +130,76 @@ msgid "Standby at startup"
 msgstr "Standby beim Start"
 
 msgid "Start import after booting up"
-msgstr "Nach dem Booten, Import starten"
+msgstr "Import nach dem Booten starten"
 
-msgid "Wake up and import"
-msgstr "Anschalten und importieren"
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgid "Wednesday"
+msgstr "Mittwoch"
 
 msgid "When in deep standby"
-msgstr "Wenn Ausgeschaltet"
+msgstr "Wenn ausgeschaltet"
 
-msgid "XMLTV Import Configuration"
-msgstr "XMLTV Import Konfiguration"
+msgid "Write to /tmp/EPGimport.log"
+msgstr "Nach /tmp/EPGimport.log schreiben"
 
-msgid "XMLTV Import Log"
-msgstr "XMLTV Import Log"
+msgid "EPG Import Configuration"
+msgstr "EPG-Import-Konfiguration"
 
-msgid "XMLTV Import Sources"
-msgstr "XMLTV Import Quellen"
+msgid "EPG Import Log"
+msgstr "EPG-Import-Log"
 
-msgid "XMLTV Import finished, %d events"
-msgstr "XMLTV Import abgeschlossen, %d Ereignisse"
+msgid "EPG Import Sources"
+msgstr "EPG-Import-Quellen"
 
-msgid "XMLTV-Importer"
-msgstr "XMLTV-Importer"
+#, python-format
+msgid "EPG Import finished, %d events"
+msgstr "EPG-Import abgeschlossen, %d Ereignisse"
+
+msgid "EPG Importer"
+msgstr "EPG-Importer"
+
+msgid "EPG-Importer"
+msgstr "EPG-Importer"
 
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"EPGImport\n"
+"Import der EPG-Daten läuft noch. Bitte warten."
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"EPGImport\n"
+"EPG-Import wird gestartet, dies\n"
+"wird bis zu einigen Minuten dauern.\n"
+"Ist das OK?"
+
+msgid ""
+"EPGImport Plugin\n"
 "Failed to start:\n"
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Nicht gestartet:\n"
 
 msgid ""
-"XMLTVImport Plugin\n"
-"Import of epg data is still in progress. Please wait."
+"You may not use this settings!\n"
+"At least one day a week should be included!"
 msgstr ""
-"XMLTVImport Plugin\n"
-"Import von EPG-Daten ist noch im Gange. Bitte warten."
-
-msgid ""
-"XMLTVImport Plugin\n"
-"Import of epg data will start\n"
-"This may take a few minutes\n"
-"Is this ok?"
-msgstr ""
-"XMLTVImport Plugin\n"
-"Import von EPG-Daten wird beginnen\n"
-"Dies kann ein paar Minuten dauern\n"
-"Ist das ok?"
+"Sie können diese Einstellung nicht nutzen!\n"
+"Mindestens ein Tag muß ausgewählt sein!"
 
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
@@ -124,3 +207,60 @@ msgid ""
 msgstr ""
 "Sie müssen Enigma2 neu starten, um die EPG-Daten zu laden\n"
 "Ist das ok?"
+
+msgid "always"
+msgstr "immer"
+
+msgid "never"
+msgstr "niemals"
+
+msgid "none"
+msgstr "keine"
+
+msgid "only automatic boot"
+msgstr "Nur bei automatischem Neustart"
+
+msgid "only manual boot"
+msgstr "Nur bei manuellem Neustart"
+
+msgid "skip the import"
+msgstr "Import überspringen"
+
+msgid "wake up and import"
+msgstr "Aufwachen und importieren"
+
+#~ msgid "Importing:"
+#~ msgstr "Importieren:"
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Show in extensions"
+#~ msgstr "In Erweiterungen anzeigen"
+
+#~ msgid "Show in plugin browser"
+#~ msgstr "Im Plugin-Browser anzeigen"
+
+#~ msgid "Skip the import"
+#~ msgstr "Import überspringen"
+
+#~ msgid "Wake up and import"
+#~ msgstr "Aufwachen und importieren"
+
+#~ msgid ""
+#~ "EPGImport Plugin\n"
+#~ "Import of epg data is still in progress. Please wait."
+#~ msgstr ""
+#~ "EPGImport Plugin\n"
+#~ "Import von EPG-Daten ist noch im Gange. Bitte warten."
+
+#~ msgid ""
+#~ "EPGImport Plugin\n"
+#~ "Import of epg data will start\n"
+#~ "This may take a few minutes\n"
+#~ "Is this ok?"
+#~ msgstr ""
+#~ "EPGImport-Plugin\n"
+#~ "Import von EPG-Daten wird beginnen\n"
+#~ "Dies kann ein paar Minuten dauern\n"
+#~ "Ist das ok?"

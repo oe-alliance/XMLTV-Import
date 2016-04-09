@@ -4,7 +4,7 @@ import log
 #from pprint import pprint
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
 
-# %Y%m%d%H%M%S 
+# %Y%m%d%H%M%S
 def quickptime(str):
 	return time.struct_time((int(str[0:4]), int(str[4:6]), int(str[6:8]),
 				 int(str[8:10]), int(str[10:12]), 0,
@@ -35,10 +35,10 @@ def get_xml_string(elem, name):
 			if not r:
 				r = txt
 			elif lang == "nl":
-				r = txt 
+				r = txt
 	except Exception,  e:
 		print "[XMLTVConverter] get_xml_string error:",  e
-	# Now returning UTF-8 by default, the epgdat/oudeis must be adjusted to make this work. 
+	# Now returning UTF-8 by default, the epgdat/oudeis must be adjusted to make this work.
 	return r.encode('utf-8')
 
 def enumerateProgrammes(fp):
@@ -49,7 +49,7 @@ def enumerateProgrammes(fp):
 			elem.clear()
 		elif elem.tag == 'channel':
 			# Throw away channel elements, save memory
-			elem.clear()    
+			elem.clear()
 
 
 class XMLTVConverter:
@@ -59,8 +59,8 @@ class XMLTVConverter:
 	    if dateformat.startswith('%Y%m%d%H%M%S'):
 		    self.dateParser = quickptime
 	    else:
-		    self.dateParser = lambda x: time.strptime(x, dateformat) 
-    
+		    self.dateParser = lambda x: time.strptime(x, dateformat)
+
 	def enumFile(self, fileobj):
 		print>>log, "[XMLTVConverter] Enumerating event information"
 		lastUnknown = None
@@ -71,7 +71,7 @@ class XMLTVConverter:
 					print>>log, "Unknown channel: ", channel
 					lastUnknown=channel
 				# return a None object to give up time to the reactor.
-				yield None 
+				yield None
 				continue
 			try:
 				services = self.channels[channel]
@@ -84,7 +84,7 @@ class XMLTVConverter:
 				cat_nr = self.get_category(category,  stop-start)
 				# data_tuple = (data.start, data.duration, data.title, data.short_description, data.long_description, data.type)
 				if not stop or not start or (stop <= start):
-					print "[XMLTVConverter] Bad start/stop time: %s (%s) - %s (%s) [%s]" % (elem.get('start'), start, elem.get('stop'), stop, title)  
+					print "[XMLTVConverter] Bad start/stop time: %s (%s) - %s (%s) [%s]" % (elem.get('start'), start, elem.get('stop'), stop, title)
 				yield (services, (start, stop-start, title, subtitle, description, cat_nr))
 			except Exception,  e:
 				print "[XMLTVConverter] parsing event error:", e
@@ -100,4 +100,3 @@ class XMLTVConverter:
 			elif len(category) > 0:
 				return category
 		return 0
-

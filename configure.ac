@@ -30,7 +30,7 @@ AM_CONDITIONAL(UPDATE_PO, test "$with_po" = "yes")
 AC_OUTPUT([
 Makefile
 etc/Makefile
-etc/xmltvimport/Makefile
+etc/epgimport/Makefile
 po/Makefile
 src/Makefile
 ])

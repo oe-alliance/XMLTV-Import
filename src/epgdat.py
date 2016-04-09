@@ -12,9 +12,9 @@ from datetime import datetime
 try:
 	import dreamcrc
 	crc32_dreambox = lambda d,t: dreamcrc.crc32(d,t) & 0xffffffff
-	print "[XMLTVImport] using C module, yay"
+	print "[EPGImport] using C module, yay"
 except:
-	print "[XMLTVImport] failed to load C implementation, sorry"
+	print "[EPGImport] failed to load C implementation, sorry"
 
 	# this table is used by CRC32 routine below (used by Dreambox for
 	# computing REF DESC value).
@@ -91,7 +91,7 @@ except:
 	# "crctype" is the description type (1 byte 0x4d or 0x4e)
 	# !!!!!!!!! IT'S VERY TIME CONSUMING !!!!!!!!!
 	def crc32_dreambox(crcdata, crctype, crctable=CRCTABLE):
-		# ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop    
+		# ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop
 		#crc=0x00000000L
 		#crc=((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ crctype) & 0x000000ffL ]
 		crc = crctable[crctype & 0x000000ffL ]
@@ -100,7 +100,7 @@ except:
 		    crc=((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ ord(d)) & 0x000000ffL ]
 		return crc
 
-# convert time or length from datetime format to 3 bytes hex value 
+# convert time or length from datetime format to 3 bytes hex value
 # i.e. 20:25:30 -> 0x20 , 0x25 , 0x30
 def TL_hexconv(dt):
 	return (
@@ -135,7 +135,7 @@ class epgdat_class:
 	events=[]
 
 	# initialize an empty dictionary (Python array)
-	# the following format can handle duplicated channel name 
+	# the following format can handle duplicated channel name
 	# format: { channel_name : [ sid , sid , .... ] }
 	lamedb_dict={}
 
@@ -155,15 +155,15 @@ class epgdat_class:
 		self.s_BBB = struct.Struct("BBB")
 		self.s_b_HH = struct.Struct(">HH")
 		self.s_I = struct.Struct(self.LB_ENDIAN+"I")
-		self.s_II = struct.Struct(self.LB_ENDIAN+"II")     
-		self.s_IIII = struct.Struct(self.LB_ENDIAN+"IIII")     
-		self.s_B3sBBB = struct.Struct("B3sBBB")     
-		self.s_3sBB = struct.Struct("3sBB")     
+		self.s_II = struct.Struct(self.LB_ENDIAN+"II")
+		self.s_IIII = struct.Struct(self.LB_ENDIAN+"IIII")
+		self.s_B3sBBB = struct.Struct("B3sBBB")
+		self.s_3sBB = struct.Struct("3sBB")
 
 	def set_endian(self,endian):
 		self.LB_ENDIAN=endian
 		self.s_I = struct.Struct(self.LB_ENDIAN+"I")
-		self.s_II = struct.Struct(self.LB_ENDIAN+"II")     
+		self.s_II = struct.Struct(self.LB_ENDIAN+"II")
 		self.s_IIII = struct.Struct(self.LB_ENDIAN+"IIII")
 
 	def set_excludedsid(self,exsidlist):
@@ -194,6 +194,9 @@ class epgdat_class:
 	def preprocess_events_channel(self, services):
 		EPG_EVENT_DATA_id = 0
 		for service in services:
+			# skip empty lines, they make a mess
+			if not service.strip():
+				continue
 			# prepare and write CHANNEL INFO record
 			ssid = service.split(":")
 			# write CHANNEL INFO record (sid, onid, tsid, eventcount)
@@ -252,15 +255,15 @@ class epgdat_class:
 				event_time_HMS=datetime.utcfromtimestamp(event[0])
 				event_length_HMS=datetime.utcfromtimestamp(event[1])
 				# epg.dat date is = (proleptic date - epg_zero_day)
-				dvb_date = event_time_HMS.toordinal() - self.EPG_PROLEPTIC_ZERO_DAY            
+				dvb_date = event_time_HMS.toordinal() - self.EPG_PROLEPTIC_ZERO_DAY
 				# EVENT DATA
 				# simply create an incremental ID,  starting from '1'
 				# event_id appears to be per channel, so this should be okay.
 				EPG_EVENT_DATA_id += 1
 				pack_1 = self.s_b_HH.pack(EPG_EVENT_DATA_id,dvb_date) # ID and DATE , always in BIG_ENDIAN
 				pack_2 = s_BBB.pack(*TL_hexconv(event_time_HMS)) # START TIME
-				pack_3 = s_BBB.pack(*TL_hexconv(event_length_HMS)) # LENGTH 
-				pack_4 = s_I.pack(short_d[0]) # REF DESC short (title)            
+				pack_3 = s_BBB.pack(*TL_hexconv(event_length_HMS)) # LENGTH
+				pack_4 = s_I.pack(short_d[0]) # REF DESC short (title)
 				for d in long_d:
 					pack_4 += s_I.pack(d[0]) # REF DESC long
 				self.EPG_TMP_FD.write(pack_1+pack_2+pack_3+pack_4)
@@ -284,7 +287,7 @@ class epgdat_class:
 				epgdat_fd.write(pack_1)
 			EPG_TMP_FD.close()
 			# HEADER 2
-			s_ii = self.s_II     
+			s_ii = self.s_II
 			pack_1=self.s_I.pack(self.EPG_HEADER2_description_count)
 			epgdat_fd.write(pack_1)
 			# event MUST BE WRITTEN IN ASCENDING ORDERED using HASH CODE as index

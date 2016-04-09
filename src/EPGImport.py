@@ -47,20 +47,20 @@ def bigStorage(minFree, default, *candidates):
 		if (free > minFree) and (free > 50000000):
 			return default
 	except Exception, e:
-		print>>log, "[XMLTVImport] Failed to stat %s:" % default, e
-		mounts = open('/proc/mounts', 'rb').readlines()
-		# format: device mountpoint fstype options #
-		mountpoints = [x.split(' ', 2)[1] for x in mounts]
-		for candidate in candidates:
-			if candidate in mountpoints:
-				try:
-					diskstat = os.statvfs(candidate)
-					free = diskstat.f_bfree * diskstat.f_bsize
-					if free > minFree:
-						return candidate
-				except:
-					pass
-		return default
+		print>>log, "[EPGImport] Failed to stat %s:" % default, e
+	mounts = open('/proc/mounts', 'rb').readlines()
+	# format: device mountpoint fstype options #
+	mountpoints = [x.split(' ', 2)[1] for x in mounts]
+	for candidate in candidates:
+		if candidate in mountpoints:
+			try:
+				diskstat = os.statvfs(candidate)
+				free = diskstat.f_bfree * diskstat.f_bsize
+				if free > minFree:
+					return candidate
+			except:
+				pass
+	return default
 
 class OudeisImporter:
 	'Wrapper to convert original patch to new one that accepts multiple services'
@@ -78,7 +78,7 @@ def unlink_if_exists(filename):
 	except:
 		pass
 
-class XMLTVImport:
+class EPGImport:
 	"""Simple Class to import EPGData"""
 
 	def __init__(self, epgcache, channelFilter):
@@ -101,7 +101,7 @@ class XMLTVImport:
 		elif hasattr(self.epgcache, 'importEvent'):
 			self.storage = OudeisImporter(self.epgcache)
 		else:
-			print "[XMLTVImport] oudeis patch not detected, using epg.dat instead."
+			print "[EPGImport] oudeis patch not detected, using epg.dat instead."
 			import epgdat_importer
 			self.storage = epgdat_importer.epgdatclass()
 		self.eventCount = 0
@@ -118,7 +118,7 @@ class XMLTVImport:
 			self.closeImport()
 			return
 		self.source = self.sources.pop()
-		print>>log, "[XMLTVImport] nextImport, source=", self.source.description
+		print>>log, "[EPGImport] nextImport, source=", self.source.description
 		self.fetchUrl(self.source.url)
 
 	def fetchUrl(self, filename):
@@ -133,12 +133,12 @@ class XMLTVImport:
 
 	def readEpgDatFile(self, filename, deleteFile=False):
 		if not hasattr(self.epgcache, 'load'):
-			print>>log, "[XMLTVImport] Cannot load EPG.DAT files on unpatched enigma. Need CrossEPG patch."
+			print>>log, "[EPGImport] Cannot load EPG.DAT files on unpatched enigma. Need CrossEPG patch."
 			return
 		unlink_if_exists(HDD_EPG_DAT)
 		try:
 			if filename.endswith('.gz'):
-				print>>log, "[XMLTVImport] Uncompressing", filename
+				print>>log, "[EPGImport] Uncompressing", filename
 				import shutil
 				fd = gzip.open(filename, 'rb')
 				epgdat = open(HDD_EPG_DAT, 'wb')
@@ -149,16 +149,15 @@ class XMLTVImport:
 			else:
 				if filename != HDD_EPG_DAT:
 					os.symlink(filename, HDD_EPG_DAT)
-			print>>log, "[XMLTVImport] Importing", HDD_EPG_DAT
+			print>>log, "[EPGImport] Importing", HDD_EPG_DAT
 			self.epgcache.load()
 			if deleteFile:
 				unlink_if_exists(filename)
 		except Exception, e:
-			print>>log, "[XMLTVImport] Failed to import %s:" % filename, e
-
+			print>>log, "[EPGImport] Failed to import %s:" % filename, e
 
 	def afterDownload(self, result, filename, deleteFile=False):
-		print>>log, "[XMLTVImport] afterDownload", filename
+		print>>log, "[EPGImport] afterDownload", filename
 		try:
 			if not os.path.getsize(filename):
 				raise Exception, "File is empty"
@@ -167,7 +166,7 @@ class XMLTVImport:
 			return
 		if self.source.parser == 'epg.dat':
 			if twisted.python.runtime.platform.supportsThreads():
-				print>>log, "[XMLTVImport] Using twisted thread for DAT file"
+				print>>log, "[EPGImport] Using twisted thread for DAT file"
 				threads.deferToThread(self.readEpgDatFile, filename, deleteFile).addCallback(lambda ignore: self.nextImport())
 			else:
 				self.readEpgDatFile(filename, deleteFile)
@@ -178,10 +177,10 @@ class XMLTVImport:
 			self.fd = open(filename, 'rb')
 		if deleteFile:
 			try:
-				print>>log, "[XMLTVImport] unlink", filename
+				print>>log, "[EPGImport] unlink", filename
 				os.unlink(filename)
 			except Exception, e:
-				print>>log, "[XMLTVImport] warning: Could not remove '%s' intermediate" % filename, e
+				print>>log, "[EPGImport] warning: Could not remove '%s' intermediate" % filename, e
 		self.channelFiles = self.source.channels.downloadables()
 		if not self.channelFiles:
 			self.afterChannelDownload(None, None)
@@ -191,7 +190,7 @@ class XMLTVImport:
 			self.do_download(filename, self.afterChannelDownload, self.channelDownloadFail)
 
 	def afterChannelDownload(self, result, filename, deleteFile=True):
-		print>>log, "[XMLTVImport] afterChannelDownload", filename
+		print>>log, "[EPGImport] afterChannelDownload", filename
 		if filename:
 			try:
 				if not os.path.getsize(filename):
@@ -200,7 +199,7 @@ class XMLTVImport:
 				self.channelDownloadFail(e)
 				return
 		if twisted.python.runtime.platform.supportsThreads():
-			print>>log, "[XMLTVImport] Using twisted thread"
+			print>>log, "[EPGImport] Using twisted thread"
 			threads.deferToThread(self.doThreadRead, filename).addCallback(lambda ignore: self.nextImport())
 			deleteFile = False # Thread will delete it
 		else:
@@ -210,7 +209,7 @@ class XMLTVImport:
 			try:
 				os.unlink(filename)
 			except Exception, e:
-				print>>log, "[XMLTVImport] warning: Could not remove '%s' intermediate" % filename, e
+				print>>log, "[EPGImport] warning: Could not remove '%s' intermediate" % filename, e
 
 	def fileno(self):
 		if self.fd is not None:
@@ -228,13 +227,13 @@ class XMLTVImport:
 						d = d[:4] + ('',) + d[5:]
 					self.storage.importEvents(r, (d,))
 				except Exception, e:
-					print>>log, "[XMLTVImport] ### importEvents exception:", e
-		print>>log, "[XMLTVImport] ### thread is ready ### Events:", self.eventCount
+					print>>log, "[EPGImport] ### importEvents exception:", e
+		print>>log, "[EPGImport] ### thread is ready ### Events:", self.eventCount
 		if filename:
 			try:
 				os.unlink(filename)
 			except Exception, e:
-				print>>log, "[XMLTVImport] warning: Could not remove '%s' intermediate" % filename, e
+				print>>log, "[EPGImport] warning: Could not remove '%s' intermediate" % filename, e
 
 	def doRead(self):
 		'called from reactor to read some data'
@@ -250,37 +249,37 @@ class XMLTVImport:
 						d = d[:4] + ('',) + d[5:]
 					self.storage.importEvents(r, (d,))
 				except Exception, e:
-					print>>log, "[XMLTVImport] importEvents exception:", e
+					print>>log, "[EPGImport] importEvents exception:", e
 		except StopIteration:
 			self.nextImport()
 
 	def connectionLost(self, failure):
 		'called from reactor on lost connection'
 		# This happens because enigma calls us after removeReader
-		print>>log, "[XMLTVImport] connectionLost", failure
+		print>>log, "[EPGImport] connectionLost", failure
 
 	def channelDownloadFail(self, failure):
-		print>>log, "[XMLTVImport] download channel failed:", failure
+		print>>log, "[EPGImport] download channel failed:", failure
 		if self.channelFiles:
 			filename = random.choice(self.channelFiles)
 			self.channelFiles.remove(filename)
 			self.do_download(filename, self.afterChannelDownload, self.channelDownloadFail)
 		else:
-			print>>log, "[XMLTVImport] no more alternatives for channels"
+			print>>log, "[EPGImport] no more alternatives for channels"
 			self.nextImport()
 
 	def downloadFail(self, failure):
-		print>>log, "[XMLTVImport] download failed:", failure
+		print>>log, "[EPGImport] download failed:", failure
 		self.source.urls.remove(self.source.url)
 		if self.source.urls:
-			print>>log, "[XMLTVImport] Attempting alternative URL"
+			print>>log, "[EPGImport] Attempting alternative URL"
 			self.source.url = random.choice(self.source.urls)
 			self.fetchUrl(self.source.url)
 		else:
 			self.nextImport()
 
 	def logPrefix(self):
-		return '[XMLTVImport]'
+		return '[EPGImport]'
 
 	def closeReader(self):
 		if self.fd is not None:
@@ -299,38 +298,38 @@ class XMLTVImport:
 			needLoad = None
 		self.storage = None
 		if self.eventCount is not None:
-			print>>log, "[XMLTVImport] imported %d events" % self.eventCount
+			print>>log, "[EPGImport] imported %d events" % self.eventCount
 			reboot = False
 			if self.eventCount:
 				if needLoad:
-					print>>log, "[XMLTVImport] no Oudeis patch, load(%s) required" % needLoad
+					print>>log, "[EPGImport] no Oudeis patch, load(%s) required" % needLoad
 					reboot = True
 					try:
 						if hasattr(self.epgcache, 'load'):
-							print>>log, "[XMLTVImport] attempt load() patch"
+							print>>log, "[EPGImport] attempt load() patch"
 							if needLoad != HDD_EPG_DAT:
 								os.symlink(needLoad, HDD_EPG_DAT)
 							self.epgcache.load()
 							reboot = False
 							unlink_if_exists(needLoad)
 					except Exception, e:
-						print>>log, "[XMLTVImport] load() failed:", e
+						print>>log, "[EPGImport] load() failed:", e
 			elif hasattr(self.epgcache, 'timeUpdated'):
 				self.epgcache.timeUpdated()
 			if self.onDone:
 				self.onDone(reboot=reboot, epgfile=needLoad)
 		self.eventCount = None
-		print>>log, "[XMLTVImport] #### Finished ####"
+		print>>log, "[EPGImport] #### Finished ####"
 
 	def isImportRunning(self):
 		return self.source is not None
 
 	def do_download(self, sourcefile, afterDownload, downloadFail):
 		path = bigStorage(9000000, '/tmp', '/media/DOMExtender', '/media/cf', '/media/usb', '/media/hdd')
-		filename = os.path.join(path, 'xmltvimport')
+		filename = os.path.join(path, 'epgimport')
 		if sourcefile.endswith('.gz'):
 			filename += '.gz'
 		sourcefile = sourcefile.encode('utf-8')
-		print>>log, "[XMLTVImport] Downloading: " + sourcefile + " to local path: " + filename
+		print>>log, "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
 		downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
 		return filename

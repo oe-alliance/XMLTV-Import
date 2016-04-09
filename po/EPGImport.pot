@@ -1,0 +1,200 @@
+# Finnish translations for plugins package.
+# Copyright (C) 2015 THE plugins'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the plugins package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+
+msgid " events\n"
+msgstr ""
+
+msgid "Automated EPG Importer"
+msgstr ""
+
+msgid "Automatic import EPG"
+msgstr ""
+
+msgid "Automatic start time"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Choice days for start import"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Clearing current EPG before import"
+msgstr ""
+
+msgid "Consider setting \"Days Profile\""
+msgstr ""
+
+msgid "Days Profile"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Import current source"
+msgstr ""
+
+#, python-format
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+
+msgid "Last import: "
+msgstr ""
+
+#, python-format
+msgid "Last import: %s events"
+msgstr ""
+
+#, python-format
+msgid "Last: %s %s, %d events"
+msgstr ""
+
+msgid "Load EPG only services in bouquets"
+msgstr ""
+
+msgid "Load long descriptions up to X days"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "No active EPG sources found, nothing to do"
+msgstr ""
+
+msgid "Press OK"
+msgstr ""
+
+msgid "Return to deep standby after import"
+msgstr ""
+
+msgid "Run AutoTimer after import"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Show \"EPG Importer\" in main menu"
+msgstr ""
+
+msgid "Show \"EPGImport\" in extensions"
+msgstr ""
+
+msgid "Skip import on restart GUI"
+msgstr ""
+
+msgid "Sources"
+msgstr ""
+
+msgid "Standby at startup"
+msgstr ""
+
+msgid "Start import after booting up"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "When in deep standby"
+msgstr ""
+
+msgid "Write to /tmp/EPGimport.log"
+msgstr ""
+
+msgid "EPG Import Configuration"
+msgstr ""
+
+msgid "EPG Import Log"
+msgstr ""
+
+msgid "EPG Import Sources"
+msgstr ""
+
+#, python-format
+msgid "EPG Import finished, %d events"
+msgstr ""
+
+msgid "EPG Importer"
+msgstr ""
+
+msgid "EPG-Importer"
+msgstr ""
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+
+msgid "always"
+msgstr ""
+
+msgid "never"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "only automatic boot"
+msgstr ""
+
+msgid "only manual boot"
+msgstr ""
+
+msgid "skip the import"
+msgstr ""
+
+msgid "wake up and import"
+msgstr ""

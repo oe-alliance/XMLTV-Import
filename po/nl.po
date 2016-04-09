@@ -3,8 +3,6 @@
 # This file is distributed under the same license as the plugins package.
 # Automatically generated, 2011.
 #
-msgid ""
-msgstr ""
 "Project-Id-Version: XMTV-Impoter for Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-27 19:08+0100\n"
@@ -20,7 +18,7 @@ msgstr ""
 "X-Poedit-Country: NETHERLANDS\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-msgid "Automated XMLTV Importer"
+msgid "Automated EPG Importer"
 msgstr "Automatische EPG importeur"
 
 msgid "Automatic start time"
@@ -35,40 +33,40 @@ msgstr "Verwijder"
 msgid "Daily automatic import"
 msgstr "Dagelijkse automatische import"
 
-msgid "XMLTV Import Configuration"
-msgstr "XMLTV Import configuratie"
+msgid "EPG Import Configuration"
+msgstr "EPG Import configuratie"
 
-msgid "XMLTV Import Log"
-msgstr "XMLTV Import Log"
+msgid "EPG Import Log"
+msgstr "EPG Import Log"
 
-msgid "XMLTV Import Sources"
-msgstr "XMLTV Import Bronnen"
+msgid "EPG Import Sources"
+msgstr "EPG Import Bronnen"
 
 #, python-format
-msgid "XMLTV Import finished, %d events"
-msgstr "XMLTV Import gereed, %d events"
+msgid "EPG Import finished, %d events"
+msgstr "EPG Import gereed, %d events"
 
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Failed to start:\n"
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Starten mislukt:\n"
 
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import of epg data is still in progress. Please wait."
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import van epg data is nog bezig: wacht."
 
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import of epg data will start\n"
 "This may take a few minutes\n"
 "Is this ok?"
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import van epg data zal beginnen\n"
 "Dit kan een paar minuten duren\n"
 "Is dat OK?"
@@ -119,8 +117,8 @@ msgstr "Wakker worden en importeren"
 msgid "When in deep standby"
 msgstr "Indien in deep standby"
 
-msgid "XMLTV-Importer"
-msgstr "XMLTV-Importeur"
+msgid "EPG-Importer"
+msgstr "EPG-Importeur"
 
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"

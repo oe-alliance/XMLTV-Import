@@ -1,2 +1,2 @@
 installdir = ${sysconfdir}
-SUBDIRS = xmltvimport
+SUBDIRS = epgimport

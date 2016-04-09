@@ -4,7 +4,7 @@ import sys
 
 import sys
 # Hack to make this test run on Windows (where the reactor cannot handle files)
-if sys.platform.startswith('win'):	
+if sys.platform.startswith('win'):
 	tmppath = '.'
 	settingspath = '.'
 else:
@@ -39,14 +39,14 @@ class epgdatclass:
 
 	def commitService(self):
 		if self.services is not None:
-			self.epg.preprocess_events_channel(self.services)  
+			self.epg.preprocess_events_channel(self.services)
 
 	def epg_done(self):
 		try:
 			self.commitService()
 			self.epg.final_process()
 		except:
-			print "[XMLTVImport] Failure in epg_done"
+			print "[EPGImport] Failure in epg_done"
 			import traceback
 			traceback.print_exc()
 		self.epg = None

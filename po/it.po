@@ -1,11 +1,11 @@
-# Italian translations for XMLTVIMPORT
+# Italian translations for EPGIMPORT
 # Copyright (C) 2012 THE plugins'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the plugins package.
 # Automatically generated, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: XMLTVIMPORT translation\n"
+"Project-Id-Version: EPGIMPORT translation\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-05 22:57+0000\n"
 "PO-Revision-Date: 2015-12-30 12:28+0100\n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Generator: Poedit 1.8.6\n"
 
 #: ../src/plugin.py:533
-msgid "Automated XMLTV Importer"
-msgstr "Importazione XMLTV automatizzata"
+msgid "Automated EPG Importer"
+msgstr "Importazione EPG automatizzata"
 
 #: ../src/plugin.py:109
 msgid "Automatic start time"
@@ -40,46 +40,46 @@ msgid "Daily automatic import"
 msgstr "Importazione programmata giornaliera"
 
 #: ../src/plugin.py:104
-msgid "XMLTV Import Configuration"
+msgid "EPG Import Configuration"
 msgstr "Configurazione"
 
 #: ../src/plugin.py:338
-msgid "XMLTV Import Log"
+msgid "EPG Import Log"
 msgstr "Log"
 
 #: ../src/plugin.py:266
-msgid "XMLTV Import Sources"
-msgstr "Provider XMLTV"
+msgid "EPG Import Sources"
+msgstr "Provider EPG"
 
 #: ../src/plugin.py:391
 #, python-format
-msgid "XMLTV Import finished, %d events"
+msgid "EPG Import finished, %d events"
 msgstr "Importazione terminata! Salvati %d eventi"
 
 #: ../src/plugin.py:224
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Failed to start:\n"
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Failed to start:\n"
 
 #: ../src/plugin.py:204
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import of epg data is still in progress. Please wait."
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Importazione eventi in corso. Attendere."
 
 #: ../src/plugin.py:214
 msgid ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "Import of epg data will start\n"
 "This may take a few minutes\n"
 "Is this ok?"
 msgstr ""
-"XMLTVImport Plugin\n"
+"EPGImport Plugin\n"
 "L'importazione degli eventi EPG sta per avviarsi\n"
 "ed impieghera’ alcuni minuti. \n"
 "Vuoi procedere?"
@@ -103,7 +103,7 @@ msgstr "Manuale"
 
 #: ../src/plugin.py:209
 msgid "No active EPG sources found, nothing to do"
-msgstr "Errore durante l'importazione! Nessuna provider XMLTV attivo trovato"
+msgstr "Errore durante l'importazione! Nessuna provider EPG attivo trovato"
 
 #: ../src/plugin.py:121 ../src/plugin.py:269
 msgid "Ok"
@@ -127,7 +127,7 @@ msgstr "Salta l’importazione"
 
 #: ../src/plugin.py:123
 msgid "Sources"
-msgstr "Provider XMLTV"
+msgstr "Provider EPG"
 
 #: ../src/plugin.py:110
 msgid "Standby at startup"
@@ -148,8 +148,8 @@ msgstr "Quando il decoder e’ in deep standby"
 #: ../src/plugin.py:166 ../src/plugin.py:171 ../src/plugin.py:535
 #: ../src/plugin.py:536 ../src/plugin.py:541 ../src/plugin.py:548
 #: ../src/plugin.py:558
-msgid "XMLTV-Importer"
-msgstr "XMLTV-Importer"
+msgid "EPG-Importer"
+msgstr "EPG-Importer"
 
 #: ../src/plugin.py:391
 msgid ""

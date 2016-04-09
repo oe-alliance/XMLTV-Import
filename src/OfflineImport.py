@@ -9,10 +9,10 @@
 import os
 import sys
 import time
-import XMLTVConfig
-import XMLTVImport
+import EPGConfig
+import EPGImport
 
-XMLTVImport.HDD_EPG_DAT = "./epg.dat.new" 
+EPGImport.HDD_EPG_DAT = "./epg.dat.new" 
 
 # Emulate an Enigma that has no patch whatsoever.
 class FakeEnigma:
@@ -23,7 +23,7 @@ class FakeEnigma:
 #	def importEvents(self, *args):
 #		print args
 
-def importFrom(xmltvimport, sourceXml):
+def importFrom(epgimport, sourceXml):
 	# Hack to make this test run on Windows (where the reactor cannot handle files)
 	if sys.platform.startswith('win'):
 		import twisted.python.runtime
@@ -42,23 +42,23 @@ def importFrom(xmltvimport, sourceXml):
 			def stop(self):
 				print "reactor stopped"
 				pass
-		XMLTVImport.reactor = FakeReactor()
-	sources = [ s for s in XMLTVConfig.enumSourcesFile(sourceXml, filter = None) ]
+		EPGImport.reactor = FakeReactor()
+	sources = [ s for s in EPGConfig.enumSourcesFile(sourceXml, filter = None) ]
 	sources.reverse()
-	xmltvimport.sources = sources
-	xmltvimport.onDone = done
-	xmltvimport.beginImport(longDescUntil = time.time() + (5*24*3600))
-	XMLTVImport.reactor.run()
+	epgimport.sources = sources
+	epgimport.onDone = done
+	epgimport.beginImport(longDescUntil = time.time() + (5*24*3600))
+	EPGImport.reactor.run()
 
 #----------------------------------------------
 def done(reboot=False, epgfile=None):
-	XMLTVImport.reactor.stop()
+	EPGImport.reactor.stop()
 	print "Done, data is in", epgfile
-	### When code arrives here, EPG data is stored in filename XMLTVImport.HDD_EPG_DAT
+	### When code arrives here, EPG data is stored in filename EPGImport.HDD_EPG_DAT
 	### So to copy it to FTP or whatever, this is the place to add that code. 
 
 if len(sys.argv) <= 1:
 	print "Usage: %s source.xml [...]" % sys.argv[0]
-xmltvimport = XMLTVImport.XMLTVImport(FakeEnigma(), lambda x: True)
+epgimport = EPGImport.EPGImport(FakeEnigma(), lambda x: True)
 for xml in sys.argv[1:]:
-	importFrom(xmltvimport, xml)
+	importFrom(epgimport, xml)

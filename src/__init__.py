@@ -3,8 +3,8 @@ from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
 import os, gettext
 
-PluginLanguageDomain = "XMLTVImport"
-PluginLanguagePath = "Extensions/XMLTVImport/locale"
+PluginLanguageDomain = "EPGImport"
+PluginLanguagePath = "Extensions/EPGImport/locale"
 
 def localeInit():
 	gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))

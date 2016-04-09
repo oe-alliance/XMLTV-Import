@@ -1,120 +1,237 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: plugins 0.0.1\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-14 08:28+0100\n"
-"PO-Revision-Date: 2012-08-25 10:54+0200\n"
-"Last-Translator: WadimArt <WadimArt@GiClub.tv>\n"
-"Language-Team: none\n"
-"Language: en\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-04-09 19:14+0200\n"
+"Last-Translator: Dimitrij <Dima-73@inbox.lv>\n"
+"Language-Team: LANGUAGE <Dima-73@inbox.lv>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7\n"
 
-msgid "Automated XMLTV Importer"
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"Начинаем импорт данных EPG.\n"
+"Это может занять несколько минут.\n"
+"Это вас устраивает?"
+
+msgid " events\n"
+msgstr " событий\n"
+
+msgid "Automated EPG Importer"
+msgstr "Автоматический импортер EPG"
+
+msgid "Automatic import EPG"
 msgstr "Автоматический импорт EPG"
 
 msgid "Automatic start time"
-msgstr "Время автостарта"
+msgstr "Начало автоматического старта"
 
 msgid "Cancel"
 msgstr "Отмена"
 
+msgid "Choice days for start import"
+msgstr "Выбор дней для старта импорта"
+
 msgid "Clear"
-msgstr "Очистить"
+msgstr "Очистка"
 
-msgid "Daily automatic import"
-msgstr "Ежедневный автоимпорт"
+msgid "Clearing current EPG before import"
+msgstr "Очистка текущего EPG перед импортом"
 
-msgid "XMLTV Import Configuration"
-msgstr "Конфигурация импорта EPG"
+msgid "Consider setting \"Days Profile\""
+msgstr "Учесть настройки \"Профиль дней\""
 
-msgid "XMLTV Import Log"
-msgstr "Журнал EPG импорта"
+msgid "Days Profile"
+msgstr "Профиль дней"
 
-msgid "XMLTV Import Sources"
-msgstr "Источники EPG импорта"
+msgid "Friday"
+msgstr "Пятница"
 
-msgid "XMLTV Import finished, %d events"
-msgstr "EPG импорт завершён, %d событий"
+msgid "Import current source"
+msgstr "Импорт текущего источника"
 
+#, python-format
 msgid ""
-"XMLTVImport Plugin\n"
-"Failed to start:\n"
+"Importing: %s\n"
+"%s events"
 msgstr ""
-"Не удалось запустить\n"
-"плагин XMLTV Import:\n"
+"Импортируем: %s\n"
+"%s событий"
 
-msgid ""
-"XMLTVImport Plugin\n"
-"Import of epg data is still in progress. Please wait."
-msgstr ""
-"Плагин XMLTV Import\n"
-"Импорт данных EPG все еще продолжается. Пожалуйста, ждите."
+msgid "Last import: "
+msgstr "Последний импорт: "
 
-msgid ""
-"XMLTVImport Plugin\n"
-"Import of epg data will start\n"
-"This may take a few minutes\n"
-"Is this ok?"
-msgstr ""
-"Плагин XMLTV Import\n"
-"Импорт данных EPG начинается\n"
-"Это может занять несколько минут\n"
-"Выполнить это сейчас?"
+#, python-format
+msgid "Last import: %s events"
+msgstr "Последний импорт: %s событий"
 
-msgid "Importing:"
-msgstr "Импортировано:"
-
+#, python-format
 msgid "Last: %s %s, %d events"
-msgstr "Последние: %s %s, %d события"
+msgstr "Последний импорт: %s %s, %d событий"
+
+msgid "Load EPG only services in bouquets"
+msgstr "Загрузка EPG только для сервисов из букетов"
 
 msgid "Load long descriptions up to X days"
-msgstr "Загрузите длинные описания вплоть до X дней"
+msgstr "Загрузка длинных описаний не больше чем на Х дней"
 
 msgid "Manual"
-msgstr "Вручную"
+msgstr "В ручную"
+
+msgid "Monday"
+msgstr "Понедельник"
 
 msgid "No active EPG sources found, nothing to do"
-msgstr "Активных источников EPG не найдено, ничего не делаю"
+msgstr "Нет найденных активных источников EPG."
 
-msgid "Ok"
-msgstr "ОК"
+msgid "Press OK"
+msgstr "Нажмите ОК"
+
+msgid "Return to deep standby after import"
+msgstr "Возврат в режим глубокого ожидания после импорта"
+
+msgid "Run AutoTimer after import"
+msgstr "Запустить Автотаймер по окончании импорта"
+
+msgid "Saturday"
+msgstr "Суббота"
 
 msgid "Save"
 msgstr "Сохранить"
 
-msgid "Show in extensions"
-msgstr "Отобразить в списке расширений"
+msgid "Show \"EPG Importer\" in main menu"
+msgstr "Показать \"Импортер EPG\" в главном меню"
 
-msgid "Show in plugin browser"
-msgstr "Отобразить в списке плагинов"
+msgid "Show \"EPGImport\" in extensions"
+msgstr "Показать \"EPG импорт\" в меню дополнений"
 
-msgid "Skip the import"
-msgstr "Пропустить импорт"
+msgid "Skip import on restart GUI"
+msgstr "Пропускать импорт после рестарта GUI"
 
 msgid "Sources"
 msgstr "Источники"
 
 msgid "Standby at startup"
-msgstr "Режим ожидания при запуске"
+msgstr "Перейти в режим ожидания после загрузки"
 
 msgid "Start import after booting up"
-msgstr "Запуск импорта после загрузки"
+msgstr "Старт импорта после загрузки"
 
-msgid "Wake up and import"
-msgstr "Импорт после пробуждения"
+msgid "Sunday"
+msgstr "Воскресенье"
+
+msgid "Thursday"
+msgstr "Четверг"
+
+msgid "Tuesday"
+msgstr "Вторник"
+
+msgid "Wednesday"
+msgstr "Среда"
 
 msgid "When in deep standby"
-msgstr "В полном режиме ожидания"
+msgstr "Поведение в глубоком ожидании"
 
-msgid "XMLTV-Importer"
-msgstr "Импорт XMLTV"
+msgid "Write to /tmp/EPGimport.log"
+msgstr ""
+
+msgid "EPG Import Configuration"
+msgstr "EPG импорт - настройки"
+
+msgid "EPG Import Log"
+msgstr "EPG импорт - лог"
+
+msgid "EPG Import Sources"
+msgstr "Источники импорта EPG"
+
+#, python-format
+msgid "EPG Import finished, %d events"
+msgstr "EPG импорт закончен, %d событий"
+
+msgid "EPG Importer"
+msgstr "Импортер EPG"
+
+msgid "EPG-Importer"
+msgstr "Импортер EPG"
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"EPG импорт\n"
+"Импорт данных EPG все еще продолжается. Пожалуйста подождите."
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"EPG импорт\n"
+"Начинаем импорт данных EPG.\n"
+"Это может занять несколько минут.\n"
+"Это вас устраивает?"
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"EPG импорт\n"
+"Ошибка старта:\n"
+
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+"Вы не можете использовать эти настройки!\n"
+"По крайней мере один день недели должен быть активирован!"
 
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
 msgstr ""
-"Вы должны перезапустить Энигму для загрузки данных EPG,\n"
-"Выполнить это сейчас?"
+"Необходим рестарт Энигма2 для загрузки данных EPG,\n"
+"сделать это сейчас?"
+
+msgid "always"
+msgstr "всегда"
+
+msgid "never"
+msgstr "никогда"
+
+msgid "none"
+msgstr ""
+
+msgid "only automatic boot"
+msgstr "только при авто загрузке"
+
+msgid "only manual boot"
+msgstr "только при ручной загрузке"
+
+msgid "skip the import"
+msgstr "пропускать импорт"
+
+msgid "wake up and import"
+msgstr "разбудить для импорта"
+
+#~ msgid ""
+#~ " %s\n"
+#~ "%s events"
+#~ msgstr ""
+#~ " %s\n"
+#~ "%s событий"
+
+#~ msgid "EPGImport"
+#~ msgstr "EPG импорт"
+
+#~ msgid "Write to /tmp/epgimport.log"
+#~ msgstr "Запись в /tmp/epgimport.log"

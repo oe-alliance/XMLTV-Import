@@ -53,20 +53,25 @@ class EPGChannel:
 			fd = gzip.GzipFile(fileobj = fd, mode = 'rb')
 		return fd
 	def parse(self, filterCallback, downloadedFile):
-		print>>log,"[XMLTVImport] Parsing channels from '%s'" % self.name
+		print>>log,"[EPGImport] Parsing channels from '%s'" % self.name
 		self.items = {}
-		for event, elem in iterparse(self.openStream(downloadedFile)):
-			if elem.tag == 'channel':
-				id = elem.get('id')
-				ref = elem.text
-				if id and ref:
-					ref = ref.encode('latin-1')
-					if filterCallback(ref):
-						if self.items.has_key(id):
-							self.items[id].append(ref)
-						else:
-							self.items[id] = [ref]
-				elem.clear()
+		try:
+			context = iterparse(self.openStream(downloadedFile))
+			for event, elem in context:
+				if elem.tag == 'channel':
+					id = elem.get('id')
+					ref = elem.text
+					if id and ref:
+						ref = ref.encode('latin-1')
+						if filterCallback(ref):
+							if self.items.has_key(id):
+								self.items[id].append(ref)
+							else:
+								self.items[id] = [ref]
+					elem.clear()
+		except Exception as e:
+			print>>log, "[EPGImport] failed to parse", downloadedFile, "Error:", e
+			pass
 	def update(self, filterCallback, downloadedFile=None):
 		if downloadedFile is not None:
 			self.mtime = time.time()
@@ -120,20 +125,20 @@ def enumSources(path, filter=None):
 		for sourcefile in os.listdir(path):
 			if sourcefile.endswith('.sources.xml'):
 				sourcefile = os.path.join(path, sourcefile)
-				print>>log, "[XMLTVImport] using source",sourcefile
 				try:
 					for s in enumSourcesFile(sourcefile, filter):
 						yield s
 				except Exception, e:
-					print>>log, "[XMLTVImport] failed to open", sourcefile, "Error:", e
+					print>>log, "[EPGImport] failed to open", sourcefile, "Error:", e
 	except Exception, e:
-		print>>log, "[XMLTVImport] failed to list", path, "Error:", e
+		print>>log, "[EPGImport] failed to list", path, "Error:", e
+
 
 def loadUserSettings(filename = SETTINGS_FILE):
 	try:
 		return pickle.load(open(filename, 'rb'))
 	except Exception, e:
-		print>>log, "[XMLTVImport] No settings", e
+		print>>log, "[EPGImport] No settings", e
 		return {"sources": []}
 
 def storeUserSettings(filename = SETTINGS_FILE, sources = None):
