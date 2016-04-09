@@ -1,3 +1,5 @@
+msgid ""
+msgstr ""
 "Project-Id-Version: EPGImport\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-14 17:06+0200\n"
