@@ -1,2 +1,0 @@
-installdir = ${sysconfdir}
-SUBDIRS = epgimport
