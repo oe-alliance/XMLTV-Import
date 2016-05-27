@@ -198,3 +198,36 @@ msgstr ""
 
 msgid "wake up and import"
 msgstr ""
+
+msgid "Show log"
+msgstr ""
+
+msgid "Ignore services list"
+msgstr ""
+
+msgid "Select action"
+msgstr ""
+
+msgid "Add Provider"
+msgstr ""
+
+msgid "Add Channel"
+msgstr ""
+
+msgid "Ignore services list(press OK to save)"
+msgstr ""
+
+msgid "Really delete all list?"
+msgstr ""
+
+msgid "Delete selected"
+msgstr ""
+
+msgid "Delete all"
+msgstr ""
+
+msgid "Channel Selection"
+msgstr ""
+
+msgid "All services provider"
+msgstr ""

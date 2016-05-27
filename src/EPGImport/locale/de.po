@@ -229,38 +229,42 @@ msgstr "Import überspringen"
 msgid "wake up and import"
 msgstr "Aufwachen und importieren"
 
-#~ msgid "Importing:"
-#~ msgstr "Importieren:"
+msgid "Show log"
+msgstr "Log anzeigen"
 
-#~ msgid "Ok"
-#~ msgstr "Ok"
+msgid "Ignore services list"
+msgstr "Liste der zu überspringenden Sender"
 
-#~ msgid "Show in extensions"
-#~ msgstr "In Erweiterungen anzeigen"
+msgid "Select action"
+msgstr "Aktion auswählen"
 
-#~ msgid "Show in plugin browser"
-#~ msgstr "Im Plugin-Browser anzeigen"
+msgid "Add Provider"
+msgstr "Senderkette hinzufügen"
 
-#~ msgid "Skip the import"
-#~ msgstr "Import überspringen"
+msgid "Add Channel"
+msgstr "Sender hinzufügen"
 
-#~ msgid "Wake up and import"
-#~ msgstr "Aufwachen und importieren"
+msgid "Ignore services list(press OK to save)"
+msgstr "Liste der zu überspringenden Sender (OK zum Speichern)"
 
-#~ msgid ""
-#~ "EPGImport Plugin\n"
-#~ "Import of epg data is still in progress. Please wait."
-#~ msgstr ""
-#~ "EPGImport Plugin\n"
-#~ "Import von EPG-Daten ist noch im Gange. Bitte warten."
+msgid "Really delete all list?"
+msgstr "Wirklich die gesamte Liste löschen?"
 
-#~ msgid ""
-#~ "EPGImport Plugin\n"
-#~ "Import of epg data will start\n"
-#~ "This may take a few minutes\n"
-#~ "Is this ok?"
-#~ msgstr ""
-#~ "EPGImport-Plugin\n"
-#~ "Import von EPG-Daten wird beginnen\n"
-#~ "Dies kann ein paar Minuten dauern\n"
-#~ "Ist das ok?"
+msgid "Delete selected"
+msgstr "Ausgewählte löschen"
+
+msgid "Delete all"
+msgstr "Alle löschen"
+
+msgid "Channel Selection"
+msgstr "Kanalauswahl"
+
+msgid "All services provider"
+msgstr "Alle Senderketten"
+
+msgid "Show in extensions"
+msgstr "In Erweiterungen anzeigen"
+
+msgid "Show in plugin browser"
+msgstr "Im Plugin-Browser anzeigen"
+

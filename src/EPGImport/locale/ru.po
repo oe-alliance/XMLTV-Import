@@ -2,9 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-04-09 19:14+0200\n"
-"Last-Translator: Dimitrij <Dima-73@inbox.lv>\n"
+"POT-Creation-Date: 2008-02-28 19:54+0100\n"
+"PO-Revision-Date: 2016-05-27 22:10+0300\n"
 "Language-Team: LANGUAGE <Dima-73@inbox.lv>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -65,6 +64,13 @@ msgid ""
 "%s events"
 msgstr ""
 "Импортируем: %s\n"
+"%s событий"
+
+msgid ""
+" %s\n"
+"%s events"
+msgstr ""
+" %s\n"
 "%s событий"
 
 msgid "Last import: "
@@ -141,8 +147,8 @@ msgstr "Среда"
 msgid "When in deep standby"
 msgstr "Поведение в глубоком ожидании"
 
-msgid "Write to /tmp/EPGimport.log"
-msgstr ""
+msgid "Write to /tmp/epgimport.log"
+msgstr "Запись в /tmp/epgimport.log"
 
 msgid "EPG Import Configuration"
 msgstr "EPG импорт - настройки"
@@ -162,6 +168,9 @@ msgstr "Импортер EPG"
 
 msgid "EPG-Importer"
 msgstr "Импортер EPG"
+
+msgid "EPGImport"
+msgstr "EPG импорт"
 
 msgid ""
 "EPGImport\n"
@@ -223,15 +232,35 @@ msgstr "пропускать импорт"
 msgid "wake up and import"
 msgstr "разбудить для импорта"
 
-#~ msgid ""
-#~ " %s\n"
-#~ "%s events"
-#~ msgstr ""
-#~ " %s\n"
-#~ "%s событий"
+msgid "Show log"
+msgstr "Показать лог"
 
-#~ msgid "EPGImport"
-#~ msgstr "EPG импорт"
+msgid "Ignore services list"
+msgstr "Список игногируемых сервисов"
 
-#~ msgid "Write to /tmp/epgimport.log"
-#~ msgstr "Запись в /tmp/epgimport.log"
+msgid "Select action"
+msgstr "Выбор действия"
+
+msgid "Add Provider"
+msgstr "Добавить провайдера"
+
+msgid "Add Channel"
+msgstr "Добавить канал"
+
+msgid "Ignore services list(press OK to save)"
+msgstr "Список игногируемых сервисов (ОК для сохранения)"
+
+msgid "Really delete all list?"
+msgstr "Удалить весь список?"
+
+msgid "Delete selected"
+msgstr "Удалить выбранное"
+
+msgid "Delete all"
+msgstr "Удалить все"
+
+msgid "Channel Selection"
+msgstr "Выбор каналов"
+
+msgid "All services provider"
+msgstr "Все сервисы провайдера"
