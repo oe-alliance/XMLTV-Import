@@ -44,7 +44,7 @@ def calcDefaultStarttime():
 from boxbranding import getImageDistro
 #Set default configuration
 config.plugins.epgimport = ConfigSubsection()
-config.plugins.epgimport.enabled = ConfigEnableDisable(default = True)
+config.plugins.epgimport.enabled = ConfigEnableDisable(default = False)
 config.plugins.epgimport.runboot = ConfigSelection(default = "4", choices = [
 		("1", _("always")),
 		("2", _("only manual boot")),
