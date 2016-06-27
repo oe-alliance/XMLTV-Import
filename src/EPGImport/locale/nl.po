@@ -126,7 +126,7 @@ msgid "Sources"
 msgstr "Bronnen"
 
 msgid "Standby at startup"
-msgstr "Stan-by na opstarten"
+msgstr "Stand-by na opstarten"
 
 msgid "Start import after booting up"
 msgstr "Start import na booten."
