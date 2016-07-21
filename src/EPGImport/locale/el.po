@@ -65,7 +65,7 @@ msgid ""
 "%s events"
 msgstr ""
 "Εισαγωγή σε εξέλιξη: %s\n"
-"%s events"
+"%s προγράμματα"
 
 msgid "Last import: "
 msgstr "Τελευταία εισαγωγή: "
