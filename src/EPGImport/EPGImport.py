@@ -9,6 +9,9 @@ import os
 import gzip
 import log
 import random
+from twisted import version
+from sys import version_info
+from socket import getaddrinfo, AF_INET6, has_ipv6
 
 HDD_EPG_DAT = "/hdd/epg.dat"
 
@@ -324,6 +327,10 @@ class EPGImport:
 	def isImportRunning(self):
 		return self.source is not None
 
+	def legacyDownload(self, result, afterDownload, downloadFail, sourcefile, filename, deleteFile=True):
+		print>>log, "[EPGImport] IPv6 download failed, falling back to IPv4: " + sourcefile
+		downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
+
 	def do_download(self, sourcefile, afterDownload, downloadFail):
 		path = bigStorage(9000000, '/tmp', '/media/DOMExtender', '/media/cf', '/media/usb', '/media/hdd')
 		filename = os.path.join(path, 'epgimport')
@@ -331,5 +338,14 @@ class EPGImport:
 			filename += '.gz'
 		sourcefile = sourcefile.encode('utf-8')
 		print>>log, "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
-		downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
+		if has_ipv6 and version_info >= (2,7,11) and ((version.major == 15 and version.minor >= 5) or version.major >= 16):
+			host = sourcefile.split("/")[2]
+			ip6 = getaddrinfo(host,0, AF_INET6)
+			if ip6:
+				sourcefile6 = sourcefile.replace(host,"[" + list(ip6)[0][4][0] + "]")
+				print>>log, "[EPGImport] Trying IPv6 first: " + sourcefile6
+				downloadPage(sourcefile6, filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+		else:
+			print>>log, "[EPGImport] No IPv6, using IPv4 directly: " + sourcefile
+			downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
 		return filename
