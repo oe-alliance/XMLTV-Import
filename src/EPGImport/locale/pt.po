@@ -1,0 +1,262 @@
+# Portuguese translation for EPGImporter
+# Copyright (C) 2015 THE plugins'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the plugins package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: BH Team\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"Last-Translator: nunigaia\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: pt_PT\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"A Importação de dados epg vai começar.\n"
+"Isto pode levar alguns minutos.\n"
+"Está correto?"
+
+msgid " events\n"
+msgstr "eventos\n"
+
+msgid "Automated EPG Importer"
+msgstr "Importador automático EPG"
+
+msgid "Automatic import EPG"
+msgstr "Importar automáticamente o EPG"
+
+msgid "Automatic start time"
+msgstr "Início automático"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Choice days for start import"
+msgstr "Escolha dos dias para iniciar a importação"
+
+msgid "Clear"
+msgstr "Limpar"
+
+msgid "Clearing current EPG before import"
+msgstr "A limpar o EPG atual antes de importar"
+
+msgid "Consider setting \"Days Profile\""
+msgstr "Considerar definir \"Perfil dos Dias\""
+
+msgid "Days Profile"
+msgstr "Perfil dos dias"
+
+msgid "Friday"
+msgstr "Sexta feira"
+
+msgid "Import current source"
+msgstr "Importar a fonte atual"
+
+#, python-format
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+"A importar %s\n"
+"%s eventos"
+
+msgid "Last import: "
+msgstr "Última importação:"
+
+#, python-format
+msgid "Last import: %s events"
+msgstr "Última importação: %s eventos"
+
+#, python-format
+msgid "Last: %s %s, %d events"
+msgstr "Última: %s %s, %d eventos"
+
+msgid "Load EPG only services in bouquets"
+msgstr "Carregar EPG dos serviços em bouquets"
+
+msgid "Load long descriptions up to X days"
+msgstr "Carregar descrições longas até X dias"
+
+msgid "Manual"
+msgstr "Manual"
+
+msgid "Monday"
+msgstr "Segunda-feira"
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "Não existem fontes de EPG ativas, nada a fazer"
+
+msgid "Press OK"
+msgstr "Prima OK "
+
+msgid "Return to deep standby after import"
+msgstr "Regressar ao Modo de Espera depois da importação"
+
+msgid "Run AutoTimer after import"
+msgstr "Executar AutoTimer após importação"
+
+msgid "Saturday"
+msgstr "Sábado"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Show \"EPG Importer\" in main menu"
+msgstr "Mostrar \"EPGImporter\" no menu principal"
+
+msgid "Show \"EPGImport\" in extensions"
+msgstr "Mostrar \"EPGImport\" em extensões"
+
+msgid "Skip import on restart GUI"
+msgstr "Saltar importação ou reiniciar GUI"
+
+msgid "Sources"
+msgstr "Fontes"
+
+msgid "Standby at startup"
+msgstr "Modo de Espera no arranque"
+
+msgid "Start import after booting up"
+msgstr "Iniciar a importação após arrancar."
+
+msgid "Sunday"
+msgstr "Domingo"
+
+msgid "Thursday"
+msgstr "Quinta-Feira"
+
+msgid "Tuesday"
+msgstr "Terça-Feira"
+
+msgid "Wednesday"
+msgstr "Quarta-Feira"
+
+msgid "When in deep standby"
+msgstr "Quando em Modo de espera"
+
+msgid "Write to /tmp/EPGimport.log"
+msgstr "Escrever em /tmp/EPGimport.log"
+
+msgid "EPG Import Configuration"
+msgstr "Configuração da importação EPG"
+
+msgid "EPG Import Log"
+msgstr "Log da Importação do EPG"
+
+msgid "EPG Import Sources"
+msgstr "Importar fontes EPG"
+
+#, python-format
+msgid "EPG Import finished, %d events"
+msgstr "Importação do EPG terminou, %d eventos."
+
+msgid "EPG Importer"
+msgstr "Importador EPG"
+
+msgid "EPG-Importer"
+msgstr "Importador EPG"
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"EPGImport\n"
+"Importação de dados epg ainda está em andamento. Aguarde, Por Favor!."
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"A Importação de dados epg vai começar.\n"
+"Isto pode levar alguns minutos.\n"
+"Está correto?"
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"O plugin EPGImport\n"
+"Falhou o arranque:\n"
+
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+"Não deve usar estas definições!\n"
+"Pelo menos um dia da semana deve ser incluído!"
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"Deve reiniciar o Enigma2 para carregard a informação do EPG.\n"
+"Isto está correto?"
+
+msgid "always"
+msgstr "sempre"
+
+msgid "never"
+msgstr "nunca"
+
+msgid "none"
+msgstr "nenhum"
+
+msgid "only automatic boot"
+msgstr "só arranque automático"
+
+msgid "only manual boot"
+msgstr "só arranque manual"
+
+msgid "skip the import"
+msgstr "saltar a importação"
+
+msgid "wake up and import"
+msgstr "acordar e importar"
+
+msgid "Show log"
+msgstr "Exibe o Log"
+
+msgid "Ignore services list"
+msgstr "Ignorar lista de serviços"
+
+msgid "Select action"
+msgstr "Selecione a ação"
+
+msgid "Add Provider"
+msgstr "Adicionar Operador"
+
+msgid "Add Channel"
+msgstr "Adicional canal"
+
+msgid "Ignore services list(press OK to save)"
+msgstr "Ignorar lista de serviços ( prima OK para Guardar )"
+
+msgid "Really delete all list?"
+msgstr "Deseja mesmo apagar todas as listas?"
+
+msgid "Delete selected"
+msgstr "Apagar os selecionados"
+
+msgid "Delete all"
+msgstr "Apagar todos"
+
+msgid "Channel Selection"
+msgstr "Seleção de Canais"
+
+msgid "All services provider"
+msgstr "Todos os serviços de operadores "
