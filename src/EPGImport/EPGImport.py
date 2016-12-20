@@ -317,6 +317,8 @@ class EPGImport:
 							unlink_if_exists(needLoad)
 					except Exception, e:
 						print>>log, "[EPGImport] load() failed:", e
+			elif hasattr(self.epgcache, 'save'):
+				self.epgcache.save()
 			elif hasattr(self.epgcache, 'timeUpdated'):
 				self.epgcache.timeUpdated()
 			if self.onDone:
