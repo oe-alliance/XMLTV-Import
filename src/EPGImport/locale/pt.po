@@ -30,7 +30,7 @@ msgstr ""
 "Está correto?"
 
 msgid " events\n"
-msgstr "eventos\n"
+msgstr " eventos\n"
 
 msgid "Automated EPG Importer"
 msgstr "Importador automático EPG"
@@ -45,13 +45,13 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "Choice days for start import"
-msgstr "Escolha dos dias para iniciar a importação"
+msgstr "Dias para iniciar a importação"
 
 msgid "Clear"
 msgstr "Limpar"
 
 msgid "Clearing current EPG before import"
-msgstr "A limpar o EPG atual antes de importar"
+msgstr "Limpar o EPG atual antes de importar"
 
 msgid "Consider setting \"Days Profile\""
 msgstr "Considerar definir \"Perfil dos Dias\""
@@ -94,7 +94,7 @@ msgid "Manual"
 msgstr "Manual"
 
 msgid "Monday"
-msgstr "Segunda-feira"
+msgstr "Segunda feira"
 
 msgid "No active EPG sources found, nothing to do"
 msgstr "Não existem fontes de EPG ativas, nada a fazer"
@@ -136,13 +136,13 @@ msgid "Sunday"
 msgstr "Domingo"
 
 msgid "Thursday"
-msgstr "Quinta-Feira"
+msgstr "Quinta Feira"
 
 msgid "Tuesday"
-msgstr "Terça-Feira"
+msgstr "Terça Feira"
 
 msgid "Wednesday"
-msgstr "Quarta-Feira"
+msgstr "Quarta Feira"
 
 msgid "When in deep standby"
 msgstr "Quando em Modo de espera"
@@ -223,7 +223,7 @@ msgid "only manual boot"
 msgstr "só arranque manual"
 
 msgid "skip the import"
-msgstr "saltar a importação"
+msgstr "saltar importação"
 
 msgid "wake up and import"
 msgstr "acordar e importar"
@@ -241,10 +241,10 @@ msgid "Add Provider"
 msgstr "Adicionar Operador"
 
 msgid "Add Channel"
-msgstr "Adicional canal"
+msgstr "Adicionar canal"
 
 msgid "Ignore services list(press OK to save)"
-msgstr "Ignorar lista de serviços ( prima OK para Guardar )"
+msgstr "Ignorar lista de serviços (prima OK para Guardar)"
 
 msgid "Really delete all list?"
 msgstr "Deseja mesmo apagar todas as listas?"
