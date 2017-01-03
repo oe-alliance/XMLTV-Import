@@ -173,7 +173,7 @@ class EPGImport:
 				threads.deferToThread(self.readEpgDatFile, filename, deleteFile).addCallback(lambda ignore: self.nextImport())
 			else:
 				self.readEpgDatFile(filename, deleteFile)
-				return
+			return
 		if filename.endswith('.gz'):
 			self.fd = gzip.open(filename, 'rb')
 		else:
