@@ -178,7 +178,7 @@ class EPGImport:
 			self.fd = gzip.open(filename, 'rb')
 		else:
 			self.fd = open(filename, 'rb')
-		if deleteFile:
+		if deleteFile and self.source.parser != 'epg.dat':
 			try:
 				print>>log, "[EPGImport] unlink", filename
 				os.unlink(filename)
