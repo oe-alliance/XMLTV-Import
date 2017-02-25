@@ -173,7 +173,7 @@ class EPGImport:
 				threads.deferToThread(self.readEpgDatFile, filename, deleteFile).addCallback(lambda ignore: self.nextImport())
 			else:
 				self.readEpgDatFile(filename, deleteFile)
-			return
+				return
 		if filename.endswith('.gz'):
 			self.fd = gzip.open(filename, 'rb')
 		else:
@@ -317,8 +317,8 @@ class EPGImport:
 							unlink_if_exists(needLoad)
 					except Exception, e:
 						print>>log, "[EPGImport] load() failed:", e
-			elif hasattr(self.epgcache, 'save'):
-				self.epgcache.save()
+				elif hasattr(self.epgcache, 'save'):
+					self.epgcache.save()
 			elif hasattr(self.epgcache, 'timeUpdated'):
 				self.epgcache.timeUpdated()
 			if self.onDone:
