@@ -176,6 +176,14 @@ class EPGImport:
 			return
 		if filename.endswith('.gz'):
 			self.fd = gzip.open(filename, 'rb')
+			try:
+				# read a bit to make sure it's a gzip file
+				self.fd.read(10)
+				self.fd.seek(0,0)
+			except Exception, e:
+				print>>log, "[EPGImport] File downloaded is not a valid gzip file", filename
+				self.downloadFail(e)
+				return
 		else:
 			self.fd = open(filename, 'rb')
 		if deleteFile and self.source.parser != 'epg.dat':
