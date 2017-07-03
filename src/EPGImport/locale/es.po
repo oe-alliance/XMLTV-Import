@@ -35,8 +35,8 @@ msgstr " Eventos\n"
 msgid "Automated EPG Importer"
 msgstr "Automatizar EPG-Import"
 
-msgid "importar EPG automáticamente"
-msgstr "EPG automatisch importieren"
+msgid "Automatic import EPG"
+msgstr "Importar EPG automáticamente"
 
 msgid "Automatic start time"
 msgstr "Hora del inicio automático"
