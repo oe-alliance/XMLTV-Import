@@ -184,6 +184,20 @@ class EPGImport:
 				print>>log, "[EPGImport] File downloaded is not a valid gzip file", filename
 				self.downloadFail(e)
 				return
+		elif filename.endswith('.xz') or filename.endswith('.lzma'):
+			try:
+				import lzma
+			except ImportError:
+				from backports import lzma
+			self.fd = lzma.open(filename, 'rb')
+			try:
+				# read a bit to make sure it's an xz file
+				self.fd.read(10)
+				self.fd.seek(0,0)
+			except Exception, e:
+				print>>log, "[EPGImport] File downloaded is not a valid xz file", filename
+				self.downloadFail(e)
+				return
 		else:
 			self.fd = open(filename, 'rb')
 		if deleteFile and self.source.parser != 'epg.dat':
