@@ -358,8 +358,10 @@ class EPGImport:
 	def do_download(self, sourcefile, afterDownload, downloadFail):
 		path = bigStorage(9000000, '/tmp', '/media/DOMExtender', '/media/cf', '/media/usb', '/media/hdd')
 		filename = os.path.join(path, 'epgimport')
-		if sourcefile.endswith('.gz'):
-			filename += '.gz'
+		ext = os.path.splitext(sourcefile)[1]
+		# Keep sensible extension, in particular the compression type
+		if ext and len(ext) < 6:
+			filename += ext
 		sourcefile = sourcefile.encode('utf-8')
 		print>>log, "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
 		host = sourcefile.split("/")[2]
