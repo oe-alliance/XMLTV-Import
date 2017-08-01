@@ -51,6 +51,12 @@ class EPGChannel:
 			raise Exception, "File is empty"
 		if filename.endswith('.gz'):
 			fd = gzip.GzipFile(fileobj = fd, mode = 'rb')
+		elif filename.endswith('.xz') or filename.endswith('.lzma'):
+			try:
+				import lzma
+			except ImportError:
+				from backports import lzma
+			fd = lzma.open(filename, 'rb')
 		return fd
 	def parse(self, filterCallback, downloadedFile):
 		print>>log,"[EPGImport] Parsing channels from '%s'" % self.name
