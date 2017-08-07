@@ -516,11 +516,14 @@ class EPGImportSources(Screen):
 		self["key_blue"] = Button()
 		cfg = EPGConfig.loadUserSettings()
 		filter = cfg["sources"]
-		sources = [
-			# (description, value, index, selected)
-			SelectionEntryComponent(x.description, x.description, 0, (filter is None) or (x.description in filter))
-			for x in EPGConfig.enumSources(CONFIG_PATH, filter=None)
-			]
+		sources = []
+		for x in EPGConfig.enumSources(CONFIG_PATH, filter=None, categories=True):
+			if hasattr(x, 'description'):
+				sources.append(
+					# (description, value, index, selected)
+					SelectionEntryComponent(x.description, x.description, 0, (filter is None) or (x.description in filter)))
+			else:
+				pass # TODO: Category...
 		self["list"] = SelectionList(sources, enableWrapAround=True)
 		list = self["list"].list
 		if list and len(list) > 0:

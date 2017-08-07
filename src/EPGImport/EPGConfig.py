@@ -100,39 +100,50 @@ class EPGChannel:
 		return "EPGChannel(urls=%s, channels=%s, mtime=%s)" % (self.urls, self.items and len(self.items), self.mtime)
 
 class EPGSource:
-	def __init__(self, path, elem):
+	def __init__(self, path, elem, category=None):
 		self.parser = elem.get('type')
 		self.urls = [e.text.strip() for e in elem.findall('url')]
 		self.url = random.choice(self.urls)
 		self.description = elem.findtext('description')
+		self.category = category
 		if not self.description:
 			self.description = self.url
 		self.format = elem.get('format', 'xml')
 		self.channels = getChannels(path, elem.get('channels'))
 
-def enumSourcesFile(sourcefile, filter=None):
+def enumSourcesFile(sourcefile, filter=None, categories=False):
 	global channelCache
-	for event, elem in iterparse(open(sourcefile, 'rb')):
-		if elem.tag == 'source':
-			s = EPGSource(sourcefile, elem)
-			elem.clear()
-			if (filter is None) or (s.description in filter):
-				yield s
-		elif elem.tag == 'channel':
-			name = elem.get('name')
-			urls = [e.text.strip() for e in elem.findall('url')]
-			if name in channelCache:
-				channelCache[name].urls = urls
-			else:
-				channelCache[name] = EPGChannel(name, urls)
+	category = None
+	for event, elem in iterparse(open(sourcefile, 'rb'), events=("start", "end")):
+		if event == 'end':
+			if elem.tag == 'source':
+				s = EPGSource(sourcefile, elem, category)
+				elem.clear()
+				if (filter is None) or (s.description in filter):
+					yield s
+			elif elem.tag == 'channel':
+				name = elem.get('name')
+				urls = [e.text.strip() for e in elem.findall('url')]
+				if name in channelCache:
+					channelCache[name].urls = urls
+				else:
+					channelCache[name] = EPGChannel(name, urls)
+			elif elem.tag == 'sourcecat':
+				category = None
+		elif event == 'start':
+			# Need the category name sooner than the contents, hence "start"
+			if elem.tag == 'sourcecat':
+				category = elem.get('sourcecatname')
+				if categories:
+					yield category
 
-def enumSources(path, filter=None):
+def enumSources(path, filter=None, categories=False):
 	try:
 		for sourcefile in os.listdir(path):
 			if sourcefile.endswith('.sources.xml'):
 				sourcefile = os.path.join(path, sourcefile)
 				try:
-					for s in enumSourcesFile(sourcefile, filter):
+					for s in enumSourcesFile(sourcefile, filter, categories):
 						yield s
 				except Exception, e:
 					print>>log, "[EPGImport] failed to open", sourcefile, "Error:", e
