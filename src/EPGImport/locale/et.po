@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: XMTV-Impoter for Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-07-04 15:47+0200\n"
+"PO-Revision-Date: 2017-08-07 15:39+0300\n"
 "Last-Translator: rimas\n"
 "Language-Team: rimas\n"
 "Language: et\n"
@@ -12,105 +12,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #: src/EPGImport/filtersServices.py:138
 msgid "Add Provider"
-msgstr ""
+msgstr "Lisa levitaja"
 
 #: src/EPGImport/filtersServices.py:139
 msgid "Add Channel"
-msgstr ""
+msgstr "Lisa kanal"
 
 #: src/EPGImport/filtersServices.py:153
 msgid "Ignore services list(press OK to save)"
-msgstr ""
+msgstr "Eiratav (salvestamiseks vajuta OK)"
 
 #: src/EPGImport/filtersServices.py:182
 msgid "Really delete all list?"
-msgstr ""
+msgstr "Kas kustutada kogu nimekiri?"
 
 #: src/EPGImport/filtersServices.py:215
 msgid "Delete selected"
-msgstr ""
+msgstr "Kustuta valik"
 
 #: src/EPGImport/filtersServices.py:216
 msgid "Delete all"
-msgstr ""
+msgstr "Kustuta  kõik"
 
 #: src/EPGImport/filtersServices.py:239
 msgid "Channel Selection"
-msgstr ""
+msgstr "Kanalivalik"
 
 #: src/EPGImport/filtersServices.py:247
 msgid "All services provider"
-msgstr ""
+msgstr "Levitaja kõigile kanalitele"
 
 #: src/EPGImport/filtersServices.py:265 src/EPGImport/plugin.py:480
 msgid "Select action"
-msgstr ""
+msgstr "Vali tegevus"
 
 #: src/EPGImport/plugin.py:52
 msgid "always"
-msgstr ""
+msgstr "alati"
 
 #: src/EPGImport/plugin.py:53
 msgid "only manual boot"
-msgstr ""
+msgstr "ainult käsitsi alglaadimisel"
 
 #: src/EPGImport/plugin.py:54
-#, fuzzy
-#| msgid "Daily automatic import"
 msgid "only automatic boot"
-msgstr "Automaatne EPG hankimine iga päev"
+msgstr "ainult automaatsel alglaadimisel"
 
 #: src/EPGImport/plugin.py:55
 msgid "never"
-msgstr ""
+msgstr "mitte kunagi"
 
 #: src/EPGImport/plugin.py:64
-#, fuzzy
-#| msgid "Wake up and import"
 msgid "wake up and import"
-msgstr "Käivita ja hangi epg"
+msgstr "käivita ja impordi"
 
 #: src/EPGImport/plugin.py:65
-#, fuzzy
-#| msgid "Skip the import"
 msgid "skip the import"
-msgstr "Ära hangi"
+msgstr "ära hangi"
 
 #: src/EPGImport/plugin.py:75
 msgid "Press OK"
-msgstr ""
+msgstr "Vajuta OK"
 
 #: src/EPGImport/plugin.py:83
 msgid "Monday"
-msgstr ""
+msgstr "Esmaspäev"
 
 #: src/EPGImport/plugin.py:84
 msgid "Tuesday"
-msgstr ""
+msgstr "Teisipäev"
 
 #: src/EPGImport/plugin.py:85
 msgid "Wednesday"
-msgstr ""
+msgstr "Kolmapäev"
 
 #: src/EPGImport/plugin.py:86
 msgid "Thursday"
-msgstr ""
+msgstr "Neljapäev"
 
 #: src/EPGImport/plugin.py:87
 msgid "Friday"
-msgstr ""
+msgstr "Reede"
 
 #: src/EPGImport/plugin.py:88
 msgid "Saturday"
-msgstr ""
+msgstr "Laupäev"
 
 #: src/EPGImport/plugin.py:89
 msgid "Sunday"
-msgstr ""
+msgstr "Pühapäev"
 
 #: src/EPGImport/plugin.py:270
 msgid "EPG Import Configuration"
@@ -135,18 +129,18 @@ msgid "Sources"
 msgstr "Allikad"
 
 #: src/EPGImport/plugin.py:295
-#, fuzzy, python-format
+#, python-format
 #| msgid "EPG Import finished, %d events"
 msgid ""
 "Importing: %s\n"
 "%s events"
-msgstr "EPG hankimine lõpetatud, %d saadet"
+msgstr ""
+"Import: %s\n"
+"%s saadet"
 
 #: src/EPGImport/plugin.py:331
-#, fuzzy
-#| msgid "Daily automatic import"
 msgid "Automatic import EPG"
-msgstr "Automaatne EPG hankimine iga päev"
+msgstr "Hangi EPG automaatselt"
 
 #: src/EPGImport/plugin.py:332
 msgid "Automatic start time"
@@ -158,7 +152,7 @@ msgstr "Puhkeseisundis"
 
 #: src/EPGImport/plugin.py:334
 msgid "Return to deep standby after import"
-msgstr ""
+msgstr "Pärast importi tagasi puhkeseisundisse"
 
 #: src/EPGImport/plugin.py:335
 msgid "Standby at startup"
@@ -166,7 +160,7 @@ msgstr "Käivitamine ooteseisundist"
 
 #: src/EPGImport/plugin.py:336
 msgid "Choice days for start import"
-msgstr ""
+msgstr "Päev EPG hankimiseks"
 
 #: src/EPGImport/plugin.py:337
 msgid "Start import after booting up"
@@ -174,25 +168,23 @@ msgstr "Hangi EPG pärast alglaadimist"
 
 #: src/EPGImport/plugin.py:338
 msgid "Load EPG only services in bouquets"
-msgstr ""
+msgstr "EPG ainult kanalitele lemmiknimekirjades"
 
 #: src/EPGImport/plugin.py:339
 msgid "Consider setting \"Days Profile\""
-msgstr ""
+msgstr "Seadista \"päevade profiil\""
 
 #: src/EPGImport/plugin.py:340
 msgid "Skip import on restart GUI"
-msgstr ""
+msgstr "Ära impordi pärast E2 taaskäivitust"
 
 #: src/EPGImport/plugin.py:341
-#, fuzzy
-#| msgid "Show in extensions"
 msgid "Show \"EPGImport\" in extensions"
-msgstr "Näita laienduste menüüs"
+msgstr "Kuva \"EPG import\" laienduste menüüs"
 
 #: src/EPGImport/plugin.py:342
 msgid "Show \"EPG Importer\" in main menu"
-msgstr ""
+msgstr "Kuva \"EPG import\" peamenüüs"
 
 #: src/EPGImport/plugin.py:343
 msgid "Load long descriptions up to X days"
@@ -200,53 +192,42 @@ msgstr "Pikk saatetutvustus X päevaks"
 
 #: src/EPGImport/plugin.py:344
 msgid "Run AutoTimer after import"
-msgstr ""
+msgstr "Käivita Autotaimer pärast importi"
 
 #: src/EPGImport/plugin.py:345
 msgid "Clearing current EPG before import"
-msgstr ""
+msgstr "Aktiivse EPG eemaldamine enne importi"
 
 #: src/EPGImport/plugin.py:432
 #, python-format
 msgid "Last: %s %s, %d events"
-msgstr "Viimane: %s %s, %d saadet"
+msgstr "Viimati: %s %s, %d saadet"
 
 #: src/EPGImport/plugin.py:437
-#, fuzzy, python-format
-#| msgid "Last: %s %s, %d events"
+#, python-format
 msgid "Last import: %s events"
-msgstr "Viimane: %s %s, %d saadet"
+msgstr "Viimati: %s saadet"
 
 #: src/EPGImport/plugin.py:442
-#, fuzzy
-#| msgid ""
-#| "EPGImport Plugin\n"
-#| "Import of epg data is still in progress. Please wait."
 msgid ""
 "EPGImport\n"
 "Import of epg data is still in progress. Please wait."
 msgstr ""
-"EPGImport\n"
+"EPG import\n"
 "Epg hankimine on pooleli. Oota."
 
 #: src/EPGImport/plugin.py:452
 msgid "No active EPG sources found, nothing to do"
-msgstr "EPG allikad on määramata. Midagi ei saa teha."
+msgstr "EPG allikad on määramata. Midagi ei saa teha"
 
 #: src/EPGImport/plugin.py:457
-#, fuzzy
-#| msgid ""
-#| "EPGImport Plugin\n"
-#| "Import of epg data will start\n"
-#| "This may take a few minutes\n"
-#| "Is this ok?"
 msgid ""
 "EPGImport\n"
 "Import of epg data will start.\n"
 "This may take a few minutes.\n"
 "Is this ok?"
 msgstr ""
-"EPGImport\n"
+"EPG import\n"
 "Algab epg hankimine \n"
 "See võib kesta mõne minuti\n"
 "Kas see sobib?"
@@ -261,31 +242,31 @@ msgstr ""
 
 #: src/EPGImport/plugin.py:479
 msgid "Show log"
-msgstr ""
+msgstr "Kuva logi"
 
 #: src/EPGImport/plugin.py:479
 msgid "Ignore services list"
-msgstr ""
+msgstr "Eiratav kanalinimekiri"
 
 #: src/EPGImport/plugin.py:527
-#, fuzzy
-#| msgid "EPG Import Sources"
 msgid "Import current source"
-msgstr "EPG importija allikad"
+msgstr "Import valitud allikast"
 
 #: src/EPGImport/plugin.py:539
 msgid "EPG Import Sources"
-msgstr "EPG importija allikad"
+msgstr "EPG impordi allikad"
 
 #: src/EPGImport/plugin.py:595
 msgid "Days Profile"
-msgstr ""
+msgstr "Päevade profiil"
 
 #: src/EPGImport/plugin.py:605
 msgid ""
 "You may not use this settings!\n"
 "At least one day a week should be included!"
 msgstr ""
+"Seda seadistust ei saa kasutada!\n"
+"Tuleb valida vähemalt üks päev või nädal!"
 
 #: src/EPGImport/plugin.py:636
 msgid "Clear"
@@ -293,41 +274,33 @@ msgstr "Kustuta"
 
 #: src/EPGImport/plugin.py:661
 msgid "EPG Import Log"
-msgstr "EPG importija logi"
+msgstr "EPG impordi logi"
 
 #: src/EPGImport/plugin.py:667
 msgid "Write to /tmp/epgimport.log"
-msgstr ""
+msgstr "Kirjuta /tmp/epgimport.log  faili"
 
 #: src/EPGImport/plugin.py:683
 msgid "Last import: "
-msgstr ""
+msgstr "Viimati: "
 
 #: src/EPGImport/plugin.py:683
 msgid " events\n"
-msgstr ""
+msgstr " saadet\n"
 
 #: src/EPGImport/plugin.py:683
-#, fuzzy
-#| msgid ""
-#| "EPGImport Plugin\n"
-#| "Import of epg data will start\n"
-#| "This may take a few minutes\n"
-#| "Is this ok?"
 msgid ""
 "\n"
 "Import of epg data will start.\n"
 "This may take a few minutes.\n"
 "Is this ok?"
 msgstr ""
-"EPGImport\n"
+"\n"
 "Algab epg hankimine \n"
 "See võib kesta mõne minuti\n"
 "Kas see sobib?"
 
 #: src/EPGImport/plugin.py:701
-#, fuzzy
-#| msgid "EPG-Importer"
 msgid "EPG Importer"
 msgstr "EPG import"
 
@@ -346,7 +319,7 @@ msgstr ""
 
 #: src/EPGImport/plugin.py:1029
 msgid "Automated EPG Importer"
-msgstr "Automaatne EPG hankija"
+msgstr "Automaatne EPG import"
 
 #: src/EPGImport/plugin.py:1031 src/EPGImport/plugin.py:1032
 #: src/EPGImport/plugin.py:1037 src/EPGImport/plugin.py:1042
