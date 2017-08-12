@@ -517,24 +517,24 @@ class EPGImportSources(Screen):
 		self["key_blue"] = Button()
 		cfg = EPGConfig.loadUserSettings()
 		filter = cfg["sources"]
-		sources = []
+		tree = []
 		cat = None
 		for x in EPGConfig.enumSources(CONFIG_PATH, filter=None, categories=True):
 			if hasattr(x, 'description'):
-				# (description, value, index, selected)
 				sel = (filter is None) or (x.description in filter)
-				entry = ExpandableSelectionList.SelectionEntryComponent(x.description, x.description, 0, sel)
-				sources.append(entry)
-				if cat is not None:
-					cat[0][2].append(entry)
-					if sel:
-						ExpandableSelectionList.expand(cat, True)
+				entry = (x.description, x.description, sel)
+				if cat is None:
+					# If no category defined, use a default one.
+					cat = ExpandableSelectionList.category("[.]")
+					tree.append(cat)
+				cat[0][2].append(entry)
+				if sel:
+					ExpandableSelectionList.expand(cat, True)
 			else:
-				cat = ExpandableSelectionList.CategoryEntryComponent(x)
-				sources.append(cat)
-		self["list"] = ExpandableSelectionList.ExpandableSelectionList(sources, enableWrapAround=True)
-		list = self["list"].list
-		if list and len(list) > 0:
+				cat = ExpandableSelectionList.category(x)
+				tree.append(cat)
+		self["list"] = ExpandableSelectionList.ExpandableSelectionList(tree, enableWrapAround=True)
+		if tree:
 			self["key_yellow"] = Button(_("Import current source"))
 		else:
 			self["key_yellow"] = Button()
@@ -550,7 +550,7 @@ class EPGImportSources(Screen):
 		self.setTitle(_("EPG Import Sources"))
 
 	def save(self):
-		sources = [ item[0][1] for item in self["list"].list if (len(item[0]) == 4) and item[0][3] ]
+		sources = [item[1] for item in self["list"].enumSelected()]
 		print>>log, "[EPGImport] Selected sources:", sources
 		EPGConfig.storeUserSettings(sources=sources)
 		self.close(True, sources, None)
