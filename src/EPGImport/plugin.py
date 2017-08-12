@@ -550,7 +550,8 @@ class EPGImportSources(Screen):
 		self.setTitle(_("EPG Import Sources"))
 
 	def save(self):
-		sources = [item[1] for item in self["list"].enumSelected()]
+		# Make the entries unique through a set
+		sources = list(set([item[1] for item in self["list"].enumSelected()]))
 		print>>log, "[EPGImport] Selected sources:", sources
 		EPGConfig.storeUserSettings(sources=sources)
 		self.close(True, sources, None)

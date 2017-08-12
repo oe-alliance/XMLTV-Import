@@ -79,8 +79,18 @@ class ExpandableSelectionList(MenuList):
 			expand(item, not item[0][1])
 			self.updateFlatList()
 		else:
+			# Multiple items may have the same key. Toggle them all,
+			# in both the visual list and the hidden items
 			i = item[0]
-			self.list[idx] = entry(i[0], i[1], not i[2])
+			key = i[1]
+			sel = not i[2]
+			for idx, e in enumerate(self.list):
+				if e[0][1] == key:
+					self.list[idx] = entry(e[0][0], key, sel)
+			for cat in self.tree:
+				for idx, e in enumerate(cat[0][2]):
+					if e[1] == key and e[2] != sel:
+						cat[0][2][idx] = (e[0], e[1], sel)
 			self.setList(self.list)
 
 	def enumSelected(self):
