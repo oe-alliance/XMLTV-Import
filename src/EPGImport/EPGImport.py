@@ -216,13 +216,12 @@ class EPGImport:
 
 	def afterChannelDownload(self, result, filename, deleteFile=True):
 		print>>log, "[EPGImport] afterChannelDownload", filename
-		if filename:
-			try:
-				if not os.path.getsize(filename):
-					raise Exception, "File is empty"
-			except Exception, e:
-				self.channelDownloadFail(e)
-				return
+		if filename is None:
+			self.channelDownloadFail(Exception("File does not exist"));
+			return
+		elif not os.path.getsize(filename):
+			self.channelDownloadFail(Exception('File is empty'))
+			return
 		if twisted.python.runtime.platform.supportsThreads():
 			print>>log, "[EPGImport] Using twisted thread"
 			threads.deferToThread(self.doThreadRead, filename).addCallback(lambda ignore: self.nextImport())
@@ -230,7 +229,7 @@ class EPGImport:
 		else:
 			self.iterator = self.createIterator(filename)
 			reactor.addReader(self)
-		if deleteFile and filename:
+		if deleteFile:
 			try:
 				os.unlink(filename)
 			except Exception, e:
