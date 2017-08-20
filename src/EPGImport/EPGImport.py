@@ -208,7 +208,7 @@ class EPGImport:
 				print>>log, "[EPGImport] warning: Could not remove '%s' intermediate" % filename, e
 		self.channelFiles = self.source.channels.downloadables()
 		if not self.channelFiles:
-			self.afterChannelDownload(None, None)
+			self.nextImport()
 		else:
 			filename = random.choice(self.channelFiles)
 			self.channelFiles.remove(filename)
