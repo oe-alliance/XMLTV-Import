@@ -242,19 +242,19 @@ class EPGImport:
 
 	def doThreadRead(self, filename):
 		'This is used on PLi with threading'
+		for data in self.createIterator(filename):
+			if data is not None:
+				self.eventCount += 1
+				try:
+					r,d = data
+					if d[0] > self.longDescUntil:
+						# Remove long description (save RAM memory)
+						d = d[:4] + ('',) + d[5:]
+					self.storage.importEvents(r, (d,))
+				except Exception, e:
+					print>>log, "[EPGImport] ### importEvents exception:", e
+		print>>log, "[EPGImport] ### thread is ready ### Events:", self.eventCount
 		if filename:
-			for data in self.createIterator(filename):
-				if data is not None:
-					self.eventCount += 1
-					try:
-						r,d = data
-						if d[0] > self.longDescUntil:
-							# Remove long description (save RAM memory)
-							d = d[:4] + ('',) + d[5:]
-						self.storage.importEvents(r, (d,))
-					except Exception, e:
-						print>>log, "[EPGImport] ### importEvents exception:", e
-			print>>log, "[EPGImport] ### thread is ready ### Events:", self.eventCount
 			try:
 				os.unlink(filename)
 			except Exception, e:

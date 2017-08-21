@@ -64,6 +64,9 @@ class XMLTVConverter:
 	def enumFile(self, fileobj):
 		print>>log, "[XMLTVConverter] Enumerating event information"
 		lastUnknown = None
+		# there is nothing no enumerate if there are no channels loaded
+		if not self.channels:
+			return
 		for elem in enumerateProgrammes(fileobj):
 			channel = elem.get('channel')
 			if not channel in self.channels:
