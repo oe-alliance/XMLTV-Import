@@ -16,7 +16,6 @@ from Components.ActionMap import ActionMap
 from Components.Button import Button
 from Components.Label import Label
 from Components.Sources.StaticText import StaticText
-from Components.SelectionList import SelectionList, SelectionEntryComponent
 from Components.ScrollLabel import ScrollLabel
 import Components.PluginComponent
 from Tools import Notifications
