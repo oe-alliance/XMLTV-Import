@@ -6,6 +6,7 @@ from Tools.LoadPixmap import LoadPixmap
 from boxbranding import getImageDistro
 if getImageDistro() in ('openatv'):
 	from Components.SelectionList import selectiononpng
+	selectionpng = selectiononpng
 else:
 	from Components.SelectionList import selectionpng
 
