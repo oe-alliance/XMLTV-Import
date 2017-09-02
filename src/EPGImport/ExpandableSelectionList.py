@@ -4,7 +4,7 @@ from enigma import eListboxPythonMultiContent, eListbox, gFont, RT_HALIGN_LEFT
 from Tools.LoadPixmap import LoadPixmap
 
 from boxbranding import getImageDistro
-if getImageDistro() in ('openatv', 'openbh', 'openhdf', 'openspa'):
+if getImageDistro() in ('openatv', 'openbh', 'openhdf', 'openspa', 'openvix'):
 	from Components.SelectionList import selectiononpng
 	selectionpng = selectiononpng
 else:
