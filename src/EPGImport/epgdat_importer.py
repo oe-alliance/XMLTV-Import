@@ -18,6 +18,8 @@ class epgdatclass:
 		path = tmppath
 		if self.checkPath('/media/cf'):
 			path='/media/cf'
+		if self.checkPath('/media/mmc'):
+			path='/media/mmc'
 		if self.checkPath('/media/usb'):
 			path='/media/usb'
 		if self.checkPath('/media/hdd'):

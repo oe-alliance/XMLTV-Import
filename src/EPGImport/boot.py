@@ -3,7 +3,7 @@ import os
 import time
 import shutil
 
-MEDIA = ("/media/hdd/", "/media/usb/", "/media/cf/", "/tmp")
+MEDIA = ("/media/hdd/", "/media/usb/", "/media/mmc/", "/media/cf/", "/tmp")
 
 def findEpg():
 	candidates = []
