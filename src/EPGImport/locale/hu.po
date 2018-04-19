@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: EPGImport v1.0\n"
+"Project-Id-Version: EPGImport v1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-04-16 14:35+0200\n"
+"PO-Revision-Date: 2018-04-19 17:49+0200\n"
 "Last-Translator: Alec <alex1vagyok@gmail.com>\n"
 "Language-Team: alec <alex1vagyok@gmail.com>\n"
 "Language: hu_HU\n"
@@ -183,11 +183,11 @@ msgstr "A kezelőfelület (GUI) újraindításakor az Importálás kihagyása"
 
 #: src/EPGImport/plugin.py:341
 msgid "Show \"EPGImport\" in extensions"
-msgstr "Az \"EPG Import\" megjelenítése a bővítményekben"
+msgstr "Az \"EPGImport\" megjelenítése a bővítményekben"
 
 #: src/EPGImport/plugin.py:342
 msgid "Show \"EPG Importer\" in main menu"
-msgstr "Az \"EPG Import\" megjelenítése a fő menüben"
+msgstr "Az \"EPGImport\" megjelenítése a fő menüben"
 
 #: src/EPGImport/plugin.py:343
 msgid "Load long descriptions up to X days"
@@ -305,7 +305,7 @@ msgstr ""
 
 #: src/EPGImport/plugin.py:701
 msgid "EPG Importer"
-msgstr "EPG Import"
+msgstr "EPGImport"
 
 #: src/EPGImport/plugin.py:729
 #, python-format
@@ -330,4 +330,4 @@ msgstr "Automatikus Műsorújság importálás"
 #: src/EPGImport/plugin.py:1059 src/EPGImport/plugin.py:1069
 #: src/EPGImport/plugin.py:1076
 msgid "EPG-Importer"
-msgstr "EPG Import"
+msgstr "EPGImport"
