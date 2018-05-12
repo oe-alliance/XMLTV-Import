@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: EPGImport v1.1\n"
+"Project-Id-Version: EPGImport v1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-04-19 17:49+0200\n"
+"PO-Revision-Date: 2018-05-12 16:39+0200\n"
 "Last-Translator: Alec <alex1vagyok@gmail.com>\n"
 "Language-Team: alec <alex1vagyok@gmail.com>\n"
 "Language: hu_HU\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 
 #: src/EPGImport/filtersServices.py:138
 msgid "Add Provider"
@@ -112,7 +112,7 @@ msgstr "Vasárnap"
 
 #: src/EPGImport/plugin.py:270
 msgid "EPG Import Configuration"
-msgstr "EPG Import beállítás"
+msgstr "EPGImport beállítás"
 
 #: src/EPGImport/plugin.py:274 src/EPGImport/plugin.py:514
 #: src/EPGImport/plugin.py:582
@@ -126,7 +126,7 @@ msgstr "Mentés"
 
 #: src/EPGImport/plugin.py:276
 msgid "Manual"
-msgstr "Kézikönyv"
+msgstr "Kézi importálás"
 
 #: src/EPGImport/plugin.py:277
 msgid "Sources"
@@ -139,7 +139,7 @@ msgid ""
 "%s events"
 msgstr ""
 "Importálás: %s\n"
-"%s események"
+"%s műsor információ"
 
 #: src/EPGImport/plugin.py:331
 msgid "Automatic import EPG"
@@ -204,12 +204,12 @@ msgstr "Az aktuális EPG törlése az importálás előtt"
 #: src/EPGImport/plugin.py:432
 #, python-format
 msgid "Last: %s %s, %d events"
-msgstr "Utolsó:  %s %s, %d esemény"
+msgstr "Utolsó:  %s %s, %d műsor információ"
 
 #: src/EPGImport/plugin.py:437
 #, python-format
 msgid "Last import: %s events"
-msgstr "Utolsó importálás:  %s esemény"
+msgstr "Utolsó importálás:  %s műsor információ"
 
 #: src/EPGImport/plugin.py:442
 msgid ""
@@ -231,9 +231,9 @@ msgid ""
 "Is this ok?"
 msgstr ""
 "EPGImport\n"
-"Az epg adatok importálása megkezdődik.\n"
+"Az EPG adatok importálása megkezdődik.\n"
 "Ez néhány percet vesz igénybe.\n"
-"Rendben van ez így?"
+"Kezdődhet az importálás?"
 
 #: src/EPGImport/plugin.py:466
 msgid ""
@@ -253,7 +253,7 @@ msgstr "Csatornák listájának figyelmen kívül hagyása"
 
 #: src/EPGImport/plugin.py:527
 msgid "Import current source"
-msgstr "Jelenlegi forrás importálása"
+msgstr "Kijelöltek importálása"
 
 #: src/EPGImport/plugin.py:539
 msgid "EPG Import Sources"
@@ -289,7 +289,7 @@ msgstr "Utolsó importálás: "
 
 #: src/EPGImport/plugin.py:683
 msgid " events\n"
-msgstr " események\n"
+msgstr " műsor információk\n"
 
 #: src/EPGImport/plugin.py:683
 msgid ""
@@ -310,7 +310,7 @@ msgstr "EPGImport"
 #: src/EPGImport/plugin.py:729
 #, python-format
 msgid "EPG Import finished, %d events"
-msgstr "EPG Import kész, %d esemény"
+msgstr "EPG Import kész, %d műsor információ"
 
 #: src/EPGImport/plugin.py:729
 msgid ""
