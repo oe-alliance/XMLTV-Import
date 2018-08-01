@@ -1,0 +1,254 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: oe-alliance / XMLTV-Import (epg-import)\n"
+"POT-Creation-Date: 2018-08-01 03:00+0300\n"
+"PO-Revision-Date: 2018-08-01 03:30+0300\n"
+"Last-Translator: TM2TURK | by thawtes <thawtes@gmail.com>\n"
+"Language-Team: TM2TURK | by thawtes <thawtes@gmail.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-SourceCharset: UTF-8\n"
+"X-Generator: TM2TURK by thawtes\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid " events\n"
+msgstr " events\n"
+
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+
+msgid "Add Channel"
+msgstr "Add Channel"
+
+msgid "Add Provider"
+msgstr "Add Provider"
+
+msgid "All services provider"
+msgstr "All services provider"
+
+msgid "always"
+msgstr "always"
+
+msgid "Automated EPG Importer"
+msgstr "Automated EPG Importer"
+
+msgid "Automatic import EPG"
+msgstr "Automatic import EPG"
+
+msgid "Automatic start time"
+msgstr "Automatic start time"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Channel Selection"
+msgstr "Channel Selection"
+
+msgid "Choice days for start import"
+msgstr "Choice days for start import"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "Clearing current EPG before import"
+msgstr "Clearing current EPG before import"
+
+msgid "Consider setting \"Days Profile\""
+msgstr "Consider setting \"Days Profile\""
+
+msgid "Days Profile"
+msgstr "Days Profile"
+
+msgid "Delete all"
+msgstr "Delete all"
+
+msgid "Delete selected"
+msgstr "Delete selected"
+
+msgid "EPG Import Configuration"
+msgstr "EPG Import Configuration"
+
+msgid "EPG Import Log"
+msgstr "EPG Import Log"
+
+msgid "EPG Import Sources"
+msgstr "EPG Import Sources"
+
+msgid "EPG Import finished, %d events"
+msgstr "EPG Import finished, %d events"
+
+msgid "EPG Importer"
+msgstr "EPG Importer"
+
+msgid "EPG-Importer"
+msgstr "EPG-Importer"
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+
+msgid "EPGImportProfile"
+msgstr "EPGImportProfile"
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "Ignore services list"
+msgstr "Ignore services list"
+
+msgid "Ignore services list(press OK to save)"
+msgstr "Ignore services list(press OK to save)"
+
+msgid "Import current source"
+msgstr "Import current source"
+
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+"Importing: %s\n"
+"%s events"
+
+msgid "Last import: "
+msgstr "Last import: "
+
+msgid "Last import: %s events"
+msgstr "Last import: %s events"
+
+msgid "Last: %s %s, %d events"
+msgstr "Last: %s %s, %d events"
+
+msgid "Load EPG only services in bouquets"
+msgstr "Load EPG only services in bouquets"
+
+msgid "Load long descriptions up to X days"
+msgstr "Load long descriptions up to X days"
+
+msgid "Manual"
+msgstr "Manual"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "never"
+msgstr "never"
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "No active EPG sources found, nothing to do"
+
+msgid "only automatic boot"
+msgstr "only automatic boot"
+
+msgid "only manual boot"
+msgstr "only manual boot"
+
+msgid "Press OK"
+msgstr "Press OK"
+
+msgid "Really delete all list?"
+msgstr "Really delete all list?"
+
+msgid "Return to deep standby after import"
+msgstr "Return to deep standby after import"
+
+msgid "Run AutoTimer after import"
+msgstr "Run AutoTimer after import"
+
+msgid "Saturday"
+msgstr "Saturday"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Select action"
+msgstr "Select action"
+
+msgid "Show \"EPG Importer\" in main menu"
+msgstr "Show \"EPG Importer\" in main menu"
+
+msgid "Show \"EPGImport\" in extensions"
+msgstr "Show \"EPGImport\" in extensions"
+
+msgid "Show log"
+msgstr "Show log"
+
+msgid "Skip import on restart GUI"
+msgstr "Skip import on restart GUI"
+
+msgid "skip the import"
+msgstr "skip the import"
+
+msgid "Sources"
+msgstr "Sources"
+
+msgid "Standby at startup"
+msgstr "Standby at startup"
+
+msgid "Start import after booting up"
+msgstr "Start import after booting up"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "wake up and import"
+msgstr "wake up and import"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "When in deep standby"
+msgstr "When in deep standby"
+
+msgid "Write to /tmp/epgimport.log"
+msgstr "Write to /tmp/epgimport.log"
+
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
