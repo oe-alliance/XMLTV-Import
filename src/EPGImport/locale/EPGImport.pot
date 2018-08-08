@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: oe-alliance / XMLTV-Import (epg-import)\n"
-"POT-Creation-Date: 2018-08-01 03:00+0300\n"
+"POT-Creation-Date: 2018-08-08 17:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME\n"
 "Language-Team: TEAM <EMAIL@ADDRESS>\n"
@@ -42,9 +42,6 @@ msgid "Automatic start time"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
-
-msgid "Channel Selection"
 msgstr ""
 
 msgid "Choice days for start import"
@@ -104,9 +101,6 @@ msgstr ""
 msgid "Ignore services list"
 msgstr ""
 
-msgid "Ignore services list(press OK to save)"
-msgstr ""
-
 msgid "Import current source"
 msgstr ""
 
@@ -149,6 +143,9 @@ msgstr ""
 msgid "Press OK"
 msgstr ""
 
+msgid "press OK to save list"
+msgstr ""
+
 msgid "Really delete all list?"
 msgstr ""
 
@@ -165,6 +162,9 @@ msgid "Save"
 msgstr ""
 
 msgid "Select action"
+msgstr ""
+
+msgid "Select service to add..."
 msgstr ""
 
 msgid "Show \"EPG Importer\" in main menu"
