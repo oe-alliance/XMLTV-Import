@@ -86,9 +86,6 @@ msgstr ""
 msgid "EPGImport Plugin\nFailed to start:\n"
 msgstr ""
 
-msgid "EPGImportProfile"
-msgstr ""
-
 msgid "EPGImport\nImport of epg data is still in progress. Please wait."
 msgstr ""
 
