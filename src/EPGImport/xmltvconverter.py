@@ -69,6 +69,7 @@ class XMLTVConverter:
 			return
 		for elem in enumerateProgrammes(fileobj):
 			channel = elem.get('channel')
+			channel = channel.lower()
 			if not channel in self.channels:
 				if lastUnknown!=channel:
 					print>>log, "Unknown channel: ", channel

@@ -66,6 +66,7 @@ class EPGChannel:
 			for event, elem in context:
 				if elem.tag == 'channel':
 					id = elem.get('id')
+					id = id.lower()
 					ref = elem.text
 					if id and ref:
 						ref = ref.encode('latin-1')
