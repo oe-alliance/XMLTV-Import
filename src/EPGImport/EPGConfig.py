@@ -60,7 +60,8 @@ class EPGChannel:
 		return fd
 	def parse(self, filterCallback, downloadedFile):
 		print>>log,"[EPGImport] Parsing channels from '%s'" % self.name
-		self.items = {}
+		if self.items is None:
+			self.items = {}
 		try:
 			context = iterparse(self.openStream(downloadedFile))
 			for event, elem in context:
@@ -80,6 +81,12 @@ class EPGChannel:
 			print>>log, "[EPGImport] failed to parse", downloadedFile, "Error:", e
 			pass
 	def update(self, filterCallback, downloadedFile=None):
+		customFile='/etc/epgimport/custom.channels.xml'
+		# Always read custom file since we don't know when it was last updated
+		# and we don't have multiple download from server problem since it is always a local file.
+		if os.path.exists(customFile):
+			print>>log,"[EPGImport] Parsing channels from '%s'" % customFile
+			self.parse(filterCallback, customFile)
 		if downloadedFile is not None:
 			self.mtime = time.time()
 			return self.parse(filterCallback, downloadedFile)
@@ -103,6 +110,13 @@ class EPGChannel:
 class EPGSource:
 	def __init__(self, path, elem, category=None):
 		self.parser = elem.get('type')
+		nocheck = elem.get('nocheck')
+		if nocheck == None:
+			self.nocheck = 0
+		elif nocheck == "1":
+			self.nocheck = 1
+		else:
+			self.nocheck = 0
 		self.urls = [e.text.strip() for e in elem.findall('url')]
 		self.url = random.choice(self.urls)
 		self.description = elem.findtext('description')
@@ -171,7 +185,7 @@ if __name__ == '__main__':
 	if len(sys.argv) > 1:
 		path = sys.argv[1]
 	for p in enumSources(path):
-		t = (p.description, p.urls, p.parser, p.format, p.channels)
+		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
 		l.append(t)
 		print t
 		x.append(p.description)
@@ -179,7 +193,7 @@ if __name__ == '__main__':
 	assert loadUserSettings('settings.pkl') == {"sources": [1,"twee"]}
 	os.remove('settings.pkl')
 	for p in enumSources(path, x):
-		t = (p.description, p.urls, p.parser, p.format, p.channels)
+		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
 		assert t in l
 		l.remove(t)
 	assert not l

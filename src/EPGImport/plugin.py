@@ -187,7 +187,7 @@ def channelFilter(ref):
 		print>>log, "Serviceref is in ignore list:", refstr
 		return False
 	if "%3a//" in ref.lower():
-		print>>log, "URL detected in serviceref, not checking fake recording on serviceref:", ref
+		# print>>log, "URL detected in serviceref, not checking fake recording on serviceref:", ref
 		return True
 	fakeRecService = NavigationInstance.instance.recordService(sref, True)
 	if fakeRecService:
