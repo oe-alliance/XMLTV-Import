@@ -419,8 +419,13 @@ class EPGImport:
 			filename += ext
 		sourcefile = sourcefile.encode('utf-8')
 		print>>log, "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
-		if self.checkValidServer(sourcefile) == 1:
+		if self.source.nocheck == 1:
+			print>>log, "[EPGImport] Not cheching the server since nocheck is set for it: " + sourcefile
 			downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
 			return filename
 		else:
-			self.downloadFail("checkValidServer reject the server")
+			if self.checkValidServer(sourcefile) == 1:
+				downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
+				return filename
+			else:
+				self.downloadFail("checkValidServer reject the server")
