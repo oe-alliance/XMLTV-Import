@@ -62,7 +62,7 @@ class FiltersList():
 				os.system('mkdir /etc/epgimport')
 			cfg = open(filename, 'w')
 		except:
-			return 
+			return
 		for ref in self.services:
 			cfg.write('%s\n'%(ref))
 		cfg.close()

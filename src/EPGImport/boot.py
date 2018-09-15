@@ -20,11 +20,11 @@ def findEpg():
 		return None
 	candidates.sort() # order by ctime...
 	# best candidate is most recent filename.
-	return candidates[-1][1]			 
-	
+	return candidates[-1][1]
+
 
 def checkCrashLog():
-	for path in MEDIA[:-1]: 
+	for path in MEDIA[:-1]:
 		try:
 			dirList=os.listdir(path)
 			for fname in dirList:

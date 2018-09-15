@@ -5,14 +5,14 @@
 # Supply the test .xml files on the command line, and the input files
 # where they can be found. On Linux, you can also download from the internet,
 # on windows the xmltv files must be local files.
-# 
+#
 import os
 import sys
 import time
 import EPGConfig
 import EPGImport
 
-EPGImport.HDD_EPG_DAT = "./epg.dat.new" 
+EPGImport.HDD_EPG_DAT = "./epg.dat.new"
 
 # Emulate an Enigma that has no patch whatsoever.
 class FakeEnigma:
@@ -55,7 +55,7 @@ def done(reboot=False, epgfile=None):
 	EPGImport.reactor.stop()
 	print "Done, data is in", epgfile
 	### When code arrives here, EPG data is stored in filename EPGImport.HDD_EPG_DAT
-	### So to copy it to FTP or whatever, this is the place to add that code. 
+	### So to copy it to FTP or whatever, this is the place to add that code.
 
 if len(sys.argv) <= 1:
 	print "Usage: %s source.xml [...]" % sys.argv[0]
