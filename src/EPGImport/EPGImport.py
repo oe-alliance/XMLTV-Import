@@ -26,7 +26,7 @@ from datetime import datetime
 date_format = "%Y-%m-%d"
 now = datetime.now()
 alloweddelta = 2
-CheckFile = "LastUpdate.log"
+CheckFile = "LastUpdate.txt"
 ServerStatusList = {}
 
 PARSERS = {
