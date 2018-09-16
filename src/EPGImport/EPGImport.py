@@ -423,6 +423,20 @@ class EPGImport:
 			filename += ext
 		sourcefile = sourcefile.encode('utf-8')
 		print>>log, "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
+		if self.source.nocheck == 1:
+			print>>log, "[EPGImport] Not cheching the server since nocheck is set for it: " + sourcefile
+			if has_ipv6 and version_info >= (2,7,11) and ((version.major == 15 and version.minor >= 5) or version.major >= 16):
+				host = sourcefile.split("/")[2]
+				ip6 = getaddrinfo(host,0, AF_INET6)
+				if ip6:
+					sourcefile6 = sourcefile.replace(host,"[" + list(ip6)[0][4][0] + "]")
+					print>>log, "[EPGImport] Trying IPv6 first: " + sourcefile6
+					downloadPage(sourcefile6, filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+			else:
+				print>>log, "[EPGImport] No IPv6, using IPv4 directly: " + sourcefile
+				downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
+			return filename
+
 		if self.checkValidServer(sourcefile) == 1:
 			if has_ipv6 and version_info >= (2,7,11) and ((version.major == 15 and version.minor >= 5) or version.major >= 16):
 				host = sourcefile.split("/")[2]
