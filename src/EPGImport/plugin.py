@@ -1041,7 +1041,7 @@ extDescriptor = PluginDescriptor(name= _("EPG-Importer"), description = descript
 pluginlist = PluginDescriptor(name=_("EPG-Importer"), description = description, where = PluginDescriptor.WHERE_PLUGINMENU, icon = 'plugin.png', fnc = main)
 
 def epgmenu(menuid, **kwargs):
-	if getImageDistro() in ("openvix", "openbh", "ventonsupport", "egami", "openhdf"):
+	if getImageDistro() in ("openvix", "openbh", "ventonsupport", "egami", "openhdf", "openhdf"):
 		if menuid == "epg":
 			return [(_("EPG-Importer"), main, "epgimporter", 1002)]
 		else:
