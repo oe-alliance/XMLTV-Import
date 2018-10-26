@@ -19,6 +19,16 @@ from twisted.internet import reactor, threads
 from twisted.web.client import downloadPage
 import twisted.python.runtime
 
+import urllib2, httplib
+from datetime import datetime
+
+# Used to check server validity
+date_format = "%Y-%m-%d"
+now = datetime.now()
+alloweddelta = 2
+CheckFile = "LastUpdate.txt"
+ServerStatusList = {}
+
 PARSERS = {
 	'xmltv': 'gen_xmltv',
 	'genxmltv': 'gen_xmltv',
@@ -40,7 +50,7 @@ def getParser(name):
 def getTimeFromHourAndMinutes(hour, minute):
 	now = time.localtime()
 	begin = int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday,
-                      hour, minute, 0, now.tm_wday, now.tm_yday, now.tm_isdst)))
+						hour, minute, 0, now.tm_wday, now.tm_yday, now.tm_isdst)))
 	return begin
 
 def bigStorage(minFree, default, *candidates):
@@ -96,6 +106,55 @@ class EPGImport:
 		self.onDone = None
 		self.epgcache = epgcache
 		self.channelFilter = channelFilter
+
+	def checkValidServer(self, serverurl):
+		dirname, filename = os.path.split(serverurl)
+		FullString = dirname + "/" + CheckFile
+		req = urllib2.build_opener()
+		req.addheaders = [('User-Agent', 'Twisted Client')]
+		dlderror=0
+		if ServerStatusList.has_key(dirname):
+			# If server is know return its status immediately
+			return ServerStatusList[dirname]
+		else:
+			# Server not in the list so checking it
+			try:
+				response = req.open(FullString)
+			except urllib2.HTTPError, e:
+				print ('[EPGImport] HTTPError in checkValidServer= ' + str(e.code))
+				dlderror=1
+			except urllib2.URLError, e:
+				print ('[EPGImport] URLError in checkValidServer= ' + str(e.reason))
+				dlderror=1
+			except httplib.HTTPException, e:
+				print ('[EPGImport] HTTPException in checkValidServer')
+				dlderror=1
+			except Exception:
+				print ('[EPGImport] Generic exception in checkValidServer')
+				dlderror=1
+
+			if not dlderror:
+				LastTime = response.read().strip('\n')
+				try:
+					FileDate = datetime.strptime(LastTime, date_format)
+				except ValueError:
+					print>>log, "[EPGImport] checkValidServer wrong date format in file rejecting server %s" % dirname
+					ServerStatusList[dirname]=0
+					return ServerStatusList[dirname]
+				delta = (now - FileDate).days
+				if delta <= alloweddelta:
+					# OK the delta is in the foreseen windows
+					ServerStatusList[dirname]=1
+				else:
+					# Sorry the delta is higher removing this site
+					print>>log, "[EPGImport] checkValidServer rejected server delta days too high: %s" % dirname
+					ServerStatusList[dirname]=0
+
+			else:
+				# We need to exclude this server
+				print>>log, "[EPGImport] checkValidServer rejected server download error for: %s" % dirname
+				ServerStatusList[dirname]=0
+		return ServerStatusList[dirname]
 
 	def beginImport(self, longDescUntil = None):
 		'Starts importing using Enigma reactor. Set self.sources before calling this.'
@@ -173,7 +232,7 @@ class EPGImport:
 				threads.deferToThread(self.readEpgDatFile, filename, deleteFile).addCallback(lambda ignore: self.nextImport())
 			else:
 				self.readEpgDatFile(filename, deleteFile)
-			return
+				return
 		if filename.endswith('.gz'):
 			self.fd = gzip.open(filename, 'rb')
 			try:
@@ -364,17 +423,34 @@ class EPGImport:
 			filename += ext
 		sourcefile = sourcefile.encode('utf-8')
 		print>>log, "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
-		host = sourcefile.split("/")[2]
-		ip6 = None
-		try:
-			ip6 = getaddrinfo(host,0, AF_INET6)
-		except:
-			pass
-		if ip6 and has_ipv6 and version_info >= (2,7,11) and ((version.major == 15 and version.minor >= 5) or version.major >= 16):
-			sourcefile6 = sourcefile.replace(host,"[" + list(ip6)[0][4][0] + "]")
+
+		ip6 = sourcefile6 = None
+		if has_ipv6 and version_info >= (2,7,11) and ((version.major == 15 and version.minor >= 5) or version.major >= 16):
+			host = sourcefile.split("/")[2]
+			# getaddrinfo throws exception on literal IPv4 addresses
+			try:
+				ip6 = getaddrinfo(host,0, AF_INET6)
+				sourcefile6 = sourcefile.replace(host,"[" + list(ip6)[0][4][0] + "]")
+			except:
+				pass
+
+		#if self.source.nocheck == 1:
+		#	print>>log, "[EPGImport] Not cheching the server since nocheck is set for it: " + sourcefile
+		if ip6:
 			print>>log, "[EPGImport] Trying IPv6 first: " + sourcefile6
 			downloadPage(sourcefile6, filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
 		else:
 			print>>log, "[EPGImport] No IPv6, using IPv4 directly: " + sourcefile
 			downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
 		return filename
+
+		#if self.checkValidServer(sourcefile) == 1:
+		#	if ip6:
+		#		print>>log, "[EPGImport] Trying IPv6 first: " + sourcefile6
+		#		downloadPage(sourcefile6, filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+		#	else:
+		#		print>>log, "[EPGImport] No IPv6, using IPv4 directly: " + sourcefile
+		#		downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
+		#	return filename
+		#else:
+		#	self.downloadFail("checkValidServer reject the server")

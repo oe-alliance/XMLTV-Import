@@ -62,7 +62,7 @@ class FiltersList():
 				os.system('mkdir /etc/epgimport')
 			cfg = open(filename, 'w')
 		except:
-			return 
+			return
 		for ref in self.services:
 			cfg.write('%s\n'%(ref))
 		cfg.close()
@@ -104,7 +104,7 @@ filtersServicesList = FiltersList()
 
 class filtersServicesSetup(Screen):
 	skin = """
-	<screen name="filtersServicesSetup" position="center,center" size="680,440" title="Ignore services list">
+	<screen name="filtersServicesSetup" position="center,center" size="680,470" title="Ignore services list">
 		<ePixmap position="0,390" size="140,40" pixmap="skin_default/buttons/red.png" alphatest="on" />
 		<ePixmap position="170,390"  size="140,40" pixmap="skin_default/buttons/green.png"  alphatest="on" />
 		<ePixmap position="340,390" size="140,40" pixmap="skin_default/buttons/yellow.png" alphatest="on" />
@@ -125,6 +125,7 @@ class filtersServicesSetup(Screen):
 				}
 			</convert>
 		</widget>
+		<widget name="introduction" position="0,440" size="680,30" font="Regular;20" halign="center" valign="center" />
 	</screen>"""
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -138,6 +139,7 @@ class filtersServicesSetup(Screen):
 		self["key_green"] = Label(_("Add Provider"))
 		self["key_yellow"] = Label(_("Add Channel"))
 		self["key_blue"] = Label(" ")
+		self["introduction"] = Label(_("press OK to save list"))
 		self.updateButtons()
 
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
@@ -150,7 +152,7 @@ class filtersServicesSetup(Screen):
 				"blue": self.keyBlue,
 			},-1)
 
-		self.setTitle(_("Ignore services list(press OK to save)"))
+		self.setTitle(_("Ignore services list"))
 
 	def keyRed(self):
 		cur = self["list"].getCurrent()
@@ -220,7 +222,7 @@ class filtersServicesSetup(Screen):
 
 class filtersServicesSelection(ChannelSelectionBase):
 	skin = """
-	<screen position="center,center" size="560,430" title="Channel Selection">
+	<screen position="center,center" size="560,430" title="Select service to add...">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
@@ -236,7 +238,7 @@ class filtersServicesSelection(ChannelSelectionBase):
 		self.providers = providers
 		ChannelSelectionBase.__init__(self, session)
 		self.bouquet_mark_edit = OFF
-		self.setTitle(_("Channel Selection"))
+		self.setTitle(_("Select service to add..."))
 		self["actions"] = ActionMap(["OkCancelActions", "TvRadioActions"], {"cancel": self.close, "ok": self.channelSelected, "keyRadio": self.setModeRadio, "keyTV": self.setModeTv})
 		self.onLayoutFinish.append(self.setModeTv)
 

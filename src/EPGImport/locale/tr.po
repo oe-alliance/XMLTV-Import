@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: oe-alliance / XMLTV-Import\n"
+"POT-Creation-Date: 2018-08-08 17:05+0300\n"
+"PO-Revision-Date: 2018-08-10 04:14+0300\n"
+"Last-Translator: TM2TURK | by thawtes <thawtes@gmail.com>\n"
+"Language-Team: TM2TURK | by thawtes <thawtes@gmail.com>\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid " events\n"
+msgstr " Adet Program Bilgisi\n"
+
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"e-rehber verilerinin içe aktarımı başlatılacak\n"
+"bu işlem biraz zaman alabilir\n"
+"işlemi başlatmak istiyor musunuz ?"
+
+msgid "Add Channel"
+msgstr "Kanal Ekle"
+
+msgid "Add Provider"
+msgstr "Platform Ekle"
+
+msgid "All services provider"
+msgstr "Platformdaki Tüm Kanalları Ekle"
+
+msgid "always"
+msgstr "her zaman"
+
+msgid "Automated EPG Importer"
+msgstr "harici e-rehber verilerini sisteminize aktarın"
+
+msgid "Automatic import EPG"
+msgstr "e-rehber verilerinin içe aktarımını otomatik yap"
+
+msgid "Automatic start time"
+msgstr "otomatik başlama zamanı"
+
+msgid "Cancel"
+msgstr "Vazgeç"
+
+msgid "Choice days for start import"
+msgstr "içe aktarımın yapılacağı günler"
+
+msgid "Clear"
+msgstr "Temizle"
+
+msgid "Clearing current EPG before import"
+msgstr "içe aktarmadan önce mevcut e-rehber verisini temizle"
+
+msgid "Consider setting \"Days Profile\""
+msgstr "seçtiğim çalışma günlerini dikkate al"
+
+msgid "Days Profile"
+msgstr "Çalışma Günleri"
+
+msgid "Delete all"
+msgstr "Hepsini Sil"
+
+msgid "Delete selected"
+msgstr "Sil"
+
+msgid "EPG Import Configuration"
+msgstr "E-Rehber Yükleyici Ayarları"
+
+msgid "EPG Import Log"
+msgstr "Kayıt Defteri"
+
+msgid "EPG Import Sources"
+msgstr "Kaynaklar"
+
+msgid "EPG Import finished, %d events"
+msgstr "içe aktarım bitti, %d adet program bilgisi yüklendi"
+
+msgid "EPG Importer"
+msgstr "E-Rehber Yükleyici"
+
+msgid "EPG-Importer"
+msgstr "E-Rehber Yükleyici"
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"E-Rehber Yükleyici Uygulaması\n"
+"Başlatılamadı:\n"
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"E-Rehber Yükleyici\n"
+"verilerin içe aktarılması hala devam ediyor, lütfen bekleyiniz ..."
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"EPGImport\n"
+"e-rehber verilerinin içe aktarımı başlatılacak\n"
+"bu işlem biraz zaman alabilir\n"
+"işlemi başlatmak istiyor musunuz ?"
+
+msgid "Friday"
+msgstr "cuma"
+
+msgid "Ignore services list"
+msgstr "Yok Sayılacak Kanal Listesi"
+
+msgid "Import current source"
+msgstr "Mevcut Kaynağı Başlat"
+
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+"Yükleniyor : %s\n"
+"%s adet program bilgisi içe aktarılıyor ..."
+
+msgid "Last import: "
+msgstr "En Son Aktarım : "
+
+msgid "Last import: %s events"
+msgstr "En Son Aktarım : %s Adet Program Bilgisi"
+
+msgid "Last: %s %s, %d events"
+msgstr "En Son : %s %s, %d adet program bilgisi içe aktarıldı !"
+
+msgid "Load EPG only services in bouquets"
+msgstr "e-rehber verilerini sadece buketlerde bulunan kanallara yükle"
+
+msgid "Load long descriptions up to X days"
+msgstr "program özet bilgilerini sağdaki gün sayısına kadar yükle"
+
+msgid "Manual"
+msgstr "Başlat"
+
+msgid "Monday"
+msgstr "pazartesi"
+
+msgid "never"
+msgstr "asla"
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "etkinleştirilmiş e-rehber veri kaynağı bulunamadı"
+
+msgid "only automatic boot"
+msgstr "sadece otomatik önyükleme olduğunda"
+
+msgid "only manual boot"
+msgstr "sadece manuel önyükleme yapıldığında"
+
+msgid "Press OK"
+msgstr "ok tuşuna basınız"
+
+msgid "press OK to save list"
+msgstr "listeyi kaydetmek için OK tuşuna basın"
+
+msgid "Really delete all list?"
+msgstr "listede olanların hepsini silmek istiyor musunuz ?"
+
+msgid "Return to deep standby after import"
+msgstr "içe aktarımdan sonra cihazı tekrar kapat"
+
+msgid "Run AutoTimer after import"
+msgstr "içe aktarımdan sonra otomatik zamanlayıcı uygulamasını çalıştır"
+
+msgid "Saturday"
+msgstr "cumartesi"
+
+msgid "Save"
+msgstr "Kaydet"
+
+msgid "Select action"
+msgstr "Seçiminizi Yapın"
+
+msgid "Select service to add..."
+msgstr "eklenecek kanalı seçiniz"
+
+msgid "Show \"EPG Importer\" in main menu"
+msgstr "ana menüde göster"
+
+msgid "Show \"EPGImport\" in extensions"
+msgstr "uygulamalar listesinde göster"
+
+msgid "Show log"
+msgstr "Kayıt Defterini Göster"
+
+msgid "Skip import on restart GUI"
+msgstr "sistem yeniden başlatıldığında içe aktarmayı pas geç "
+
+msgid "skip the import"
+msgstr "içe aktarmayı pas geç"
+
+msgid "Sources"
+msgstr "Kaynaklar"
+
+msgid "Standby at startup"
+msgstr "cihazı hazırda beklet"
+
+msgid "Start import after booting up"
+msgstr "önyüklemeden sonra içe aktarmayı başlat"
+
+msgid "Sunday"
+msgstr "pazar"
+
+msgid "Thursday"
+msgstr "perşembe"
+
+msgid "Tuesday"
+msgstr "salı"
+
+msgid "wake up and import"
+msgstr "cihazı aç ve içe aktar"
+
+msgid "Wednesday"
+msgstr "çarşamba"
+
+msgid "When in deep standby"
+msgstr "cihaz kapalı olduğunda"
+
+msgid "Write to /tmp/epgimport.log"
+msgstr "/tmp/epgimport.log dosyasına yaz"
+
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+"bu ayarları kullanamazsınız !\n"
+"haftada en az bir gün dahil edilmelidir !"
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"e-rehber verilerini yüklemek için sistemi yeniden başlatmanız gerekiyor\n"
+"işletim sistemini şimdi yeniden başlatmak istiyor musunuz ?"
