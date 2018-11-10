@@ -82,8 +82,16 @@ class XMLTVConverter:
 				start = get_time_utc(elem.get('start'), self.dateParser)
 				stop = get_time_utc(elem.get('stop'), self.dateParser)
 				title = get_xml_string(elem, 'title')
-				subtitle = get_xml_string(elem, 'sub-title')
-				description = get_xml_string(elem, 'desc')
+				# try/except for EPG XML files with program entries containing <sub-title ... />
+				try:
+					subtitle = get_xml_string(elem, 'sub-title')
+				except:
+					subtitle = ''
+				# try/except for EPG XML files with program entries containing <desc ... />
+				try:
+					description = get_xml_string(elem, 'desc')
+				except:
+					description = ''
 				category = get_xml_string(elem, 'category')
 				cat_nr = self.get_category(category,  stop-start)
 				# data_tuple = (data.start, data.duration, data.title, data.short_description, data.long_description, data.type)
