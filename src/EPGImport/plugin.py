@@ -76,6 +76,10 @@ config.plugins.epgimport.day_profile = ConfigSelection(choices = [("1", _("Press
 config.plugins.extra_epgimport = ConfigSubsection()
 config.plugins.extra_epgimport.last_import = ConfigText(default = "none")
 config.plugins.extra_epgimport.day_import = ConfigSubDict()
+if getImageDistro() in ("openatv"):
+	config.plugins.epgimport.showinplugins.value=False
+	config.plugins.epgimport.showinmainmenu.value=False
+
 for i in range(7):
 	config.plugins.extra_epgimport.day_import[i] = ConfigEnableDisable(default = True)
 
@@ -341,6 +345,7 @@ class EPGImportConfig(ConfigListScreen,Screen):
 		self.cfg_runboot_day = getConfigListEntry(_("Consider setting \"Days Profile\""), self.EPG.runboot_day)
 		self.cfg_runboot_restart = getConfigListEntry(_("Skip import on restart GUI"), self.EPG.runboot_restart)
 		self.cfg_showinextensions = getConfigListEntry(_("Show \"EPGImport\" in extensions"), self.EPG.showinextensions)
+		self.cfg_showinplugins = getConfigListEntry(_("Show \"EPGImport\" in plugins"), self.EPG.showinplugins)
 		self.cfg_showinmainmenu = getConfigListEntry(_("Show \"EPG Importer\" in main menu"), self.EPG.showinmainmenu)
 		self.cfg_longDescDays = getConfigListEntry(_("Load long descriptions up to X days"), self.EPG.longDescDays)
 		self.cfg_parse_autotimer = getConfigListEntry(_("Run AutoTimer after import"), self.EPG.parse_autotimer)
@@ -362,7 +367,9 @@ class EPGImportConfig(ConfigListScreen,Screen):
 			if self.EPG.runboot.value == "1" or self.EPG.runboot.value == "2":
 				list.append(self.cfg_runboot_restart)
 		list.append(self.cfg_showinextensions)
-		list.append(self.cfg_showinmainmenu)
+		if getImageDistro() not in ("openatv"):
+			list.append(self.cfg_showinplugins)
+			list.append(self.cfg_showinmainmenu)
 		list.append(self.cfg_import_onlybouquet)
 		if hasattr(enigma.eEPGCache, 'flushEPG'):
 			list.append(self.cfg_clear_oldepg)
@@ -1073,13 +1080,6 @@ def Plugins(**kwargs):
 			],
 			fnc = autostart,
 			wakeupfnc = getNextWakeup
-		),
-		PluginDescriptor(
-			name=_("EPG-Importer"),
-			description = description,
-			where = PluginDescriptor.WHERE_PLUGINMENU,
-			icon = 'plugin.png',
-			fnc = main
 		),
 		PluginDescriptor(
 			name=_("EPG-Importer"),
