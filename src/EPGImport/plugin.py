@@ -58,7 +58,7 @@ config.plugins.epgimport.runboot_restart = ConfigYesNo(default = False)
 config.plugins.epgimport.runboot_day = ConfigYesNo(default = False)
 config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default = False)
 config.plugins.epgimport.wakeup = ConfigClock(default = calcDefaultStarttime())
-config.plugins.epgimport.showinplugins = ConfigYesNo(default = False)
+config.plugins.epgimport.showinplugins = ConfigYesNo(default = True)
 config.plugins.epgimport.showinextensions = ConfigYesNo(default = True)
 config.plugins.epgimport.deepstandby = ConfigSelection(default = "skip", choices = [
 		("wakeup", _("wake up and import")),
@@ -76,6 +76,8 @@ config.plugins.epgimport.day_profile = ConfigSelection(choices = [("1", _("Press
 config.plugins.extra_epgimport = ConfigSubsection()
 config.plugins.extra_epgimport.last_import = ConfigText(default = "none")
 config.plugins.extra_epgimport.day_import = ConfigSubDict()
+
+# Forcibly set these options to false in OpenATV:
 if getImageDistro() in ("openatv"):
 	config.plugins.epgimport.showinplugins.value=False
 	config.plugins.epgimport.showinmainmenu.value=False
@@ -367,6 +369,7 @@ class EPGImportConfig(ConfigListScreen,Screen):
 			if self.EPG.runboot.value == "1" or self.EPG.runboot.value == "2":
 				list.append(self.cfg_runboot_restart)
 		list.append(self.cfg_showinextensions)
+		# Only show these settings if not using OpenATV:
 		if getImageDistro() not in ("openatv"):
 			list.append(self.cfg_showinplugins)
 			list.append(self.cfg_showinmainmenu)
