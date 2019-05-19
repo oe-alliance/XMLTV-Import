@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: oe-alliance / XMLTV-Import (epg-import)\n"
-"POT-Creation-Date: 2018-08-08 17:05+0300\n"
+"POT-Creation-Date: 2019-05-20 02:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME\n"
 "Language-Team: TEAM <EMAIL@ADDRESS>\n"
@@ -168,6 +168,9 @@ msgid "Show \"EPG Importer\" in main menu"
 msgstr ""
 
 msgid "Show \"EPGImport\" in extensions"
+msgstr ""
+
+msgid "Show \"EPGImport\" in plugins"
 msgstr ""
 
 msgid "Show log"
