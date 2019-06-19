@@ -1064,7 +1064,7 @@ def epgmenu(menuid, **kwargs):
 			return [(_("EPG-Importer"), main, "epgimporter", None)]
 		else:
 			return []
-	elif getImageDistro() in ("openmips"):
+	elif getImageDistro() in ("teamblue"):
 		if menuid == "epg_menu":
 			return [(_("EPG-Importer"), main, "epgimporter", 95)]
 		else:
