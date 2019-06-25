@@ -120,6 +120,13 @@ def getAlternatives(service):
 	alternativeServices = enigma.eServiceCenter.getInstance().list(service)
 	return alternativeServices and alternativeServices.getContent("S", True)
 
+def getRefNum(ref):
+    ref = ref.split(':')[3:7]
+    try:
+        return int(ref[0], 16) << 48 | int(ref[1], 16) << 32 | int(ref[2], 16) << 16 | int(ref[3], 16) >> 16
+    except:
+        return
+
 def getBouquetChannelList():
 	channels = [ ]
 	serviceHandler = enigma.eServiceCenter.getInstance()
@@ -147,13 +154,13 @@ def getBouquetChannelList():
 										altrernative_list = getAlternatives(service)
 										if altrernative_list:
 											for channel in altrernative_list:
-												refstr = ':'.join(channel.split(':')[:11])
-												if refstr not in channels:
-													channels.append(refstr)
+												refnum = getRefNum(channel)
+												if refnum and refnum not in channels:
+													channels.append(refnum)
 									else:
-										refstr = ':'.join(service.toString().split(':')[:11])
-										if refstr not in channels:
-											channels.append(refstr)
+										refnum = getRefNum(service.toString())
+										if refnum and refnum not in channels:
+											channels.append(refnum)
 	else:
 		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'
 		bouquet_root = enigma.eServiceReference(bouquet_rootstr)
@@ -167,13 +174,13 @@ def getBouquetChannelList():
 						altrernative_list = getAlternatives(service)
 						if altrernative_list:
 							for channel in altrernative_list:
-								refstr = ':'.join(channel.split(':')[:11])
-								if refstr not in channels:
-									channels.append(refstr)
+								refnum = getRefNum(channel)
+								if refnum and refnum not in channels:
+									channels.append(refnum)
 					else:
-						refstr = ':'.join(service.toString().split(':')[:11])
-						if refstr not in channels:
-							channels.append(refstr)
+						refnum = getRefNum(service.toString())
+						if refnum and refnum not in channels:
+							channels.append(refnum)
 	return channels
 
 # Filter servicerefs that this box can display by starting a fake recording.
@@ -181,19 +188,19 @@ def channelFilter(ref):
 	if not ref:
 		return False
 	sref = enigma.eServiceReference(ref)
-	refstr = ':'.join(sref.toString().split(':')[:11])
+	refnum = getRefNum(sref.toString())
 	if config.plugins.epgimport.import_onlybouquet.value:
 		global BouquetChannelListList
 		if BouquetChannelListList is None:
 			BouquetChannelListList = getBouquetChannelList()
-		if refstr not in BouquetChannelListList:
-			print>>log, "Serviceref not in bouquets:", refstr
+		if refnum not in BouquetChannelListList:
+			print>>log, "Serviceref not in bouquets:", sref.toString()
 			return False
 	global serviceIgnoreList
 	if serviceIgnoreList is None:
-		serviceIgnoreList = filtersServices.filtersServicesList.servicesList()
-	if refstr in serviceIgnoreList:
-		print>>log, "Serviceref is in ignore list:", refstr
+		serviceIgnoreList =  [getRefNum(x) for x in filtersServices.filtersServicesList.servicesList()]
+	if refnum in serviceIgnoreList:
+		print>>log, "Serviceref is in ignore list:", sref.toString()
 		return False
 	if "%3a//" in ref.lower():
 		# print>>log, "URL detected in serviceref, not checking fake recording on serviceref:", ref
