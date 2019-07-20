@@ -71,7 +71,7 @@ config.plugins.epgimport.deepstandby = ConfigSelection(default = "skip", choices
 config.plugins.epgimport.standby_afterwakeup = ConfigYesNo(default = False)
 config.plugins.epgimport.shutdown = ConfigYesNo(default = False)
 config.plugins.epgimport.longDescDays = ConfigNumber(default = 5)
-config.plugins.epgimport.showinmainmenu = ConfigYesNo(default = False)
+#config.plugins.epgimport.showinmainmenu = ConfigYesNo(default = False)
 config.plugins.epgimport.deepstandby_afterimport = NoSave(ConfigYesNo(default = False))
 config.plugins.epgimport.parse_autotimer = ConfigYesNo(default = False)
 config.plugins.epgimport.import_onlybouquet = ConfigYesNo(default = False)
@@ -82,8 +82,8 @@ config.plugins.extra_epgimport.last_import = ConfigText(default = "none")
 config.plugins.extra_epgimport.day_import = ConfigSubDict()
 
 # Forcibly set these options to false in OpenATV:
-if getImageDistro() in ("openatv"):
-	config.plugins.epgimport.showinmainmenu.value=False
+#if getImageDistro() in ("openatv"):
+#	config.plugins.epgimport.showinmainmenu.value=False
 
 for i in range(7):
 	config.plugins.extra_epgimport.day_import[i] = ConfigEnableDisable(default = True)
@@ -358,7 +358,7 @@ class EPGImportConfig(ConfigListScreen,Screen):
 		self.cfg_runboot_restart = getConfigListEntry(_("Skip import on restart GUI"), self.EPG.runboot_restart)
 		self.cfg_showinextensions = getConfigListEntry(_("Show \"EPGImport\" in extensions"), self.EPG.showinextensions)
 		self.cfg_showinplugins = getConfigListEntry(_("Show \"EPGImport\" in plugins"), self.EPG.showinplugins)
-		self.cfg_showinmainmenu = getConfigListEntry(_("Show \"EPG Importer\" in main menu"), self.EPG.showinmainmenu)
+#		self.cfg_showinmainmenu = getConfigListEntry(_("Show \"EPG Importer\" in main menu"), self.EPG.showinmainmenu)
 		self.cfg_longDescDays = getConfigListEntry(_("Load long descriptions up to X days"), self.EPG.longDescDays)
 		self.cfg_parse_autotimer = getConfigListEntry(_("Run AutoTimer after import"), self.EPG.parse_autotimer)
 		self.cfg_clear_oldepg = getConfigListEntry(_("Clearing current EPG before import"), config.plugins.epgimport.clear_oldepg)
@@ -381,8 +381,8 @@ class EPGImportConfig(ConfigListScreen,Screen):
 		list.append(self.cfg_showinextensions)
 		list.append(self.cfg_showinplugins)
 		# Only show these settings if not using OpenATV:
-		if getImageDistro() not in ("openatv"):
-			list.append(self.cfg_showinmainmenu)
+#		if getImageDistro() not in ("openatv"):
+#			list.append(self.cfg_showinmainmenu)
 		list.append(self.cfg_import_onlybouquet)
 		if hasattr(enigma.eEPGCache, 'flushEPG'):
 			list.append(self.cfg_clear_oldepg)
@@ -729,11 +729,11 @@ def start_import(session, **kwargs):
 def main(session, **kwargs):
 	session.openWithCallback(doneConfiguring, EPGImportConfig)
 
-def main_menu(menuid, **kwargs):
-	if menuid == "mainmenu" and config.plugins.epgimport.showinmainmenu.getValue():
-		return [(_("EPG Importer"), start_import, "epgimporter", 45)]
-	else:
-		return []
+#def main_menu(menuid, **kwargs):
+#	if menuid == "mainmenu" and config.plugins.epgimport.showinmainmenu.getValue():
+#		return [(_("EPG Importer"), start_import, "epgimporter", 45)]
+#	else:
+#		return []
 
 def doneConfiguring(session, retval):
 	"user has closed configuration, check new values...."
