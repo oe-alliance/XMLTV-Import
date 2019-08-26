@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: plugins 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-05 22:57+0000\n"
+"PO-Revision-Date: 2018-12-08 11:44+0300\n"
+"Last-Translator: mosad - مساعد الجعيد <abo-mishal@hotmail.com>\n"
+"Language-Team: mosad - مساعد الجعيد\n"
+"Language: ar_SA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2\n"
+
+msgid "Automated EPG Importer"
+msgstr "إستيراد دليل البرامج الإلكترونية الآلي"
+
+msgid "Automatic start time"
+msgstr "وقت بدء التشغيل التلقائي"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Clear"
+msgstr "مسح"
+
+msgid "Daily automatic import"
+msgstr "إستيراد يوميا تلقائي"
+
+msgid "EPG Import Configuration"
+msgstr "تكوين إستيراد دليل البرامج الإلكترونية"
+
+msgid "EPG Import Log"
+msgstr "سجل إستيراد دليل البرامج الإلكترونية"
+
+msgid "EPG Import Sources"
+msgstr "مصادر إستيراد دليل البرامج الإلكترونية"
+
+msgid "EPG Import finished, %d events"
+msgstr "إنتهاء إستيراد دليل البرامج الإلكترونية, %d والأحداث"
+
+msgid "EPG-Importer"
+msgstr "إستيراد دليل البرامج الإلكترونية"
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"بلج إنز إستيراد دليل البرامج الإلكتروينة\n"
+"فشل في البدء:\n"
+"\n"
+
+msgid ""
+"EPGImport Plugin\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"بلج إنز إستيراد دليل البرامج الإلكتروينة\n"
+"إستيراد بيانات دليل البرامج الإلكترونية لايزال قيد العمل.الرجاء الإنتظار."
+
+msgid ""
+"EPGImport Plugin\n"
+"Import of epg data will start\n"
+"This may take a few minutes\n"
+"Is this ok?"
+msgstr ""
+"بلج إنز إستيراد دليل البرامج الإلكتروينة\n"
+"بدء إستيراد بيانات دليل البرامج الإلكترونية\n"
+"قد يستغرق بضع دقائق\n"
+"فهل أنت موافق؟"
+
+msgid "Importing:"
+msgstr "يستورد:"
+
+msgid "Last: %s %s, %d events"
+msgstr "أخر: %s %s, %d الأحداث"
+
+msgid "Load long descriptions up to X days"
+msgstr "تحميل وصف مطول إضغط على عدد الايام"
+
+msgid "Manual"
+msgstr "يدوي"
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "لا توجد مصادر لدليل البرامج الإلكترونية مفعلة، علىك أن تفعل شيئا"
+
+msgid "Ok"
+msgstr "موافق"
+
+msgid "Save"
+msgstr "حفظ"
+
+msgid "Show in extensions"
+msgstr "عرض الملحقات"
+
+msgid "Show in plugin browser"
+msgstr "عرض متصفح البلج إنز"
+
+msgid "Skip the import"
+msgstr "تخطي الإستيراد"
+
+msgid "Sources"
+msgstr "المصادر"
+
+msgid "Standby at startup"
+msgstr "وضع الاستعداد عند بدء التشغيل"
+
+msgid "Start import after booting up"
+msgstr "تشغيل الإستيراد بعد الإقلاع"
+
+msgid "Wake up and import"
+msgstr "إستيقاظ وإستيراد"
+
+msgid "When in deep standby"
+msgstr "عندما تكون في وضع الاستعداد العميق"
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"يجب إعادة تشغيل الانجما 2 لتحميل بيانات دليل البرامج الإلكترونية\n"
+" هل أنت موافق؟"
