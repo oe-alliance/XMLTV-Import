@@ -1,0 +1,220 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-28 19:54+0100\n"
+"PO-Revision-Date: 2019-06-13 00:12+0300\n"
+"Language-Team: kvinto\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: kvinto <badsystem@ukr.net>\n"
+"Language: uk_UA\n"
+"X-Generator: Poedit 2.2.3\n"
+
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"Починається завантаження даних ЕПГ.\n"
+"Це може зайняти декілька хвилин.\n"
+"Це нормально?"
+
+msgid ""
+" %s\n"
+"%s events"
+msgstr ""
+" %s\n"
+"%s подій"
+
+msgid " events\n"
+msgstr " подій\n"
+
+msgid "Automated EPG Importer"
+msgstr "Автозавантаження ЕПГ"
+
+msgid "Automatic import EPG"
+msgstr "Автоматичне завантаження ЕПГ"
+
+msgid "Automatic start time"
+msgstr "Час автоматичного старту"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Choice days for start import"
+msgstr "Вибір днів для завантаження даних"
+
+msgid "Clear"
+msgstr "Очистка"
+
+msgid "Clearing current EPG before import"
+msgstr "Очищення даних ЕПГ перед завантаженням"
+
+msgid "Consider setting \"Days Profile\""
+msgstr "Врахувати налаштування \"Профіль днів\""
+
+msgid "Days Profile"
+msgstr "Профіль днів"
+
+msgid "EPG Import Configuration"
+msgstr "Налаштування EPG Import"
+
+msgid "EPG Import Log"
+msgstr "Лог ЕПГ завантаження"
+
+msgid "EPG Import Sources"
+msgstr "Джерело для ЕПГ завантаження"
+
+msgid "EPG Import finished, %d events"
+msgstr "ЕПГ завантаження завершено, %d подій"
+
+msgid "EPG importer"
+msgstr "Завантажувач ЕПГ"
+
+msgid "EPGImport"
+msgstr "Завантажувач ЕПГ"
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"Завантаження ЕПГ\n"
+"Завантаження даних ЕПГ ще продовжується. Будь ласка, почекайте."
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"Завантаження ЕПГ\n"
+"Починається завантаження даних ЕПГ.\n"
+"Це може заняти декілька хвилин.\n"
+"Це Вас задовільняє?"
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"Завантаження ЕПГ\n"
+"Помилка старту:\n"
+
+msgid "Friday"
+msgstr "П’ятниця"
+
+msgid "Import current source"
+msgstr "Завантажити зараз"
+
+msgid "Importing:"
+msgstr "Завантажуємо:"
+
+msgid "Last import: "
+msgstr "Останнє завантаження: "
+
+msgid "Last import: %s events"
+msgstr "Останнє завантаження: %s подій"
+
+msgid "Last: %s %s, %d events"
+msgstr "Останнє завантаження: %s %s, %d подій"
+
+msgid "Load EPG only services in bouquets"
+msgstr "Завантаження ЕПГ тільки для каналів з фаворитів"
+
+msgid "Load long descriptions up to X days"
+msgstr "Завантаження великих описів передач не більше чим на Х днів"
+
+msgid "Manual"
+msgstr "Вручну"
+
+msgid "Monday"
+msgstr "Понеділок"
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "Не знайдено активних ЕПГ джерел"
+
+msgid "Press OK"
+msgstr "Натисніть ОК"
+
+msgid "Return to deep standby after import"
+msgstr "Повернутися до режиму очікування після завантаження даних"
+
+msgid "Run AutoTimer after import"
+msgstr "Запустити AutoTimer після завантаження"
+
+msgid "Saturday"
+msgstr "Субота"
+
+msgid "Save"
+msgstr "Зберегти"
+
+msgid "Show \"EPG Importer\" in main menu"
+msgstr "Показати \"EPG Importer\" в головному меню"
+
+msgid "Show \"EPGImport\" in extensions"
+msgstr "Показати \"EPG importer\" в меню плагінів"
+
+msgid "Skip import on restart GUI"
+msgstr "Не завантажувати після рестарту GUI"
+
+msgid "Sources"
+msgstr "Джерела"
+
+msgid "Standby at startup"
+msgstr "Перейти в режим очікування після завантаження"
+
+msgid "Start import after booting up"
+msgstr "Завантажити після включення"
+
+msgid "Sunday"
+msgstr "Неділя"
+
+msgid "Thursday"
+msgstr "Четвер"
+
+msgid "Tuesday"
+msgstr "Вівторок"
+
+msgid "Wednesday"
+msgstr "Середа"
+
+msgid "When in deep standby"
+msgstr "Дія в глибокому режимі очікування"
+
+msgid "Write to /tmp/epgimport.log"
+msgstr "Записати в /tmp/epgimport.log"
+
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+"Ви не можете використовувати дані налаштування!\n"
+"Хоча б один день тижня повинен бути активований!"
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"Необхідно перезавантаження Enigma2 для отримання даних ЕПГ,\n"
+"зробити це зараз?"
+
+msgid "always"
+msgstr "завжди"
+
+msgid "never"
+msgstr "ніколи"
+
+msgid "only automatic boot"
+msgstr "тільки при автозагрузці"
+
+msgid "only manual boot"
+msgstr "тільки при ручній загрузці"
+
+msgid "skip the import"
+msgstr "пропускати завантаження"
+
+msgid "wake up and import"
+msgstr "ввімкнути для завантаження"
