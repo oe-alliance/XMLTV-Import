@@ -75,6 +75,7 @@ config.plugins.epgimport.longDescDays = ConfigNumber(default = 5)
 config.plugins.epgimport.deepstandby_afterimport = NoSave(ConfigYesNo(default = False))
 config.plugins.epgimport.parse_autotimer = ConfigYesNo(default = False)
 config.plugins.epgimport.import_onlybouquet = ConfigYesNo(default = False)
+config.plugins.epgimport.import_onlyiptv = ConfigYesNo(default = False)
 config.plugins.epgimport.clear_oldepg = ConfigYesNo(default = False)
 config.plugins.epgimport.day_profile = ConfigSelection(choices = [("1", _("Press OK"))], default = "1")
 config.plugins.extra_epgimport = ConfigSubsection()
@@ -186,6 +187,9 @@ def getBouquetChannelList():
 # Filter servicerefs that this box can display by starting a fake recording.
 def channelFilter(ref):
 	if not ref:
+		return False
+	# ignore non IPTV
+	if config.plugins.epgimport.import_onlyiptv.value and ("%3a//" not in ref.lower() or ref.startswith("1")):
 		return False
 	sref = enigma.eServiceReference(ref)
 	refnum = getRefNum(sref.toString())
@@ -354,6 +358,7 @@ class EPGImportConfig(ConfigListScreen,Screen):
 		self.cfg_day_profile = getConfigListEntry(_("Choice days for start import"), self.EPG.day_profile)
 		self.cfg_runboot = getConfigListEntry(_("Start import after booting up"), self.EPG.runboot)
 		self.cfg_import_onlybouquet = getConfigListEntry(_("Load EPG only services in bouquets"), self.EPG.import_onlybouquet)
+		self.cfg_import_onlyiptv = getConfigListEntry(_("Load EPG only for IPTV channels"), self.EPG.import_onlyiptv)
 		self.cfg_runboot_day = getConfigListEntry(_("Consider setting \"Days Profile\""), self.EPG.runboot_day)
 		self.cfg_runboot_restart = getConfigListEntry(_("Skip import on restart GUI"), self.EPG.runboot_restart)
 		self.cfg_showinextensions = getConfigListEntry(_("Show \"EPGImport\" in extensions"), self.EPG.showinextensions)
@@ -384,6 +389,7 @@ class EPGImportConfig(ConfigListScreen,Screen):
 #		if getImageDistro() not in ("openatv"):
 #			list.append(self.cfg_showinmainmenu)
 		list.append(self.cfg_import_onlybouquet)
+		list.append(self.cfg_import_onlyiptv)
 		if hasattr(enigma.eEPGCache, 'flushEPG'):
 			list.append(self.cfg_clear_oldepg)
 		list.append(self.cfg_longDescDays)

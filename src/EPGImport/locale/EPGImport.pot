@@ -116,6 +116,9 @@ msgstr ""
 msgid "Load EPG only services in bouquets"
 msgstr ""
 
+msgid "Load EPG only for IPTV channels"
+msgstr ""
+
 msgid "Load long descriptions up to X days"
 msgstr ""
 
