@@ -243,7 +243,7 @@ msgid ""
 "You may not use this settings!\n"
 "At least one day a week should be included!"
 msgstr ""
-„Toto nastavenie nemôžete použiť! \ N"
+„Toto nastavenie nemôžete použiť! \ n"
 „Mal by byť zahrnutý aspoň jeden deň v týždni!“
 
 msgid ""
