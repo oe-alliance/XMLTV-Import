@@ -237,7 +237,7 @@ msgid "When in deep standby"
 msgstr "Ak je prijímač v hlbokom spánku"
 
 msgid "Write to /tmp/epgimport.log"
-msgstr "Zapíssať do /tmp/epgimport.log"
+msgstr "Zapísať do /tmp/epgimport.log"
 
 msgid ""
 "You may not use this settings!\n"
