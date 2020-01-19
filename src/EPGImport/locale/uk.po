@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-28 19:54+0100\n"
-"PO-Revision-Date: 2019-06-13 00:12+0300\n"
+"PO-Revision-Date: 2020-01-19 15:12+0300\n"
 "Language-Team: kvinto\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,7 +55,7 @@ msgid "Clearing current EPG before import"
 msgstr "Очищення даних ЕПГ перед завантаженням"
 
 msgid "Consider setting \"Days Profile\""
-msgstr "Врахувати налаштування \"Профіль днів\""
+msgstr "Врахувати налаштування 'Профіль днів'"
 
 msgid "Days Profile"
 msgstr "Профіль днів"
@@ -121,6 +121,9 @@ msgstr "Останнє завантаження: %s подій"
 msgid "Last: %s %s, %d events"
 msgstr "Останнє завантаження: %s %s, %d подій"
 
+msgid "Load EPG only for IPTV channels"
+msgstr "Завантаження ЕПГ тільки для IPTV каналів"
+
 msgid "Load EPG only services in bouquets"
 msgstr "Завантаження ЕПГ тільки для каналів з фаворитів"
 
@@ -152,10 +155,13 @@ msgid "Save"
 msgstr "Зберегти"
 
 msgid "Show \"EPG Importer\" in main menu"
-msgstr "Показати \"EPG Importer\" в головному меню"
+msgstr "Показати 'EPG Importer' в Головному меню"
 
 msgid "Show \"EPGImport\" in extensions"
-msgstr "Показати \"EPG importer\" в меню плагінів"
+msgstr "Показати 'EPG importer' в меню розширень"
+
+msgid "Show \"EPGImport\" in plugins"
+msgstr "Показати 'EPG importer' в списку плагінів"
 
 msgid "Skip import on restart GUI"
 msgstr "Не завантажувати після рестарту GUI"
