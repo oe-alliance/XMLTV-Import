@@ -46,7 +46,7 @@ def entry(description, value, selected):
 def expand(cat, value=True):
 	# cat is a list of data and icons
 	if cat[0][1] != value:
-		ix, iy, iw, ih = skin.parameters.get("SelectionListLock",(0, 2, 25, 24))
+		ix, iy, iw, ih = skin.parameters.get("SelectionListLock", (0, 2, 25, 24))
 		if value:
 			icon = expandedIcon
 		else:

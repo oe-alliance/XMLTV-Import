@@ -1,5 +1,7 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import os
-import log
+from . import log
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
 import cPickle as pickle
 import gzip
@@ -48,7 +50,7 @@ class EPGChannel:
 	def openStream(self, filename):
 		fd = open(filename, 'rb')
 		if not os.fstat(fd.fileno()).st_size:
-			raise Exception, "File is empty"
+			raise Exception("File is empty")
 		if filename.endswith('.gz'):
 			fd = gzip.GzipFile(fileobj = fd, mode = 'rb')
 		elif filename.endswith('.xz') or filename.endswith('.lzma'):
@@ -59,7 +61,7 @@ class EPGChannel:
 			fd = lzma.open(filename, 'rb')
 		return fd
 	def parse(self, filterCallback, downloadedFile):
-		print>>log,"[EPGImport] Parsing channels from '%s'" % self.name
+		print("[EPGImport] Parsing channels from '%s'" % self.name, file=log)
 		if self.items is None:
 			self.items = {}
 		try:
@@ -72,20 +74,20 @@ class EPGChannel:
 					if id and ref:
 						ref = ref.encode('latin-1')
 						if filterCallback(ref):
-							if self.items.has_key(id):
+							if id in self.items:
 								self.items[id].append(ref)
 							else:
 								self.items[id] = [ref]
 					elem.clear()
 		except Exception as e:
-			print>>log, "[EPGImport] failed to parse", downloadedFile, "Error:", e
+			print("[EPGImport] failed to parse", downloadedFile, "Error:", e, file=log)
 			pass
 	def update(self, filterCallback, downloadedFile=None):
 		customFile='/etc/epgimport/custom.channels.xml'
 		# Always read custom file since we don't know when it was last updated
 		# and we don't have multiple download from server problem since it is always a local file.
 		if os.path.exists(customFile):
-			print>>log,"[EPGImport] Parsing channels from '%s'" % customFile
+			print("[EPGImport] Parsing channels from '%s'" % customFile, file=log)
 			self.parse(filterCallback, customFile)
 		if downloadedFile is not None:
 			self.mtime = time.time()
@@ -160,17 +162,17 @@ def enumSources(path, filter=None, categories=False):
 				try:
 					for s in enumSourcesFile(sourcefile, filter, categories):
 						yield s
-				except Exception, e:
-					print>>log, "[EPGImport] failed to open", sourcefile, "Error:", e
-	except Exception, e:
-		print>>log, "[EPGImport] failed to list", path, "Error:", e
+				except Exception as e:
+					print("[EPGImport] failed to open", sourcefile, "Error:", e, file=log)
+	except Exception as e:
+		print("[EPGImport] failed to list", path, "Error:", e, file=log)
 
 
 def loadUserSettings(filename = SETTINGS_FILE):
 	try:
 		return pickle.load(open(filename, 'rb'))
-	except Exception, e:
-		print>>log, "[EPGImport] No settings", e
+	except Exception as e:
+		print("[EPGImport] No settings", e, file=log)
 		return {"sources": []}
 
 def storeUserSettings(filename = SETTINGS_FILE, sources = None):
@@ -187,17 +189,17 @@ if __name__ == '__main__':
 	for p in enumSources(path):
 		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
 		l.append(t)
-		print t
+		print(t)
 		x.append(p.description)
-	storeUserSettings('settings.pkl', [1,"twee"])
-	assert loadUserSettings('settings.pkl') == {"sources": [1,"twee"]}
+	storeUserSettings('settings.pkl', [1, "twee"])
+	assert loadUserSettings('settings.pkl') == {"sources": [1, "twee"]}
 	os.remove('settings.pkl')
 	for p in enumSources(path, x):
 		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
 		assert t in l
 		l.remove(t)
 	assert not l
-	for name,c in channelCache.items():
-		print "Update:", name
+	for name, c in channelCache.items():
+		print("Update:", name)
 		c.update()
-		print "# of channels:", len(c.items)
+		print("# of channels:", len(c.items))

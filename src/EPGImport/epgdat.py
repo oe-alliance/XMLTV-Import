@@ -3,6 +3,7 @@
 # Heavily modified by MiLo http://www.sat4all.com/
 # Lots of stuff removed that i did not need.
 
+from __future__ import print_function
 import os
 import sys
 import codecs
@@ -11,10 +12,10 @@ from datetime import datetime
 
 try:
 	import dreamcrc
-	crc32_dreambox = lambda d,t: dreamcrc.crc32(d,t) & 0xffffffff
-	print "[EPGImport] using C module, yay"
+	crc32_dreambox = lambda d, t: dreamcrc.crc32(d, t) & 0xffffffff
+	print("[EPGImport] using C module, yay")
 except:
-	print "[EPGImport] failed to load C implementation, sorry"
+	print("[EPGImport] failed to load C implementation, sorry")
 
 	# this table is used by CRC32 routine below (used by Dreambox for
 	# computing REF DESC value).
@@ -94,10 +95,10 @@ except:
 		# ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop
 		#crc=0x00000000L
 		#crc=((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ crctype) & 0x000000ffL ]
-		crc = crctable[crctype & 0x000000ffL ]
-		crc = ((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ len(crcdata)) & 0x000000ffL ]
+		crc = crctable[crctype & 0x000000ff ]
+		crc = ((crc << 8 ) & 0xffffff00) ^ crctable[((crc >> 24) ^ len(crcdata)) & 0x000000ff ]
 		for d in crcdata:
-		    crc=((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ ord(d)) & 0x000000ffL ]
+		    crc=((crc << 8 ) & 0xffffff00) ^ crctable[((crc >> 24) ^ ord(d)) & 0x000000ff ]
 		return crc
 
 # convert time or length from datetime format to 3 bytes hex value
@@ -145,10 +146,10 @@ class epgdat_class:
 	#   datetime.datetime.toordinal(1858,11,17) => 678576
 	EPG_PROLEPTIC_ZERO_DAY=678576
 
-	def __init__(self,tmp_path,lamedb_path,epgdat_path):
+	def __init__(self, tmp_path, lamedb_path, epgdat_path):
 		self.EPGDAT_FILENAME=epgdat_path
-		self.EPGDAT_TMP_FILENAME=os.path.join(tmp_path,self.EPGDAT_TMP_FILENAME)
-		self.EPG_TMP_FD=open(self.EPGDAT_TMP_FILENAME,"wb")
+		self.EPGDAT_TMP_FILENAME=os.path.join(tmp_path, self.EPGDAT_TMP_FILENAME)
+		self.EPG_TMP_FD=open(self.EPGDAT_TMP_FILENAME, "wb")
 		self.LAMEDB=lamedb_path
 		self.s_B = struct.Struct("B")
 		self.s_BB = struct.Struct("BB")
@@ -160,31 +161,31 @@ class epgdat_class:
 		self.s_B3sBBB = struct.Struct("B3sBBB")
 		self.s_3sBB = struct.Struct("3sBB")
 
-	def set_endian(self,endian):
+	def set_endian(self, endian):
 		self.LB_ENDIAN=endian
 		self.s_I = struct.Struct(self.LB_ENDIAN+"I")
 		self.s_II = struct.Struct(self.LB_ENDIAN+"II")
 		self.s_IIII = struct.Struct(self.LB_ENDIAN+"IIII")
 
-	def set_excludedsid(self,exsidlist):
+	def set_excludedsid(self, exsidlist):
 		self.EXCLUDED_SID=exsidlist
 
 	# assembling short description (type 0x4d , it's the Title) and compute its crc
 	def short_desc(self, s):
 		# 0x15 is UTF-8 encoding.
 		res = self.s_3sBB.pack('eng', len(s)+1, 0x15) + str(s) + "\0"
-		return (crc32_dreambox(res,0x4d),res)
+		return (crc32_dreambox(res, 0x4d), res)
 
 	# assembling long description (type 0x4e) and compute its crc
-	def long_desc(self,s):
+	def long_desc(self, s):
 		r = []
 		# compute total number of descriptions, block 245 bytes each
 		# number of descriptions start to index 0
 		num_tot_desc = (len(s) + 244) // 245
 		for i in range(num_tot_desc):
 			ssub = s[i*245:i*245+245]
-			sres = self.s_B3sBBB.pack((i << 4) + (num_tot_desc-1),'eng',0x00,len(ssub)+1,0x15) + str(ssub)
-			r.append((crc32_dreambox(sres,0x4e), sres))
+			sres = self.s_B3sBBB.pack((i << 4) + (num_tot_desc-1), 'eng', 0x00, len(ssub)+1, 0x15) + str(ssub)
+			r.append((crc32_dreambox(sres, 0x4e), sres))
 		return r
 
 	def add_event(self, starttime, duration, title, description):
@@ -201,8 +202,8 @@ class epgdat_class:
 			ssid = service.split(":")
 			# write CHANNEL INFO record (sid, onid, tsid, eventcount)
 			self.EPG_TMP_FD.write(self.s_IIII.pack( \
-				int(ssid[3],16), int(ssid[5],16), \
-				int(ssid[4],16), len(self.events)))
+				int(ssid[3], 16), int(ssid[5], 16), \
+				int(ssid[4], 16), len(self.events)))
 			self.EPG_HEADER1_channel_count += 1
 			# event_dict.keys() are numeric so indexing is possibile
 			# key is the same thing as counter and is more simple to manage last-1 item
@@ -218,13 +219,13 @@ class epgdat_class:
 				EPG_EVENT_HEADER_datasize += 4  # add 4 bytes for a sigle REF DESC (CRC32)
 				#if not epg_event_description_dict.has_key(short_d[0]):
 				#if not exist_event(short_d[0]) :
-				if not self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.has_key(short_d[0]) :
+				if short_d[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER :
 					# DESCRIPTION DATA
-					pack_1 = s_BB.pack(0x4d,len(short_d[1])) + short_d[1]
+					pack_1 = s_BB.pack(0x4d, len(short_d[1])) + short_d[1]
 					# DESCRIPTION HEADER (2 int) will be computed at the end just before EPG.DAT write
 					# because it need the total number of the same description called by many channel section
 					#save_event(short_d[0],[pack_1,1])
-					self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[short_d[0]]=[pack_1,1]
+					self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[short_d[0]]=[pack_1, 1]
 					self.EPG_HEADER2_description_count += 1
 				else:
 					#increment_event(short_d[0])
@@ -235,20 +236,20 @@ class epgdat_class:
 				for desc in long_d:
 					#if not epg_event_description_dict.has_key(long_d[i][0]):
 					#if not exist_event(long_d[i][0]) :
-					if not self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.has_key(desc[0]) :
+					if desc[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER :
 						# DESCRIPTION DATA
-						pack_1 = s_BB.pack(0x4e,len(desc[1])) + desc[1]
+						pack_1 = s_BB.pack(0x4e, len(desc[1])) + desc[1]
 						self.EPG_HEADER2_description_count += 1
 						# DESCRIPTION HEADER (2 int) will be computed at the end just before EPG.DAT write
 						# because it need the total number of the same description called by different channel section
 						#save_event(long_d[i][0],[pack_1,1])
-						self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[desc[0]]=[pack_1,1]
+						self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[desc[0]]=[pack_1, 1]
 					else:
 						#increment_event(long_d[i][0])
 						self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[desc[0]][1] += 1
 				# **** (2) : have REF DESC and now can create EVENT HEADER / DATA ****
 				# EVENT HEADER (2 bytes: 0x01 , 10 bytes + number of CRC32 * 4)
-				pack_1=s_BB.pack(0x01,0x0a + EPG_EVENT_HEADER_datasize )
+				pack_1=s_BB.pack(0x01, 0x0a + EPG_EVENT_HEADER_datasize )
 				self.EPG_TMP_FD.write(pack_1)
 				# extract date and time from <event>
 				# unix format (second since 1970) and already GMT corrected
@@ -260,7 +261,7 @@ class epgdat_class:
 				# simply create an incremental ID,  starting from '1'
 				# event_id appears to be per channel, so this should be okay.
 				EPG_EVENT_DATA_id += 1
-				pack_1 = self.s_b_HH.pack(EPG_EVENT_DATA_id,dvb_date) # ID and DATE , always in BIG_ENDIAN
+				pack_1 = self.s_b_HH.pack(EPG_EVENT_DATA_id, dvb_date) # ID and DATE , always in BIG_ENDIAN
 				pack_2 = s_BBB.pack(*TL_hexconv(event_time_HMS)) # START TIME
 				pack_3 = s_BBB.pack(*TL_hexconv(event_length_HMS)) # LENGTH
 				pack_4 = s_I.pack(short_d[0]) # REF DESC short (title)
@@ -274,12 +275,12 @@ class epgdat_class:
 	def final_process(self):
 		if self.EPG_TOTAL_EVENTS > 0:
 			self.EPG_TMP_FD.close()
-			epgdat_fd=open(self.EPGDAT_FILENAME,"wb")
+			epgdat_fd=open(self.EPGDAT_FILENAME, "wb")
 			# HEADER 1
-			pack_1=struct.pack(self.LB_ENDIAN+"I13sI",0x98765432,'ENIGMA_EPG_V7',self.EPG_HEADER1_channel_count)
+			pack_1=struct.pack(self.LB_ENDIAN+"I13sI", 0x98765432, 'ENIGMA_EPG_V7', self.EPG_HEADER1_channel_count)
 			epgdat_fd.write(pack_1)
 			# write first EPG.DAT section
-			EPG_TMP_FD=open(self.EPGDAT_TMP_FILENAME,"rb")
+			EPG_TMP_FD=open(self.EPGDAT_TMP_FILENAME, "rb")
 			while True:
 				pack_1=EPG_TMP_FD.read(4096)
 				if not pack_1:
@@ -294,7 +295,7 @@ class epgdat_class:
 			for temp in sorted(self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.keys()) :
 				pack_2=self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[temp]
 				#pack_1=struct.pack(LB_ENDIAN+"II",int(temp,16),pack_2[1])
-				pack_1=s_ii.pack(temp,pack_2[1])
+				pack_1=s_ii.pack(temp, pack_2[1])
 				epgdat_fd.write(pack_1+pack_2[0])
 			epgdat_fd.close()
 		# *** cleanup **

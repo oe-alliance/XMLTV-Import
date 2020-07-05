@@ -1,6 +1,8 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import time
 import calendar
-import log
+from . import log
 #from pprint import pprint
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
 
@@ -20,8 +22,8 @@ def get_time_utc(timestring, fdateparse):
 		#suppose file says +0300 => that means we have to substract 3 hours from localtime to get gmt
 		timegm -= (3600*int(values[1])/100)
 		return timegm
-	except Exception, e:
-		print "[XMLTVConverter] get_time_utc error:", e
+	except Exception as e:
+		print("[XMLTVConverter] get_time_utc error:", e)
 		return 0
 
 # Preferred language should be configurable, but for now,
@@ -36,8 +38,8 @@ def get_xml_string(elem, name):
 				r = txt
 			elif lang == "nl":
 				r = txt
-	except Exception,  e:
-		print "[XMLTVConverter] get_xml_string error:",  e
+	except Exception as  e:
+		print("[XMLTVConverter] get_xml_string error:",  e)
 	# Now returning UTF-8 by default, the epgdat/oudeis must be adjusted to make this work.
 	return r.encode('utf-8')
 
@@ -62,7 +64,7 @@ class XMLTVConverter:
 		    self.dateParser = lambda x: time.strptime(x, dateformat)
 
 	def enumFile(self, fileobj):
-		print>>log, "[XMLTVConverter] Enumerating event information"
+		print("[XMLTVConverter] Enumerating event information", file=log)
 		lastUnknown = None
 		# there is nothing no enumerate if there are no channels loaded
 		if not self.channels:
@@ -72,7 +74,7 @@ class XMLTVConverter:
 			channel = channel.lower()
 			if not channel in self.channels:
 				if lastUnknown!=channel:
-					print>>log, "Unknown channel: ", channel
+					print("Unknown channel: ", channel, file=log)
 					lastUnknown=channel
 				# return a None object to give up time to the reactor.
 				yield None
@@ -96,13 +98,13 @@ class XMLTVConverter:
 				cat_nr = self.get_category(category,  stop-start)
 				# data_tuple = (data.start, data.duration, data.title, data.short_description, data.long_description, data.type)
 				if not stop or not start or (stop <= start):
-					print "[XMLTVConverter] Bad start/stop time: %s (%s) - %s (%s) [%s]" % (elem.get('start'), start, elem.get('stop'), stop, title)
+					print("[XMLTVConverter] Bad start/stop time: %s (%s) - %s (%s) [%s]" % (elem.get('start'), start, elem.get('stop'), stop, title))
 				yield (services, (start, stop-start, title, subtitle, description, cat_nr))
-			except Exception,  e:
-				print "[XMLTVConverter] parsing event error:", e
+			except Exception as  e:
+				print("[XMLTVConverter] parsing event error:", e)
 
 	def get_category(self,  str,  duration):
-		if (not str) or (type(str) != type('str')):
+		if (not str) or (not isinstance(str, type('str'))):
 			return 0
 		if str in self.categories:
 			category = self.categories[str]
