@@ -93,8 +93,8 @@ except:
 	# !!!!!!!!! IT'S VERY TIME CONSUMING !!!!!!!!!
 	def crc32_dreambox(crcdata, crctype, crctable=CRCTABLE):
 		# ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop
-		#crc=0x00000000L
-		#crc=((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ crctype) & 0x000000ffL ]
+		#crc=0x00000000
+		#crc=((crc << 8 ) & 0xffffff00) ^ crctable[((crc >> 24) ^ crctype) & 0x000000ff ]
 		crc = crctable[crctype & 0x000000ff ]
 		crc = ((crc << 8 ) & 0xffffff00) ^ crctable[((crc >> 24) ^ len(crcdata)) & 0x000000ff ]
 		for d in crcdata:
@@ -217,7 +217,7 @@ class epgdat_class:
 				# short description (title) type 0x4d
 				short_d = event[2]
 				EPG_EVENT_HEADER_datasize += 4  # add 4 bytes for a sigle REF DESC (CRC32)
-				#if not epg_event_description_dict.has_key(short_d[0]):
+				#if not short_d[0] in epg_event_description_dict:
 				#if not exist_event(short_d[0]) :
 				if short_d[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER :
 					# DESCRIPTION DATA
@@ -234,7 +234,7 @@ class epgdat_class:
 				long_d = event[3]
 				EPG_EVENT_HEADER_datasize += 4 * len(long_d) # add 4 bytes for a single REF DESC (CRC32)
 				for desc in long_d:
-					#if not epg_event_description_dict.has_key(long_d[i][0]):
+					#if not long_d[i][0] in epg_event_description_dict:
 					#if not exist_event(long_d[i][0]) :
 					if desc[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER :
 						# DESCRIPTION DATA

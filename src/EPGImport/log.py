@@ -2,12 +2,16 @@
 #
 # One can simply use
 # import log
-# print>>log, "Some text"
+# print("Some text", file=log)
 # because the log unit looks enough like a file!
 
+from __future__ import print_function
+
 import sys
-from cStringIO import StringIO
 import threading
+
+from six.moves import cStringIO as StringIO
+
 
 logfile = StringIO()
 # Need to make our operations thread-safe.

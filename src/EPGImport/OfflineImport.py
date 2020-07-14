@@ -21,9 +21,9 @@ class FakeEnigma:
 	def getInstance(self):
 		return self
 #	def load(self):
-#		print "...load..."
+#		print("...load...")
 #	def importEvents(self, *args):
-#		print args
+#		print(args)
 
 def importFrom(epgimport, sourceXml):
 	# Hack to make this test run on Windows (where the reactor cannot handle files)

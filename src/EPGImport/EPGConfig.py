@@ -3,10 +3,12 @@ from __future__ import print_function
 import os
 from . import log
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
-import cPickle as pickle
 import gzip
 import time
 import random
+
+from six.moves import cPickle as pickle
+
 
 # User selection stored here, so it goes into a user settings backup
 SETTINGS_FILE = '/etc/enigma2/epgimport.conf'

@@ -12,6 +12,9 @@ from Components.Label import Label
 from . import EPGConfig
 import os
 
+from six.moves import reload_module
+
+
 OFF = 0
 EDIT_BOUQUET = 1
 EDIT_ALTERNATIVES = 2
@@ -71,7 +74,7 @@ class FiltersList():
 	def load(self):
 		self.loadFrom('/etc/epgimport/ignore.conf')
 
-	def reload(self):
+	def reload_module(self):
 		self.services = []
 		self.load()
 
