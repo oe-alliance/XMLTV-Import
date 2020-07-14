@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from __future__ import absolute_import
 from __future__ import print_function
 import os
@@ -6,6 +7,7 @@ from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, i
 import gzip
 import time
 import random
+import six
 
 from six.moves import cPickle as pickle
 
@@ -74,7 +76,7 @@ class EPGChannel:
 					id = id.lower()
 					ref = elem.text
 					if id and ref:
-						ref = ref.encode('latin-1')
+						ref = six.ensure_str(ref)
 						if filterCallback(ref):
 							if id in self.items:
 								self.items[id].append(ref)

@@ -17,6 +17,7 @@ from socket import getaddrinfo, AF_INET6, has_ipv6
 
 HDD_EPG_DAT = "/hdd/epg.dat"
 
+import six
 from six.moves import http_client
 from six.moves import urllib
 from twisted.internet import reactor, threads
@@ -415,7 +416,7 @@ class EPGImport:
 
 	def legacyDownload(self, result, afterDownload, downloadFail, sourcefile, filename, deleteFile=True):
 		print("[EPGImport] IPv6 download failed, falling back to IPv4: " + sourcefile, file=log)
-		downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+		downloadPage(six.ensure_binary(sourcefile), filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
 
 	def do_download(self, sourcefile, afterDownload, downloadFail):
 		path = bigStorage(9000000, '/tmp', '/media/DOMExtender', '/media/cf', '/media/mmc', '/media/usb', '/media/hdd')
@@ -424,7 +425,7 @@ class EPGImport:
 		# Keep sensible extension, in particular the compression type
 		if ext and len(ext) < 6:
 			filename += ext
-		sourcefile = sourcefile.encode('utf-8')
+		sourcefile = six.ensure_str(sourcefile)
 		print("[EPGImport] Downloading: " + sourcefile + " to local path: " + filename, file=log)
 
 		ip6 = sourcefile6 = None
@@ -441,19 +442,19 @@ class EPGImport:
 		#	print>>log, "[EPGImport] Not cheching the server since nocheck is set for it: " + sourcefile
 		if ip6:
 			print("[EPGImport] Trying IPv6 first: " + sourcefile6, file=log)
-			downloadPage(sourcefile6, filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+			downloadPage(six.ensure_binary(sourcefile6), filename, headers={b'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, six.ensure_binary(sourcefile), filename, True)
 		else:
 			print("[EPGImport] No IPv6, using IPv4 directly: " + sourcefile, file=log)
-			downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+			downloadPage(six.ensure_binary(sourcefile), filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
 		return filename
 
 		#if self.checkValidServer(sourcefile) == 1:
 		#	if ip6:
 		#		print>>log, "[EPGImport] Trying IPv6 first: " + sourcefile6
-		#		downloadPage(sourcefile6, filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+		#		downloadPage(six.ensure_binary(sourcefile6), filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, six.ensure_binary(sourcefile), filename, True)
 		#	else:
 		#		print>>log, "[EPGImport] No IPv6, using IPv4 directly: " + sourcefile
-		#		downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
+		#		downloadPage(six.ensure_binary(sourcefile), filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename,True))
 		#	return filename
 		#else:
 		#	self.downloadFail("checkValidServer reject the server")

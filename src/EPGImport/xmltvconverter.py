@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 import time
 import calendar
+import six
 from . import log
 #from pprint import pprint
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
@@ -41,7 +42,7 @@ def get_xml_string(elem, name):
 	except Exception as  e:
 		print("[XMLTVConverter] get_xml_string error:",  e)
 	# Now returning UTF-8 by default, the epgdat/oudeis must be adjusted to make this work.
-	return r.encode('utf-8')
+	return six.ensure_str(r)
 
 def enumerateProgrammes(fp):
 	"""Enumerates programme ElementTree nodes from file object 'fp'"""
