@@ -116,8 +116,28 @@ static PyMethodDef DreamCrcMethods[] = {
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
+#if PY_MAJOR_VERSION >= 3
+	static struct PyModuleDef moduledef = {
+		PyModuleDef_HEAD_INIT,
+		"dreamcrc",						/* m_name */
+		"Module for epgimport",			/* m_doc */
+		-1,								/* m_size */
+		DreamCrcMethods,				/* m_methods */
+		NULL,							/* m_reload */
+		NULL,							/* m_traverse */
+		NULL,							/* m_clear */
+		NULL,							/* m_free */
+	};
+
+PyMODINIT_FUNC PyInit_dreamcrc(void)
+{
+    return PyModule_Create(&moduledef);
+}
+#else
+
 PyMODINIT_FUNC
 initdreamcrc(void)
 {
     (void) Py_InitModule("dreamcrc", DreamCrcMethods);
 }
+#endif
