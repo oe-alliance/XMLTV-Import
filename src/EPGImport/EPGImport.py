@@ -17,11 +17,12 @@ from socket import getaddrinfo, AF_INET6, has_ipv6
 
 HDD_EPG_DAT = "/hdd/epg.dat"
 
+from six.moves import http_client
+from six.moves import urllib
 from twisted.internet import reactor, threads
 from twisted.web.client import downloadPage
 import twisted.python.runtime
 
-import urllib2, httplib
 from datetime import datetime
 
 # Used to check server validity
@@ -112,7 +113,7 @@ class EPGImport:
 	def checkValidServer(self, serverurl):
 		dirname, filename = os.path.split(serverurl)
 		FullString = dirname + "/" + CheckFile
-		req = urllib2.build_opener()
+		req = urllib.request.build_opener()
 		req.addheaders = [('User-Agent', 'Twisted Client')]
 		dlderror=0
 		if dirname in ServerStatusList:
@@ -122,13 +123,13 @@ class EPGImport:
 			# Server not in the list so checking it
 			try:
 				response = req.open(FullString)
-			except urllib2.HTTPError as e:
+			except urllib.error.HTTPError as e:
 				print ('[EPGImport] HTTPError in checkValidServer= ' + str(e.code))
 				dlderror=1
-			except urllib2.URLError as e:
+			except urllib.error.URLError as e:
 				print ('[EPGImport] URLError in checkValidServer= ' + str(e.reason))
 				dlderror=1
-			except httplib.HTTPException as e:
+			except http_client.HTTPException as e:
 				print ('[EPGImport] HTTPException in checkValidServer')
 				dlderror=1
 			except Exception:
