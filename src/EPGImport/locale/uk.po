@@ -106,20 +106,27 @@ msgstr ""
 msgid "Friday"
 msgstr "П’ятниця"
 
+msgid "Ignore services list"
+msgstr "Ігнорувати список каналів"
+
 msgid "Import current source"
 msgstr "Завантажити зараз"
 
-msgid "Importing:"
-msgstr "Завантажуємо:"
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+"Завантаження: %s\n"
+"%s передач"
 
 msgid "Last import: "
 msgstr "Останнє завантаження: "
 
 msgid "Last import: %s events"
-msgstr "Останнє завантаження: %s подій"
+msgstr "Останнє завантаження: %s передач"
 
 msgid "Last: %s %s, %d events"
-msgstr "Останнє завантаження: %s %s, %d подій"
+msgstr "Останнє завантаження: %s %s, %d передач"
 
 msgid "Load EPG only for IPTV channels"
 msgstr "Завантаження ЕПГ тільки для IPTV каналів"
@@ -162,6 +169,9 @@ msgstr "Показати 'EPG importer' в меню розширень"
 
 msgid "Show \"EPGImport\" in plugins"
 msgstr "Показати 'EPG importer' в списку плагінів"
+
+msgid "Show log"
+msgstr "Показати лог"
 
 msgid "Skip import on restart GUI"
 msgstr "Не завантажувати після рестарту GUI"
