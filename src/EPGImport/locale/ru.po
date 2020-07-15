@@ -2,132 +2,129 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-07-04 15:48+0200\n"
+"POT-Creation-Date: 2019-05-20 02:30+0300\n"
+"PO-Revision-Date: 2020-07-14 22:58+0300\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <Dima-73@inbox.lv>\n"
-"Language: ru\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.3.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/EPGImport/filtersServices.py:138
-msgid "Add Provider"
-msgstr "Добавить провайдера"
+msgid " events\n"
+msgstr " событий\n"
 
-#: src/EPGImport/filtersServices.py:139
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"Начинаем импорт данных EPG.\n"
+"Это может занять несколько минут.\n"
+"Вас устраивает?"
+
 msgid "Add Channel"
 msgstr "Добавить канал"
 
-#: src/EPGImport/filtersServices.py:153
-msgid "Ignore services list(press OK to save)"
-msgstr "Список игногируемых сервисов (ОК для сохранения)"
+msgid "Add Provider"
+msgstr "Добавить провайдер"
 
-#: src/EPGImport/filtersServices.py:182
-msgid "Really delete all list?"
-msgstr "Удалить весь список?"
-
-#: src/EPGImport/filtersServices.py:215
-msgid "Delete selected"
-msgstr "Удалить выбранное"
-
-#: src/EPGImport/filtersServices.py:216
-msgid "Delete all"
-msgstr "Удалить все"
-
-#: src/EPGImport/filtersServices.py:239
-msgid "Channel Selection"
-msgstr "Выбор каналов"
-
-#: src/EPGImport/filtersServices.py:247
 msgid "All services provider"
 msgstr "Все сервисы провайдера"
 
-#: src/EPGImport/filtersServices.py:265 src/EPGImport/plugin.py:480
-msgid "Select action"
-msgstr "Выбор действия"
-
-#: src/EPGImport/plugin.py:52
 msgid "always"
 msgstr "всегда"
 
-#: src/EPGImport/plugin.py:53
-msgid "only manual boot"
-msgstr "только при ручной загрузке"
+msgid "Automated EPG Importer"
+msgstr "Автоматический импортер EPG"
 
-#: src/EPGImport/plugin.py:54
-msgid "only automatic boot"
-msgstr "только при авто загрузке"
+msgid "Automatic import EPG"
+msgstr "Автоматический импорт EPG"
 
-#: src/EPGImport/plugin.py:55
-msgid "never"
-msgstr "никогда"
+msgid "Automatic start time"
+msgstr "Начало автоматического старта"
 
-#: src/EPGImport/plugin.py:64
-msgid "wake up and import"
-msgstr "разбудить для импорта"
-
-#: src/EPGImport/plugin.py:65
-msgid "skip the import"
-msgstr "пропускать импорт"
-
-#: src/EPGImport/plugin.py:75
-msgid "Press OK"
-msgstr "Нажмите ОК"
-
-#: src/EPGImport/plugin.py:83
-msgid "Monday"
-msgstr "Понедельник"
-
-#: src/EPGImport/plugin.py:84
-msgid "Tuesday"
-msgstr "Вторник"
-
-#: src/EPGImport/plugin.py:85
-msgid "Wednesday"
-msgstr "Среда"
-
-#: src/EPGImport/plugin.py:86
-msgid "Thursday"
-msgstr "Четверг"
-
-#: src/EPGImport/plugin.py:87
-msgid "Friday"
-msgstr "Пятница"
-
-#: src/EPGImport/plugin.py:88
-msgid "Saturday"
-msgstr "Суббота"
-
-#: src/EPGImport/plugin.py:89
-msgid "Sunday"
-msgstr "Воскресенье"
-
-#: src/EPGImport/plugin.py:270
-msgid "EPG Import Configuration"
-msgstr "EPG импорт - настройки"
-
-#: src/EPGImport/plugin.py:274 src/EPGImport/plugin.py:514
-#: src/EPGImport/plugin.py:582
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/EPGImport/plugin.py:275 src/EPGImport/plugin.py:515
-#: src/EPGImport/plugin.py:583 src/EPGImport/plugin.py:639
-msgid "Save"
-msgstr "Сохранить"
+msgid "Choice days for start import"
+msgstr "Выбор дней для старта импорта"
 
-#: src/EPGImport/plugin.py:276
-msgid "Manual"
-msgstr "В ручную"
+msgid "Clear"
+msgstr "Очистка"
 
-#: src/EPGImport/plugin.py:277
-msgid "Sources"
-msgstr "Источники"
+msgid "Clearing current EPG before import"
+msgstr "Очистка текущего EPG перед импортом"
 
-#: src/EPGImport/plugin.py:295
-#, python-format
+msgid "Consider setting \"Days Profile\""
+msgstr "Учесть настройки \"Профиль дней\""
+
+msgid "Days Profile"
+msgstr "Профиль дней"
+
+msgid "Delete all"
+msgstr "Удалить все"
+
+msgid "Delete selected"
+msgstr "Удалить выбранное"
+
+msgid "EPG Import Configuration"
+msgstr "Импортер EPG - Настройки"
+
+msgid "EPG Import Log"
+msgstr "Импортер EPG - Журнал"
+
+msgid "EPG Import Sources"
+msgstr "Источники импорта"
+
+msgid "EPG Import finished, %d events"
+msgstr "Импорт EPG закончен, %d событий"
+
+msgid "EPG Importer"
+msgstr "Импортер EPG"
+
+msgid "EPG-Importer"
+msgstr "Импортер EPG"
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"Импортер EPG\n"
+"Ошибка старта:\n"
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"Импортер EPG\n"
+"Импорт данных EPG все еще продолжается. Пожалуйста, подождите."
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"Импортер EPG\n"
+"Начинаем импорт данных EPG.\n"
+"Это может занять несколько минут.\n"
+"Вас устраивает?"
+
+msgid "Friday"
+msgstr "Пятница"
+
+msgid "Ignore services list"
+msgstr "Список игногируемых сервисов"
+
+msgid "Import current source"
+msgstr "Импорт текущего источника"
+
 msgid ""
 "Importing: %s\n"
 "%s events"
@@ -135,129 +132,117 @@ msgstr ""
 "Импортируем: %s\n"
 "%s событий"
 
-#: src/EPGImport/plugin.py:331
-msgid "Automatic import EPG"
-msgstr "Автоматический импорт EPG"
+msgid "Last import: "
+msgstr "Последний импорт: "
 
-#: src/EPGImport/plugin.py:332
-msgid "Automatic start time"
-msgstr "Начало автоматического старта"
-
-#: src/EPGImport/plugin.py:333
-msgid "When in deep standby"
-msgstr "Поведение в глубоком ожидании"
-
-#: src/EPGImport/plugin.py:334
-msgid "Return to deep standby after import"
-msgstr "Возврат в режим глубокого ожидания после импорта"
-
-#: src/EPGImport/plugin.py:335
-msgid "Standby at startup"
-msgstr "Перейти в режим ожидания после загрузки"
-
-#: src/EPGImport/plugin.py:336
-msgid "Choice days for start import"
-msgstr "Выбор дней для старта импорта"
-
-#: src/EPGImport/plugin.py:337
-msgid "Start import after booting up"
-msgstr "Старт импорта после загрузки"
-
-#: src/EPGImport/plugin.py:338
-msgid "Load EPG only services in bouquets"
-msgstr "Загрузка EPG только для сервисов из букетов"
-
-#: src/EPGImport/plugin.py:339
-msgid "Consider setting \"Days Profile\""
-msgstr "Учесть настройки \"Профиль дней\""
-
-#: src/EPGImport/plugin.py:340
-msgid "Skip import on restart GUI"
-msgstr "Пропускать импорт после рестарта GUI"
-
-#: src/EPGImport/plugin.py:341
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Показать \"EPG импорт\" в меню дополнений"
-
-#: src/EPGImport/plugin.py:342
-msgid "Show \"EPG Importer\" in main menu"
-msgstr "Показать \"Импортер EPG\" в главном меню"
-
-#: src/EPGImport/plugin.py:343
-msgid "Load long descriptions up to X days"
-msgstr "Загрузка длинных описаний не больше чем на Х дней"
-
-#: src/EPGImport/plugin.py:344
-msgid "Run AutoTimer after import"
-msgstr "Запустить Автотаймер по окончании импорта"
-
-#: src/EPGImport/plugin.py:345
-msgid "Clearing current EPG before import"
-msgstr "Очистка текущего EPG перед импортом"
-
-#: src/EPGImport/plugin.py:432
-#, python-format
-msgid "Last: %s %s, %d events"
-msgstr "Последний импорт: %s %s, %d событий"
-
-#: src/EPGImport/plugin.py:437
-#, python-format
 msgid "Last import: %s events"
 msgstr "Последний импорт: %s событий"
 
-#: src/EPGImport/plugin.py:442
-msgid ""
-"EPGImport\n"
-"Import of epg data is still in progress. Please wait."
-msgstr ""
-"EPG импорт\n"
-"Импорт данных EPG все еще продолжается. Пожалуйста подождите."
+msgid "Last: %s %s, %d events"
+msgstr "Последний импорт: %s %s, %d событий"
 
-#: src/EPGImport/plugin.py:452
+msgid "Load EPG only services in bouquets"
+msgstr "Загрузка EPG только для сервисов из букетов"
+
+msgid "Load EPG only for IPTV channels"
+msgstr "Загрузка EPG только для IPTV"
+
+msgid "Load long descriptions up to X days"
+msgstr "Загрузка длинных описаний не больше чем на Х дней"
+
+msgid "Manual"
+msgstr "В ручную"
+
+msgid "Monday"
+msgstr "Понедельник"
+
+msgid "never"
+msgstr "никогда"
+
 msgid "No active EPG sources found, nothing to do"
-msgstr "Нет найденных активных источников EPG."
+msgstr "Активные источники EPG не найдены."
 
-#: src/EPGImport/plugin.py:457
-msgid ""
-"EPGImport\n"
-"Import of epg data will start.\n"
-"This may take a few minutes.\n"
-"Is this ok?"
-msgstr ""
-"EPG импорт\n"
-"Начинаем импорт данных EPG.\n"
-"Это может занять несколько минут.\n"
-"Это вас устраивает?"
+msgid "only automatic boot"
+msgstr "только при авто загрузке"
 
-#: src/EPGImport/plugin.py:466
-msgid ""
-"EPGImport Plugin\n"
-"Failed to start:\n"
-msgstr ""
-"EPG импорт\n"
-"Ошибка старта:\n"
+msgid "only manual boot"
+msgstr "только при ручной загрузке"
 
-#: src/EPGImport/plugin.py:479
+msgid "Press OK"
+msgstr "Нажмите ОК"
+
+msgid "press OK to save list"
+msgstr "Нажмите ОК для сохранения списка"
+
+msgid "Really delete all list?"
+msgstr "Удалить весь список?"
+
+msgid "Return to deep standby after import"
+msgstr "Возврат в режим глубокого ожидания после импорта"
+
+msgid "Run AutoTimer after import"
+msgstr "По окончании импорта запустить Автотаймер"
+
+msgid "Saturday"
+msgstr "Суббота"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Select action"
+msgstr "Выбор действия"
+
+msgid "Select service to add..."
+msgstr "Выберите канал для добавления..."
+
+msgid "Show \"EPG Importer\" in main menu"
+msgstr "Показать \"Импортер EPG\" в главном меню"
+
+msgid "Show \"EPGImport\" in extensions"
+msgstr "Показать \"Импортер EPG\" в меню дополнений"
+
+msgid "Show \"EPGImport\" in plugins"
+msgstr "Показать \"Импортер EPG\" в списке плагинов"
+
 msgid "Show log"
-msgstr "Показать лог"
+msgstr "Показать журнал"
 
-#: src/EPGImport/plugin.py:479
-msgid "Ignore services list"
-msgstr "Список игногируемых сервисов"
+msgid "Skip import on restart GUI"
+msgstr "Пропускать импорт после рестарта GUI"
 
-#: src/EPGImport/plugin.py:527
-msgid "Import current source"
-msgstr "Импорт текущего источника"
+msgid "skip the import"
+msgstr "пропускать импорт"
 
-#: src/EPGImport/plugin.py:539
-msgid "EPG Import Sources"
-msgstr "Источники импорта EPG"
+msgid "Sources"
+msgstr "Источники"
 
-#: src/EPGImport/plugin.py:595
-msgid "Days Profile"
-msgstr "Профиль дней"
+msgid "Standby at startup"
+msgstr "После загрузки, перейти в режим ожидания"
 
-#: src/EPGImport/plugin.py:605
+msgid "Start import after booting up"
+msgstr "Старт импорта после загрузки"
+
+msgid "Sunday"
+msgstr "Воскресенье"
+
+msgid "Thursday"
+msgstr "Четверг"
+
+msgid "Tuesday"
+msgstr "Вторник"
+
+msgid "wake up and import"
+msgstr "разбудить для импорта"
+
+msgid "Wednesday"
+msgstr "Среда"
+
+msgid "When in deep standby"
+msgstr "Поведение в глубоком ожидании"
+
+msgid "Write to /tmp/epgimport.log"
+msgstr "Запись в /tmp/epgimport.log"
+
 msgid ""
 "You may not use this settings!\n"
 "At least one day a week should be included!"
@@ -265,73 +250,9 @@ msgstr ""
 "Вы не можете использовать эти настройки!\n"
 "По крайней мере один день недели должен быть активирован!"
 
-#: src/EPGImport/plugin.py:636
-msgid "Clear"
-msgstr "Очистка"
-
-#: src/EPGImport/plugin.py:661
-msgid "EPG Import Log"
-msgstr "EPG импорт - лог"
-
-#: src/EPGImport/plugin.py:667
-msgid "Write to /tmp/epgimport.log"
-msgstr "Запись в /tmp/epgimport.log"
-
-#: src/EPGImport/plugin.py:683
-msgid "Last import: "
-msgstr "Последний импорт: "
-
-#: src/EPGImport/plugin.py:683
-msgid " events\n"
-msgstr " событий\n"
-
-#: src/EPGImport/plugin.py:683
-msgid ""
-"\n"
-"Import of epg data will start.\n"
-"This may take a few minutes.\n"
-"Is this ok?"
-msgstr ""
-"\n"
-"Начинаем импорт данных EPG.\n"
-"Это может занять несколько минут.\n"
-"Это вас устраивает?"
-
-#: src/EPGImport/plugin.py:701
-msgid "EPG Importer"
-msgstr "Импортер EPG"
-
-#: src/EPGImport/plugin.py:729
-#, python-format
-msgid "EPG Import finished, %d events"
-msgstr "EPG импорт закончен, %d событий"
-
-#: src/EPGImport/plugin.py:729
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
 msgstr ""
-"Необходим рестарт Энигма2 для загрузки данных EPG,\n"
-"сделать это сейчас?"
-
-#: src/EPGImport/plugin.py:1029
-msgid "Automated EPG Importer"
-msgstr "Автоматический импортер EPG"
-
-#: src/EPGImport/plugin.py:1031 src/EPGImport/plugin.py:1032
-#: src/EPGImport/plugin.py:1037 src/EPGImport/plugin.py:1042
-#: src/EPGImport/plugin.py:1047 src/EPGImport/plugin.py:1052
-#: src/EPGImport/plugin.py:1059 src/EPGImport/plugin.py:1069
-#: src/EPGImport/plugin.py:1076
-msgid "EPG-Importer"
-msgstr "Импортер EPG"
-
-#~ msgid ""
-#~ " %s\n"
-#~ "%s events"
-#~ msgstr ""
-#~ " %s\n"
-#~ "%s событий"
-
-#~ msgid "EPGImport"
-#~ msgstr "EPG импорт"
+"Для загрузки данных EPG требуется перезагрузка,\n"
+"Вас устраивает?"
