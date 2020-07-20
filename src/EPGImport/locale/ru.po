@@ -151,7 +151,7 @@ msgid "Load long descriptions up to X days"
 msgstr "Загрузка длинных описаний не больше чем на Х дней"
 
 msgid "Manual"
-msgstr "В ручную"
+msgstr "Вручную"
 
 msgid "Monday"
 msgstr "Понедельник"
