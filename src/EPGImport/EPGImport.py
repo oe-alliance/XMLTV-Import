@@ -415,7 +415,7 @@ class EPGImport:
 		return self.source is not None
 
 	def legacyDownload(self, result, afterDownload, downloadFail, sourcefile, filename, deleteFile=True):
-		print("[EPGImport] IPv6 download failed, falling back to IPv4: " + sourcefile, file=log)
+		print("[EPGImport] IPv6 download failed, falling back to IPv4: " + six.ensure_str(sourcefile), file=log)
 		downloadPage(six.ensure_binary(sourcefile), filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
 
 	def do_download(self, sourcefile, afterDownload, downloadFail):
