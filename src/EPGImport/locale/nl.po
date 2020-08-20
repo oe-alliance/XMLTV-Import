@@ -218,7 +218,7 @@ msgstr "Zaterdag"
 
 #: ../plugin.py:297 ../plugin.py:543 ../plugin.py:622 ../plugin.py:678
 msgid "Save"
-msgstr "Sla op"
+msgstr "Opslaan"
 
 #: ../filtersServices.py:267 ../plugin.py:508
 msgid "Select action"
@@ -298,7 +298,7 @@ msgstr ""
 
 #: ../plugin.py:52
 msgid "always"
-msgstr "atijd"
+msgstr "altijd"
 
 #: ../plugin.py:55
 msgid "never"
