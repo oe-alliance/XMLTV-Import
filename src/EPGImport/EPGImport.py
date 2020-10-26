@@ -184,7 +184,7 @@ class EPGImport:
 		self.fetchUrl(self.source.url)
 
 	def fetchUrl(self, filename):
-		if filename.startswith('http:') or filename.startswith('ftp:'):
+		if filename.startswith('http:') or filename.startswith('ftp:') or filename.startswith('https:'):
 			self.do_download(filename, self.afterDownload, self.downloadFail)
 		else:
 			self.afterDownload(None, filename, deleteFile=False)
@@ -423,6 +423,26 @@ class EPGImport:
 			filename += ext
 		sourcefile = sourcefile.encode('utf-8')
 		print>>log, "[EPGImport] Downloading: " + sourcefile + " to local path: " + filename
+		response = None
+		hdr = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36','Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' }
+		req = urllib2.Request(sourcefile, headers=hdr)
+		success = False
+		try:
+			response = urllib2.urlopen(req)
+			with open(filename,'wb') as output:
+				output.write(response.read())
+				success = True
+				afterDownload(True, filename)
+		except urllib2.URLError as e:
+			print>>log, (e)
+			pass
+		except:
+			print>>log,"\n ***** unknown error"
+			pass
+			
+		if not success:
+			downloadFail(True)
+		return filename
 
 		ip6 = sourcefile6 = None
 		if has_ipv6 and version_info >= (2,7,11) and ((version.major == 15 and version.minor >= 5) or version.major >= 16):
