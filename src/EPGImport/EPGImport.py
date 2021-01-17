@@ -9,7 +9,7 @@ from __future__ import print_function
 import time
 import os
 import gzip
-from . import log
+import log
 import random
 from twisted import version
 from sys import version_info
