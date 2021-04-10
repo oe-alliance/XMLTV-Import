@@ -152,7 +152,8 @@ def getBouquetChannelList():
 						if clist:
 							while True:
 								service = clist.getNext()
-								if not service.valid(): break
+								if not service.valid():
+									break
 								if not (service.flags & mask):
 									if service.flags & altrernative:
 										altrernative_list = getAlternatives(service)
@@ -172,7 +173,8 @@ def getBouquetChannelList():
 		if not services is None:
 			while True:
 				service = services.getNext()
-				if not service.valid(): break
+				if not service.valid():
+					break
 				if not (service.flags & mask):
 					if service.flags & altrernative:
 						altrernative_list = getAlternatives(service)
