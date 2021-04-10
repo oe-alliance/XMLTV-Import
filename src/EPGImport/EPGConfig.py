@@ -17,9 +17,11 @@ SETTINGS_FILE = '/etc/enigma2/epgimport.conf'
 
 channelCache = {}
 
+
 def isLocalFile(filename):
 	# we check on a '://' as a silly way to check local file
 	return '://' not in filename
+
 
 def getChannels(path, name):
 	global channelCache
@@ -51,6 +53,7 @@ class EPGChannel:
 		else:
 			self.urls = urls
 		self.items = None
+
 	def openStream(self, filename):
 		fd = open(filename, 'rb')
 		if not os.fstat(fd.fileno()).st_size:
@@ -64,6 +67,7 @@ class EPGChannel:
 				from backports import lzma
 			fd = lzma.open(filename, 'rb')
 		return fd
+
 	def parse(self, filterCallback, downloadedFile):
 		print("[EPGImport] Parsing channels from '%s'" % self.name, file=log)
 		if self.items is None:
@@ -86,6 +90,7 @@ class EPGChannel:
 		except Exception as e:
 			print("[EPGImport] failed to parse", downloadedFile, "Error:", e, file=log)
 			pass
+
 	def update(self, filterCallback, downloadedFile=None):
 		customFile = '/etc/epgimport/custom.channels.xml'
 		# Always read custom file since we don't know when it was last updated
@@ -101,6 +106,7 @@ class EPGChannel:
 			if (not self.mtime) or (self.mtime < mtime):
 				self.parse(filterCallback, self.urls[0])
 				self.mtime = mtime
+
 	def downloadables(self):
 		if (len(self.urls) == 1) and isLocalFile(self.urls[0]):
 			return None
@@ -110,8 +116,10 @@ class EPGChannel:
 			if (not self.mtime) or (self.mtime + 86400 < now):
 				return self.urls
 		return None
+
 	def __repr__(self):
 		return "EPGChannel(urls=%s, channels=%s, mtime=%s)" % (self.urls, self.items and len(self.items), self.mtime)
+
 
 class EPGSource:
 	def __init__(self, path, elem, category=None):
@@ -131,6 +139,7 @@ class EPGSource:
 			self.description = self.url
 		self.format = elem.get('format', 'xml')
 		self.channels = getChannels(path, elem.get('channels'))
+
 
 def enumSourcesFile(sourcefile, filter=None, categories=False):
 	global channelCache
@@ -158,6 +167,7 @@ def enumSourcesFile(sourcefile, filter=None, categories=False):
 				if categories:
 					yield category
 
+
 def enumSources(path, filter=None, categories=False):
 	try:
 		for sourcefile in os.listdir(path):
@@ -179,9 +189,11 @@ def loadUserSettings(filename=SETTINGS_FILE):
 		print("[EPGImport] No settings", e, file=log)
 		return {"sources": []}
 
+
 def storeUserSettings(filename=SETTINGS_FILE, sources=None):
 	container = {"sources": sources}
 	pickle.dump(container, open(filename, 'wb'), pickle.HIGHEST_PROTOCOL)
+
 
 if __name__ == '__main__':
 	import sys

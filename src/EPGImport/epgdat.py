@@ -91,6 +91,7 @@ except:
 	# "crcdata" is the description string
 	# "crctype" is the description type (1 byte 0x4d or 0x4e)
 	# !!!!!!!!! IT'S VERY TIME CONSUMING !!!!!!!!!
+
 	def crc32_dreambox(crcdata, crctype, crctable=CRCTABLE):
 		# ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop
 		#crc=0x00000000
@@ -103,6 +104,8 @@ except:
 
 # convert time or length from datetime format to 3 bytes hex value
 # i.e. 20:25:30 -> 0x20 , 0x25 , 0x30
+
+
 def TL_hexconv(dt):
 	return (
 		(dt.hour % 10) + (16 * (dt.hour / 10)),

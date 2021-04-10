@@ -28,6 +28,7 @@ def new():
 	'Factory method to return main class instance'
 	return Gen_Xmltv()
 
+
 class Gen_Xmltv():
 	def iterator(self, fd, channelsDict):
 		try:
