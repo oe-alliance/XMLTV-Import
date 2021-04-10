@@ -6,7 +6,7 @@ dreamcrc = Extension('Extensions/EPGImport/dreamcrc',
                     sources=['dreamcrc.c'])
 
 pkg = 'Extensions.EPGImport'
-setup (name='enigma2-plugin-extensions-epgimport',
+setup(name='enigma2-plugin-extensions-epgimport',
        version='0.9.12',
        description='C implementation of Dream CRC32 algorithm',
        package_dir={pkg: 'EPGImport'},

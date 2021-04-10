@@ -207,7 +207,7 @@ class filtersServicesSetup(Screen):
 		self.close()
 
 	def updateList(self):
-		self.list = [ ]
+		self.list = []
 		for service in self.RefList.servicesList():
 			if '1:0:' in service:
 				provname = getProviderName(eServiceReference(service))
