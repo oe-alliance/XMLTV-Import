@@ -25,13 +25,15 @@ def getProviderName(ref):
 	if not providerlist is None:
 		while True:
 			provider = providerlist.getNext()
-			if not provider.valid(): break
+			if not provider.valid():
+				break
 			if provider.flags & eServiceReference.isDirectory:
 				servicelist = serviceHandler.list(provider)
 				if not servicelist is None:
 					while True:
 						service = servicelist.getNext()
-						if not service.valid(): break
+						if not service.valid():
+							break
 						if service == ref:
 							info = serviceHandler.info(provider)
 							return info and info.getName(provider) or "Unknown"
@@ -49,8 +51,10 @@ class FiltersList():
 			return
 		while True:
 			line = cfg.readline()
-			if not line: break
-			if line[0] in '#;\n': continue
+			if not line:
+				break
+			if line[0] in '#;\n':
+				continue
 			ref = line.strip()
 			if not ref in self.services:
 				self.services.append(ref)

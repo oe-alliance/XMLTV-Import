@@ -200,8 +200,8 @@ class epgdat_class:
 			# prepare and write CHANNEL INFO record
 			ssid = service.split(":")
 			# write CHANNEL INFO record (sid, onid, tsid, eventcount)
-			self.EPG_TMP_FD.write(self.s_IIII.pack( \
-				int(ssid[3],16), int(ssid[5],16), \
+			self.EPG_TMP_FD.write(self.s_IIII.pack(
+				int(ssid[3],16), int(ssid[5],16),
 				int(ssid[4],16), len(self.events)))
 			self.EPG_HEADER1_channel_count += 1
 			# event_dict.keys() are numeric so indexing is possibile
