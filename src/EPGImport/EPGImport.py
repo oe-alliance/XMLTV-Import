@@ -166,12 +166,12 @@ class EPGImport:
         dirname, filename = os.path.split(serverurl)
         FullString = dirname + '/' + CheckFile
         # req = urllib2.build_opener()
-        
+
         if pythonVer == 2:
             req = urllib2.build_opener()
         else:
             req = urllib.request.build_opener()
-            
+
         req.addheaders = [('User-Agent', 'Twisted Client')]
         dlderror = 0
         if dirname in ServerStatusList:
@@ -196,7 +196,7 @@ class EPGImport:
                     dlderror = 1
 
             else:
-                
+
                 try:
                     response = req.open(FullString)
                 except urllib.error.HTTPError as e:

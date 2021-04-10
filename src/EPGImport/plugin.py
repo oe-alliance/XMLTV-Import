@@ -226,7 +226,7 @@ def channelFilter(ref):
 		# -7 (errNoSourceFound) occurs when tuner is disconnected.
 		r = fakeRecResult in (0, -7)
 		#if not r:
-		#	print>>log, "Rejected (%d): %s" % (fakeRecResult, ref) 			
+		#	print>>log, "Rejected (%d): %s" % (fakeRecResult, ref)
 		return r
 	print>>log, "Invalid serviceref string:", ref
 	return False
@@ -1172,4 +1172,3 @@ class SetupSummary(Screen):
 	def selectionChanged(self):
 		self["SetupEntry"].text = self.parent.getCurrentEntry()
 		self["SetupValue"].text = self.parent.getCurrentValue()
-

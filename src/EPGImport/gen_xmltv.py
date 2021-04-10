@@ -37,4 +37,3 @@ class Gen_Xmltv():
 			print "[gen_xmltv] Error:", e
 			import traceback
 			traceback.print_exc()
-
