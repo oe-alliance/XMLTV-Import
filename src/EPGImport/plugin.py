@@ -204,7 +204,7 @@ def channelFilter(ref):
 			return False
 	global serviceIgnoreList
 	if serviceIgnoreList is None:
-		serviceIgnoreList =  [getRefNum(x) for x in filtersServices.filtersServicesList.servicesList()]
+		serviceIgnoreList = [getRefNum(x) for x in filtersServices.filtersServicesList.servicesList()]
 	if refnum in serviceIgnoreList:
 		print>>log, "Serviceref is in ignore list:", sref.toString()
 		return False
@@ -721,7 +721,7 @@ class EPGImportLog(Screen):
 
 class EPGImportDownloader(MessageBox):
 	def __init__(self, session):
-		MessageBox.__init__(self, session, _("Last import: ")+ config.plugins.extra_epgimport.last_import.value + _(" events\n") + _("\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?"), MessageBox.TYPE_YESNO)
+		MessageBox.__init__(self, session, _("Last import: ") + config.plugins.extra_epgimport.last_import.value + _(" events\n") + _("\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?"), MessageBox.TYPE_YESNO)
 		self.skinName = "MessageBox"
 
 def msgClosed(ret):
@@ -848,7 +848,7 @@ class AutoStartTimer:
 			clock = config.plugins.epgimport.wakeup.value
 			nowt = time.time()
 			now = time.localtime(nowt)
-			return int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday, clock[0], clock[1], lastMACbyte()/5, 0, now.tm_yday, now.tm_isdst)))
+			return int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday, clock[0], clock[1], lastMACbyte() / 5, 0, now.tm_yday, now.tm_isdst)))
 		else:
 			return -1
 
@@ -865,10 +865,10 @@ class AutoStartTimer:
 				return -1
 				print>>log, "[XMLTVImport] wakeup day of week disabled"
 			if wake < now + atLeast:
-				wake += 86400*wakeup_day
+				wake += 86400 * wakeup_day
 			else:
 				if not config.plugins.extra_epgimport.day_import[cur_day].value:
-					wake += 86400*wakeup_day
+					wake += 86400 * wakeup_day
 			next = wake - now
 			self.timer.startLongTimer(next)
 		else:
@@ -919,10 +919,10 @@ class AutoStartTimer:
 				return -1
 				print>>log, "[XMLTVImport] wakeup day of week disabled"
 			if wake_up < now:
-				wake_up += 86400*wakeup_day
+				wake_up += 86400 * wakeup_day
 			else:
 				if not config.plugins.extra_epgimport.day_import[cur_day].value:
-					wake_up += 86400*wakeup_day
+					wake_up += 86400 * wakeup_day
 		else:
 			wake_up = -1
 		return wake_up
@@ -935,7 +935,7 @@ class AutoStartTimer:
 				wake = self.getStatus()
 				now_t = time.time()
 				now = int(now_t)
-				if 0 < wake - now <= 60*5:
+				if 0 < wake - now <= 60 * 5:
 					if config.plugins.epgimport.standby_afterwakeup.value:
 						if not Screens.Standby.inStandby:
 							Notifications.AddNotification(Screens.Standby.Standby)
@@ -975,7 +975,7 @@ def WakeupDayOfWeek():
 		cur_day = -1
 	if cur_day >= 0:
 		for i in (1,2,3,4,5,6,7):
-			if config.plugins.extra_epgimport.day_import[(cur_day+i)%7].value:
+			if config.plugins.extra_epgimport.day_import[(cur_day + i) % 7].value:
 				return i
 	return start_day
 
@@ -984,7 +984,7 @@ def onBootStartCheck():
 	print>>log, "[XMLTVImport] onBootStartCheck"
 	now = int(time.time())
 	wake = autoStartTimer.getStatus()
-	print>>log, "[XMLTVImport] now=%d wake=%d wake-now=%d" % (now, wake, wake-now)
+	print>>log, "[XMLTVImport] now=%d wake=%d wake-now=%d" % (now, wake, wake - now)
 	if (wake < 0) or (wake - now > 600):
 		on_start = False
 		if config.plugins.epgimport.runboot.value == "1":

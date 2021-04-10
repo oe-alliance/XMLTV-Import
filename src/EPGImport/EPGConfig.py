@@ -81,7 +81,7 @@ class EPGChannel:
 			print>>log, "[EPGImport] failed to parse", downloadedFile, "Error:", e
 			pass
 	def update(self, filterCallback, downloadedFile=None):
-		customFile='/etc/epgimport/custom.channels.xml'
+		customFile = '/etc/epgimport/custom.channels.xml'
 		# Always read custom file since we don't know when it was last updated
 		# and we don't have multiple download from server problem since it is always a local file.
 		if os.path.exists(customFile):

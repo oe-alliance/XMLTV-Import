@@ -17,13 +17,13 @@ class epgdatclass:
 		self.services = None
 		path = tmppath
 		if self.checkPath('/media/cf'):
-			path='/media/cf'
+			path = '/media/cf'
 		if self.checkPath('/media/mmc'):
-			path='/media/mmc'
+			path = '/media/mmc'
 		if self.checkPath('/media/usb'):
-			path='/media/usb'
+			path = '/media/usb'
 		if self.checkPath('/media/hdd'):
-			path='/media/hdd'
+			path = '/media/hdd'
 		self.epgfile = os.path.join(path, 'epg_new.dat')
 		self.epg = epgdat.epgdat_class(path, settingspath, self.epgfile)
 
@@ -56,7 +56,7 @@ class epgdatclass:
 	def checkPath(self,path):
 		f = os.popen('mount', "r")
 		for l in f.xreadlines():
-			if l.find(path)!=-1:
+			if l.find(path) != -1:
 				return True
 		return False
 
