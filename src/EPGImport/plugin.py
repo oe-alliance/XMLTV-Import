@@ -245,7 +245,7 @@ try:
 		HD = True
 except:
 	pass
-class EPGImportConfig(ConfigListScreen,Screen):
+class EPGImportConfig(ConfigListScreen, Screen):
 	if HD:
 		skin = """
 			<screen position="center,center" size="600,500" title="EPG Import Configuration" >
@@ -344,7 +344,7 @@ class EPGImportConfig(ConfigListScreen,Screen):
 	def initConfig(self):
 		def getPrevValues(section):
 			res = {}
-			for (key,val) in section.content.items.items():
+			for (key, val) in section.content.items.items():
 				if isinstance(val, ConfigSubsection):
 					res[key] = getPrevValues(val)
 				else:
@@ -411,7 +411,7 @@ class EPGImportConfig(ConfigListScreen,Screen):
 
 	def keyRed(self):
 		def setPrevValues(section, values):
-			for (key,val) in section.content.items.items():
+			for (key, val) in section.content.items.items():
 				value = values.get(key, None)
 				if value is not None:
 					if isinstance(val, ConfigSubsection):
@@ -430,7 +430,7 @@ class EPGImportConfig(ConfigListScreen,Screen):
 		self.EPG.save()
 		if self.prev_onlybouquet != config.plugins.epgimport.import_onlybouquet.value or (autoStartTimer is not None and autoStartTimer.prev_multibouquet != config.usage.multibouquet.value):
 			EPGConfig.channelCache = {}
-		self.close(True,self.session)
+		self.close(True, self.session)
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -459,12 +459,12 @@ class EPGImportConfig(ConfigListScreen,Screen):
 			except:
 				# Not all images have inPast
 				d, t = FuzzyTime(start)
-			self["statusbar"].setText(_("Last: %s %s, %d events") % (d,t,count))
+			self["statusbar"].setText(_("Last: %s %s, %d events") % (d, t, count))
 			self.lastImportResult = lastImportResult
 
 	def keyInfo(self):
 		last_import = config.plugins.extra_epgimport.last_import.value
-		self.session.open(MessageBox,_("Last import: %s events") % (last_import),type=MessageBox.TYPE_INFO)
+		self.session.open(MessageBox, _("Last import: %s events") % (last_import), type=MessageBox.TYPE_INFO)
 
 	def doimport(self, one_source=None):
 		if epgimport.isImportRunning():
@@ -974,7 +974,7 @@ def WakeupDayOfWeek():
 	except:
 		cur_day = -1
 	if cur_day >= 0:
-		for i in (1,2,3,4,5,6,7):
+		for i in (1, 2, 3, 4, 5, 6, 7):
 			if config.plugins.extra_epgimport.day_import[(cur_day + i) % 7].value:
 				return i
 	return start_day

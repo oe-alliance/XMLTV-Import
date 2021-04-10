@@ -53,7 +53,7 @@ class epgdatclass:
 			traceback.print_exc()
 		self.epg = None
 
-	def checkPath(self,path):
+	def checkPath(self, path):
 		f = os.popen('mount', "r")
 		for l in f.xreadlines():
 			if l.find(path) != -1:

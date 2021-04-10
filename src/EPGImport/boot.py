@@ -37,7 +37,7 @@ def checkCrashLog():
 						print "no time found in filename"
 					if howold < 120:
 						print "recent crashfile found analysing"
-						crashfile = open(path + fname,"r")
+						crashfile = open(path + fname, "r")
 						crashtext = crashfile.read()
 						crashfile.close()
 						if (crashtext.find("FATAL: LINE ") != -1):
@@ -56,8 +56,8 @@ def findNewEpg():
 epg = findEpg()
 newepg = findNewEpg()
 
-print "Epg.dat found at : ",epg
-print "newepg  found at : ",newepg
+print "Epg.dat found at : ", epg
+print "newepg  found at : ", newepg
 
 ##Delete epg.dat if last crash was because of error in epg.dat
 if checkCrashLog():
