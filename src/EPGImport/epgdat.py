@@ -304,4 +304,3 @@ class epgdat_class:
 		# *** cleanup **
 		if os.path.exists(self.EPGDAT_TMP_FILENAME):
 			os.unlink(self.EPGDAT_TMP_FILENAME)
-
