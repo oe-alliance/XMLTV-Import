@@ -8,6 +8,8 @@ from . import log
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
 
 # %Y%m%d%H%M%S
+
+
 def quickptime(str):
 	return time.struct_time((int(str[0:4]), int(str[4:6]), int(str[6:8]),
 				 int(str[8:10]), int(str[10:12]), 0,
@@ -21,7 +23,7 @@ def get_time_utc(timestring, fdateparse):
 		tm = fdateparse(values[0])
 		timegm = calendar.timegm(tm)
 		#suppose file says +0300 => that means we have to substract 3 hours from localtime to get gmt
-		timegm -= (3600*int(values[1])/100)
+		timegm -= (3600 * int(values[1]) / 100)
 		return timegm
 	except Exception as e:
 		print("[XMLTVConverter] get_time_utc error:", e)
@@ -29,6 +31,8 @@ def get_time_utc(timestring, fdateparse):
 
 # Preferred language should be configurable, but for now,
 # we just like Dutch better!
+
+
 def get_xml_string(elem, name):
 	r = ''
 	try:
@@ -39,10 +43,11 @@ def get_xml_string(elem, name):
 				r = txt
 			elif lang == "nl":
 				r = txt
-	except Exception as  e:
-		print("[XMLTVConverter] get_xml_string error:",  e)
+	except Exception as e:
+		print("[XMLTVConverter] get_xml_string error:", e)
 	# Now returning UTF-8 by default, the epgdat/oudeis must be adjusted to make this work.
 	return six.ensure_str(r)
+
 
 def enumerateProgrammes(fp):
 	"""Enumerates programme ElementTree nodes from file object 'fp'"""
@@ -56,7 +61,7 @@ def enumerateProgrammes(fp):
 
 
 class XMLTVConverter:
-	def __init__(self, channels_dict, category_dict, dateformat = '%Y%m%d%H%M%S %Z'):
+	def __init__(self, channels_dict, category_dict, dateformat='%Y%m%d%H%M%S %Z'):
 	    self.channels = channels_dict
 	    self.categories = category_dict
 	    if dateformat.startswith('%Y%m%d%H%M%S'):
@@ -74,9 +79,9 @@ class XMLTVConverter:
 			channel = elem.get('channel')
 			channel = channel.lower()
 			if not channel in self.channels:
-				if lastUnknown!=channel:
+				if lastUnknown != channel:
 					print("Unknown channel: ", channel, file=log)
-					lastUnknown=channel
+					lastUnknown = channel
 				# return a None object to give up time to the reactor.
 				yield None
 				continue
@@ -96,21 +101,21 @@ class XMLTVConverter:
 				except:
 					description = ''
 				category = get_xml_string(elem, 'category')
-				cat_nr = self.get_category(category,  stop-start)
+				cat_nr = self.get_category(category, stop - start)
 				# data_tuple = (data.start, data.duration, data.title, data.short_description, data.long_description, data.type)
 				if not stop or not start or (stop <= start):
 					print("[XMLTVConverter] Bad start/stop time: %s (%s) - %s (%s) [%s]" % (elem.get('start'), start, elem.get('stop'), stop, title))
-				yield (services, (start, stop-start, title, subtitle, description, cat_nr))
-			except Exception as  e:
+				yield (services, (start, stop - start, title, subtitle, description, cat_nr))
+			except Exception as e:
 				print("[XMLTVConverter] parsing event error:", e)
 
-	def get_category(self,  str,  duration):
+	def get_category(self, str, duration):
 		if (not str) or (not isinstance(str, type('str'))):
 			return 0
 		if str in self.categories:
 			category = self.categories[str]
 			if len(category) > 1:
-				if duration > 60*category[1]:
+				if duration > 60 * category[1]:
 					return category[0]
 			elif len(category) > 0:
 				return category

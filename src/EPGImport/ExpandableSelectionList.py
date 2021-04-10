@@ -8,6 +8,7 @@ import skin
 expandableIcon = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "icons/expandable.png"))
 expandedIcon = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "icons/expanded.png"))
 
+
 def loadSettings():
 	global cat_desc_loc, entry_desc_loc, cat_icon_loc, entry_icon_loc
 	x, y, w, h = skin.parameters.get("SelectionListDescr", (25, 3, 650, 30))
@@ -17,6 +18,7 @@ def loadSettings():
 	x, y, w, h = skin.parameters.get("SelectionListLock", (0, 2, 25, 24))
 	cat_icon_loc = (x, 0, w, y + y + h) # The category icon is larger
 	entry_icon_loc = (x + ind, y, w, h)
+
 
 def category(description, isExpanded=False):
 	global cat_desc_loc, cat_icon_loc
@@ -29,6 +31,7 @@ def category(description, isExpanded=False):
 		(eListboxPythonMultiContent.TYPE_TEXT,) + cat_desc_loc + (0, RT_HALIGN_LEFT, description),
 		(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST,) + cat_icon_loc + (icon,)
 	]
+
 
 def entry(description, value, selected):
 	global entry_desc_loc, entry_icon_loc
@@ -43,6 +46,7 @@ def entry(description, value, selected):
 	res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST,) + entry_icon_loc + (selectionpng,))
 	return res
 
+
 def expand(cat, value=True):
 	# cat is a list of data and icons
 	if cat[0][1] != value:
@@ -55,17 +59,20 @@ def expand(cat, value=True):
 		cat[0] = (t[0], value, t[2])
 		cat[2] = (eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST,) + cat_icon_loc + (icon,)
 
+
 def isExpanded(cat):
 	return cat[0][1]
+
 
 def isCategory(item):
 	# Return whether list enty is a Category
 	return hasattr(item[0][2], 'append')
 
+
 class ExpandableSelectionList(MenuList):
-	def __init__(self, tree = None, enableWrapAround = False):
+	def __init__(self, tree=None, enableWrapAround=False):
 		'tree is expected to be a list of categories'
-		MenuList.__init__(self, [], enableWrapAround, content = eListboxPythonMultiContent)
+		MenuList.__init__(self, [], enableWrapAround, content=eListboxPythonMultiContent)
 		font = skin.fonts.get("SelectionList", ("Regular", 20, 30))
 		self.l.setFont(0, gFont(font[0], font[1]))
 		self.l.setItemHeight(font[2])
@@ -109,5 +116,6 @@ class ExpandableSelectionList(MenuList):
 			for entry in cat[0][2]:
 				if entry[2]:
 					yield entry
+
 
 loadSettings()
