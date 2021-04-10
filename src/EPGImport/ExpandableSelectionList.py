@@ -63,9 +63,9 @@ def isCategory(item):
 	return hasattr(item[0][2], 'append')
 
 class ExpandableSelectionList(MenuList):
-	def __init__(self, tree = None, enableWrapAround = False):
+	def __init__(self, tree=None, enableWrapAround=False):
 		'tree is expected to be a list of categories'
-		MenuList.__init__(self, [], enableWrapAround, content = eListboxPythonMultiContent)
+		MenuList.__init__(self, [], enableWrapAround, content=eListboxPythonMultiContent)
 		font = skin.fonts.get("SelectionList", ("Regular", 20, 30))
 		self.l.setFont(0, gFont(font[0], font[1]))
 		self.l.setItemHeight(font[2])

@@ -43,11 +43,11 @@ def importFrom(epgimport, sourceXml):
 				print "reactor stopped"
 				pass
 		EPGImport.reactor = FakeReactor()
-	sources = [ s for s in EPGConfig.enumSourcesFile(sourceXml, filter = None) ]
+	sources = [ s for s in EPGConfig.enumSourcesFile(sourceXml, filter=None) ]
 	sources.reverse()
 	epgimport.sources = sources
 	epgimport.onDone = done
-	epgimport.beginImport(longDescUntil = time.time() + (5*24*3600))
+	epgimport.beginImport(longDescUntil=time.time() + (5*24*3600))
 	EPGImport.reactor.run()
 
 #----------------------------------------------

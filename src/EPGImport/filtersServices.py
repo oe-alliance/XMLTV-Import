@@ -268,7 +268,7 @@ class filtersServicesSelection(ChannelSelectionBase):
 									self.close(providerlist)
 								else:
 									self.close(None)
-				self.session.openWithCallback(addAction, ChoiceBox, title = _("Select action"), list=menu)
+				self.session.openWithCallback(addAction, ChoiceBox, title=_("Select action"), list=menu)
 			else:
 				self.enterPath(ref)
 		elif (ref.flags & 7) == 7:
