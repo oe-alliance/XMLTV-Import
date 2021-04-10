@@ -166,12 +166,12 @@ class EPGImport:
         dirname, filename = os.path.split(serverurl)
         FullString = dirname + '/' + CheckFile
         # req = urllib2.build_opener()
-        
+
         if pythonVer == 2:
             req = urllib2.build_opener()
         else:
             req = urllib.request.build_opener()
-            
+
         req.addheaders = [('User-Agent', 'Twisted Client')]
         dlderror = 0
         if dirname in ServerStatusList:
@@ -196,14 +196,14 @@ class EPGImport:
                     dlderror = 1
 
             else:
-                
+
                 try:
                     response = req.open(FullString)
                 except urllib.error.HTTPError as e:
-                    print ('[EPGImport] HTTPError in checkValidServer= ' + str(e.code))
+                    print('[EPGImport] HTTPError in checkValidServer= ' + str(e.code))
                     dlderror = 1
                 except urllib.error.URLError as e:
-                    print ('[EPGImport] URLError in checkValidServer= ' + str(e.reason))
+                    print('[EPGImport] URLError in checkValidServer= ' + str(e.reason))
                     dlderror = 1
 
                 # except http_client.HTTPException as e:
@@ -211,7 +211,7 @@ class EPGImport:
                 # dlderror = 1
 
                 except Exception:
-                    print ('[EPGImport] Generic exception in checkValidServer')
+                    print('[EPGImport] Generic exception in checkValidServer')
                     dlderror = 1
 
         if not dlderror:
