@@ -56,7 +56,7 @@ class EPGChannel:
 		if not os.fstat(fd.fileno()).st_size:
 			raise Exception("File is empty")
 		if filename.endswith('.gz'):
-			fd = gzip.GzipFile(fileobj = fd, mode = 'rb')
+			fd = gzip.GzipFile(fileobj=fd, mode='rb')
 		elif filename.endswith('.xz') or filename.endswith('.lzma'):
 			try:
 				import lzma
@@ -172,14 +172,14 @@ def enumSources(path, filter=None, categories=False):
 		print("[EPGImport] failed to list", path, "Error:", e, file=log)
 
 
-def loadUserSettings(filename = SETTINGS_FILE):
+def loadUserSettings(filename=SETTINGS_FILE):
 	try:
 		return pickle.load(open(filename, 'rb'))
 	except Exception as e:
 		print("[EPGImport] No settings", e, file=log)
 		return {"sources": []}
 
-def storeUserSettings(filename = SETTINGS_FILE, sources = None):
+def storeUserSettings(filename=SETTINGS_FILE, sources=None):
 	container = {"sources": sources}
 	pickle.dump(container, open(filename, 'wb'), pickle.HIGHEST_PROTOCOL)
 

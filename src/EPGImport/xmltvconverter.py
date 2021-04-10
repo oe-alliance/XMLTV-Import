@@ -56,7 +56,7 @@ def enumerateProgrammes(fp):
 
 
 class XMLTVConverter:
-	def __init__(self, channels_dict, category_dict, dateformat = '%Y%m%d%H%M%S %Z'):
+	def __init__(self, channels_dict, category_dict, dateformat='%Y%m%d%H%M%S %Z'):
 	    self.channels = channels_dict
 	    self.categories = category_dict
 	    if dateformat.startswith('%Y%m%d%H%M%S'):
