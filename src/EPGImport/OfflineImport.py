@@ -49,7 +49,7 @@ def importFrom(epgimport, sourceXml):
 	sources.reverse()
 	epgimport.sources = sources
 	epgimport.onDone = done
-	epgimport.beginImport(longDescUntil=time.time() + (5*24*3600))
+	epgimport.beginImport(longDescUntil=time.time() + (5 * 24 * 3600))
 	EPGImport.reactor.run()
 
 #----------------------------------------------

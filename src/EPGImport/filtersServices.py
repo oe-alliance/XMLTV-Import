@@ -22,7 +22,7 @@ EDIT_ALTERNATIVES = 2
 def getProviderName(ref):
 	typestr = ref.getData(0) in (2, 10) and service_types_radio or service_types_tv
 	pos = typestr.rfind(':')
-	rootstr = '%s (channelID == %08x%04x%04x) && %s FROM PROVIDERS ORDER BY name'%(typestr[:pos+1], ref.getUnsignedData(4), ref.getUnsignedData(2), ref.getUnsignedData(3), typestr[pos+1:])
+	rootstr = '%s (channelID == %08x%04x%04x) && %s FROM PROVIDERS ORDER BY name' % (typestr[:pos + 1], ref.getUnsignedData(4), ref.getUnsignedData(2), ref.getUnsignedData(3), typestr[pos + 1:])
 	provider_root = eServiceReference(rootstr)
 	serviceHandler = eServiceCenter.getInstance()
 	providerlist = serviceHandler.list(provider_root)
@@ -72,7 +72,7 @@ class FiltersList():
 		except:
 			return
 		for ref in self.services:
-			cfg.write('%s\n'%(ref))
+			cfg.write('%s\n' % (ref))
 		cfg.close()
 
 	def load(self):
