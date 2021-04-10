@@ -132,7 +132,7 @@ def getRefNum(ref):
         return
 
 def getBouquetChannelList():
-	channels = [ ]
+	channels = []
 	serviceHandler = enigma.eServiceCenter.getInstance()
 	mask = (enigma.eServiceReference.isMarker | enigma.eServiceReference.isDirectory)
 	altrernative = enigma.eServiceReference.isGroup
@@ -346,7 +346,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 
 	def initConfig(self):
 		def getPrevValues(section):
-			res = { }
+			res = {}
 			for (key, val) in section.content.items.items():
 				if isinstance(val, ConfigSubsection):
 					res[key] = getPrevValues(val)
@@ -374,7 +374,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		self.cfg_clear_oldepg = getConfigListEntry(_("Clearing current EPG before import"), config.plugins.epgimport.clear_oldepg)
 
 	def createSetup(self):
-		list = [ self.cfg_enabled ]
+		list = [self.cfg_enabled]
 		if self.EPG.enabled.value:
 			list.append(self.cfg_wakeup)
 			list.append(self.cfg_deepstandby)
@@ -480,7 +480,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 			cfg = EPGConfig.loadUserSettings()
 		else:
 			cfg = one_source
-		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter=cfg["sources"]) ]
+		sources = [s for s in EPGConfig.enumSources(CONFIG_PATH, filter=cfg["sources"])]
 		if not sources:
 			self.session.open(MessageBox, _("No active EPG sources found, nothing to do"), MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 			return
@@ -597,7 +597,7 @@ class EPGImportSources(Screen):
 			try:
 				idx = self["list"].getSelectedIndex()
 				item = self["list"].list[idx][0]
-				source = [ item[1] or "" ]
+				source = [item[1] or ""]
 				cfg = {"sources": source}
 				print("[XMLTVImport] Selected source: ", source, file=log)
 			except Exception as e:
@@ -758,7 +758,7 @@ def doneImport(reboot=False, epgfile=None):
 	lastImportResult = (time.time(), epgimport.eventCount)
 	try:
 		start, count = lastImportResult
-		localtime = time.asctime( time.localtime(time.time()))
+		localtime = time.asctime(time.localtime(time.time()))
 		lastimport = "%s, %d" % (localtime, count)
 		config.plugins.extra_epgimport.last_import.value = lastimport
 		config.plugins.extra_epgimport.last_import.save()
@@ -885,7 +885,7 @@ class AutoStartTimer:
 			self.prev_multibouquet = config.usage.multibouquet.value
 			EPGConfig.channelCache = {}
 		cfg = EPGConfig.loadUserSettings()
-		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter=cfg["sources"]) ]
+		sources = [s for s in EPGConfig.enumSources(CONFIG_PATH, filter=cfg["sources"])]
 		if sources:
 			sources.reverse()
 			epgimport.sources = sources
@@ -905,7 +905,7 @@ class AutoStartTimer:
 
 	def getSources(self):
 		cfg = EPGConfig.loadUserSettings()
-		sources = [ s for s in EPGConfig.enumSources(CONFIG_PATH, filter=cfg["sources"]) ]
+		sources = [s for s in EPGConfig.enumSources(CONFIG_PATH, filter=cfg["sources"])]
 		if sources:
 			return True
 		return False

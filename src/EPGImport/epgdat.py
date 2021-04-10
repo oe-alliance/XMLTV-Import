@@ -95,10 +95,10 @@ except:
 		# ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop
 		#crc=0x00000000
 		#crc=((crc << 8 ) & 0xffffff00) ^ crctable[((crc >> 24) ^ crctype) & 0x000000ff ]
-		crc = crctable[crctype & 0x000000ff ]
-		crc = ((crc << 8 ) & 0xffffff00) ^ crctable[((crc >> 24) ^ len(crcdata)) & 0x000000ff ]
+		crc = crctable[crctype & 0x000000ff]
+		crc = ((crc << 8) & 0xffffff00) ^ crctable[((crc >> 24) ^ len(crcdata)) & 0x000000ff]
 		for d in crcdata:
-		    crc=((crc << 8 ) & 0xffffff00) ^ crctable[((crc >> 24) ^ ord(d)) & 0x000000ff ]
+		    crc=((crc << 8) & 0xffffff00) ^ crctable[((crc >> 24) ^ ord(d)) & 0x000000ff]
 		return crc
 
 # convert time or length from datetime format to 3 bytes hex value
@@ -219,7 +219,7 @@ class epgdat_class:
 				EPG_EVENT_HEADER_datasize += 4  # add 4 bytes for a sigle REF DESC (CRC32)
 				#if not short_d[0] in epg_event_description_dict:
 				#if not exist_event(short_d[0]) :
-				if short_d[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER :
+				if short_d[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER:
 					# DESCRIPTION DATA
 					pack_1 = s_BB.pack(0x4d, len(short_d[1])) + short_d[1]
 					# DESCRIPTION HEADER (2 int) will be computed at the end just before EPG.DAT write
@@ -236,7 +236,7 @@ class epgdat_class:
 				for desc in long_d:
 					#if not long_d[i][0] in epg_event_description_dict:
 					#if not exist_event(long_d[i][0]) :
-					if desc[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER :
+					if desc[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER:
 						# DESCRIPTION DATA
 						pack_1 = s_BB.pack(0x4e, len(desc[1])) + desc[1]
 						self.EPG_HEADER2_description_count += 1
@@ -249,7 +249,7 @@ class epgdat_class:
 						self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[desc[0]][1] += 1
 				# **** (2) : have REF DESC and now can create EVENT HEADER / DATA ****
 				# EVENT HEADER (2 bytes: 0x01 , 10 bytes + number of CRC32 * 4)
-				pack_1=s_BB.pack(0x01, 0x0a + EPG_EVENT_HEADER_datasize )
+				pack_1=s_BB.pack(0x01, 0x0a + EPG_EVENT_HEADER_datasize)
 				self.EPG_TMP_FD.write(pack_1)
 				# extract date and time from <event>
 				# unix format (second since 1970) and already GMT corrected
@@ -292,7 +292,7 @@ class epgdat_class:
 			pack_1=self.s_I.pack(self.EPG_HEADER2_description_count)
 			epgdat_fd.write(pack_1)
 			# event MUST BE WRITTEN IN ASCENDING ORDERED using HASH CODE as index
-			for temp in sorted(self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.keys()) :
+			for temp in sorted(self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.keys()):
 				pack_2=self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[temp]
 				#pack_1=struct.pack(LB_ENDIAN+"II",int(temp,16),pack_2[1])
 				pack_1=s_ii.pack(temp, pack_2[1])
