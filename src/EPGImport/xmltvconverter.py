@@ -5,6 +5,8 @@ import log
 from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
 
 # %Y%m%d%H%M%S
+
+
 def quickptime(str):
 	return time.struct_time((int(str[0:4]), int(str[4:6]), int(str[6:8]),
 				 int(str[8:10]), int(str[10:12]), 0,
@@ -26,6 +28,8 @@ def get_time_utc(timestring, fdateparse):
 
 # Preferred language should be configurable, but for now,
 # we just like Dutch better!
+
+
 def get_xml_string(elem, name):
 	r = ''
 	try:
@@ -40,6 +44,7 @@ def get_xml_string(elem, name):
 		print "[XMLTVConverter] get_xml_string error:", e
 	# Now returning UTF-8 by default, the epgdat/oudeis must be adjusted to make this work.
 	return r.encode('utf-8')
+
 
 def enumerateProgrammes(fp):
 	"""Enumerates programme ElementTree nodes from file object 'fp'"""

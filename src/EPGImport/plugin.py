@@ -30,11 +30,13 @@ import NavigationInstance
 
 import filtersServices
 
+
 def lastMACbyte():
 	try:
 		return int(open('/sys/class/net/eth0/address').readline().strip()[-2:], 16)
 	except:
 		return 256
+
 
 def calcDefaultStarttime():
 	try:
@@ -43,6 +45,7 @@ def calcDefaultStarttime():
 	except:
 		offset = 7680
 	return (5 * 60 * 60) + offset
+
 
 from boxbranding import getImageDistro
 #Set default configuration
@@ -115,11 +118,13 @@ _session = None
 BouquetChannelListList = None
 serviceIgnoreList = None
 
+
 def getAlternatives(service):
 	if not service:
 		return None
 	alternativeServices = enigma.eServiceCenter.getInstance().list(service)
 	return alternativeServices and alternativeServices.getContent("S", True)
+
 
 def getRefNum(ref):
     ref = ref.split(':')[3:7]
@@ -127,6 +132,7 @@ def getRefNum(ref):
         return int(ref[0], 16) << 48 | int(ref[1], 16) << 32 | int(ref[2], 16) << 16 | int(ref[3], 16) >> 16
     except:
         return
+
 
 def getBouquetChannelList():
 	channels = []
@@ -187,6 +193,8 @@ def getBouquetChannelList():
 	return channels
 
 # Filter servicerefs that this box can display by starting a fake recording.
+
+
 def channelFilter(ref):
 	if not ref:
 		return False
@@ -223,9 +231,11 @@ def channelFilter(ref):
 	print>>log, "Invalid serviceref string:", ref
 	return False
 
+
 epgimport = EPGImport.EPGImport(enigma.eEPGCache.getInstance(), channelFilter)
 
 lastImportResult = None
+
 
 def startImport():
 	EPGImport.HDD_EPG_DAT = config.misc.epgcache_filename.value
@@ -245,6 +255,8 @@ try:
 		HD = True
 except:
 	pass
+
+
 class EPGImportConfig(ConfigListScreen, Screen):
 	if HD:
 		skin = """
@@ -288,6 +300,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 				<widget name="statusbar" position="10,410" size="500,20" font="Regular;18" />
 				<widget name="status" position="10,330" size="580,60" font="Regular;20" />
 			</screen>"""
+
 	def __init__(self, session, args=0):
 		self.session = session
 		self.skin = EPGImportConfig.skin
@@ -508,6 +521,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 	def openMenu(self):
 		menu = [(_("Show log"), self.showLog), (_("Ignore services list"), self.openIgnoreList)]
 		text = _("Select action")
+
 		def setAction(choice):
 			if choice:
 				choice[1]()
@@ -518,6 +532,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 
 	def showLog(self):
 		self.session.open(EPGImportLog)
+
 
 class EPGImportSources(Screen):
 	"Pick sources from config"
@@ -603,6 +618,7 @@ class EPGImportSources(Screen):
 				if cfg["sources"] != "":
 					self.close(False, None, cfg)
 
+
 class EPGImportProfile(ConfigListScreen, Screen):
 	skin = """
 		<screen position="center,center" size="400,230" title="EPGImportProfile" >
@@ -654,6 +670,7 @@ class EPGImportProfile(ConfigListScreen, Screen):
 			x[1].cancel()
 		self.close()
 
+
 class EPGImportLog(Screen):
 	skin = """
 		<screen position="center,center" size="560,400" title="EPG Import Log" >
@@ -671,6 +688,7 @@ class EPGImportLog(Screen):
 			</widget>
 			<widget name="list" position="10,40" size="540,340" />
 		</screen>"""
+
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
@@ -719,10 +737,12 @@ class EPGImportLog(Screen):
 		log.logfile.truncate()
 		self.close(False)
 
+
 class EPGImportDownloader(MessageBox):
 	def __init__(self, session):
 		MessageBox.__init__(self, session, _("Last import: ") + config.plugins.extra_epgimport.last_import.value + _(" events\n") + _("\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?"), MessageBox.TYPE_YESNO)
 		self.skinName = "MessageBox"
+
 
 def msgClosed(ret):
 	global autoStartTimer
@@ -731,8 +751,10 @@ def msgClosed(ret):
 			print>>log, "[XMLTVImport] Run manual starting import"
 			autoStartTimer.runImport()
 
+
 def start_import(session, **kwargs):
 	session.openWithCallback(msgClosed, EPGImportDownloader)
+
 
 def main(session, **kwargs):
 	session.openWithCallback(doneConfiguring, EPGImportConfig)
@@ -743,10 +765,12 @@ def main(session, **kwargs):
 #	else:
 #		return []
 
+
 def doneConfiguring(session, retval):
 	"user has closed configuration, check new values...."
 	if autoStartTimer is not None:
 		autoStartTimer.update()
+
 
 def doneImport(reboot=False, epgfile=None):
 	global _session, lastImportResult, BouquetChannelListList, serviceIgnoreList
@@ -786,6 +810,7 @@ def doneImport(reboot=False, epgfile=None):
 				checkDeepstandby(_session, parse=False)
 		else:
 			checkDeepstandby(_session, parse=False)
+
 
 class checkDeepstandby:
 	def __init__(self, session, parse=False):
@@ -965,6 +990,7 @@ class AutoStartTimer:
 			config.plugins.epgimport.deepstandby_afterimport.value = False
 			print>>log, "[XMLTVImport] checking standby remove, not deep standby after import"
 
+
 def WakeupDayOfWeek():
 	start_day = -1
 	try:
@@ -978,6 +1004,7 @@ def WakeupDayOfWeek():
 			if config.plugins.extra_epgimport.day_import[(cur_day + i) % 7].value:
 				return i
 	return start_day
+
 
 def onBootStartCheck():
 	global autoStartTimer
@@ -1018,6 +1045,7 @@ def onBootStartCheck():
 	else:
 		print>>log, "[XMLTVImport] import to start in less than 10 minutes anyway, skipping..."
 
+
 def autostart(reason, session=None, **kwargs):
 	"called with reason=1 to during shutdown, with reason=0 at startup?"
 	global autoStartTimer
@@ -1042,6 +1070,7 @@ def autostart(reason, session=None, **kwargs):
 	else:
 		print>>log, "[XMLTVImport] Stop"
 
+
 def getNextWakeup():
 	"returns timestamp of next time when autostart should be called"
 	if autoStartTimer:
@@ -1051,8 +1080,11 @@ def getNextWakeup():
 	return -1
 
 # we need this helper function to identify the descriptor
+
+
 def extensionsmenu(session, **kwargs):
 	main(session, **kwargs)
+
 
 def setExtensionsmenu(el):
 	try:
@@ -1063,10 +1095,12 @@ def setExtensionsmenu(el):
 	except Exception, e:
 		print "[EPGImport] Failed to update extensions menu:", e
 
+
 description = _("Automated EPG Importer")
 config.plugins.epgimport.showinextensions.addNotifier(setExtensionsmenu, initial_call=False, immediate_feedback=False)
 extDescriptor = PluginDescriptor(name=_("EPG-Importer"), description=description, where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionsmenu)
 pluginlist = PluginDescriptor(name=_("EPG-Importer"), description=description, where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main)
+
 
 def epgmenu(menuid, **kwargs):
 	if getImageDistro() in ("openvix", "openbh", "ventonsupport", "egami", "openhdf", "opendroid"):
@@ -1089,6 +1123,7 @@ def epgmenu(menuid, **kwargs):
 			return [(_("EPG-Importer"), main, "epgimporter", 1002)]
 		else:
 			return []
+
 
 def Plugins(**kwargs):
 	result = [
@@ -1114,6 +1149,7 @@ def Plugins(**kwargs):
 	if config.plugins.epgimport.showinplugins.value:
 		result.append(pluginlist)
 	return result
+
 
 class SetupSummary(Screen):
 	def __init__(self, session, parent):

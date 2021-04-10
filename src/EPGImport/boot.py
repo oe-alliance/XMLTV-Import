@@ -5,6 +5,7 @@ import shutil
 
 MEDIA = ("/media/hdd/", "/media/usb/", "/media/mmc/", "/media/cf/", "/tmp")
 
+
 def findEpg():
 	candidates = []
 	for path in MEDIA:
@@ -47,11 +48,13 @@ def checkCrashLog():
 			pass
 	return False
 
+
 def findNewEpg():
 	for path in MEDIA:
 		fn = os.path.join(path, 'epg_new.dat')
 		if os.path.exists(fn):
 			return fn
+
 
 epg = findEpg()
 newepg = findNewEpg()

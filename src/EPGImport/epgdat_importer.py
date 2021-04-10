@@ -11,6 +11,7 @@ else:
 	tmppath = '/tmp'
 	settingspath = '/etc/enigma2'
 
+
 class epgdatclass:
 	def __init__(self):
 		self.data = None

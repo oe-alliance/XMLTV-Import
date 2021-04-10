@@ -15,6 +15,7 @@ OFF = 0
 EDIT_BOUQUET = 1
 EDIT_ALTERNATIVES = 2
 
+
 def getProviderName(ref):
 	typestr = ref.getData(0) in (2, 10) and service_types_radio or service_types_tv
 	pos = typestr.rfind(':')
@@ -38,6 +39,7 @@ def getProviderName(ref):
 							info = serviceHandler.info(provider)
 							return info and info.getName(provider) or "Unknown"
 	return ''
+
 
 class FiltersList():
 	def __init__(self):
@@ -104,7 +106,9 @@ class FiltersList():
 		self.services = []
 		self.save()
 
+
 filtersServicesList = FiltersList()
+
 
 class filtersServicesSetup(Screen):
 	skin = """
@@ -131,6 +135,7 @@ class filtersServicesSetup(Screen):
 		</widget>
 		<widget name="introduction" position="0,440" size="680,30" font="Regular;20" halign="center" valign="center" />
 	</screen>"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.RefList = filtersServicesList
@@ -224,6 +229,7 @@ class filtersServicesSetup(Screen):
 			self["key_red"].setText(" ")
 			self["key_blue"].setText(" ")
 
+
 class filtersServicesSelection(ChannelSelectionBase):
 	skin = """
 	<screen position="center,center" size="560,430" title="Select service to add...">
@@ -238,6 +244,7 @@ class filtersServicesSelection(ChannelSelectionBase):
 		<widget name="list" position="00,45" size="560,364" scrollbarMode="showOnDemand" />
 	</screen>
 	"""
+
 	def __init__(self, session, providers=False):
 		self.providers = providers
 		ChannelSelectionBase.__init__(self, session)
@@ -251,6 +258,7 @@ class filtersServicesSelection(ChannelSelectionBase):
 		if self.providers and (ref.flags & 7) == 7:
 			if 'provider' in ref.toString():
 				menu = [(_("All services provider"), "providerlist")]
+
 				def addAction(choice):
 					if choice is not None:
 						if choice[1] == "providerlist":
