@@ -221,7 +221,7 @@ class epgdat_class:
 				EPG_EVENT_HEADER_datasize += 4  # add 4 bytes for a sigle REF DESC (CRC32)
 				#if not epg_event_description_dict.has_key(short_d[0]):
 				#if not exist_event(short_d[0]) :
-				if not self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.has_key(short_d[0]):
+				if short_d[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER:
 					# DESCRIPTION DATA
 					pack_1 = s_BB.pack(0x4d, len(short_d[1])) + short_d[1]
 					# DESCRIPTION HEADER (2 int) will be computed at the end just before EPG.DAT write
@@ -238,7 +238,7 @@ class epgdat_class:
 				for desc in long_d:
 					#if not epg_event_description_dict.has_key(long_d[i][0]):
 					#if not exist_event(long_d[i][0]) :
-					if not self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.has_key(desc[0]):
+					if desc[0] not in self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER:
 						# DESCRIPTION DATA
 						pack_1 = s_BB.pack(0x4e, len(desc[1])) + desc[1]
 						self.EPG_HEADER2_description_count += 1
