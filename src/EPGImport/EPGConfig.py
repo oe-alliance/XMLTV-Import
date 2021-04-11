@@ -76,7 +76,7 @@ class EPGChannel:
 					if id and ref:
 						ref = ref.encode('latin-1')
 						if filterCallback(ref):
-							if self.items.has_key(id):
+							if id in self.items:
 								self.items[id].append(ref)
 							else:
 								self.items[id] = [ref]
