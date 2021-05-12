@@ -547,7 +547,7 @@ class EPGImport:
                 sourcefile6 = sourcefile.replace(host, '[' + list(ip6)[0][4][0] + ']')
             except:
                 pass
-
+        ip6 = False
         if ip6:
             print("[EPGImport] Trying IPv6 first: " + str(sourcefile6), file=log)
             if sourcefile.startswith("https") and sslverify:
