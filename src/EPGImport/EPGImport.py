@@ -19,21 +19,10 @@ from twisted.internet import reactor, threads
 from twisted.web.client import downloadPage
 import twisted.python.runtime
 
-"""
-import six
-from six.moves import http_client
-from six.moves import urllib
-"""
-
 import sys
+import six
 
-try:
-    pythonVer = sys.version_info.major
-except:
-    pythonVer = 2
-
-
-if pythonVer == 2:
+if six.PY2:
     import urllib2
     import httplib
 else:
@@ -167,7 +156,7 @@ class EPGImport:
         FullString = dirname + '/' + CheckFile
         # req = urllib2.build_opener()
 
-        if pythonVer == 2:
+        if six.PY2:
             req = urllib2.build_opener()
         else:
             req = urllib.request.build_opener()
@@ -179,7 +168,7 @@ class EPGImport:
             return ServerStatusList[dirname]
         else:
             # Server not in the list so checking it
-            if pythonVer == 2:
+            if six.PY2:
                 try:
                     response = req.open(FullString)
                 except urllib2.HTTPError as e:
@@ -512,19 +501,15 @@ class EPGImport:
         return self.source is not None
 
     def legacyDownload(self, result, afterDownload, downloadFail, sourcefile, filename, deleteFile=True):
-
         print("[EPGImport] IPv6 download failed, falling back to IPv4: " + str(sourcefile), file=log)
+        sourcefile4 = sourcefile.encode() if six.PY3 else sourcefile
         if sourcefile.startswith("https") and sslverify:
             parsed_uri = urlparse(sourcefile)
             domain = parsed_uri.hostname
             sniFactory = SNIFactory(domain)
-            if pythonVer == 3:
-                sourcefile = sourcefile.encode()
-            downloadPage(sourcefile, filename, sniFactory).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+            downloadPage(sourcefile4, filename, sniFactory).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
         else:
-            if pythonVer == 3:
-                sourcefile = sourcefile.encode()
-            downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+            downloadPage(sourcefile4, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
 
     def do_download(self, sourcefile, afterDownload, downloadFail):
         path = bigStorage(9000000, '/tmp', '/media/DOMExtender', '/media/cf', '/media/mmc', '/media/usb', '/media/hdd')
@@ -533,46 +518,41 @@ class EPGImport:
         # Keep sensible extension, in particular the compression type
         if ext and len(ext) < 6:
             filename += ext
-        # sourcefile = sourcefile.encode('utf-8')
-        sourcefile = str(sourcefile)
+        sourcefile = sourcefile4 = str(sourcefile)
 
         print("[EPGImport] Downloading: " + str(sourcefile) + " to local path: " + str(filename), file=log)
 
         ip6 = sourcefile6 = None
         if has_ipv6 and version_info >= (2, 7, 11) and ((version.major == 15 and version.minor >= 5) or version.major >= 16):
             host = sourcefile.split('/')[2]
-            # getaddrinfo throws exception on literal IPv4 addresses
-            try:
+            Headers={six.ensure_binary('host'): six.ensure_binary(host)} if six.PY3 else {'host': host}
+            try:         # getaddrinfo throws exception on literal IPv4 addresses
                 ip6 = getaddrinfo(host, 0, AF_INET6)
                 sourcefile6 = sourcefile.replace(host, '[' + list(ip6)[0][4][0] + ']')
+                if six.PY3:            
+                    sourcefile6 = sourcefile6.encode()                 
             except:
                 pass
-        ip6 = False
+        print("[EPGImport] IPv6=%s" % ip6)
         if ip6:
             print("[EPGImport] Trying IPv6 first: " + str(sourcefile6), file=log)
             if sourcefile.startswith("https") and sslverify:
                 parsed_uri = urlparse(sourcefile)
                 domain = parsed_uri.hostname
                 sniFactory = SNIFactory(domain)
-                if pythonVer == 3:
-                    sourcefile6 = sourcefile6.encode()
-                downloadPage(sourcefile6, filename, sniFactory, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+                downloadPage(sourcefile6, filename, sniFactory, headers=Headers).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
             else:
-                if pythonVer == 3:
-                    sourcefile6 = sourcefile6.encode()
-                downloadPage(sourcefile6, filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+                 downloadPage(sourcefile6, filename, headers=Headers).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
 
         else:
             print("[EPGImport] No IPv6, using IPv4 directly: " + str(sourcefile), file=log)
+            if six.PY3:
+                sourcefile4 = sourcefile4.encode()
             if sourcefile.startswith("https") and sslverify:
                 parsed_uri = urlparse(sourcefile)
                 domain = parsed_uri.hostname
                 sniFactory = SNIFactory(domain)
-                if pythonVer == 3:
-                    sourcefile = sourcefile.encode()
-                downloadPage(sourcefile, filename, sniFactory).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+                downloadPage(sourcefile4, filename, sniFactory).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
             else:
-                if pythonVer == 3:
-                    sourcefile = sourcefile.encode()
-                downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+                downloadPage(sourcefile4, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
         return filename
