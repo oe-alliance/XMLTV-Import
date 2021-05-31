@@ -10,6 +10,9 @@ import codecs
 import struct
 from datetime import datetime
 
+from boxbranding import getImageDistro
+EpgDatV8 = getImageDistro() in ("openvix",)
+
 try:
 	import dreamcrc
 	crc32_dreambox = lambda d, t: dreamcrc.crc32(d, t) & 0xffffffff
@@ -161,7 +164,10 @@ class epgdat_class:
 		self.s_I = struct.Struct(self.LB_ENDIAN + "I")
 		self.s_II = struct.Struct(self.LB_ENDIAN + "II")
 		self.s_IIII = struct.Struct(self.LB_ENDIAN + "IIII")
-		self.s_B3sBBB = struct.Struct("B3sBBB")
+		if EpgDatV8:
+			self.s_B3sHBB = struct.Struct("B3sHBB")
+		else:
+			self.s_B3sBBB = struct.Struct("B3sBBB")
 		self.s_3sBB = struct.Struct("3sBB")
 
 	def set_endian(self, endian):
@@ -187,7 +193,10 @@ class epgdat_class:
 		num_tot_desc = (len(s) + 244) // 245
 		for i in range(num_tot_desc):
 			ssub = s[i * 245:i * 245 + 245]
-			sres = self.s_B3sBBB.pack((i << 4) + (num_tot_desc - 1), 'eng', 0x00, len(ssub) + 1, 0x15) + str(ssub)
+			if EpgDatV8:
+				sres = self.s_B3sHBB.pack((i << 4) + (num_tot_desc-1), 'eng', 0x0000, len(ssub) + 1, 0x15) + str(ssub)
+			else:
+				sres = self.s_B3sBBB.pack((i << 4) + (num_tot_desc-1), 'eng', 0x00, len(ssub) + 1, 0x15) + str(ssub)
 			r.append((crc32_dreambox(sres, 0x4e), sres))
 		return r
 
@@ -280,7 +289,10 @@ class epgdat_class:
 			self.EPG_TMP_FD.close()
 			epgdat_fd = open(self.EPGDAT_FILENAME, "wb")
 			# HEADER 1
-			pack_1 = struct.pack(self.LB_ENDIAN + "I13sI", 0x98765432, 'ENIGMA_EPG_V7', self.EPG_HEADER1_channel_count)
+			if EpgDatV8:
+				pack_1 = struct.pack(self.LB_ENDIAN + "I13sI", 0x98765432, 'ENIGMA_EPG_V8', self.EPG_HEADER1_channel_count)
+			else:
+				pack_1 = struct.pack(self.LB_ENDIAN + "I13sI", 0x98765432, 'ENIGMA_EPG_V7', self.EPG_HEADER1_channel_count)
 			epgdat_fd.write(pack_1)
 			# write first EPG.DAT section
 			EPG_TMP_FD = open(self.EPGDAT_TMP_FILENAME, "rb")
