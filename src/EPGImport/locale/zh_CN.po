@@ -1,0 +1,275 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: plugins 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2018-01-27 14:51+0800\n"
+"Last-Translator: 孤独之剑 <haotzyy1970@163.com>\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7\n"
+
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"导入EPG数据将开始.\n"
+"这可能需要几分钟.\n"
+"现在开始吗?"
+
+msgid " events\n"
+msgstr "字节\n"
+
+msgid "Add Channel"
+msgstr "添加频道"
+
+msgid "Add Provider"
+msgstr "添加供应商 "
+
+msgid "All services provider"
+msgstr "所有的服务供应商"
+
+msgid "Automated EPG Importer"
+msgstr "自动EPG导入 "
+
+msgid "Automatic import EPG"
+msgstr "EPG自动导入 "
+
+msgid "Automatic start time"
+msgstr "自动开始时间 "
+
+msgid "Cancel"
+msgstr "取消 "
+
+msgid "Channel Selection"
+msgstr "频道选择"
+
+msgid "Choice days for start import"
+msgstr "选择日期启动导入 "
+
+msgid "Clear"
+msgstr "清除 "
+
+msgid "Clearing current EPG before import"
+msgstr "导入前清除当前EPG "
+
+msgid "Consider setting \"Days Profile\""
+msgstr "通过设置 \"每天扼要介绍 \" "
+
+msgid "Days Profile"
+msgstr "在特定日期导入"
+
+msgid "Delete all"
+msgstr "删除所有 "
+
+msgid "Delete selected"
+msgstr "删除所选 "
+
+msgid "EPG Import Configuration"
+msgstr "EPG导入配置 "
+
+msgid "EPG Import Log"
+msgstr "EPG导入日志"
+
+msgid "EPG Import Sources"
+msgstr "EPG的导入来源"
+
+msgid "EPG Import finished, %d events"
+msgstr "EPG导入完成, %d 字节 "
+
+msgid "EPG Importer"
+msgstr "EPG节目预告"
+
+msgid "EPG-Importer"
+msgstr "EPG节目预告"
+
+msgid "EPGImport"
+msgstr "电子节目指南"
+
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"EPG导入 \n"
+"EPG数据的导入仍在进行中,请稍等."
+
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"EPG导入\n"
+"EPG数据将开始导入.\n"
+"这可能需要几分钟时间.\n"
+"现在开始吗?"
+
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"EPG导入插件\n"
+"启动失败:\n"
+
+msgid "Friday"
+msgstr "星期五 "
+
+msgid "Ignore services list"
+msgstr "忽略频道列表 "
+
+msgid "Ignore services list(press OK to save)"
+msgstr "忽略频道列表（按OK键保存） "
+
+msgid "Import current source"
+msgstr "输入导入源"
+
+msgid ""
+"Importing: %s\n"
+"%s events"
+msgstr ""
+"导入: %s\n"
+"%s 字节 "
+
+msgid "Last import: "
+msgstr "最后导入: "
+
+msgid "Last import: %s events"
+msgstr "最后导入: %s 字节"
+
+msgid "Last: %s %s, %d events"
+msgstr "最后更新: %s %s, %d 字节 "
+
+msgid "Load EPG only services in bouquets"
+msgstr "仅在自定义频道中加载EPG"
+
+msgid "Load EPG only for IPTV channels"
+msgstr "仅为IPTV频道加载EPG"
+
+msgid "Load long descriptions up to X days"
+msgstr "载入EPG数据最大天数"
+
+msgid "Manual"
+msgstr "手动 "
+
+msgid "Monday"
+msgstr "星期一"
+
+msgid "No active EPG sources found, nothing to do"
+msgstr "没有发现有效的EPG源"
+
+msgid "Press OK"
+msgstr "按OK键"
+
+msgid "Really delete all list?"
+msgstr "真的删除所有列表？"
+
+msgid "Return to deep standby after import"
+msgstr "导入后返回深度待机"
+
+msgid "Run AutoTimer after import"
+msgstr "导入后运行自动计时器 "
+
+msgid "Saturday"
+msgstr "星期六"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Select action"
+msgstr "选择操作 "
+
+msgid "Show \"EPG Importer\" in main menu"
+msgstr "在主菜单中显示'EPG导入程序' "
+
+msgid "Show \"EPG import now\" in main menu"
+msgstr "在主菜单中显示'立即导入EPG' "
+
+msgid "Show \"EPGImport\" in extensions"
+msgstr "在扩展栏中显示'EPG导入' "
+
+msgid "Show \"EPGImport\" in plugins"
+msgstr "在插件中显示'EPG导入'"
+
+msgid "Show in extensions"
+msgstr "在扩展栏中显示 "
+
+msgid "Show in plugin browser"
+msgstr "在插件浏览器中显示"
+
+msgid "Show log"
+msgstr "显示日志 "
+
+msgid "Skip import on restart GUI"
+msgstr "重启GUI跳过导入 "
+
+msgid "Sources"
+msgstr "来源 "
+
+msgid "Standby at startup"
+msgstr "待机时 "
+
+msgid "Start import after booting up"
+msgstr "开机启动导入"
+
+msgid "Sunday"
+msgstr "星期日 "
+
+msgid "Thursday"
+msgstr "星期四"
+
+msgid "Tuesday"
+msgstr "星期二 "
+
+msgid "Wednesday"
+msgstr "星期三 "
+
+msgid "When in deep standby"
+msgstr "当处于深度待机状态时"
+
+msgid "Write to /tmp/EPGimport.log"
+msgstr "写入 /tmp/EPGimport.log"
+
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+"你可以不使用这些设置!\n"
+"每周必须至少选择一天!"
+
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"你必须重新启动Enigma2加载EPG数据.\n"
+"现在开始吗?"
+
+msgid "always"
+msgstr "总是 "
+
+msgid "never"
+msgstr "从未 "
+
+msgid "none"
+msgstr "无 "
+
+msgid "only automatic boot"
+msgstr "开机自动导入 "
+
+msgid "only manual boot"
+msgstr "仅手动启动"
+
+msgid "press OK to save list"
+msgstr "按OK键保存列表 "
+
+msgid "skip the import"
+msgstr "跳过导入"
+
+msgid "wake up and import"
+msgstr "唤醒并导入"
