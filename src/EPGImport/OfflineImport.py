@@ -6,6 +6,19 @@
 # where they can be found. On Linux, you can also download from the internet,
 # on windows the xmltv files must be local files.
 #
+#
+# On python 3 running this file as a script will result in import errors 
+# so run it as a module.
+#
+# 1) Save a backup copy of EPGImport/__init__py.
+# 2) Truncate EPGImport/__init__py to zero length (to avoid import errors).
+# 3) At the command line go to the parent directory of EPGImport:
+# 4) cd /usr/lib/enigma2/python/Plugins/Extensions
+# 5) Now run as a module from the command line:
+# 6) python -m EPGImport.OfflineImport <filename args>
+# 7) Reinstate your backup of __init__.py
+#
+
 from __future__ import absolute_import
 from __future__ import print_function
 import os
