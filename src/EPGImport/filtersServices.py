@@ -206,7 +206,7 @@ class filtersServicesSetup(Screen):
 	def keyOk(self):
 		self.RefList.save()
 		if self.RefList.services != self.prev_list:
-			self.RefList.reload()
+			self.RefList.reload_module()
 			EPGConfig.channelCache = {}
 		self.close()
 
