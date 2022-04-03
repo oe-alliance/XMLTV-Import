@@ -10,8 +10,7 @@ import codecs
 import struct
 from datetime import datetime
 
-from boxbranding import getImageDistro
-EpgDatV8 = getImageDistro() in ("openvix",)
+EpgDatV8 = os.path.isfile("/etc/image-version") and "distro=openvix" in open("/etc/image-version").read()
 
 try:
 	import dreamcrc
