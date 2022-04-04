@@ -5,12 +5,10 @@
 # print("Some text", file=log)
 # because the log unit looks enough like a file!
 
-from __future__ import print_function
-
 import sys
 import threading
 
-from six.moves import cStringIO as StringIO
+from io import StringIO
 
 
 logfile = StringIO()
