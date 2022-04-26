@@ -124,7 +124,12 @@ class OudeisImporter:
 
     def importEvents(self, services, events):
         for service in services:
-            self.epgcache.importEvent(service, events)
+            try:
+                self.epgcache.importEvent(service, events)
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
+                print("[EPGImport][importEvents] ### importEvents exception:", e, file=log)
 
 
 def unlink_if_exists(filename):
@@ -229,11 +234,13 @@ class EPGImport:
     def beginImport(self, longDescUntil=None):
         """Starts importing using Enigma reactor. Set self.sources before calling this."""
         if hasattr(self.epgcache, 'importEvents'):
+            print('[EPGImport][beginImport] using importEvents.')
             self.storage = self.epgcache
         elif hasattr(self.epgcache, 'importEvent'):
+            print('[EPGImport][beginImport] using importEvent(Oudis).')
             self.storage = OudeisImporter(self.epgcache)
         else:
-            print('[EPGImport] oudeis patch not detected, using epg.dat instead.')
+            print('[EPGImport][beginImport] oudeis patch not detected, using using epgdat_importer.epgdatclass/epg.dat instead.')
             from . import epgdat_importer
             self.storage = epgdat_importer.epgdatclass()
         self.eventCount = 0
@@ -384,15 +391,16 @@ class EPGImport:
         for data in self.createIterator(filename):
             if data is not None:
                 self.eventCount += 1
+                r, d = data
+                if d[0] > self.longDescUntil:
+                    # Remove long description (save RAM memory)
+                    d = d[:4] + ('',) + d[5:]
                 try:
-                    r, d = data
-                    if d[0] > self.longDescUntil:
-                        # Remove long description (save RAM memory)
-                        d = d[:4] + ('',) + d[5:]
                     self.storage.importEvents(r, (d,))
                 except Exception as e:
-                    print("[EPGImport] ### importEvents exception:", e, file=log)
-        print("[EPGImport] ### thread is ready ### Events:", self.eventCount, file=log)
+                    import traceback
+                    print("[EPGImport][doThreadRead] ### importEvents exception:", e, file=log)
+        print("[EPGImport][doThreadRead] ### thread is ready ### Events:", self.eventCount, file=log)
         if filename:
             try:
                 os.unlink(filename)
@@ -417,7 +425,7 @@ class EPGImport:
                         d = d[:4] + ('',) + d[5:]
                     self.storage.importEvents(r, (d,))
                 except Exception as e:
-                    print("[EPGImport] importEvents exception:", e, file=log)
+                    print("[EPGImport][doRead] importEvents exception:", e, file=log)
 
         except StopIteration:
             self.nextImport()
