@@ -548,9 +548,9 @@ class EPGImport:
                 parsed_uri = urlparse(sourcefile)
                 domain = parsed_uri.hostname
                 sniFactory = SNIFactory(domain)
-                downloadPage(sourcefile6, filename, sniFactory, headers=Headers).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+                downloadPage(sourcefile6, filename, sniFactory, headers=Headers, timeout=90).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
             else:
-                 downloadPage(sourcefile6, filename, headers=Headers).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+                 downloadPage(sourcefile6, filename, headers=Headers, timeout=90).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
 
         else:
             print("[EPGImport] No IPv6, using IPv4 directly: " + str(sourcefile), file=log)
@@ -560,7 +560,7 @@ class EPGImport:
                 parsed_uri = urlparse(sourcefile)
                 domain = parsed_uri.hostname
                 sniFactory = SNIFactory(domain)
-                downloadPage(sourcefile4, filename, sniFactory).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+                downloadPage(sourcefile4, filename, sniFactory, timeout=90).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
             else:
-                downloadPage(sourcefile4, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+                downloadPage(sourcefile4, filename, timeout=90).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
         return filename
