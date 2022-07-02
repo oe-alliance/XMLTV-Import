@@ -556,11 +556,11 @@ class EPGImport:
                 sniFactory = SNIFactory(domain)
                 if pythonVer == 3:
                     sourcefile6 = sourcefile6.encode()
-                downloadPage(sourcefile6, filename, sniFactory, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+                downloadPage(sourcefile6, filename, sniFactory, headers={'host': host}, timeout=90).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
             else:
                 if pythonVer == 3:
                     sourcefile6 = sourcefile6.encode()
-                downloadPage(sourcefile6, filename, headers={'host': host}).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
+                downloadPage(sourcefile6, filename, headers={'host': host}, timeout=90).addCallback(afterDownload, filename, True).addErrback(self.legacyDownload, afterDownload, downloadFail, sourcefile, filename, True)
 
         else:
             print("[EPGImport] No IPv6, using IPv4 directly: " + str(sourcefile), file=log)
@@ -570,9 +570,9 @@ class EPGImport:
                 sniFactory = SNIFactory(domain)
                 if pythonVer == 3:
                     sourcefile = sourcefile.encode()
-                downloadPage(sourcefile, filename, sniFactory).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+                downloadPage(sourcefile, filename, sniFactory, timeout=90).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
             else:
                 if pythonVer == 3:
                     sourcefile = sourcefile.encode()
-                downloadPage(sourcefile, filename).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
+                downloadPage(sourcefile, filename, timeout=90).addCallbacks(afterDownload, downloadFail, callbackArgs=(filename, True))
         return filename
