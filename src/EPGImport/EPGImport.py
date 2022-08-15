@@ -317,7 +317,7 @@ class EPGImport:
     def createIterator(self, filename):
 #       print("[EPGImport][createIterator], filename", filename)
         self.source.channels.update(self.channelFilter, filename)
-        return getParser(self.source.parser).iterator(self.fd, self.source.channels.items)
+        return getParser(self.source.parser).iterator(self.fd, self.source.channels.items, self.source.offset)
 
     def readEpgDatFile(self, filename, deleteFile=False):
         if not hasattr(self.epgcache, 'load'):

@@ -61,13 +61,15 @@ def enumerateProgrammes(fp):
 
 
 class XMLTVConverter:
-	def __init__(self, channels_dict, category_dict, dateformat='%Y%m%d%H%M%S %Z'):
+	def __init__(self, channels_dict, category_dict, dateformat='%Y%m%d%H%M%S %Z', offset=0):
 	    self.channels = channels_dict
 	    self.categories = category_dict
 	    if dateformat.startswith('%Y%m%d%H%M%S'):
 		    self.dateParser = quickptime
 	    else:
 		    self.dateParser = lambda x: time.strptime(x, dateformat)
+		self.offset = offset
+		print("[XMLTVConverter] Using a custom time offset of %d" % offset)
 
 	def enumFile(self, fileobj):
 		print("[XMLTVConverter] Enumerating event information", file=log)
@@ -87,8 +89,8 @@ class XMLTVConverter:
 				continue
 			try:
 				services = self.channels[channel]
-				start = get_time_utc(elem.get('start'), self.dateParser)
-				stop = get_time_utc(elem.get('stop'), self.dateParser)
+				start = get_time_utc(elem.get('start'), self.dateParser) + self.offset
+				stop = get_time_utc(elem.get('stop'), self.dateParser) + self.offset
 				title = get_xml_string(elem, 'title')
 				# try/except for EPG XML files with program entries containing <sub-title ... />
 				try:

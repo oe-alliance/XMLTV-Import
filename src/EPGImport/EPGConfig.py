@@ -23,7 +23,7 @@ def isLocalFile(filename):
 	return '://' not in filename
 
 
-def getChannels(path, name):
+def getChannels(path, name, offset):
 	global channelCache
 	if name in channelCache:
 		return channelCache[name]
@@ -39,13 +39,13 @@ def getChannels(path, name):
 		return channelCache[channelfile]
 	except KeyError:
 		pass
-	c = EPGChannel(channelfile)
+	c = EPGChannel(channelfile, offset=offset)
 	channelCache[channelfile] = c
 	return c
 
 
 class EPGChannel:
-	def __init__(self, filename, urls=None):
+	def __init__(self, filename, urls=None, offset=0):
 		self.mtime = None
 		self.name = filename
 		if urls is None:
@@ -53,6 +53,7 @@ class EPGChannel:
 		else:
 			self.urls = urls
 		self.items = None
+		self.offset = offset
 
 	def openStream(self, filename):
 		fd = open(filename, 'rb')
@@ -122,7 +123,7 @@ class EPGChannel:
 
 
 class EPGSource:
-	def __init__(self, path, elem, category=None):
+	def __init__(self, path, elem, category=None, offset=0):
 		self.parser = elem.get('type')
 		nocheck = elem.get('nocheck')
 		if nocheck == None:
@@ -135,10 +136,11 @@ class EPGSource:
 		self.url = random.choice(self.urls)
 		self.description = elem.findtext('description')
 		self.category = category
+		self.offset = offset
 		if not self.description:
 			self.description = self.url
 		self.format = elem.get('format', 'xml')
-		self.channels = getChannels(path, elem.get('channels'))
+		self.channels = getChannels(path, elem.get('channels'), offset)
 
 
 def enumSourcesFile(sourcefile, filter=None, categories=False):
@@ -147,7 +149,9 @@ def enumSourcesFile(sourcefile, filter=None, categories=False):
 	for event, elem in iterparse(open(sourcefile, 'rb'), events=("start", "end")):
 		if event == 'end':
 			if elem.tag == 'source':
-				s = EPGSource(sourcefile, elem, category)
+				# calculate custom time offset in minutes
+				offset = int(elem.get('offset', '+0000')) * 3600 // 100
+				s = EPGSource(sourcefile, elem, category, offset)
 				elem.clear()
 				if (filter is None) or (s.description in filter):
 					yield s
