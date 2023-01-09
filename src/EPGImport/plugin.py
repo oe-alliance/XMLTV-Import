@@ -1,38 +1,41 @@
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import print_function
 # for localized messages
 from . import _
-import time
-import os
-import enigma
 from . import log
+from . import ExpandableSelectionList
+from . import filtersServices
+# Plugin
+from . import EPGImport
+from . import EPGConfig
 
+
+import os
+import time
+
+import enigma
+from boxbranding import getImageDistro
 # Config
-from Components.config import config, configfile, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry, ConfigText, ConfigSelection, ConfigNumber, ConfigSubDict, NoSave
-import Screens.Standby
-from Screens.MessageBox import MessageBox
-from Screens.Screen import Screen
-from Screens.ChoiceBox import ChoiceBox
-from Components.ConfigList import ConfigListScreen
 from Components.ActionMap import ActionMap
 from Components.Button import Button
+from Components.config import config, configfile, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry, ConfigText, ConfigSelection, ConfigNumber, ConfigSubDict, NoSave
+from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
-from Components.Sources.StaticText import StaticText
-from Components.ScrollLabel import ScrollLabel
 import Components.PluginComponent
+from Components.ScrollLabel import ScrollLabel
+from Components.Sources.StaticText import StaticText
+from Plugins.Plugin import PluginDescriptor
+from Screens.ChoiceBox import ChoiceBox
+from Screens.MessageBox import MessageBox
+from Screens.Screen import Screen
+import Screens.Standby
 from Tools import Notifications
-from Tools.FuzzyDate import FuzzyTime
 from Tools.Directories import fileExists
-from . import ExpandableSelectionList
+from Tools.FuzzyDate import FuzzyTime
 try:
 	from Tools.StbHardware import getFPWasTimerWakeup
 except:
 	from Tools.DreamboxHardware import getFPWasTimerWakeup
+
 import NavigationInstance
-
-from . import filtersServices
-
 
 def lastMACbyte():
 	try:
@@ -50,7 +53,6 @@ def calcDefaultStarttime():
 	return (5 * 60 * 60) + offset
 
 
-from boxbranding import getImageDistro
 #Set default configuration
 config.plugins.epgimport = ConfigSubsection()
 config.plugins.epgimport.enabled = ConfigEnableDisable(default=False)
@@ -104,13 +106,6 @@ weekdays = [
 	_("Saturday"),
 	_("Sunday"),
 	]
-
-# Plugin
-from . import EPGImport
-from . import EPGConfig
-
-# Plugin definition
-from Plugins.Plugin import PluginDescriptor
 
 # historically located (not a problem, we want to update it)
 CONFIG_PATH = '/etc/epgimport'
