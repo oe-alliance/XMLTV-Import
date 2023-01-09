@@ -193,7 +193,7 @@ class EPGImport:
         callInThread(threadGetPage, url=sourcefile, file=filename, headers=Headers, success=afterDownload, fail=downloadFail)
 
     def afterDownload(self, filename, deleteFile=False):
-        print("[EPGImport][afterDownload] filename", filename)
+#       print("[EPGImport][afterDownload] filename", filename)
         try:
             if not ospath.getsize(filename):
                 raise Exception("File is empty")
@@ -266,7 +266,7 @@ class EPGImport:
             self.nextImport()
 
     def afterChannelDownload(self, filename, deleteFile=True):
-        print("[EPGImport][afterChannelDownload] filename", filename)
+#       print("[EPGImport][afterChannelDownload] filename", filename)
         if filename:
             try:
                 if not ospath.getsize(filename):
@@ -301,7 +301,7 @@ class EPGImport:
             self.nextImport()
 
     def createIterator(self, filename):
-        print("[EPGImport][createIterator], filename", filename)    
+#       print("[EPGImport][createIterator], filename", filename)    
         self.source.channels.update(self.channelFilter, filename)
         return getParser(self.source.parser).iterator(self.fd, self.source.channels.items)
 
