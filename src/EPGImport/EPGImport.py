@@ -82,7 +82,7 @@ def bigStorage(minFree, default, *candidates):
             return default
     except Exception as e:
         print("[EPGImport] Failed to stat %s:" % default, e)
-
+        pass
     mounts = open('/proc/mounts', 'rb').readlines()
     # format: device mountpoint fstype options #
     mountpoints = [x.split(' ', 2)[1] for x in mounts]
@@ -181,7 +181,8 @@ class EPGImport:
     def urlDownload(self, sourcefile, afterDownload, downloadFail):
 #       print("[EPGImport][urlDownload] Requests IPv4")
         host = sourcefile.split('/')[2] + sourcefile.split('/')[3]
-        path = bigStorage(9000000, '/media/hdd', '/tmp')            # lets use HDD and flash as backup media
+        pathDefault = "/media/hdd" if ospath.exists("/media/hdd") else "/tmp"        
+        path = bigStorage(9000000, pathDefault, '/media/usb', '/media/cf')            # lets use HDD and flash as main backup media
         filename = ospath.join(path, host)
         ext = ospath.splitext(sourcefile)[1]
         # Keep sensible extension, in particular the compression type
