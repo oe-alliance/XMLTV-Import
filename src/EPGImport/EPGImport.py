@@ -81,11 +81,10 @@ def bigStorage(minFree, default, *candidates):
         if free > minFree and free > 50000000:
             return default
     except Exception as e:
-        print("[EPGImport] Failed to stat %s:" % default, e)
-        pass
+        print("[EPGImport][bigStorage] Failed to stat %s:" % default, e)
     with open('/proc/mounts', 'rb') as f:
         # format: device mountpoint fstype options #
-        mountpoints = [x.decode('utf-8').split(' ', 2)[1] for x in f.readlines()]
+        mountpoints = [x.decode().split(' ', 2)[1] for x in f.readlines()]
     for candidate in candidates:
         if candidate in mountpoints:
             try:
@@ -93,10 +92,10 @@ def bigStorage(minFree, default, *candidates):
                 free = diskstat.f_bfree * diskstat.f_bsize
                 if free > minFree:
                     return candidate
-            except:
-                pass
-
-    return default
+            except Exception as e:
+                print("[EPGImport][bigStorage] Failed to stat %s:" % default, e)
+                continue
+    raise Exception("[EPGImport][bigStorage] Insufficient storage for download")
 
 
 class OudeisImporter:
@@ -197,7 +196,7 @@ class EPGImport:
 #       print("[EPGImport][afterDownload] filename", filename)
         try:
             if not ospath.getsize(filename):
-                raise Exception("File is empty")
+                raise Exception("[EPGImport][afterDownload] File is empty")
         except Exception as e:
             print("[EPGImport][afterDownload] Exception filename 0", filename)
             self.downloadFail(e)
