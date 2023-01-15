@@ -25,9 +25,9 @@ from twisted.internet._sslverify import ClientTLSOptions
 sslverify = False
 
 def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None, *args, **kwargs):
-#   print('[EPGImport][threadGetPage] url, file, args, kwargs', url, "   ", file, "   ", args, "   ", kwargs) 
+#   print('[EPGImport][threadGetPage] url, file, args, kwargs', url, "   ", file, "   ", args, "   ", kwargs)
     try:
-        response = get(url.encode(), verify=False, headers=urlheaders, timeout=15)
+        response = get(url, verify=False, headers=urlheaders, timeout=15)
         response.raise_for_status()
 
         with open(file, "wb") as f:
@@ -83,9 +83,9 @@ def bigStorage(minFree, default, *candidates):
     except Exception as e:
         print("[EPGImport] Failed to stat %s:" % default, e)
         pass
-    mounts = open('/proc/mounts', 'rb').readlines()
-    # format: device mountpoint fstype options #
-    mountpoints = [x.split(' ', 2)[1] for x in mounts]
+    with open('/proc/mounts', 'rb') as f:
+        # format: device mountpoint fstype options #
+        mountpoints = [x.decode('utf-8').split(' ', 2)[1] for x in f.readlines()]
     for candidate in candidates:
         if candidate in mountpoints:
             try:
@@ -181,7 +181,7 @@ class EPGImport:
     def urlDownload(self, sourcefile, afterDownload, downloadFail):
 #       print("[EPGImport][urlDownload] Requests IPv4")
         host = sourcefile.split('/')[2] + sourcefile.split('/')[3]
-        pathDefault = "/media/hdd" if ospath.exists("/media/hdd") else "/tmp"        
+        pathDefault = "/media/hdd" if ospath.exists("/media/hdd") else "/tmp"
         path = bigStorage(9000000, pathDefault, '/media/usb', '/media/cf')            # lets use HDD and flash as main backup media
         filename = ospath.join(path, host)
         ext = ospath.splitext(sourcefile)[1]
@@ -189,7 +189,7 @@ class EPGImport:
         if ext and len(ext) < 6:
             filename += ext
         host = sourcefile.split('/')[2]
-        Headers = {'host': host}            
+        Headers = {'host': host}
         print("[EPGImport][urlDownload] Downloading: " + sourcefile + " to local path: " + filename)
         callInThread(threadGetPage, url=sourcefile, file=filename, headers=Headers, success=afterDownload, fail=downloadFail)
 
@@ -199,7 +199,7 @@ class EPGImport:
             if not ospath.getsize(filename):
                 raise Exception("File is empty")
         except Exception as e:
-            print("[EPGImport][afterDownload] Exception filename 0", filename)        
+            print("[EPGImport][afterDownload] Exception filename 0", filename)
             self.downloadFail(e)
             return
 
@@ -210,7 +210,7 @@ class EPGImport:
             else:
                 self.readEpgDatFile(filename, deleteFile)
                 return
-                
+
         if filename.endswith('.gz'):
             self.fd = gzip.open(filename, 'rb')
             try:                # read a bit to make sure it's a gzip file
@@ -236,7 +236,7 @@ class EPGImport:
 
         else:
             self.fd = open(filename, 'rb')
-            
+
         if deleteFile and self.source.parser != 'epg.dat':
             try:
                 print("[EPGImport][afterDownload] unlink", filename)
@@ -245,7 +245,7 @@ class EPGImport:
                 print("[EPGImport][afterDownload] warning: Could not remove '%s' intermediate" % filename, e)
 
         self.channelFiles = self.source.channels.downloadables()
-#        print("[EPGImport][afterDownload] self.source, self.channelFiles", self.source, "   ", self.channelFiles)        
+#        print("[EPGImport][afterDownload] self.source, self.channelFiles", self.source, "   ", self.channelFiles)
         if not self.channelFiles:
             self.afterChannelDownload(None, None)
         else:
@@ -273,7 +273,7 @@ class EPGImport:
                 if not ospath.getsize(filename):
                     raise Exception("File is empty")
             except Exception as e:
-                print("[EPGImport][afterChannelDownload] Exception filename", filename)            
+                print("[EPGImport][afterChannelDownload] Exception filename", filename)
                 self.channelDownloadFail(e)
                 return
 
@@ -302,7 +302,7 @@ class EPGImport:
             self.nextImport()
 
     def createIterator(self, filename):
-#       print("[EPGImport][createIterator], filename", filename)    
+#       print("[EPGImport][createIterator], filename", filename)
         self.source.channels.update(self.channelFilter, filename)
         return getParser(self.source.parser).iterator(self.fd, self.source.channels.items)
 
