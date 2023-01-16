@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oe-alliance / XMLTV-Import\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-01 17:04+0100\n"
+"POT-Creation-Date: 2023-01-16 06:40+0000\n"
 "PO-Revision-Date: 2018-08-10 04:14+0300\n"
 "Last-Translator: TM2TURK | by thawtes <thawtes@gmail.com>\n"
 "Language-Team: TM2TURK | by thawtes <thawtes@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../plugin.py:746
+#: ../plugin.py:739
 msgid ""
 "\n"
 "Import of epg data will start.\n"
@@ -26,7 +26,7 @@ msgstr ""
 "bu işlem biraz zaman alabilir\n"
 "işlemi başlatmak istiyor musunuz ?"
 
-#: ../plugin.py:746
+#: ../plugin.py:739
 msgid " events\n"
 msgstr " Adet Program Bilgisi\n"
 
@@ -42,39 +42,39 @@ msgstr "Platform Ekle"
 msgid "All services provider"
 msgstr "Platformdaki Tüm Kanalları Ekle"
 
-#: ../plugin.py:1102
+#: ../plugin.py:1095
 msgid "Automated EPG Importer"
 msgstr "harici e-rehber verilerini sisteminize aktarın"
 
-#: ../plugin.py:371
+#: ../plugin.py:366
 msgid "Automatic import EPG"
 msgstr "e-rehber verilerinin içe aktarımını otomatik yap"
 
-#: ../plugin.py:372
+#: ../plugin.py:367
 msgid "Automatic start time"
 msgstr "otomatik başlama zamanı"
 
-#: ../plugin.py:314 ../plugin.py:562 ../plugin.py:642
+#: ../plugin.py:309 ../plugin.py:557 ../plugin.py:637
 msgid "Cancel"
 msgstr "Vazgeç"
 
-#: ../plugin.py:376
+#: ../plugin.py:371
 msgid "Choice days for start import"
 msgstr "içe aktarımın yapılacağı günler"
 
-#: ../plugin.py:698
+#: ../plugin.py:693
 msgid "Clear"
 msgstr "Temizle"
 
-#: ../plugin.py:387
+#: ../plugin.py:382
 msgid "Clearing current EPG before import"
 msgstr "içe aktarmadan önce mevcut e-rehber verisini temizle"
 
-#: ../plugin.py:380
+#: ../plugin.py:375
 msgid "Consider setting \"Days Profile\""
 msgstr "seçtiğim çalışma günlerini dikkate al"
 
-#: ../plugin.py:655
+#: ../plugin.py:650
 msgid "Days Profile"
 msgstr "Çalışma Günleri"
 
@@ -86,29 +86,29 @@ msgstr "Hepsini Sil"
 msgid "Delete selected"
 msgstr "Sil"
 
-#: ../plugin.py:310
+#: ../plugin.py:305
 msgid "EPG Import Configuration"
 msgstr "E-Rehber Yükleyici Ayarları"
 
-#: ../plugin.py:723
+#: ../plugin.py:718
 msgid "EPG Import Log"
 msgstr "Kayıt Defteri"
 
-#: ../plugin.py:597
+#: ../plugin.py:592
 msgid "EPG Import Sources"
 msgstr "Kaynaklar"
 
-#: ../plugin.py:797
+#: ../plugin.py:790
 #, python-format
 msgid "EPG Import finished, %d events"
 msgstr "içe aktarım bitti, %d adet program bilgisi yüklendi"
 
-#: ../plugin.py:1104 ../plugin.py:1105 ../plugin.py:1111 ../plugin.py:1116
-#: ../plugin.py:1121 ../plugin.py:1126 ../plugin.py:1134 ../plugin.py:1144
+#: ../plugin.py:1097 ../plugin.py:1098 ../plugin.py:1104 ../plugin.py:1109
+#: ../plugin.py:1114 ../plugin.py:1119 ../plugin.py:1127 ../plugin.py:1137
 msgid "EPG-Importer"
 msgstr "E-Rehber Yükleyici"
 
-#: ../plugin.py:488
+#: ../plugin.py:483
 msgid ""
 "EPGImport\n"
 "Import of epg data is still in progress. Please wait."
@@ -116,7 +116,7 @@ msgstr ""
 "E-Rehber Yükleyici\n"
 "verilerin içe aktarılması hala devam ediyor, lütfen bekleyiniz ..."
 
-#: ../plugin.py:503
+#: ../plugin.py:498
 msgid ""
 "EPGImport\n"
 "Import of epg data will start.\n"
@@ -128,7 +128,7 @@ msgstr ""
 "bu işlem biraz zaman alabilir\n"
 "işlemi başlatmak istiyor musunuz ?"
 
-#: ../plugin.py:512
+#: ../plugin.py:507
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -136,19 +136,19 @@ msgstr ""
 "E-Rehber Yükleyici Uygulaması\n"
 "Başlatılamadı:\n"
 
-#: ../plugin.py:103
+#: ../plugin.py:105
 msgid "Friday"
 msgstr "cuma"
 
-#: ../filtersServices.py:168 ../plugin.py:525
+#: ../filtersServices.py:168 ../plugin.py:520
 msgid "Ignore services list"
 msgstr "Yok Sayılacak Kanal Listesi"
 
-#: ../plugin.py:585
+#: ../plugin.py:580
 msgid "Import current source"
 msgstr "Mevcut Kaynağı Başlat"
 
-#: ../plugin.py:335
+#: ../plugin.py:330
 #, python-format
 msgid ""
 "Importing: %s\n"
@@ -157,45 +157,45 @@ msgstr ""
 "Yükleniyor : %s\n"
 "%s adet program bilgisi içe aktarılıyor ..."
 
-#: ../plugin.py:746
+#: ../plugin.py:739
 msgid "Last import: "
 msgstr "En Son Aktarım : "
 
-#: ../plugin.py:483
+#: ../plugin.py:478
 #, python-format
 msgid "Last import: %s events"
 msgstr "En Son Aktarım : %s Adet Program Bilgisi"
 
-#: ../plugin.py:478
+#: ../plugin.py:473
 #, python-format
 msgid "Last: %s %s, %d events"
 msgstr "En Son : %s %s, %d adet program bilgisi içe aktarıldı !"
 
-#: ../plugin.py:379
+#: ../plugin.py:374
 msgid "Load EPG only for IPTV channels"
 msgstr ""
 
-#: ../plugin.py:378
+#: ../plugin.py:373
 msgid "Load EPG only services in bouquets"
 msgstr "e-rehber verilerini sadece buketlerde bulunan kanallara yükle"
 
-#: ../plugin.py:385
+#: ../plugin.py:380
 msgid "Load long descriptions up to X days"
 msgstr "program özet bilgilerini sağdaki gün sayısına kadar yükle"
 
-#: ../plugin.py:316
+#: ../plugin.py:311
 msgid "Manual"
 msgstr "Başlat"
 
-#: ../plugin.py:99
+#: ../plugin.py:101
 msgid "Monday"
 msgstr "pazartesi"
 
-#: ../plugin.py:498
+#: ../plugin.py:493
 msgid "No active EPG sources found, nothing to do"
 msgstr "etkinleştirilmiş e-rehber veri kaynağı bulunamadı"
 
-#: ../plugin.py:86
+#: ../plugin.py:88
 msgid "Press OK"
 msgstr "ok tuşuna basınız"
 
@@ -203,23 +203,23 @@ msgstr "ok tuşuna basınız"
 msgid "Really delete all list?"
 msgstr "listede olanların hepsini silmek istiyor musunuz ?"
 
-#: ../plugin.py:374
+#: ../plugin.py:369
 msgid "Return to deep standby after import"
 msgstr "içe aktarımdan sonra cihazı tekrar kapat"
 
-#: ../plugin.py:386
+#: ../plugin.py:381
 msgid "Run AutoTimer after import"
 msgstr "içe aktarımdan sonra otomatik zamanlayıcı uygulamasını çalıştır"
 
-#: ../plugin.py:104
+#: ../plugin.py:106
 msgid "Saturday"
 msgstr "cumartesi"
 
-#: ../plugin.py:315 ../plugin.py:563 ../plugin.py:643 ../plugin.py:701
+#: ../plugin.py:310 ../plugin.py:558 ../plugin.py:638 ../plugin.py:696
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../filtersServices.py:283 ../plugin.py:526
+#: ../filtersServices.py:283 ../plugin.py:521
 msgid "Select action"
 msgstr "Seçiminizi Yapın"
 
@@ -227,60 +227,60 @@ msgstr "Seçiminizi Yapın"
 msgid "Select service to add..."
 msgstr "eklenecek kanalı seçiniz"
 
-#: ../plugin.py:382
+#: ../plugin.py:377
 msgid "Show \"EPGImport\" in extensions"
 msgstr "uygulamalar listesinde göster"
 
-#: ../plugin.py:383
+#: ../plugin.py:378
 #, fuzzy
 msgid "Show \"EPGImport\" in plugins"
 msgstr "uygulamalar listesinde göster"
 
-#: ../plugin.py:525
+#: ../plugin.py:520
 msgid "Show log"
 msgstr "Kayıt Defterini Göster"
 
-#: ../plugin.py:381
+#: ../plugin.py:376
 msgid "Skip import on restart GUI"
 msgstr "sistem yeniden başlatıldığında içe aktarmayı pas geç "
 
-#: ../plugin.py:317
+#: ../plugin.py:312
 msgid "Sources"
 msgstr "Kaynaklar"
 
-#: ../plugin.py:375
+#: ../plugin.py:370
 msgid "Standby at startup"
 msgstr "cihazı hazırda beklet"
 
-#: ../plugin.py:377
+#: ../plugin.py:372
 msgid "Start import after booting up"
 msgstr "önyüklemeden sonra içe aktarmayı başlat"
 
-#: ../plugin.py:105
+#: ../plugin.py:107
 msgid "Sunday"
 msgstr "pazar"
 
-#: ../plugin.py:102
+#: ../plugin.py:104
 msgid "Thursday"
 msgstr "perşembe"
 
-#: ../plugin.py:100
+#: ../plugin.py:102
 msgid "Tuesday"
 msgstr "salı"
 
-#: ../plugin.py:101
+#: ../plugin.py:103
 msgid "Wednesday"
 msgstr "çarşamba"
 
-#: ../plugin.py:373
+#: ../plugin.py:368
 msgid "When in deep standby"
 msgstr "cihaz kapalı olduğunda"
 
-#: ../plugin.py:729
+#: ../plugin.py:724
 msgid "Write to /tmp/epgimport.log"
 msgstr "/tmp/epgimport.log dosyasına yaz"
 
-#: ../plugin.py:665
+#: ../plugin.py:660
 msgid ""
 "You may not use this settings!\n"
 "At least one day a week should be included!"
@@ -288,7 +288,7 @@ msgstr ""
 "bu ayarları kullanamazsınız !\n"
 "haftada en az bir gün dahil edilmelidir !"
 
-#: ../plugin.py:797
+#: ../plugin.py:790
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
@@ -296,19 +296,19 @@ msgstr ""
 "e-rehber verilerini yüklemek için sistemi yeniden başlatmanız gerekiyor\n"
 "işletim sistemini şimdi yeniden başlatmak istiyor musunuz ?"
 
-#: ../plugin.py:58
+#: ../plugin.py:60
 msgid "always"
 msgstr "her zaman"
 
-#: ../plugin.py:61
+#: ../plugin.py:63
 msgid "never"
 msgstr "asla"
 
-#: ../plugin.py:60
+#: ../plugin.py:62
 msgid "only automatic boot"
 msgstr "sadece otomatik önyükleme olduğunda"
 
-#: ../plugin.py:59
+#: ../plugin.py:61
 msgid "only manual boot"
 msgstr "sadece manuel önyükleme yapıldığında"
 
@@ -316,10 +316,10 @@ msgstr "sadece manuel önyükleme yapıldığında"
 msgid "press OK to save list"
 msgstr "listeyi kaydetmek için OK tuşuna basın"
 
-#: ../plugin.py:75
+#: ../plugin.py:77
 msgid "skip the import"
 msgstr "içe aktarmayı pas geç"
 
-#: ../plugin.py:74
+#: ../plugin.py:76
 msgid "wake up and import"
 msgstr "cihazı aç ve içe aktar"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-01 17:04+0100\n"
+"POT-Creation-Date: 2023-01-16 06:40+0000\n"
 "PO-Revision-Date: 2018-12-08 11:44+0300\n"
 "Last-Translator: mosad - مساعد الجعيد <abo-mishal@hotmail.com>\n"
 "Language-Team: mosad - مساعد الجعيد\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2\n"
 
-#: ../plugin.py:746
+#: ../plugin.py:739
 #, fuzzy
 msgid ""
 "\n"
@@ -26,7 +26,7 @@ msgstr ""
 "قد يستغرق بضع دقائق\n"
 "فهل أنت موافق؟"
 
-#: ../plugin.py:746
+#: ../plugin.py:739
 msgid " events\n"
 msgstr ""
 
@@ -42,40 +42,40 @@ msgstr ""
 msgid "All services provider"
 msgstr ""
 
-#: ../plugin.py:1102
+#: ../plugin.py:1095
 msgid "Automated EPG Importer"
 msgstr "إستيراد دليل البرامج الإلكترونية الآلي"
 
-#: ../plugin.py:371
+#: ../plugin.py:366
 #, fuzzy
 msgid "Automatic import EPG"
 msgstr "إستيراد يوميا تلقائي"
 
-#: ../plugin.py:372
+#: ../plugin.py:367
 msgid "Automatic start time"
 msgstr "وقت بدء التشغيل التلقائي"
 
-#: ../plugin.py:314 ../plugin.py:562 ../plugin.py:642
+#: ../plugin.py:309 ../plugin.py:557 ../plugin.py:637
 msgid "Cancel"
 msgstr "إلغاء"
 
-#: ../plugin.py:376
+#: ../plugin.py:371
 msgid "Choice days for start import"
 msgstr ""
 
-#: ../plugin.py:698
+#: ../plugin.py:693
 msgid "Clear"
 msgstr "مسح"
 
-#: ../plugin.py:387
+#: ../plugin.py:382
 msgid "Clearing current EPG before import"
 msgstr ""
 
-#: ../plugin.py:380
+#: ../plugin.py:375
 msgid "Consider setting \"Days Profile\""
 msgstr ""
 
-#: ../plugin.py:655
+#: ../plugin.py:650
 msgid "Days Profile"
 msgstr ""
 
@@ -87,29 +87,29 @@ msgstr ""
 msgid "Delete selected"
 msgstr ""
 
-#: ../plugin.py:310
+#: ../plugin.py:305
 msgid "EPG Import Configuration"
 msgstr "تكوين إستيراد دليل البرامج الإلكترونية"
 
-#: ../plugin.py:723
+#: ../plugin.py:718
 msgid "EPG Import Log"
 msgstr "سجل إستيراد دليل البرامج الإلكترونية"
 
-#: ../plugin.py:597
+#: ../plugin.py:592
 msgid "EPG Import Sources"
 msgstr "مصادر إستيراد دليل البرامج الإلكترونية"
 
-#: ../plugin.py:797
+#: ../plugin.py:790
 #, python-format
 msgid "EPG Import finished, %d events"
 msgstr "إنتهاء إستيراد دليل البرامج الإلكترونية, %d والأحداث"
 
-#: ../plugin.py:1104 ../plugin.py:1105 ../plugin.py:1111 ../plugin.py:1116
-#: ../plugin.py:1121 ../plugin.py:1126 ../plugin.py:1134 ../plugin.py:1144
+#: ../plugin.py:1097 ../plugin.py:1098 ../plugin.py:1104 ../plugin.py:1109
+#: ../plugin.py:1114 ../plugin.py:1119 ../plugin.py:1127 ../plugin.py:1137
 msgid "EPG-Importer"
 msgstr "إستيراد دليل البرامج الإلكترونية"
 
-#: ../plugin.py:488
+#: ../plugin.py:483
 #, fuzzy
 msgid ""
 "EPGImport\n"
@@ -118,7 +118,7 @@ msgstr ""
 "بلج إنز إستيراد دليل البرامج الإلكتروينة\n"
 "إستيراد بيانات دليل البرامج الإلكترونية لايزال قيد العمل.الرجاء الإنتظار."
 
-#: ../plugin.py:503
+#: ../plugin.py:498
 #, fuzzy
 msgid ""
 "EPGImport\n"
@@ -131,7 +131,7 @@ msgstr ""
 "قد يستغرق بضع دقائق\n"
 "فهل أنت موافق؟"
 
-#: ../plugin.py:512
+#: ../plugin.py:507
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -140,65 +140,65 @@ msgstr ""
 "فشل في البدء:\n"
 "\n"
 
-#: ../plugin.py:103
+#: ../plugin.py:105
 msgid "Friday"
 msgstr ""
 
-#: ../filtersServices.py:168 ../plugin.py:525
+#: ../filtersServices.py:168 ../plugin.py:520
 msgid "Ignore services list"
 msgstr ""
 
-#: ../plugin.py:585
+#: ../plugin.py:580
 #, fuzzy
 msgid "Import current source"
 msgstr "مصادر إستيراد دليل البرامج الإلكترونية"
 
-#: ../plugin.py:335
+#: ../plugin.py:330
 #, fuzzy, python-format
 msgid ""
 "Importing: %s\n"
 "%s events"
 msgstr "إنتهاء إستيراد دليل البرامج الإلكترونية, %d والأحداث"
 
-#: ../plugin.py:746
+#: ../plugin.py:739
 msgid "Last import: "
 msgstr ""
 
-#: ../plugin.py:483
+#: ../plugin.py:478
 #, fuzzy, python-format
 msgid "Last import: %s events"
 msgstr "أخر: %s %s, %d الأحداث"
 
-#: ../plugin.py:478
+#: ../plugin.py:473
 #, python-format
 msgid "Last: %s %s, %d events"
 msgstr "أخر: %s %s, %d الأحداث"
 
-#: ../plugin.py:379
+#: ../plugin.py:374
 msgid "Load EPG only for IPTV channels"
 msgstr ""
 
-#: ../plugin.py:378
+#: ../plugin.py:373
 msgid "Load EPG only services in bouquets"
 msgstr ""
 
-#: ../plugin.py:385
+#: ../plugin.py:380
 msgid "Load long descriptions up to X days"
 msgstr "تحميل وصف مطول إضغط على عدد الايام"
 
-#: ../plugin.py:316
+#: ../plugin.py:311
 msgid "Manual"
 msgstr "يدوي"
 
-#: ../plugin.py:99
+#: ../plugin.py:101
 msgid "Monday"
 msgstr ""
 
-#: ../plugin.py:498
+#: ../plugin.py:493
 msgid "No active EPG sources found, nothing to do"
 msgstr "لا توجد مصادر لدليل البرامج الإلكترونية مفعلة، علىك أن تفعل شيئا"
 
-#: ../plugin.py:86
+#: ../plugin.py:88
 msgid "Press OK"
 msgstr ""
 
@@ -206,23 +206,23 @@ msgstr ""
 msgid "Really delete all list?"
 msgstr ""
 
-#: ../plugin.py:374
+#: ../plugin.py:369
 msgid "Return to deep standby after import"
 msgstr ""
 
-#: ../plugin.py:386
+#: ../plugin.py:381
 msgid "Run AutoTimer after import"
 msgstr ""
 
-#: ../plugin.py:104
+#: ../plugin.py:106
 msgid "Saturday"
 msgstr ""
 
-#: ../plugin.py:315 ../plugin.py:563 ../plugin.py:643 ../plugin.py:701
+#: ../plugin.py:310 ../plugin.py:558 ../plugin.py:638 ../plugin.py:696
 msgid "Save"
 msgstr "حفظ"
 
-#: ../filtersServices.py:283 ../plugin.py:526
+#: ../filtersServices.py:283 ../plugin.py:521
 msgid "Select action"
 msgstr ""
 
@@ -230,67 +230,67 @@ msgstr ""
 msgid "Select service to add..."
 msgstr ""
 
-#: ../plugin.py:382
+#: ../plugin.py:377
 #, fuzzy
 msgid "Show \"EPGImport\" in extensions"
 msgstr "عرض الملحقات"
 
-#: ../plugin.py:383
+#: ../plugin.py:378
 #, fuzzy
 msgid "Show \"EPGImport\" in plugins"
 msgstr "عرض متصفح البلج إنز"
 
-#: ../plugin.py:525
+#: ../plugin.py:520
 msgid "Show log"
 msgstr ""
 
-#: ../plugin.py:381
+#: ../plugin.py:376
 msgid "Skip import on restart GUI"
 msgstr ""
 
-#: ../plugin.py:317
+#: ../plugin.py:312
 msgid "Sources"
 msgstr "المصادر"
 
-#: ../plugin.py:375
+#: ../plugin.py:370
 msgid "Standby at startup"
 msgstr "وضع الاستعداد عند بدء التشغيل"
 
-#: ../plugin.py:377
+#: ../plugin.py:372
 msgid "Start import after booting up"
 msgstr "تشغيل الإستيراد بعد الإقلاع"
 
-#: ../plugin.py:105
+#: ../plugin.py:107
 msgid "Sunday"
 msgstr ""
 
-#: ../plugin.py:102
+#: ../plugin.py:104
 msgid "Thursday"
 msgstr ""
 
-#: ../plugin.py:100
+#: ../plugin.py:102
 msgid "Tuesday"
 msgstr ""
 
-#: ../plugin.py:101
+#: ../plugin.py:103
 msgid "Wednesday"
 msgstr ""
 
-#: ../plugin.py:373
+#: ../plugin.py:368
 msgid "When in deep standby"
 msgstr "عندما تكون في وضع الاستعداد العميق"
 
-#: ../plugin.py:729
+#: ../plugin.py:724
 msgid "Write to /tmp/epgimport.log"
 msgstr ""
 
-#: ../plugin.py:665
+#: ../plugin.py:660
 msgid ""
 "You may not use this settings!\n"
 "At least one day a week should be included!"
 msgstr ""
 
-#: ../plugin.py:797
+#: ../plugin.py:790
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
@@ -298,20 +298,20 @@ msgstr ""
 "يجب إعادة تشغيل الانجما 2 لتحميل بيانات دليل البرامج الإلكترونية\n"
 " هل أنت موافق؟"
 
-#: ../plugin.py:58
+#: ../plugin.py:60
 msgid "always"
 msgstr ""
 
-#: ../plugin.py:61
+#: ../plugin.py:63
 msgid "never"
 msgstr ""
 
-#: ../plugin.py:60
+#: ../plugin.py:62
 #, fuzzy
 msgid "only automatic boot"
 msgstr "إستيراد يوميا تلقائي"
 
-#: ../plugin.py:59
+#: ../plugin.py:61
 msgid "only manual boot"
 msgstr ""
 
@@ -319,12 +319,12 @@ msgstr ""
 msgid "press OK to save list"
 msgstr ""
 
-#: ../plugin.py:75
+#: ../plugin.py:77
 #, fuzzy
 msgid "skip the import"
 msgstr "تخطي الإستيراد"
 
-#: ../plugin.py:74
+#: ../plugin.py:76
 #, fuzzy
 msgid "wake up and import"
 msgstr "إستيقاظ وإستيراد"
