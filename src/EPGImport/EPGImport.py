@@ -194,8 +194,7 @@ class EPGImport:
         # Keep sensible extension, in particular the compression type
         if ext and len(ext) < 6:
             filename += ext
-        host = sourcefile.split('/')[2]
-        Headers = {'host': host, 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+        Headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
         print("[EPGImport][urlDownload] Downloading: " + sourcefile + " to local path: " + filename)
         callInThread(threadGetPage, url=sourcefile, file=filename, urlheaders=Headers, success=afterDownload, fail=downloadFail)
 
