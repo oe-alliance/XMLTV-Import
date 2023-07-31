@@ -9,6 +9,8 @@ import gzip
 import random
 import time
 from . import log
+import random
+import string
 
 from socket import getaddrinfo, AF_INET6, has_ipv6
 
@@ -178,7 +180,7 @@ class EPGImport:
             self.afterDownload(filename, deleteFile=False)
 
     def urlDownload(self, sourcefile, afterDownload, downloadFail):
-        host = sourcefile.split('/')[2] + sourcefile.split('/')[3]
+        host = ''.join(random.choices(string.ascii_lowercase, k=5))
         check_mount = False
         if ospath.exists("/media/hdd"):
             with open('/proc/mounts', 'r') as f:
