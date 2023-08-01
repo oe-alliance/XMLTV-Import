@@ -29,7 +29,7 @@ sslverify = False
 def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None, *args, **kwargs):
 #   print('[EPGImport][threadGetPage] url, file, args, kwargs', url, "   ", file, "   ", args, "   ", kwargs)
     try:
-        response = get(url, verify=False, headers=urlheaders, timeout=15)
+        response = get(url, verify=False, headers=urlheaders, timeout=15, allow_redirects=True)
         response.raise_for_status()
 
         with open(file, "wb") as f:
