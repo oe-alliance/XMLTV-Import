@@ -17,7 +17,7 @@ from socket import getaddrinfo, AF_INET6, has_ipv6
 from twisted.internet import reactor, threads
 import twisted.python.runtime
 
-from requests import get, packages
+from requests import packages, Session
 packages.urllib3.disable_warnings(packages.urllib3.exceptions.InsecureRequestWarning)
 from requests.exceptions import HTTPError, RequestException
 
@@ -29,7 +29,9 @@ sslverify = False
 def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None, *args, **kwargs):
 #   print('[EPGImport][threadGetPage] url, file, args, kwargs', url, "   ", file, "   ", args, "   ", kwargs)
     try:
-        response = get(url, verify=False, headers=urlheaders, timeout=15, allow_redirects=True)
+        s = Session()
+        s.headers = {}
+        response = s.get(url, verify=False, headers=urlheaders, timeout=15, allow_redirects=True)
         response.raise_for_status()
 
         with open(file, "wb") as f:
@@ -196,7 +198,11 @@ class EPGImport:
         # Keep sensible extension, in particular the compression type
         if ext and len(ext) < 6:
             filename += ext
-        Headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+        Headers = {
+            'User-Agent': 'Twisted Client',
+            'Accept-Encoding': 'gzip, deflate', 
+            'Accept': '*/*', 
+            'Connection': 'keep-alive'}
         print("[EPGImport][urlDownload] Downloading: " + sourcefile + " to local path: " + filename)
         callInThread(threadGetPage, url=sourcefile, file=filename, urlheaders=Headers, success=afterDownload, fail=downloadFail)
 
