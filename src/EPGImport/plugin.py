@@ -12,7 +12,14 @@ import os
 import time
 
 import enigma
-from boxbranding import getImageDistro
+
+try:
+    from Components.SystemInfo import BoxInfo
+    IMAGDISTRO = BoxInfo.getItem("distro")
+except:
+    from boxbranding import getImageDistro
+    IMAGDISTRO = getImageDistro()
+
 # Config
 from Components.ActionMap import ActionMap
 from Components.Button import Button
@@ -36,6 +43,7 @@ except:
 	from Tools.DreamboxHardware import getFPWasTimerWakeup
 
 import NavigationInstance
+
 
 def lastMACbyte():
 	try:
@@ -67,10 +75,7 @@ config.plugins.epgimport.runboot_day = ConfigYesNo(default=False)
 config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default=False)
 config.plugins.epgimport.wakeup = ConfigClock(default=calcDefaultStarttime())
 # Different default in OpenATV:
-if getImageDistro() in ("openatv"):
-	config.plugins.epgimport.showinplugins = ConfigYesNo(default=False)
-else:
-	config.plugins.epgimport.showinplugins = ConfigYesNo(default=True)
+config.plugins.epgimport.showinplugins = ConfigYesNo(default=IMAGDISTRO != "openatv")
 config.plugins.epgimport.showinextensions = ConfigYesNo(default=True)
 config.plugins.epgimport.deepstandby = ConfigSelection(default="skip", choices=[
 		("wakeup", _("wake up and import")),
@@ -89,10 +94,6 @@ config.plugins.epgimport.day_profile = ConfigSelection(choices=[("1", _("Press O
 config.plugins.extra_epgimport = ConfigSubsection()
 config.plugins.extra_epgimport.last_import = ConfigText(default="none")
 config.plugins.extra_epgimport.day_import = ConfigSubDict()
-
-# Forcibly set these options to false in OpenATV:
-#if getImageDistro() in ("openatv"):
-#	config.plugins.epgimport.showinmainmenu.value=False
 
 for i in range(7):
 	config.plugins.extra_epgimport.day_import[i] = ConfigEnableDisable(default=True)
@@ -398,9 +399,6 @@ class EPGImportConfig(ConfigListScreen, Screen):
 				list.append(self.cfg_runboot_restart)
 		list.append(self.cfg_showinextensions)
 		list.append(self.cfg_showinplugins)
-		# Only show these settings if not using OpenATV:
-#		if getImageDistro() not in ("openatv"):
-#			list.append(self.cfg_showinmainmenu)
 		list.append(self.cfg_import_onlybouquet)
 		list.append(self.cfg_import_onlyiptv)
 		if hasattr(enigma.eEPGCache, 'flushEPG'):
@@ -1099,17 +1097,17 @@ pluginlist = PluginDescriptor(name=_("EPG-Importer"), description=description, w
 
 
 def epgmenu(menuid, **kwargs):
-	if getImageDistro() in ("openvix", "openbh", "ventonsupport", "egami", "openhdf", "opendroid"):
+	if IMAGDISTRO in ("openvix", "openbh", "ventonsupport", "egami", "openhdf", "opendroid"):
 		if menuid == "epg":
 			return [(_("EPG-Importer"), main, "epgimporter", 1002)]
 		else:
 			return []
-	elif getImageDistro() in ("openatv"):
+	elif IMAGDISTRO in ("openatv"):
 		if menuid == "epg":
 			return [(_("EPG-Importer"), main, "epgimporter", None)]
 		else:
 			return []
-	elif getImageDistro() in ("teamblue"):
+	elif IMAGDISTRO in ("teamblue"):
 		if menuid == "epg_menu":
 			return [(_("EPG-Importer"), main, "epgimporter", 95)]
 		else:
