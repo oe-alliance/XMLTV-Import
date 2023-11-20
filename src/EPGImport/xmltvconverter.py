@@ -62,12 +62,12 @@ def enumerateProgrammes(fp):
 
 class XMLTVConverter:
 	def __init__(self, channels_dict, category_dict, dateformat='%Y%m%d%H%M%S %Z', offset=0):
-	    self.channels = channels_dict
-	    self.categories = category_dict
-	    if dateformat.startswith('%Y%m%d%H%M%S'):
-		    self.dateParser = quickptime
-	    else:
-		    self.dateParser = lambda x: time.strptime(x, dateformat)
+		self.channels = channels_dict
+		self.categories = category_dict
+		if dateformat.startswith('%Y%m%d%H%M%S'):
+			self.dateParser = quickptime
+		else:
+			self.dateParser = lambda x: time.strptime(x, dateformat)
 		self.offset = offset
 		print("[XMLTVConverter] Using a custom time offset of %d" % offset)
 
