@@ -15,10 +15,10 @@ import enigma
 
 try:
     from Components.SystemInfo import BoxInfo
-    IMAGDISTRO = BoxInfo.getItem("distro")
+    IMAGEDISTRO = BoxInfo.getItem("distro")
 except:
     from boxbranding import getImageDistro
-    IMAGDISTRO = getImageDistro()
+    IMAGEDISTRO = getImageDistro()
 
 # Config
 from Components.ActionMap import ActionMap
@@ -75,7 +75,7 @@ config.plugins.epgimport.runboot_day = ConfigYesNo(default=False)
 config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default=False)
 config.plugins.epgimport.wakeup = ConfigClock(default=calcDefaultStarttime())
 # Different default in OpenATV:
-config.plugins.epgimport.showinplugins = ConfigYesNo(default=IMAGDISTRO != "openatv")
+config.plugins.epgimport.showinplugins = ConfigYesNo(default=IMAGEDISTRO != "openatv")
 config.plugins.epgimport.showinextensions = ConfigYesNo(default=True)
 config.plugins.epgimport.deepstandby = ConfigSelection(default="skip", choices=[
 		("wakeup", _("wake up and import")),
@@ -1097,17 +1097,17 @@ pluginlist = PluginDescriptor(name=_("EPG-Importer"), description=description, w
 
 
 def epgmenu(menuid, **kwargs):
-	if IMAGDISTRO in ("openvix", "openbh", "ventonsupport", "egami", "openhdf", "opendroid"):
+	if IMAGEDISTRO in ("openvix", "openbh", "ventonsupport", "egami", "openhdf", "opendroid"):
 		if menuid == "epg":
 			return [(_("EPG-Importer"), main, "epgimporter", 1002)]
 		else:
 			return []
-	elif IMAGDISTRO in ("openatv"):
+	elif IMAGEDISTRO in ("openatv"):
 		if menuid == "epg":
 			return [(_("EPG-Importer"), main, "epgimporter", None)]
 		else:
 			return []
-	elif IMAGDISTRO in ("teamblue"):
+	elif IMAGEDISTRO in ("teamblue"):
 		if menuid == "epg_menu":
 			return [(_("EPG-Importer"), main, "epgimporter", 95)]
 		else:
