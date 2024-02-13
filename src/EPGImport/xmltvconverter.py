@@ -48,6 +48,17 @@ def get_xml_string(elem, name):
 	# Now returning UTF-8 by default, the epgdat/oudeis must be adjusted to make this work.
 	return six.ensure_str(r)
 
+def get_xml_rating_string(elem):
+	r = ''
+	try:
+		for node in elem.findall("rating"):
+			for val in node.findall("value"):
+				txt = val.text.replace("+", "")
+				if not r:
+					r = txt
+	except Exception as e:
+		print("[XMLTVConverter] get_xml_rating_string error:", e)
+	return six.ensure_str(r)
 
 def enumerateProgrammes(fp):
 	"""Enumerates programme ElementTree nodes from file object 'fp'"""
@@ -104,10 +115,22 @@ class XMLTVConverter:
 					description = ''
 				category = get_xml_string(elem, 'category')
 				cat_nr = self.get_category(category, stop - start)
+
+				try:
+					rating_str = get_xml_rating_string(elem)
+					# hardcode country as ENG since there is no handling for parental certification systems per country yet
+					# also we support currently only number like values like "12+" since the epgcache works only with bytes right now
+					rating = [("eng", int(rating_str)-3)]
+				except:
+					rating = None
+
 				# data_tuple = (data.start, data.duration, data.title, data.short_description, data.long_description, data.type)
 				if not stop or not start or (stop <= start):
 					print("[XMLTVConverter] Bad start/stop time: %s (%s) - %s (%s) [%s]" % (elem.get('start'), start, elem.get('stop'), stop, title))
-				yield (services, (start, stop - start, title, subtitle, description, cat_nr))
+				if rating:
+					yield (services, (start, stop - start, title, subtitle, description, cat_nr, 0, rating))
+				else:
+					yield (services, (start, stop - start, title, subtitle, description, cat_nr))
 			except Exception as e:
 				print("[XMLTVConverter] parsing event error:", e)
 
