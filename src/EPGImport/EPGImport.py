@@ -33,6 +33,11 @@ def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None,
         s.headers = {}
         response = s.get(url, verify=False, headers=urlheaders, timeout=15, allow_redirects=True)
         response.raise_for_status()
+        ext = ospath.splitext(file)[1]
+        if not ext:
+            ext = ospath.splitext(response.url)[1]
+            if ext and len(ext) < 6:
+                file += ext
 
         with open(file, "wb") as f:
             f.write(response.content)
