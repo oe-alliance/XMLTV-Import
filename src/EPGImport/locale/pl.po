@@ -181,7 +181,7 @@ msgstr "Ładuj EPG tylko dla kanałów IPTV"
 
 #: ../plugin.py:373
 msgid "Load EPG only services in bouquets"
-msgstr "Ładuj EPG tylko dla usług w pakietach"
+msgstr "Ładuj EPG tylko dla usług w listach kanałów"
 
 #: ../plugin.py:380
 msgid "Load long descriptions up to X days"
@@ -189,7 +189,7 @@ msgstr "Ładuj długie opisy do X dni"
 
 #: ../plugin.py:311
 msgid "Manual"
-msgstr "Ręczny"
+msgstr "Ręcznie"
 
 #: ../plugin.py:101
 msgid "Monday"
@@ -237,7 +237,7 @@ msgstr "Pokaż \"EPGImport\" w rozszerzeniach"
 
 #: ../plugin.py:378
 msgid "Show \"EPGImport\" in plugins"
-msgstr "Pokaż \"EPGImport\" w wtyczkach"
+msgstr "Pokaż \"EPGImport\" we wtyczkach"
 
 #: ../plugin.py:520
 msgid "Show log"
@@ -257,7 +257,7 @@ msgstr "Czuwanie przy uruchamianiu"
 
 #: ../plugin.py:372
 msgid "Start import after booting up"
-msgstr "Rozpocznij import po uruchomieniu"
+msgstr "Rozpocznij import po uruchomieniu dekodera"
 
 #: ../plugin.py:107
 msgid "Sunday"
