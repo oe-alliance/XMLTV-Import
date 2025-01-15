@@ -4,7 +4,8 @@
 # you can supply a similar interface. See plugin.py and OfflineImport.py for
 # the contract.
 from datetime import datetime
-from os import path as ospath, statvfs, symlink, unlink
+from os.path import exists, getsize, join, splitext
+from os import statvfs, symlink, unlink
 import gzip
 import random
 import time
@@ -26,6 +27,7 @@ from twisted.internet import ssl
 from twisted.internet._sslverify import ClientTLSOptions
 sslverify = False
 
+
 def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None, *args, **kwargs):
 #   print('[EPGImport][threadGetPage] url, file, args, kwargs', url, "   ", file, "   ", args, "   ", kwargs)
     try:
@@ -33,9 +35,9 @@ def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None,
         s.headers = {}
         response = s.get(url, verify=False, headers=urlheaders, timeout=15, allow_redirects=True)
         response.raise_for_status()
-        ext = ospath.splitext(file)[1]
+        ext = splitext(file)[1]
         if not ext:
-            ext = ospath.splitext(response.url)[1]
+            ext = splitext(response.url)[1]
             if ext and len(ext) < 6:
                 file += ext
 
@@ -53,12 +55,11 @@ def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None,
 #       if fail is not None:
         fail(error)
 
+
 # Used to check server validity
 HDD_EPG_DAT = '/hdd/epg.dat'
 
 PARSERS = {'xmltv': 'gen_xmltv', 'genxmltv': 'gen_xmltv'}
-
-
 
 
 def relImport(name):
@@ -189,7 +190,7 @@ class EPGImport:
     def urlDownload(self, sourcefile, afterDownload, downloadFail):
         host = ''.join(random.choices(string.ascii_lowercase, k=5))
         check_mount = False
-        if ospath.exists("/media/hdd"):
+        if exists("/media/hdd"):
             with open('/proc/mounts', 'r') as f:
                 for line in f:
                     l = line.split()
@@ -198,15 +199,15 @@ class EPGImport:
         # print("[EPGImport][urlDownload]2 check_mount ", check_mount)
         pathDefault = "/media/hdd" if check_mount else "/tmp"
         path = bigStorage(9000000, pathDefault, '/media/usb', '/media/cf')            # lets use HDD and flash as main backup media
-        filename = ospath.join(path, host)
-        ext = ospath.splitext(sourcefile)[1]
+        filename = join(path, host)
+        ext = splitext(sourcefile)[1]
         # Keep sensible extension, in particular the compression type
         if ext and len(ext) < 6:
             filename += ext
         Headers = {
             'User-Agent': 'Twisted Client',
-            'Accept-Encoding': 'gzip, deflate', 
-            'Accept': '*/*', 
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept': '*/*',
             'Connection': 'keep-alive'}
         print("[EPGImport][urlDownload] Downloading: " + sourcefile + " to local path: " + filename)
         callInThread(threadGetPage, url=sourcefile, file=filename, urlheaders=Headers, success=afterDownload, fail=downloadFail)
@@ -214,7 +215,7 @@ class EPGImport:
     def afterDownload(self, filename, deleteFile=False):
 #       print("[EPGImport][afterDownload] filename", filename)
         try:
-            if not ospath.getsize(filename):
+            if not getsize(filename):
                 raise Exception("[EPGImport][afterDownload] File is empty")
         except Exception as e:
             print("[EPGImport][afterDownload] Exception filename 0", filename)
@@ -249,6 +250,11 @@ class EPGImport:
                 file_content = self.fd.peek(1)
             except lzma.LZMAError as e:
                 print("[EPGImport][afterDownload] File downloaded is not a valid xz file", filename)
+                try:
+                    print("[EPGImport][afterDownload] unlink", filename)
+                    unlink(filename)
+                except Exception as e:
+                    print("[EPGImport][afterDownload] warning: Could not remove '%s' intermediate" % filename, e)
                 self.downloadFail(e)
                 return
 
@@ -288,7 +294,7 @@ class EPGImport:
 #       print("[EPGImport][afterChannelDownload] filename", filename)
         if filename:
             try:
-                if not ospath.getsize(filename):
+                if not getsize(filename):
                     raise Exception("File is empty")
             except Exception as e:
                 print("[EPGImport][afterChannelDownload] Exception filename", filename)
@@ -348,7 +354,6 @@ class EPGImport:
         except Exception as e:
             print("[EPGImport] Failed to import %s:" % filename, e)
 
-
     def fileno(self):
         if self.fd is not None:
             return self.fd.fileno()
@@ -405,7 +410,6 @@ class EPGImport:
         """called from reactor on lost connection"""
         # This happens because enigma calls us after removeReader
         print("[EPGImport] connectionLost", failure)
-
 
     def closeReader(self):
         if self.fd is not None:
