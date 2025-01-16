@@ -35,15 +35,22 @@ def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None,
         s.headers = {}
         response = s.get(url, verify=False, headers=urlheaders, timeout=15, allow_redirects=True)
         response.raise_for_status()
-        ext = splitext(file)[1]
+        # check here for content-disposition header so to extract the actual filename (if the url doesnt contain it)
+        content_disp = response.headers.get('Content-Disposition', '')
+        filename = content_disp.split('filename="')[-1].split('"')[0]
+        ext = ospath.splitext(file)[1]
+        if filename:
+            ext = ospath.splitext(filename)[1]
+            if ext and len(ext) < 6:
+                file += ext
         if not ext:
             ext = splitext(response.url)[1]
             if ext and len(ext) < 6:
-                file += ext
+                file += ext 
 
         with open(file, "wb") as f:
             f.write(response.content)
-#       print('[EPGImport][threadGetPage] file completed: ', file)
+#        print('[EPGImport][threadGetPage] file completed: ', file)
         success(file, deleteFile=True)
 
     except HTTPError as httperror:
