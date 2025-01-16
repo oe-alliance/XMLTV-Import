@@ -46,7 +46,7 @@ def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None,
         if not ext:
             ext = splitext(response.url)[1]
             if ext and len(ext) < 6:
-                file += ext 
+                file += ext
 
         with open(file, "wb") as f:
             f.write(response.content)
