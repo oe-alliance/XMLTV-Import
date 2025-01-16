@@ -38,9 +38,9 @@ def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None,
         # check here for content-disposition header so to extract the actual filename (if the url doesnt contain it)
         content_disp = response.headers.get('Content-Disposition', '')
         filename = content_disp.split('filename="')[-1].split('"')[0]
-        ext = ospath.splitext(file)[1]
+        ext = splitext(file)[1]
         if filename:
-            ext = ospath.splitext(filename)[1]
+            ext = splitext(filename)[1]
             if ext and len(ext) < 6:
                 file += ext
         if not ext:
