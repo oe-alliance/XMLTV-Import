@@ -7,7 +7,7 @@
 # on windows the xmltv files must be local files.
 #
 #
-# On python 3 running this file as a script will result in import errors 
+# On python 3 running this file as a script will result in import errors
 # so run it as a module.
 #
 # 1) Rename existing EPGImport/__init__py to x__init__py and offline__init__py to __init__py
@@ -18,11 +18,13 @@
 # 6) Reinstate your renamed __init__.py
 #
 # called modules EPGImport, epgdat, epgdat_importer, log
-import os
-import sys
-import time
+
 from . import EPGConfig
 from . import EPGImport
+
+import sys
+import time
+
 
 EPGImport.HDD_EPG_DAT = "./epg.dat.new"
 
@@ -32,10 +34,12 @@ EPGImport.HDD_EPG_DAT = "./epg.dat.new"
 class FakeEnigma:
 	def getInstance(self):
 		return self
-#	def load(self):
-#		print("...load...")
-#	def importEvents(self, *args):
-#		print(args)
+
+	# def load(self):
+		# print("...load...")
+
+	# def importEvents(self, *args):
+		# print(args)
 
 
 def importFrom(epgimport, sourceXml):
@@ -69,14 +73,14 @@ def importFrom(epgimport, sourceXml):
 	epgimport.beginImport(longDescUntil=time.time() + (5 * 24 * 3600))
 	EPGImport.reactor.run()
 
-#----------------------------------------------
+# ----------------------------------------------
 
 
 def done(reboot=False, epgfile=None):
 	EPGImport.reactor.stop()
 	print("Done, data is in", epgfile)
-	### When code arrives here, EPG data is stored in filename EPGImport.HDD_EPG_DAT
-	### So to copy it to FTP or whatever, this is the place to add that code.
+	# ## When code arrives here, EPG data is stored in filename EPGImport.HDD_EPG_DAT
+	# ## So to copy it to FTP or whatever, this is the place to add that code.
 
 
 if len(sys.argv) <= 1:

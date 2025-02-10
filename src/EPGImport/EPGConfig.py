@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 import os
 from . import log
-from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
+from xml.etree.cElementTree import iterparse
 import gzip
 import time
 import random
@@ -67,6 +67,11 @@ class EPGChannel:
 			except ImportError:
 				from backports import lzma
 			fd = lzma.open(filename, 'rb')
+		elif filename.endswith('.zip'):
+			import zipfile
+			from six import BytesIO
+			zip_obj = zipfile.ZipFile(filename, 'r')
+			fd = BytesIO(zip_obj.open(zip_obj.namelist()[0]).read())
 		return fd
 
 	def parse(self, filterCallback, downloadedFile):
@@ -126,7 +131,7 @@ class EPGSource:
 	def __init__(self, path, elem, category=None, offset=0):
 		self.parser = elem.get('type')
 		nocheck = elem.get('nocheck')
-		if nocheck == None:
+		if nocheck is None:
 			self.nocheck = 0
 		elif nocheck == "1":
 			self.nocheck = 1
@@ -202,13 +207,13 @@ def storeUserSettings(filename=SETTINGS_FILE, sources=None):
 if __name__ == '__main__':
 	import sys
 	x = []
-	l = []
+	ls = []
 	path = '.'
 	if len(sys.argv) > 1:
 		path = sys.argv[1]
 	for p in enumSources(path):
 		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
-		l.append(t)
+		ls.append(t)
 		print(t)
 		x.append(p.description)
 	storeUserSettings('settings.pkl', [1, "twee"])
@@ -216,9 +221,9 @@ if __name__ == '__main__':
 	os.remove('settings.pkl')
 	for p in enumSources(path, x):
 		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
-		assert t in l
-		l.remove(t)
-	assert not l
+		assert t in ls
+		ls.remove(t)
+	assert not ls
 	for name, c in channelCache.items():
 		print("Update:", name)
 		c.update()

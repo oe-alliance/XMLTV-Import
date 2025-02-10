@@ -17,10 +17,10 @@ def findEpg():
 						ffn = os.path.join(path, fn)
 						candidates.append((os.path.getctime(ffn), ffn))
 		except:
-			pass # ignore errors.
+			pass  # ignore errors.
 	if not candidates:
 		return None
-	candidates.sort() # order by ctime...
+	candidates.sort()  # order by ctime...
 	# best candidate is most recent filename.
 	return candidates[-1][1]
 
@@ -63,14 +63,14 @@ newepg = findNewEpg()
 print("Epg.dat found at : ", epg)
 print("newepg  found at : ", newepg)
 
-##Delete epg.dat if last crash was because of error in epg.dat
+# #Delete epg.dat if last crash was because of error in epg.dat
 if checkCrashLog():
 	try:
 		os.unlink(epg)
 	except:
 		print("delete error")
 
-##if excists cp epg_new.dat epg.dat
+# #if excists cp epg_new.dat epg.dat
 if newepg:
 	if epg:
 		print("replacing epg.dat with newmade version")
