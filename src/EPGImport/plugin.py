@@ -583,8 +583,9 @@ class EPGImportSources(Screen):
 		Screen.__init__(self, session)
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("Save"))
-		self["key_blue"] = Button()
+		self["key_blue"] = Button(_('Import from Git'))
 		cfg = EPGConfig.loadUserSettings()
+		self.container = None
 		filter = cfg["sources"]
 		tree = []
 		cat = None
@@ -616,6 +617,7 @@ class EPGImportSources(Screen):
 				"red": self.cancel,
 				"green": self.save,
 				"yellow": self.do_import,
+				"blue": self.git_import,         # Blue Button - Import via Git
 				"save": self.save,
 				"cancel": self.cancel,
 				"ok": self["list"].toggleSelection
@@ -624,8 +626,122 @@ class EPGImportSources(Screen):
 		)
 		self.setTitle(_("EPG Import Sources"))
 
+	def git_import(self):
+		self.session.openWithCallback(
+			self.install_update,
+			MessageBox,
+			_("Do you want to update Source now?\n\nWait for the import successful message!"),
+			MessageBox.TYPE_YESNO
+		)
+
+	def install_update(self, answer=False):
+		if answer:
+			installer_url = "https://raw.githubusercontent.com/Belfagor2005/EPGImport-99/main/installer_source.sh"
+			cmd = "wget -q --no-check-certificate " + installer_url + " -O - | /bin/bash -x > /tmp/install_debug.log 2>&1"
+			if self.container:
+				del self.container
+			self.container = enigma.eConsoleAppContainer()
+			self.run = 0
+			self.finished = False
+
+			self.container.appClosed.append(self.after_update)
+			if self.container.execute(cmd):
+				print("Command executed successfully")
+			else:
+				print("Command execution failed")
+
+			retval = self.container.execute(cmd)
+			print("Command execution result:", retval)
+			if retval == 0:
+				self.after_update(-1)
+
+		else:
+			self.session.open(
+				MessageBox,
+				_("Update Aborted!"),
+				MessageBox.TYPE_INFO,
+				timeout=3
+			)
+
+	def after_update(self, retval):
+		print("after_update called with retval:", retval)
+		if retval == 0:
+			print("Update completed successfully.")
+		elif retval == -1:
+			print("Import failed with return code: -1")
+		else:
+			print("Unexpected return value:", retval)
+
+		if self.container:
+			try:
+				self.container.appClosed.remove(self.after_update)
+			except:
+				self.container.appClosed_conn = None
+			self.container.kill()
+
+		# i forced because .. mistake!
+		self.refresh_tree()
+		self.session.open(
+			MessageBox,
+			_("Source files Imported and List Updated!"),
+			MessageBox.TYPE_INFO,
+			timeout=5
+		)
+
+		self.cfg_imp()		
+
+	def refresh_tree(self):
+		print("Refreshing tree...")
+		cfg = EPGConfig.loadUserSettings()
+		filter = cfg["sources"]
+		tree = []
+		cat = None
+		for x in EPGConfig.enumSources(CONFIG_PATH, filter=None, categories=True):
+			# print("Source detected:", x)
+			if hasattr(x, 'description'):
+				sel = (filter is None) or (x.description in filter)
+				entry = (x.description, x.description, sel)
+				if cat is None:
+					cat = ExpandableSelectionList.category("[.]")
+					tree.append(cat)
+				cat[0][2].append(entry)
+				if sel:
+					ExpandableSelectionList.expand(cat, True)
+			else:
+				cat = ExpandableSelectionList.category(x)
+				tree.append(cat)
+		self["list"].setList(tree)
+		self["key_yellow"].show()
+		self["key_blue"].show()
+		"""
+		# print("Tree updated:", tree)
+		# if tree:
+			# self["key_yellow"].show()
+			# # self["key_blue"].hide()
+		# else:
+			# self["key_yellow"].hide()
+			# # self["key_blue"].show()
+		"""
+
+	def cfg_imp(self):
+		self.source_cfg = resolveFilename(SCOPE_PLUGINS, "Extensions/EPGImport/epgimport.conf")
+		dest_cfg = '/etc/enigma2'  # destination config
+		if not os.path.exists(CONFIG_PATH):
+			try:
+				os.makedirs(CONFIG_PATH)
+			except Exception as e:
+				print("Error creating directory:", CONFIG_PATH, ":", str(e))
+				return
+		if not os.path.exists(os.path.join(dest_cfg, 'epgimport.conf')):
+			try:
+				import shutil
+				shutil.copy(self.source_cfg, dest_cfg)
+				print("File copied:", self.source_cfg, "->", dest_cfg)
+			except Exception as e:
+				print("Error while copying configuration file:", self.source_cfg, ":", str(e))
+
 	def save(self):
-		# Make the entries unique through a set
+		''' Make the entries unique through a set '''
 		sources = list(set([item[1] for item in self["list"].enumSelected()]))
 		print("[XMLTVImport] Selected sources:", sources, file=log)
 		EPGConfig.storeUserSettings(sources=sources)

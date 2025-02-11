@@ -98,7 +98,7 @@ class EPGChannel:
 			pass
 
 	def update(self, filterCallback, downloadedFile=None):
-		customFile = '/etc/epgimport/custom.channels.xml'
+		customFile = '/etc/epgimport/rytec.channels.xml'
 		# Always read custom file since we don't know when it was last updated
 		# and we don't have multiple download from server problem since it is always a local file.
 		if os.path.exists(customFile):
@@ -161,7 +161,8 @@ def enumSourcesFile(sourcefile, filter=None, categories=False):
 				if (filter is None) or (s.description in filter):
 					yield s
 			elif elem.tag == 'channel':
-				name = elem.get('name')
+				name = elem.get('name')  # lululla
+				# name = elem.get('name') or elem.findtext('display-name')
 				urls = [e.text.strip() for e in elem.findall('url')]
 				if name in channelCache:
 					channelCache[name].urls = urls
