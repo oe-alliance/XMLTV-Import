@@ -3,30 +3,50 @@
 # This file no longer has a direct link to Enigma2, allowing its use anywhere
 # you can supply a similar interface. See plugin.py and OfflineImport.py for
 # the contract.
+
 # from . import log
 
-# from datetime import datetime
 from os import statvfs, symlink, unlink
-
 from Components.config import config
 from os.path import ismount
-
 from os.path import exists, getsize, join, splitext
 from requests import packages, Session
 from requests.exceptions import HTTPError, RequestException
-# from socket import getaddrinfo, AF_INET6, has_ipv6
 from twisted.internet import reactor, threads
 from datetime import datetime
-# from twisted.internet import ssl
-# from twisted.internet._sslverify import ClientTLSOptions
 from twisted.internet.reactor import callInThread
 from six import PY2 as IS_PY2
 import gzip
 import random
-
 import string
 import time
 import twisted.python.runtime
+
+
+try:
+	basestring
+except NameError:
+	basestring = str
+
+
+def maybe_encode(text, encoding="utf-8"):
+	"""
+	Ensures that the text is properly encoded in Python 2 and 3.
+
+	:param text: The input text (assumed to be a string).
+	:param encoding: The encoding format (default: utf-8).
+	:return: Encoded text (if necessary).
+	"""
+	if IS_PY2:
+		if isinstance(text, unicode):
+			return text.encode(encoding)
+		elif isinstance(text, basestring):
+			return text
+	else:
+		if isinstance(text, bytes):
+			return text.decode(encoding)
+		return text
+
 
 packages.urllib3.disable_warnings(packages.urllib3.exceptions.InsecureRequestWarning)
 
@@ -38,16 +58,6 @@ CheckFile = "LastUpdate.txt"
 PARSERS = {'xmltv': 'gen_xmltv', 'genxmltv': 'gen_xmltv'}
 # sslverify = False
 # Used to check server validity
-
-
-def maybe_encode(text, encoding="utf8"):
-	if IS_PY2:
-		if isinstance(text, unicode):  # In Python 2, unicode exist
-			return text.encode(encoding)
-		else:
-			return text
-	else:
-		return text  # In Python 3 already as Unicode
 
 
 def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None, *args, **kwargs):

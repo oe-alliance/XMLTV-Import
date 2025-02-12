@@ -7,12 +7,6 @@ from . import filtersServices
 from . import EPGImport
 from . import EPGConfig
 
-
-import os
-import time
-
-import enigma
-
 try:
 	from Components.SystemInfo import BoxInfo
 	IMAGEDISTRO = BoxInfo.getItem("distro")
@@ -26,14 +20,12 @@ from Components.Button import Button
 from Components.config import config, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry, ConfigText, ConfigSelection, ConfigNumber, ConfigSubDict, NoSave
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
-import Components.PluginComponent
 from Components.ScrollLabel import ScrollLabel
 from Components.Sources.StaticText import StaticText
 from Plugins.Plugin import PluginDescriptor
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
-import Screens.Standby
 from Tools import Notifications
 from Tools.Directories import SCOPE_PLUGINS, fileExists, resolveFilename
 from Tools.FuzzyDate import FuzzyTime
@@ -42,7 +34,12 @@ try:
 except:
 	from Tools.DreamboxHardware import getFPWasTimerWakeup
 
+import Components.PluginComponent
+import enigma
 import NavigationInstance
+import os
+import Screens.Standby
+import time
 
 
 def lastMACbyte():
@@ -162,12 +159,12 @@ def getBouquetChannelList():
 										if altrernative_list:
 											for channel in altrernative_list:
 												refnum = getRefNum(channel)
-												if refnum and refnum not in channels:
-													channels.append(refnum)
+												if refnum:
+													channels.add(refnum)
 									else:
 										refnum = getRefNum(service.toString())
-										if refnum and refnum not in channels:
-											channels.append(refnum)
+										if refnum:
+											channels.add(refnum)
 	else:
 		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'
 		bouquet_root = enigma.eServiceReference(bouquet_rootstr)
@@ -183,12 +180,12 @@ def getBouquetChannelList():
 						if altrernative_list:
 							for channel in altrernative_list:
 								refnum = getRefNum(channel)
-								if refnum and refnum not in channels:
-									channels.append(refnum)
+								if refnum:
+									channels.add(refnum)
 					else:
 						refnum = getRefNum(service.toString())
-						if refnum and refnum not in channels:
-							channels.append(refnum)
+						if refnum:
+							channels.add(refnum)
 	return channels
 
 # Filter servicerefs that this box can display by starting a fake recording.
@@ -222,8 +219,8 @@ def channelFilter(ref):
 		fakeRecResult = fakeRecService.start(True)
 		NavigationInstance.instance.stopRecordService(fakeRecService)
 		# -7 (errNoSourceFound) occurs when tuner is disconnected.
-		r = fakeRecResult in (0, -7)
-		return r
+		return fakeRecResult in (0, -5, -7)
+		# return r
 	print("Invalid serviceref string:", ref, file=log)
 	return False
 
@@ -234,16 +231,13 @@ lastImportResult = None
 
 
 def startImport():
-	if not epgimport.isImportRunning():
-		EPGImport.HDD_EPG_DAT = config.misc.epgcache_filename.value
-		if config.plugins.epgimport.clear_oldepg.value and hasattr(epgimport.epgcache, 'flushEPG'):
-			EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT)
-			EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT + '.backup')
-			epgimport.epgcache.flushEPG()
-		epgimport.onDone = doneImport
-		epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
-	else:
-		print("[startImport] Already running, won't start again")
+	EPGImport.HDD_EPG_DAT = config.misc.epgcache_filename.value
+	if config.plugins.epgimport.clear_oldepg.value and hasattr(epgimport.epgcache, 'flushEPG'):
+		EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT)
+		EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT + '.backup')
+		epgimport.epgcache.flushEPG()
+	epgimport.onDone = doneImport
+	epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
 
 
 # #################################
@@ -481,22 +475,17 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		if lastImportResult and (lastImportResult != self.lastImportResult):
 			start, count = lastImportResult
 			try:
-				if isinstance(start, str):
-					start = time.mktime(time.strptime(start, "%Y-%m-%d %H:%M:%S"))
-				elif not isinstance(start, (int, float)):
-					raise ValueError("Start value is not a valid timestamp or string")
-
-				# Call FuzzyTime with the correct timestamp
-				d, t = FuzzyTime(int(start), inPast=True)
-			except Exception as e:
-				print("[XMLTVImport] Error with FuzzyTime:", e)
+				start = int(start)
+				d, t = FuzzyTime(start, inPast=True)
+			except:
 				try:
 					d, t = FuzzyTime(int(start))
-					print("[XMLTVImport] Metod FuzzyTime(int(start)")
-				except Exception as e:
-					print("[XMLTVImport] Fallback with FuzzyTime also failed:", e)
-					d, t = _("unknown"), _("unknown")
-			self["statusbar"].setText(_("Last: %s %s, %d events") % (d, t, count))
+				except:
+					print("[EPGImport] Error: start is not a valid integer:", start)
+					return
+
+			text = _("Last: %s %s, %d events") % (d, t, count)
+			self["statusbar"].setText(text)
 			self.lastImportResult = lastImportResult
 
 	def keyInfo(self):
@@ -586,7 +575,13 @@ class EPGImportSources(Screen):
 		self["key_blue"] = Button(_('Import from Git'))
 		cfg = EPGConfig.loadUserSettings()
 		self.container = None
-		filter = cfg["sources"]
+		if "sources" in cfg:
+			filter = cfg["sources"]
+		else:
+			# Gestisci l'errore o imposta un valore di fallback
+			filter = None
+			print("[EPGImport] Warning: 'sources' key not found in cfg.")
+		# filter = cfg["sources"]
 		tree = []
 		cat = None
 		for x in EPGConfig.enumSources(CONFIG_PATH, filter=None, categories=True):
@@ -688,7 +683,7 @@ class EPGImportSources(Screen):
 			timeout=5
 		)
 
-		self.cfg_imp()		
+		self.cfg_imp()
 
 	def refresh_tree(self):
 		print("Refreshing tree...")
@@ -713,14 +708,15 @@ class EPGImportSources(Screen):
 		self["list"].setList(tree)
 		self["key_yellow"].show()
 		self["key_blue"].show()
+
 		"""
-		# print("Tree updated:", tree)
-		# if tree:
-			# self["key_yellow"].show()
-			# # self["key_blue"].hide()
-		# else:
-			# self["key_yellow"].hide()
-			# # self["key_blue"].show()
+		print("Tree updated:", tree)
+		if tree:
+			self["key_yellow"].show()
+			# self["key_blue"].hide()
+		else:
+			self["key_yellow"].hide()
+			# self["key_blue"].show()
 		"""
 
 	def cfg_imp(self):
