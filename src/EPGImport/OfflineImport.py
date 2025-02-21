@@ -7,7 +7,7 @@
 # on windows the xmltv files must be local files.
 #
 #
-# On python 3 running this file as a script will result in import errors 
+# On python 3 running this file as a script will result in import errors
 # so run it as a module.
 #
 # 1) Rename existing EPGImport/__init__py to x__init__py and offline__init__py to __init__py

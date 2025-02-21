@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script to generate po files outside of the normal build process
-#  
+#
 # Pre-requisite:
 # The following tools must be installed on your system and accessible from path
 # gawk, find, xgettext, $localgsed, python, msguniq, msgmerge, msgattrib, msgfmt, msginit
@@ -14,7 +14,7 @@ printf "Po files update/creation from script starting.\n"
 #
 # Retrieve languages from Makefile.am LANGS variable for backward compatibility
 #
-# languages=($(gawk ' BEGIN { FS=" " } 
+# languages=($(gawk ' BEGIN { FS=" " }
 #		/^LANGS/ {
 #			for (i=3; i<=NF; i++)
 #				printf "%s ", $i

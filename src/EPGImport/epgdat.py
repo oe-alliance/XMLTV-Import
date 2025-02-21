@@ -223,7 +223,7 @@ class epgdat_class:
 				EPG_EVENT_HEADER_datasize = 0
 				
 				# short description (title) type 0x4d	self.shortDescription(title[:240]) = event[2]
-				shortDescription = event[2]		# (crc32, short description packed) 
+				shortDescription = event[2]		# (crc32, short description packed)
 				EPG_EVENT_HEADER_datasize += 4  	# add 4 bytes for a single REF DESC (CRC32)
 
 				if shortDescription[0] not in list(self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.keys()):
@@ -237,7 +237,7 @@ class epgdat_class:
 					self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[shortDescription[0]][1] += 1
 					
 				# long description type 0x4e	self.longDescription(description) = event[3]
-				longDescription = event[3]	# (crc32, long description(s) packed) 
+				longDescription = event[3]	# (crc32, long description(s) packed)
 				EPG_EVENT_HEADER_datasize += 4 * len(longDescription) # add 4 bytes for each CRC32
 				for desc in longDescription:	# desc = crc + packed long desc
 					if desc[0] not in list(self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER.keys()):
@@ -304,7 +304,7 @@ class epgdat_class:
 				temp_crc_data = self.EPGDAT_HASH_EVENT_MEMORY_CONTAINER[temp]
 				#pack_4=struct.pack(LB_ENDIAN+"II",int(temp,16),temp_crc_data[1])
 				pack_4 = s_ii.pack(temp, temp_crc_data[1])	# crc and packed data
-				epgdat_fd.write(pack_4 + temp_crc_data[0])	# packed (crc, packed data) & crc 
+				epgdat_fd.write(pack_4 + temp_crc_data[0])	# packed (crc, packed data) & crc
 			epgdat_fd.close()
 		# *** cleanup **
 		if os.path.exists(self.EPGDAT_TMP_FILENAME):

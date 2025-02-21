@@ -81,7 +81,7 @@ const unsigned int CRCTABLE[] = {
 # "crctype" is the description type (1 byte 0x4d or 0x4e)
 # !!!!!!!!! IT'S VERY TIME CONSUMING !!!!!!!!!
 def crc32_dreambox(crcdata, crctype, crctable=CRCTABLE):
-        # ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop    
+        # ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop
         #crc=0x00000000L
         #crc=((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ crctype) & 0x000000ffL ]
         crc = crctable[crctype & 0x000000ffL ]
@@ -95,7 +95,7 @@ static PyObject *
 dreamcrc(PyObject *self, PyObject *args)
 {
     unsigned int crc;
-    unsigned int len; 
+    unsigned int len;
     const char *data;
     unsigned int i;
     int crctype;
@@ -103,7 +103,7 @@ dreamcrc(PyObject *self, PyObject *args)
         return NULL;
     crc = CRCTABLE[crctype & 0x000000ff];
     crc = ((crc << 8 ) & 0xffffff00) ^ CRCTABLE[ ((crc >> 24) ^ len) & 0x000000ff ];
-    for (i = 0; i < len; ++i)    
+    for (i = 0; i < len; ++i)
     {
         crc=((crc << 8 ) & 0xffffff00) ^ CRCTABLE[ ((crc >> 24) ^ data[i]) & 0x000000ff ];
     }
