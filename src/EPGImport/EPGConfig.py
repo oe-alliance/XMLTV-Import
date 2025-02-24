@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
-import gzip
-import os
-import random
-import time
-import re
+from gzip import GzipFile
+from os import fstat, listdir, remove
+from os.path import exists, getmtime, join, split
+from random import choice
+from time import time
 from html import unescape
-from re import sub
+from re import compile, sub, error as reError
 from pickle import dump, load, HIGHEST_PROTOCOL
 from xml.etree.cElementTree import iterparse
 
@@ -28,11 +28,11 @@ def getChannels(path, name, offset):
 	global channelCache
 	if name in channelCache:
 		return channelCache[name]
-	dirname, filename = os.path.split(path)
+	dirname, filename = split(path)
 	if name:
-		channelfile = os.path.join(dirname, name) if isLocalFile(name) else name
+		channelfile = join(dirname, name) if isLocalFile(name) else name
 	else:
-		channelfile = os.path.join(dirname, filename.split('.', 1)[0] + '.channels.xml')
+		channelfile = join(dirname, filename.split('.', 1)[0] + '.channels.xml')
 	try:
 		return channelCache[channelfile]
 	except KeyError:
@@ -102,20 +102,17 @@ def xml_unescape(text):
 
 def openStream(filename):
 	fd = open(filename, 'rb')
-	if not os.fstat(fd.fileno()).st_size:
+	if not fstat(fd.fileno()).st_size:
 		raise Exception("File is empty")
 	if filename.endswith('.gz'):
-		fd = gzip.GzipFile(fileobj=fd, mode='rb')
+		fd = GzipFile(fileobj=fd, mode='rb')
 	elif filename.endswith('.xz') or filename.endswith('.lzma'):
-		try:
-			import lzma
-		except ImportError:
-			from backports import lzma
+		import lzma
 		fd = lzma.open(filename, 'rb')
 	elif filename.endswith('.zip'):
-		import zipfile
-		from six import BytesIO
-		zip_obj = zipfile.ZipFile(filename, 'r')
+		from zipfile import ZipFile
+		from io import BytesIO
+		zip_obj = ZipFile(filename, 'r')
 		fd = BytesIO(zip_obj.open(zip_obj.namelist()[0]).read())
 	return fd
 
@@ -132,15 +129,15 @@ def set_channel_id_filter():
 					if clean_channel_id_line:
 						try:
 							# We compile indivually every line just to report error
-							full_filter = re.compile(clean_channel_id_line)
-						except re.error:
+							full_filter = compile(clean_channel_id_line)
+						except reError:
 							print("[EPGImport] ERROR: " + clean_channel_id_line + " is not a valid regex. It will be ignored.", file=log)
 						else:
 							full_filter = full_filter + clean_channel_id_line + "|"
 	except IOError:
 		print("[EPGImport] INFO: no channel_id_filter.conf file found.", file=log)
 		# Return a dummy filter (empty line filter) all accepted except empty channel id
-		compiled_filter = re.compile("^$")
+		compiled_filter = compile("^$")
 		return (compiled_filter)
 	# Last char is | so remove it
 	full_filter = full_filter[:-1]
@@ -149,14 +146,14 @@ def set_channel_id_filter():
 	# channel_id_filter.conf file exist but is empty, it has only comments, or only invalid regex
 	if len(full_filter) == 0:
 		# full_filter is empty returning dummy filter
-		compiled_filter = re.compile("^$")
+		compiled_filter = compile("^$")
 	else:
 		try:
-			compiled_filter = re.compile(full_filter)
-		except re.error:
+			compiled_filter = compile(full_filter)
+		except reError:
 			print("[EPGImport] ERROR: final regex " + full_filter + " doesn't compile properly.", file=log)
 			# Return a dummy filter  (empty line filter) all accepted except empty channel id
-			compiled_filter = re.compile("^$")
+			compiled_filter = compile("^$")
 		else:
 			print("[EPGImport] INFO : final regex " + full_filter + " compiled successfully.", file=log)
 
@@ -221,18 +218,18 @@ class EPGChannel:
 		customFile = '/etc/epgimport/custom.channels.xml'
 		# Always read custom file since we don't know when it was last updated
 		# and we don't have multiple download from server problem since it is always a local file.
-		if not os.path.exists(customFile):
+		if not exists(customFile):
 			customFile = '/etc/epgimport/rytec.channels.xml'
 
-		if os.path.exists(customFile):
+		if exists(customFile):
 			print("[EPGImport] Parsing channels from '%s'" % customFile, file=log)
 			self.parse(filterCallback, customFile, filterCustomChannel)
 		if downloadedFile is not None:
-			self.mtime = time.time()
+			self.mtime = time()
 			return self.parse(filterCallback, downloadedFile, True)
 		elif (len(self.urls) == 1) and isLocalFile(self.urls[0]):
 			try:
-				mtime = os.path.getmtime(self.urls[0])
+				mtime = getmtime(self.urls[0])
 			except:
 				mtime = None
 			if (not self.mtime) or (mtime is not None and self.mtime < mtime):
@@ -244,7 +241,7 @@ class EPGChannel:
 			return None
 		else:
 			# Check at most once a day
-			now = time.time()
+			now = time()
 			if (not self.mtime) or (self.mtime + 86400 < now):
 				return self.urls
 		return []
@@ -258,7 +255,7 @@ class EPGSource:
 		self.parser = elem.get('type', 'gen_xmltv')
 		self.nocheck = int(elem.get('nocheck', 0))
 		self.urls = [e.text.strip() for e in elem.findall('url')]
-		self.url = random.choice(self.urls)
+		self.url = choice(self.urls)
 		self.description = elem.findtext('description')
 		self.category = category
 		self.offset = offset
@@ -303,9 +300,9 @@ def enumSourcesFile(sourcefile, filter=None, categories=False):
 
 def enumSources(path, filter=None, categories=False):
 	try:
-		for filename in os.listdir(path):
+		for filename in listdir(path):
 			if filename.endswith('.sources.xml'):
-				sourcefile = os.path.join(path, filename)
+				sourcefile = join(path, filename)
 				try:
 					for s in enumSourcesFile(sourcefile, filter, categories):
 						yield s
@@ -342,7 +339,7 @@ if __name__ == '__main__':
 		x.append(p.description)
 	storeUserSettings('settings.pkl', [1, "twee"])
 	assert loadUserSettings('settings.pkl') == {"sources": [1, "twee"]}
-	os.remove('settings.pkl')
+	remove('settings.pkl')
 	for p in enumSources(path, x):
 		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
 		assert t in lx

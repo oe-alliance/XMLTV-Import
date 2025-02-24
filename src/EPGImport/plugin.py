@@ -1,5 +1,6 @@
-import os
-import time
+from os import remove
+from os.path import exists
+from time import asctime, localtime, mktime, strftime, strptime, time
 
 from enigma import eConsoleAppContainer, eServiceCenter, eServiceReference, eEPGCache, eTimer, getDesktop
 
@@ -272,7 +273,7 @@ def startImport():
 			EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT + '.backup')
 			epgimport.epgcache.flushEPG()
 		epgimport.onDone = doneImport
-		epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
+		epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time())
 	else:
 		print("[startImport] Already running, won't start again", file=log)
 
@@ -527,7 +528,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 			start, count = lastImportResult
 			try:
 				if isinstance(start, str):
-					start = time.mktime(time.strptime(start, "%Y-%m-%d %H:%M:%S"))
+					start = mktime(strptime(start, "%Y-%m-%d %H:%M:%S"))
 				elif not isinstance(start, (int, float)):
 					raise ValueError("Start value is not a valid timestamp or string")
 
@@ -848,13 +849,13 @@ def doneImport(reboot=False, epgfile=None):
 	BouquetChannelListList = None
 	serviceIgnoreList = None
 	#
-	timestamp = time.time()
-	formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(timestamp))
+	timestamp = time()
+	formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime(timestamp))
 	lastImportResult = (formatted_time, epgimport.eventCount)
-	# lastImportResult = (time.time(), epgimport.eventCount)
+	# lastImportResult = (time(), epgimport.eventCount)
 	try:
 		start, count = lastImportResult
-		localtime = time.asctime(time.localtime(time.time()))
+		localtime = asctime(localtime(time()))
 		lastimport = "%s, %d" % (localtime, count)
 		config.plugins.extra_epgimport.last_import.value = lastimport
 		config.plugins.extra_epgimport.last_import.save()
@@ -922,7 +923,7 @@ def restartEnigma(confirmed):
 			print("Failed to create /tmp/enigmastandby", file=log)
 	else:
 		try:
-			os.remove("/tmp/enigmastandby")
+			remove("/tmp/enigmastandby")
 		except:
 			pass
 	# now reboot
@@ -951,9 +952,9 @@ class AutoStartTimer:
 	def getWakeTime(self):
 		if config.plugins.epgimport.enabled.value:
 			clock = config.plugins.epgimport.wakeup.value
-			nowt = time.time()
-			now = time.localtime(nowt)
-			return int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday, clock[0], clock[1], lastMACbyte() // 5, 0, now.tm_yday, now.tm_isdst)))
+			nowt = time()
+			now = localtime(nowt)
+			return int(mktime((now.tm_year, now.tm_mon, now.tm_mday, clock[0], clock[1], lastMACbyte() // 5, 0, now.tm_yday, now.tm_isdst)))
 		else:
 			return -1
 
@@ -963,9 +964,9 @@ class AutoStartTimer:
 			self.clock = config.plugins.epgimport.wakeup.value
 			self.onceRepeatImport.stop()
 		wake = self.getWakeTime()
-		now_t = time.time()
+		now_t = time()
 		now = int(now_t)
-		now_day = time.localtime(now_t)
+		now_day = localtime(now_t)
 		if wake > 0:
 			cur_day = int(now_day.tm_wday)
 			wakeup_day = WakeupDayOfWeek()
@@ -982,8 +983,8 @@ class AutoStartTimer:
 		else:
 			self.onceRepeatImport.stop()
 			wake = -1
-		now_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(now))
-		wake_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(wake)) if wake > 0 else "Not set"
+		now_str = strftime("%Y-%m-%d %H:%M:%S", localtime(now))
+		wake_str = strftime("%Y-%m-%d %H:%M:%S", localtime(wake)) if wake > 0 else "Not set"
 
 		print("[XMLTVImport] WakeUpTime now set to", wake_str, "(now=%s)" % now_str, file=log)
 		return wake
@@ -1023,7 +1024,7 @@ class AutoStartTimer:
 
 	def onTimer(self):
 		self.timer.stop()
-		now = int(time.time())
+		now = int(time())
 		print("[XMLTVImport] onTimer occured at", now, file=log)
 		wake = self.getWakeTime()
 		# If we're close enough, we're okay...
@@ -1046,9 +1047,9 @@ class AutoStartTimer:
 
 	def getStatus(self):
 		wake_up = self.getWakeTime()
-		now_t = time.time()
+		now_t = time()
 		now = int(now_t)
-		now_day = time.localtime(now_t)
+		now_day = localtime(now_t)
 		if wake_up > 0:
 			cur_day = int(now_day.tm_wday)
 			wakeup_day = WakeupDayOfWeek()
@@ -1066,11 +1067,11 @@ class AutoStartTimer:
 
 	def afterFinishImportCheck(self):
 		if config.plugins.epgimport.deepstandby.value == 'wakeup' and getFPWasTimerWakeup():
-			if os.path.exists("/tmp/enigmastandby") or os.path.exists("/tmp/.EPGImportAnswerBoot"):
+			if exists("/tmp/enigmastandby") or exists("/tmp/.EPGImportAnswerBoot"):
 				print("[XMLTVImport] is restart enigma2", file=log)
 			else:
 				wake = self.getStatus()
-				now_t = time.time()
+				now_t = time()
 				now = int(now_t)
 				if 0 < wake - now <= 60 * 5:
 					if config.plugins.epgimport.standby_afterwakeup.value:
@@ -1120,8 +1121,8 @@ class AutoStartTimer:
 def WakeupDayOfWeek():
 	start_day = -1
 	try:
-		now = time.time()
-		now_day = time.localtime(now)
+		now = time()
+		now_day = localtime(now)
 		cur_day = int(now_day.tm_wday)
 	except:
 		cur_day = -1
@@ -1135,7 +1136,7 @@ def WakeupDayOfWeek():
 def onBootStartCheck():
 	global autoStartTimer
 	print("[XMLTVImport] onBootStartCheck", file=log)
-	now = int(time.time())
+	now = int(time())
 	wake = autoStartTimer.getStatus()
 	print("[XMLTVImport] now=%d wake=%d wake-now=%d" % (now, wake, wake - now), file=log)
 	if (wake < 0) or (wake - now > 600):
@@ -1152,7 +1153,7 @@ def onBootStartCheck():
 			print("[XMLTVImport] is automatic boot", file=log)
 		flag = '/tmp/.EPGImportAnswerBoot'
 		if config.plugins.epgimport.runboot_restart.value and runboot != "3":
-			if os.path.exists(flag):
+			if exists(flag):
 				on_start = False
 				print("[XMLTVImport] not starting import - is restart enigma2", file=log)
 			else:
@@ -1161,7 +1162,7 @@ def onBootStartCheck():
 				except:
 					print("Failed to create /tmp/.EPGImportAnswerBoot", file=log)
 		if config.plugins.epgimport.runboot_day.value:
-			now = time.localtime()
+			now = localtime()
 			cur_day = int(now.tm_wday)
 			if not config.plugins.extra_epgimport.day_import[cur_day].value:
 				on_start = False
@@ -1177,11 +1178,11 @@ def autostart(reason, session=None, **kwargs):
 	"called with reason=1 to during shutdown, with reason=0 at startup?"
 	global autoStartTimer
 	global _session
-	print("[XMLTVImport] autostart (%s) occured at" % reason, time.time(), file=log)
+	print("[XMLTVImport] autostart (%s) occured at" % reason, time(), file=log)
 	if reason == 0 and _session is None:
-		nms = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-		# log.write("[EPGImport] autostart (%s) occured at (%s)" % (reason, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
-		# print("[EPGImport] autostart (%s) occured at" % reason, time.time(), file=log)
+		nms = strftime("%Y-%m-%d %H:%M:%S", localtime(time()))
+		# log.write("[EPGImport] autostart (%s) occured at (%s)" % (reason, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+		# print("[EPGImport] autostart (%s) occured at" % reason, time(), file=log)
 		print("[EPGImport] autostart (%s) occured at" % reason, nms, file=log)
 		if session is not None:
 			_session = session
@@ -1190,12 +1191,12 @@ def autostart(reason, session=None, **kwargs):
 			if config.plugins.epgimport.runboot.value != "4":
 				onBootStartCheck()
 		# If WE caused the reboot, put the box back in standby.
-		if os.path.exists("/tmp/enigmastandby"):
+		if exists("/tmp/enigmastandby"):
 			print("[XMLTVImport] Returning to standby", file=log)
 			if not Screens.Standby.inStandby:
 				Notifications.AddNotification(Screens.Standby.Standby)
 			try:
-				os.remove("/tmp/enigmastandby")
+				remove("/tmp/enigmastandby")
 			except:
 				pass
 	else:
@@ -1278,26 +1279,3 @@ def Plugins(**kwargs):
 	if config.plugins.epgimport.showinplugins.value:
 		result.append(pluginlist)
 	return result
-
-
-class SetupSummary(Screen):
-	def __init__(self, session, parent):
-		Screen.__init__(self, session, parent=parent)
-		self["SetupTitle"] = StaticText(_(parent.setup_title))
-		self["SetupEntry"] = StaticText("")
-		self["SetupValue"] = StaticText("")
-		self.onShow.append(self.addWatcher)
-		self.onHide.append(self.removeWatcher)
-
-	def addWatcher(self):
-		self.parent.onChangedEntry.append(self.selectionChanged)
-		self.parent["list"].onSelectionChanged.append(self.selectionChanged)
-		self.selectionChanged()
-
-	def removeWatcher(self):
-		self.parent.onChangedEntry.remove(self.selectionChanged)
-		self.parent["list"].onSelectionChanged.remove(self.selectionChanged)
-
-	def selectionChanged(self):
-		self["SetupEntry"].text = self.parent.getCurrentEntry()
-		self["SetupValue"].text = self.parent.getCurrentValue()
