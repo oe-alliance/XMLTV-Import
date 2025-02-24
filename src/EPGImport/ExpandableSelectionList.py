@@ -1,6 +1,6 @@
 from Components.MenuList import MenuList
+from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT
 from Tools.Directories import resolveFilename, SCOPE_CURRENT_SKIN
-from enigma import eListboxPythonMultiContent, eListbox, gFont, RT_HALIGN_LEFT
 from Tools.LoadPixmap import LoadPixmap
 
 import skin
@@ -12,20 +12,18 @@ expandedIcon = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "icons/expanded.pn
 def loadSettings():
 	global cat_desc_loc, entry_desc_loc, cat_icon_loc, entry_icon_loc
 	x, y, w, h = skin.parameters.get("EPGImportSelectionListDescr", skin.parameters.get("SelectionListDescr", (25, 3, 650, 30)))
-	ind = x # Indent the entries by the same amount as the icon.
+	ind = x  # Indent the entries by the same amount as the icon.
 	cat_desc_loc = (x, y, w, h)
 	entry_desc_loc = (x + ind, y, w - ind, h)
 	x, y, w, h = skin.parameters.get("EPGImportSelectionListLock", skin.parameters.get("SelectionListLock", (0, 2, 25, 24)))
-	cat_icon_loc = (x, 0, w, y + y + h) # The category icon is larger
+	cat_icon_loc = (x, 0, w, y + y + h)  # The category icon is larger
 	entry_icon_loc = (x + ind, y, w, h)
 
 
 def category(description, isExpanded=False):
 	global cat_desc_loc, cat_icon_loc
-	if isExpanded:
-		icon = expandedIcon
-	else:
-		icon = expandableIcon
+	icon = expandedIcon if isExpanded else expandableIcon
+
 	return [
 		(description, isExpanded, []),
 		(eListboxPythonMultiContent.TYPE_TEXT,) + cat_desc_loc + (0, RT_HALIGN_LEFT, description),
@@ -80,13 +78,13 @@ class ExpandableSelectionList(MenuList):
 
 	def updateFlatList(self):
 		# Update the view of the items by flattening the tree
-		l = []
+		ls = []
 		for cat in self.tree:
-			l.append(cat)
+			ls.append(cat)
 			if isExpanded(cat):
 				for item in cat[0][2]:
-					l.append(entry(*item))
-		self.setList(l)
+					ls.append(entry(*item))
+		self.setList(ls)
 
 	def toggleSelection(self):
 		idx = self.getSelectedIndex()

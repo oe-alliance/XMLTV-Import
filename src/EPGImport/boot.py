@@ -1,8 +1,8 @@
 #!/usr/bin/python
-from __future__ import print_function
-import os
-import time
-import shutil
+from os import listdir, unlink
+from os.path import exists, getctime, join
+from time import time
+from shutil import copy2
 
 MEDIA = ("/media/hdd/", "/media/usb/", "/media/mmc/", "/media/cf/", "/tmp")
 
@@ -11,16 +11,16 @@ def findEpg():
 	candidates = []
 	for path in MEDIA:
 		try:
-			if os.path.exists(path):
-				for fn in os.listdir(path):
+			if exists(path):
+				for fn in listdir(path):
 					if "epg.dat" in fn:
-						ffn = os.path.join(path, fn)
-						candidates.append((os.path.getctime(ffn), ffn))
+						ffn = join(path, fn)
+						candidates.append((getctime(ffn), ffn))
 		except:
-			pass # ignore errors.
+			pass  # ignore errors.
 	if not candidates:
 		return None
-	candidates.sort() # order by ctime...
+	candidates.sort()  # order by ctime...
 	# best candidate is most recent filename.
 	return candidates[-1][1]
 
@@ -28,14 +28,14 @@ def findEpg():
 def checkCrashLog():
 	for path in MEDIA[:-1]:
 		try:
-			dirList = os.listdir(path)
+			dirList = listdir(path)
 			for fname in dirList:
-				if fname[0:13] == 'enigma2_crash':
+				if fname[0:13] == "enigma2_crash":
 					try:
 						crashtime = 0
 						crashtime = int(fname[14:24])
-						howold = time.time() - crashtime
-					except:
+						howold = time() - crashtime
+					except Exception:
 						print("no time found in filename")
 					if howold < 120:
 						print("recent crashfile found analysing")
@@ -45,34 +45,34 @@ def checkCrashLog():
 						if (crashtext.find("FATAL: LINE ") != -1):
 							print("string found, deleting epg.dat")
 							return True
-		except:
+		except Exception:
 			pass
 	return False
 
 
 def findNewEpg():
 	for path in MEDIA:
-		fn = os.path.join(path, 'epg_new.dat')
-		if os.path.exists(fn):
+		fn = join(path, "epg_new.dat")
+		if exists(fn):
 			return fn
 
 
 epg = findEpg()
 newepg = findNewEpg()
 
-print("Epg.dat found at : ", epg)
-print("newepg  found at : ", newepg)
+print(f"Epg.dat found at : {epg}")
+print(f"newepg  found at : {newepg}")
 
-##Delete epg.dat if last crash was because of error in epg.dat
+# Delete epg.dat if last crash was because of error in epg.dat
 if checkCrashLog():
 	try:
-		os.unlink(epg)
+		unlink(epg)
 	except:
 		print("delete error")
 
-##if excists cp epg_new.dat epg.dat
+# if excists cp epg_new.dat epg.dat
 if newepg:
 	if epg:
 		print("replacing epg.dat with newmade version")
-		os.unlink(epg)
-		shutil.copy2(newepg, epg)
+		unlink(epg)
+		copy2(newepg, epg)

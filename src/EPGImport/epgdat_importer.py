@@ -2,7 +2,6 @@ from . import epgdat
 import os
 import sys
 
-import sys
 # Hack to make this test run on Windows (where the reactor cannot handle files)
 if sys.platform.startswith('win'):
 	tmppath = '.'
@@ -29,7 +28,7 @@ class epgdatclass:
 		self.epg = epgdat.epgdat_class(path, settingspath, self.epgfile)
 
 	def importEvents(self, services, dataTupleList):
-		'This method is called repeatedly for each bit of data'
+		'''This method is called repeatedly for each bit of data'''
 		if services != self.services:
 			self.commitService()
 			self.services = services
@@ -56,8 +55,8 @@ class epgdatclass:
 
 	def checkPath(self, path):
 		f = os.popen('mount', "r")
-		for l in f:
-			if l.find(path) != -1:
+		for lx in f.xreadlines():
+			if lx.find(path) != - 1:
 				return True
 		return False
 

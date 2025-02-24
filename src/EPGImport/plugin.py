@@ -1,3 +1,8 @@
+import os
+import time
+
+from enigma import eConsoleAppContainer, eServiceCenter, eServiceReference, eEPGCache, eTimer, getDesktop
+
 # for localized messages
 from . import _
 from . import log
@@ -7,11 +12,6 @@ from . import filtersServices
 from . import EPGImport
 from . import EPGConfig
 
-
-import os
-import time
-
-import enigma
 
 try:
     from Components.SystemInfo import BoxInfo
@@ -23,9 +23,10 @@ except:
 # Config
 from Components.ActionMap import ActionMap
 from Components.Button import Button
-from Components.config import config, configfile, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry, ConfigText, ConfigSelection, ConfigNumber, ConfigSubDict, NoSave
+from Components.config import config, configfile, ConfigDirectory, ConfigEnableDisable, ConfigInteger, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry, ConfigText, ConfigSelection, ConfigNumber, ConfigSubDict, NoSave
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
+from Components.Console import Console
 import Components.PluginComponent
 from Components.ScrollLabel import ScrollLabel
 from Components.Sources.StaticText import StaticText
@@ -33,9 +34,10 @@ from Plugins.Plugin import PluginDescriptor
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
+from Screens.VirtualKeyBoard import VirtualKeyBoard
 import Screens.Standby
 from Tools import Notifications
-from Tools.Directories import fileExists
+from Tools.Directories import fileExists, SCOPE_PLUGINS, resolveFilename, isPluginInstalled
 from Tools.FuzzyDate import FuzzyTime
 try:
 	from Tools.StbHardware import getFPWasTimerWakeup
@@ -63,7 +65,8 @@ def calcDefaultStarttime():
 
 #Set default configuration
 config.plugins.epgimport = ConfigSubsection()
-config.plugins.epgimport.enabled = ConfigEnableDisable(default=False)
+config.plugins.epgimport.enabled = ConfigEnableDisable(default=True)
+config.plugins.epgimport.repeat_import = ConfigInteger(default=0, limits=(0, 23))
 config.plugins.epgimport.runboot = ConfigSelection(default="4", choices=[
 		("1", _("always")),
 		("2", _("only manual boot")),
@@ -72,7 +75,7 @@ config.plugins.epgimport.runboot = ConfigSelection(default="4", choices=[
 		])
 config.plugins.epgimport.runboot_restart = ConfigYesNo(default=False)
 config.plugins.epgimport.runboot_day = ConfigYesNo(default=False)
-config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default=False)
+# config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default=False)
 config.plugins.epgimport.wakeup = ConfigClock(default=calcDefaultStarttime())
 # Different default in OpenATV:
 config.plugins.epgimport.showinplugins = ConfigYesNo(default=IMAGEDISTRO != "openatv")
@@ -81,18 +84,23 @@ config.plugins.epgimport.deepstandby = ConfigSelection(default="skip", choices=[
 		("wakeup", _("wake up and import")),
 		("skip", _("skip the import"))
 		])
+config.plugins.epgimport.pathdb = ConfigDirectory(default='/etc/enigma2/epg.dat')
+config.plugins.epgimport.execute_shell = ConfigYesNo(default=False)
+config.plugins.epgimport.shell_name = ConfigText(default="")
 config.plugins.epgimport.standby_afterwakeup = ConfigYesNo(default=False)
+config.plugins.epgimport.run_after_standby = ConfigYesNo(default=False)
 config.plugins.epgimport.shutdown = ConfigYesNo(default=False)
 config.plugins.epgimport.longDescDays = ConfigNumber(default=5)
-#config.plugins.epgimport.showinmainmenu = ConfigYesNo(default = False)
+# config.plugins.epgimport.showinmainmenu = ConfigYesNo(default=False)
 config.plugins.epgimport.deepstandby_afterimport = NoSave(ConfigYesNo(default=False))
 config.plugins.epgimport.parse_autotimer = ConfigYesNo(default=False)
 config.plugins.epgimport.import_onlybouquet = ConfigYesNo(default=False)
 config.plugins.epgimport.import_onlyiptv = ConfigYesNo(default=False)
 config.plugins.epgimport.clear_oldepg = ConfigYesNo(default=False)
+config.plugins.epgimport.filter_custom_channel = ConfigYesNo(default=True)
 config.plugins.epgimport.day_profile = ConfigSelection(choices=[("1", _("Press OK"))], default="1")
 config.plugins.extra_epgimport = ConfigSubsection()
-config.plugins.extra_epgimport.last_import = ConfigText(default="none")
+config.plugins.extra_epgimport.last_import = ConfigText(default="0")
 config.plugins.extra_epgimport.day_import = ConfigSubDict()
 
 for i in range(7):
@@ -108,6 +116,7 @@ weekdays = [
 	_("Sunday"),
 	]
 
+
 # historically located (not a problem, we want to update it)
 CONFIG_PATH = '/etc/epgimport'
 
@@ -116,44 +125,49 @@ autoStartTimer = None
 _session = None
 BouquetChannelListList = None
 serviceIgnoreList = None
+filterCounter = 0
+isFilterRunning = 0
 
 
 def getAlternatives(service):
 	if not service:
 		return None
-	alternativeServices = enigma.eServiceCenter.getInstance().list(service)
+	alternativeServices = eServiceCenter.getInstance().list(service)
 	return alternativeServices and alternativeServices.getContent("S", True)
 
 
 def getRefNum(ref):
-    ref = ref.split(':')[3:7]
-    try:
-        return int(ref[0], 16) << 48 | int(ref[1], 16) << 32 | int(ref[2], 16) << 16 | int(ref[3], 16) >> 16
-    except:
-        return
+	ref = ref.split(':')[3:7]
+	try:
+		return int(ref[0], 16) << 48 | int(ref[1], 16) << 32 | int(ref[2], 16) << 16 | int(ref[3], 16) >> 16
+	except:
+		return
 
 
 def getBouquetChannelList():
 	channels = []
-	serviceHandler = enigma.eServiceCenter.getInstance()
-	mask = (enigma.eServiceReference.isMarker | enigma.eServiceReference.isDirectory)
-	altrernative = enigma.eServiceReference.isGroup
+	global isFilterRunning, filterCounter
+	isFilterRunning = 1
+	serviceHandler = eServiceCenter.getInstance()
+	mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
+	altrernative = eServiceReference.isGroup
 	if config.usage.multibouquet.value:
 		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.tv" ORDER BY bouquet'
-		bouquet_root = enigma.eServiceReference(bouquet_rootstr)
+		bouquet_root = eServiceReference(bouquet_rootstr)
 		list = serviceHandler.list(bouquet_root)
 		if list:
 			while True:
 				s = list.getNext()
 				if not s.valid():
 					break
-				if s.flags & enigma.eServiceReference.isDirectory:
+				if s.flags & eServiceReference.isDirectory:
 					info = serviceHandler.info(s)
 					if info:
 						clist = serviceHandler.list(s)
 						if clist:
 							while True:
 								service = clist.getNext()
+								filterCounter += 1
 								if not service.valid():
 									break
 								if not (service.flags & mask):
@@ -170,11 +184,12 @@ def getBouquetChannelList():
 											channels.append(refnum)
 	else:
 		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'
-		bouquet_root = enigma.eServiceReference(bouquet_rootstr)
+		bouquet_root = eServiceReference(bouquet_rootstr)
 		services = serviceHandler.list(bouquet_root)
-		if not services is None:
+		if services is not None:
 			while True:
 				service = services.getNext()
+				filterCounter += 1
 				if not service.valid():
 					break
 				if not (service.flags & mask):
@@ -189,6 +204,7 @@ def getBouquetChannelList():
 						refnum = getRefNum(service.toString())
 						if refnum and refnum not in channels:
 							channels.append(refnum)
+	isFilterRunning = 0
 	return channels
 
 # Filter servicerefs that this box can display by starting a fake recording.
@@ -200,7 +216,7 @@ def channelFilter(ref):
 	# ignore non IPTV
 	if config.plugins.epgimport.import_onlyiptv.value and ("%3a//" not in ref.lower() or ref.startswith("1")):
 		return False
-	sref = enigma.eServiceReference(ref)
+	sref = eServiceReference(ref)
 	refnum = getRefNum(sref.toString())
 	if config.plugins.epgimport.import_onlybouquet.value:
 		global BouquetChannelListList
@@ -223,37 +239,47 @@ def channelFilter(ref):
 		fakeRecResult = fakeRecService.start(True)
 		NavigationInstance.instance.stopRecordService(fakeRecService)
 		# -7 (errNoSourceFound) occurs when tuner is disconnected.
-		r = fakeRecResult in (0, -7)
-		#if not r:
-		#	print>>log, "Rejected (%d): %s" % (fakeRecResult, ref)
-		return r
+		# r = fakeRecResult in (0, -7)
+		return fakeRecResult in (0, -5, -7)
+		# return r
 	print("Invalid serviceref string:", ref, file=log)
 	return False
 
 
-epgimport = EPGImport.EPGImport(enigma.eEPGCache.getInstance(), channelFilter)
+try:
+    epgcache_instance = eEPGCache.getInstance()
+    if not epgcache_instance:
+        print("[EPGImport] Failed to get valid EPGCache instance.", file=log)
+    else:
+        print("[EPGImport] EPGCache instance obtained successfully.", file=log)
+    epgimport = EPGImport.EPGImport(epgcache_instance, channelFilter)
+except Exception as e:
+    print("[EPGImport] Error obtaining EPGCache instance: %s" % e, file=log)
 
+# epgimport = EPGImport.EPGImport(eEPGCache.getInstance(), channelFilter)
 lastImportResult = None
 
 
 def startImport():
-	EPGImport.HDD_EPG_DAT = config.misc.epgcache_filename.value
-	if config.plugins.epgimport.clear_oldepg.value and hasattr(epgimport.epgcache, 'flushEPG'):
-		EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT)
-		EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT + '.backup')
-		epgimport.epgcache.flushEPG()
-	epgimport.onDone = doneImport
-	epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
+	if not epgimport.isImportRunning():
+		EPGImport.HDD_EPG_DAT = config.misc.epgcache_filename.value
+		if config.plugins.epgimport.filter_custom_channel.value:
+			EPGConfig.filterCustomChannel = True
+		else:
+			EPGConfig.filterCustomChannel = False
+		if config.plugins.epgimport.clear_oldepg.value and hasattr(epgimport.epgcache, 'flushEPG'):
+			EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT)
+			EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT + '.backup')
+			epgimport.epgcache.flushEPG()
+		epgimport.onDone = doneImport
+		epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time.time())
+	else:
+		print("[startImport] Already running, won't start again", file=log)
 
 
 ##################################
 # Configuration GUI
-HD = False
-try:
-	if enigma.getDesktop(0).size().width() >= 1280:
-		HD = True
-except:
-	pass
+HD = True if getDesktop(0).size().width() >= 1280 else False
 
 
 class EPGImportConfig(ConfigListScreen, Screen):
@@ -300,13 +326,12 @@ class EPGImportConfig(ConfigListScreen, Screen):
 				<widget name="status" position="10,330" size="580,60" font="Regular;20" />
 			</screen>"""
 
-	def __init__(self, session, args=0):
-		self.session = session
+	def __init__(self, session):
 		self.skin = EPGImportConfig.skin
 		self.setup_title = _("EPG Import Configuration")
 		Screen.__init__(self, session)
 		self["status"] = Label()
-		self["statusbar"] = Label()
+		self["statusbar"] = Label(_("Last import: %s events") % config.plugins.extra_epgimport.last_import.value)
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("Save"))
 		self["key_yellow"] = Button(_("Manual"))
@@ -322,20 +347,22 @@ class EPGImportConfig(ConfigListScreen, Screen):
 			"log": self.keyInfo,
 			"contextMenu": self.openMenu,
 		}, -1)
-		ConfigListScreen.__init__(self, [], session=self.session)
 		self.lastImportResult = None
+		list = []
 		self.onChangedEntry = []
+		ConfigListScreen.__init__(self, list, session=self.session, on_change=self.changedEntry)
 		self.prev_onlybouquet = config.plugins.epgimport.import_onlybouquet.value
 		self.initConfig()
 		self.createSetup()
-		self.importStatusTemplate = _("Importing: %s\n%s events")
-		self.updateTimer = enigma.eTimer()
+		self.filterStatusTemplate = _("Filtering:\n%s Please wait!")
+		self.importStatusTemplate = _("Importing:\n%s %s events")
+		self.updateTimer = eTimer()
 		self.updateTimer.callback.append(self.updateStatus)
 		self.updateTimer.start(2000)
 		self.updateStatus()
+		self.onLayoutFinish.append(self.createSummary)
 		self.onLayoutFinish.append(self.__layoutFinished)
 
-	# for summary:
 	def changedEntry(self):
 		for x in self.onChangedEntry:
 			x()
@@ -354,6 +381,8 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		self.setTitle(self.setup_title)
 
 	def initConfig(self):
+		dx = 4 * " "
+
 		def getPrevValues(section):
 			res = {}
 			for (key, val) in section.content.items.items():
@@ -362,25 +391,31 @@ class EPGImportConfig(ConfigListScreen, Screen):
 				else:
 					res[key] = val.value
 			return res
+
 		self.EPG = config.plugins.epgimport
 		self.prev_values = getPrevValues(self.EPG)
-		self.cfg_enabled = getConfigListEntry(_("Automatic import EPG"), self.EPG.enabled)
-		self.cfg_wakeup = getConfigListEntry(_("Automatic start time"), self.EPG.wakeup)
-		self.cfg_deepstandby = getConfigListEntry(_("When in deep standby"), self.EPG.deepstandby)
-		self.cfg_shutdown = getConfigListEntry(_("Return to deep standby after import"), self.EPG.shutdown)
-		self.cfg_standby_afterwakeup = getConfigListEntry(_("Standby at startup"), self.EPG.standby_afterwakeup)
-		self.cfg_day_profile = getConfigListEntry(_("Choice days for start import"), self.EPG.day_profile)
-		self.cfg_runboot = getConfigListEntry(_("Start import after booting up"), self.EPG.runboot)
-		self.cfg_import_onlybouquet = getConfigListEntry(_("Load EPG only services in bouquets"), self.EPG.import_onlybouquet)
-		self.cfg_import_onlyiptv = getConfigListEntry(_("Load EPG only for IPTV channels"), self.EPG.import_onlyiptv)
-		self.cfg_runboot_day = getConfigListEntry(_("Consider setting \"Days Profile\""), self.EPG.runboot_day)
-		self.cfg_runboot_restart = getConfigListEntry(_("Skip import on restart GUI"), self.EPG.runboot_restart)
-		self.cfg_showinextensions = getConfigListEntry(_("Show \"EPGImport\" in extensions"), self.EPG.showinextensions)
-		self.cfg_showinplugins = getConfigListEntry(_("Show \"EPGImport\" in plugins"), self.EPG.showinplugins)
-#		self.cfg_showinmainmenu = getConfigListEntry(_("Show \"EPG Importer\" in main menu"), self.EPG.showinmainmenu)
-		self.cfg_longDescDays = getConfigListEntry(_("Load long descriptions up to X days"), self.EPG.longDescDays)
-		self.cfg_parse_autotimer = getConfigListEntry(_("Run AutoTimer after import"), self.EPG.parse_autotimer)
-		self.cfg_clear_oldepg = getConfigListEntry(_("Delete current EPG before import"), config.plugins.epgimport.clear_oldepg)
+		self.cfg_enabled = getConfigListEntry(_("Automatic import EPG"), self.EPG.enabled, _("When enabled, it allows you to schedule an automatic EPG update at the given days and time."))
+		self.cfg_wakeup = getConfigListEntry(dx + _("Automatic start time"), self.EPG.wakeup, _("Specify the time for the automatic EPG update."))
+		self.cfg_deepstandby = getConfigListEntry(dx + _("When in deep standby"), self.EPG.deepstandby, _("Choose the action to perform when the box is in deep standby and the automatic EPG update should normally start."))
+		self.cfg_shutdown = getConfigListEntry(dx + _("Return to deep standby after import"), self.EPG.shutdown, _("This will turn back waked up box into deep-standby after automatic EPG import."))
+		self.cfg_standby_afterwakeup = getConfigListEntry(dx + _("Standby at startup"), self.EPG.standby_afterwakeup, _("The waked up box will be turned into standby after automatic EPG import wake up."))
+		self.cfg_day_profile = getConfigListEntry(_("Choice days for start import"), self.EPG.day_profile, _("You can select the day(s) when the EPG update must be performed."))
+		self.cfg_runboot = getConfigListEntry(_("Start import after booting up"), self.EPG.runboot, _("Specify in which case the EPG must be automatically updated after the box has booted."))
+		self.cfg_import_onlybouquet = getConfigListEntry(dx + _("Load EPG only services in bouquets"), self.EPG.import_onlybouquet, _("To save memory you can decide to only load EPG data for the services that you have in your bouquet files."))
+		self.cfg_import_onlyiptv = getConfigListEntry(_("Load EPG only for IPTV channels"), self.EPG.import_onlyiptv, _("Specify in this case the EPG should be imported only for iptv lists."))
+		self.cfg_runboot_day = getConfigListEntry(dx + _("Consider setting \"Days Profile\""), self.EPG.runboot_day, _("When you decide to import the EPG after the box booted mention if the \"days profile\" must be take into consideration or not."))
+		self.cfg_runboot_restart = getConfigListEntry(dx + _("Skip import on restart GUI"), self.EPG.runboot_restart, _("When you restart the GUI you can decide to skip or not the EPG data import."))
+		self.cfg_showinextensions = getConfigListEntry(_("Show \"EPG import now\" in extensions"), self.EPG.showinextensions, _("Display a shortcut \"EPG import now\" in the extension menu. This menu entry will immediately start the EPG update process when selected."))
+		self.cfg_showinplugins = getConfigListEntry(_("Show \"EPGImport\" in plugins"), self.EPG.showinplugins, _("Display a shortcut \"EPG import\" in the browser plugin.."))
+		# self.cfg_showinmainmenu = getConfigListEntry(_("Show \"EPG import\" in epg menu"), self.EPG.showinmainmenu, _("Display a shortcut \"EPG import\" in your STB epg menu screen. This allows you to access the configuration."))
+		self.cfg_longDescDays = getConfigListEntry(_("Load long descriptions up to X days"), self.EPG.longDescDays, _("Define the number of days that you want to get the full EPG data, reducing this number can help you to save memory usage on your box. But you are also limited with the EPG provider available data. You will not have 15 days EPG if it only provide 7 days data."))
+		self.cfg_parse_autotimer = getConfigListEntry(_("Run AutoTimer after import"), self.EPG.parse_autotimer, _("You can start automatically the plugin AutoTimer after the EPG data update to have it refreshing its scheduling after EPG data refresh."))
+		self.cfg_clear_oldepg = getConfigListEntry(_("Clearing current EPG before import"), config.plugins.epgimport.clear_oldepg, _("This will clear the current EPG data in memory before updating the EPG data. This allows you to always have a clean new EPG with the latest EPG data, for example in case of program changes between refresh, otherwise EPG data are cumulative."))
+		self.cfg_filter_custom_channel = getConfigListEntry(_("Also apply \"channel id\" filtering on custom.channels.xml"), self.EPG.filter_custom_channel, _("This is for advanced users that are using the channel id filtering feature. If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."))
+		self.cfg_execute_shell = getConfigListEntry(_("Execute shell command before import EPG"), self.EPG.execute_shell, _("When enabled, then you can run the desired script before starting the import, after which the import of the EPG will begin."))
+		self.cfg_shell_name = getConfigListEntry(dx + _("Shell command name"), self.EPG.shell_name, _("Enter shell command name."))
+		self.cfg_run_after_standby = getConfigListEntry(_("Start import after standby"), self.EPG.run_after_standby, _("Start import after resuming from standby mode."))
+		self.cfg_repeat_import = getConfigListEntry(dx + _("Hours after which the import is repeated"), self.EPG.repeat_import, _("Number of hours (1-23, or 0 for no repeat) after which the import is repeated. This value is not saved and will be reset when the GUI restarts."))
 
 	def createSetup(self):
 		list = [self.cfg_enabled]
@@ -391,25 +426,33 @@ class EPGImportConfig(ConfigListScreen, Screen):
 				list.append(self.cfg_shutdown)
 				if not self.EPG.shutdown.value:
 					list.append(self.cfg_standby_afterwakeup)
+					list.append(self.cfg_repeat_import)
+			else:
+				list.append(self.cfg_repeat_import)
 		list.append(self.cfg_day_profile)
 		list.append(self.cfg_runboot)
 		if self.EPG.runboot.value != "4":
 			list.append(self.cfg_runboot_day)
 			if self.EPG.runboot.value == "1" or self.EPG.runboot.value == "2":
 				list.append(self.cfg_runboot_restart)
-		list.append(self.cfg_showinextensions)
-		list.append(self.cfg_showinplugins)
+		list.append(self.cfg_run_after_standby)
 		list.append(self.cfg_import_onlybouquet)
 		list.append(self.cfg_import_onlyiptv)
-		if hasattr(enigma.eEPGCache, 'flushEPG'):
+		if hasattr(eEPGCache, 'flushEPG'):
 			list.append(self.cfg_clear_oldepg)
+		list.append(self.cfg_filter_custom_channel)
 		list.append(self.cfg_longDescDays)
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py"):
+		list.append(self.cfg_execute_shell)
+		if self.EPG.execute_shell.value:
+			list.append(self.cfg_shell_name)
+		if fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/plugin.pyo")) or fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/plugin.pyc")):
 			try:
-				from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
+				# from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
 				list.append(self.cfg_parse_autotimer)
 			except:
 				print("[XMLTVImport] AutoTimer Plugin not installed", file=log)
+		list.append(self.cfg_showinextensions)
+		list.append(self.cfg_showinplugins)
 		self["config"].list = list
 		self["config"].l.setList(list)
 
@@ -419,6 +462,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 			self.createSetup()
 
 	def keyRed(self):
+
 		def setPrevValues(section, values):
 			for (key, val) in section.content.items.items():
 				value = values.get(key, None)
@@ -432,14 +476,25 @@ class EPGImportConfig(ConfigListScreen, Screen):
 
 	def keyGreen(self):
 		self.updateTimer.stop()
-		if not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py") and self.EPG.parse_autotimer.value:
+		if self.EPG.parse_autotimer.value and (not fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/plugin.pyo")) or not fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/plugin.pyc"))):
 			self.EPG.parse_autotimer.value = False
+		if self.EPG.deepstandby.value == "skip" and self.EPG.shutdown.value:
+			self.EPG.shutdown.value = False
 		if self.EPG.shutdown.value:
 			self.EPG.standby_afterwakeup.value = False
-		self.EPG.save()
+			self.EPG.repeat_import.value = 0
 		if self.prev_onlybouquet != config.plugins.epgimport.import_onlybouquet.value or (autoStartTimer is not None and autoStartTimer.prev_multibouquet != config.usage.multibouquet.value):
 			EPGConfig.channelCache = {}
-		self.close(True, self.session)
+		self.save()
+
+	def save(self):
+		if self["config"].isChanged():
+			for x in self["config"].list:
+				x[1].save()
+			configfile.save()
+			self.EPG.save()
+			self.session.open(MessageBox, _("Settings saved successfully !"), MessageBox.TYPE_INFO, timeout=5)
+		self.close(True)
 
 	def keyLeft(self):
 		ConfigListScreen.keyLeft(self)
@@ -451,29 +506,46 @@ class EPGImportConfig(ConfigListScreen, Screen):
 
 	def keyOk(self):
 		ConfigListScreen.keyOK(self)
-		sel = self["config"].getCurrent()[1]
+		sel = self["config"].getCurrent() and self["config"].getCurrent()[1]
 		if sel and sel == self.EPG.day_profile:
 			self.session.open(EPGImportProfile)
+		elif sel == self.EPG.shell_name:
+			self.session.openWithCallback(self.textEditCallback, VirtualKeyBoard, text=self.EPG.shell_name.value)
+		else:
+			return
 
 	def updateStatus(self):
 		text = ""
-		if epgimport.isImportRunning():
+		global isFilterRunning, filterCounter
+		if isFilterRunning == 1:
+			text = self.filterStatusTemplate % (str(filterCounter))
+		elif epgimport.isImportRunning():
 			src = epgimport.source
 			text = self.importStatusTemplate % (src.description, epgimport.eventCount)
 		self["status"].setText(text)
 		if lastImportResult and (lastImportResult != self.lastImportResult):
 			start, count = lastImportResult
 			try:
-				d, t = FuzzyTime(start, inPast=True)
-			except:
-				# Not all images have inPast
-				d, t = FuzzyTime(start)
+				if isinstance(start, str):
+					start = time.mktime(time.strptime(start, "%Y-%m-%d %H:%M:%S"))
+				elif not isinstance(start, (int, float)):
+					raise ValueError("Start value is not a valid timestamp or string")
+
+				# Chiama FuzzyTime con il timestamp corretto
+				d, t = FuzzyTime(int(start), inPast=True)
+			except Exception as e:
+				print("[EPGImport] Errore con FuzzyTime:", e)
+				try:
+					d, t = FuzzyTime(int(start))
+				except Exception as e:
+					print("[EPGImport] Fallito anche il fallback con FuzzyTime:", e)
+					d, t = _("unknown"), _("unknown")
 			self["statusbar"].setText(_("Last: %s %s, %d events") % (d, t, count))
 			self.lastImportResult = lastImportResult
 
 	def keyInfo(self):
 		last_import = config.plugins.extra_epgimport.last_import.value
-		self.session.open(MessageBox, _("Last import: %s events") % (last_import), type=MessageBox.TYPE_INFO)
+		self.session.open(MessageBox, _("Last import: %s events") % last_import, type=MessageBox.TYPE_INFO)
 
 	def doimport(self, one_source=None):
 		if epgimport.isImportRunning():
@@ -487,10 +559,10 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		else:
 			cfg = one_source
 		sources = [s for s in EPGConfig.enumSources(CONFIG_PATH, filter=cfg["sources"])]
+		EPGImport.ServerStatusList = {}
 		if not sources:
 			self.session.open(MessageBox, _("No active EPG sources found, nothing to do"), MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 			return
-		# make it a stack, first on top.
 		sources.reverse()
 		epgimport.sources = sources
 		self.session.openWithCallback(self.do_import_callback, MessageBox, _("EPGImport\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?"), MessageBox.TYPE_YESNO, timeout=15, default=True)
@@ -499,11 +571,17 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		if not confirmed:
 			return
 		try:
-			startImport()
+			if config.plugins.epgimport.execute_shell.value and config.plugins.epgimport.shell_name.value:
+				Console().eBatch([config.plugins.epgimport.shell_name.value], self.executeShellEnd, debug=True)
+			else:
+				startImport()
 		except Exception as e:
 			print("[XMLTVImport] Error at start:", e, file=log)
 			self.session.open(MessageBox, _("EPGImport Plugin\nFailed to start:\n") + str(e), MessageBox.TYPE_ERROR, timeout=15, close_on_any_key=True)
 		self.updateStatus()
+
+	def executeShellEnd(self, *args, **kwargs):
+		startImport()
 
 	def dosources(self):
 		self.session.openWithCallback(self.sourcesDone, EPGImportSources)
@@ -550,10 +628,10 @@ class EPGImportSources(Screen):
 		</screen>"""
 
 	def __init__(self, session):
-		self.session = session
 		Screen.__init__(self, session)
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("Save"))
+		self["key_yellow"] = Button(_('Import'))
 		self["key_blue"] = Button()
 		cfg = EPGConfig.loadUserSettings()
 		filter = cfg["sources"]
@@ -575,9 +653,9 @@ class EPGImportSources(Screen):
 				tree.append(cat)
 		self["list"] = ExpandableSelectionList.ExpandableSelectionList(tree, enableWrapAround=True)
 		if tree:
-			self["key_yellow"] = Button(_("Import current source"))
+			self["key_yellow"].show()
 		else:
-			self["key_yellow"] = Button()
+			self["key_yellow"].hide()
 		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],
 		{
 			"red": self.cancel,
@@ -590,7 +668,7 @@ class EPGImportSources(Screen):
 		self.setTitle(_("EPG Import Sources"))
 
 	def save(self):
-		# Make the entries unique through a set
+		''' Make the entries unique through a set '''
 		sources = list(set([item[1] for item in self["list"].enumSelected()]))
 		print("[XMLTVImport] Selected sources:", sources, file=log)
 		EPGConfig.storeUserSettings(sources=sources)
@@ -625,9 +703,9 @@ class EPGImportProfile(ConfigListScreen, Screen):
 			<ePixmap name="green"  position="140,190" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
 		</screen>"""
 
-	def __init__(self, session, args=0):
-		self.session = session
+	def __init__(self, session):
 		Screen.__init__(self, session)
+		self.setTitle(_("Days Profile"))
 		self.list = []
 		for i in range(7):
 			self.list.append(getConfigListEntry(weekdays[i], config.plugins.extra_epgimport.day_import[i]))
@@ -648,18 +726,20 @@ class EPGImportProfile(ConfigListScreen, Screen):
 		self.setTitle(_("Days Profile"))
 
 	def save(self):
-		if not config.plugins.extra_epgimport.day_import[0].value:
-			if not config.plugins.extra_epgimport.day_import[1].value:
-				if not config.plugins.extra_epgimport.day_import[2].value:
-					if not config.plugins.extra_epgimport.day_import[3].value:
-						if not config.plugins.extra_epgimport.day_import[4].value:
-							if not config.plugins.extra_epgimport.day_import[5].value:
-								if not config.plugins.extra_epgimport.day_import[6].value:
-									self.session.open(MessageBox, _("You may not use this settings!\nAt least one day a week should be included!"), MessageBox.TYPE_INFO, timeout=6)
-									return
-		for x in self["config"].list:
-			x[1].save()
-		self.close()
+		if all(not config.plugins.extra_epgimport.day_import[i].value for i in range(7)):
+			self.session.open(
+				MessageBox,
+				_("You may not use this settings!\nAt least one day a week should be included!"),
+				MessageBox.TYPE_INFO,
+				timeout=6
+			)
+			return
+		ConfigListScreen.keySave(self)
+		"""
+		# for x in self["config"].list:
+			# x[1].save()
+		# self.close()
+		"""
 
 	def cancel(self):
 		for x in self["config"].list:
@@ -688,11 +768,12 @@ class EPGImportLog(Screen):
 	def __init__(self, session):
 		self.session = session
 		Screen.__init__(self, session)
+		self.log = log
 		self["key_red"] = Button(_("Clear"))
 		self["key_green"] = Button()
 		self["key_yellow"] = Button()
 		self["key_blue"] = Button(_("Save"))
-		self["list"] = ScrollLabel(log.getvalue())
+		self["list"] = ScrollLabel(self.log.getvalue())
 		self["actions"] = ActionMap(["DirectionActions", "OkCancelActions", "ColorActions", "MenuActions"],
 		{
 			"red": self.clear,
@@ -717,10 +798,9 @@ class EPGImportLog(Screen):
 
 	def save(self):
 		try:
-			f = open('/tmp/epgimport.log', 'w')
-			f.write(log.getvalue())
+			with open('/tmp/epgimport.log', 'w') as f:
+				f.write(self.log.getvalue())
 			self.session.open(MessageBox, _("Write to /tmp/epgimport.log"), MessageBox.TYPE_INFO, timeout=5, close_on_any_key=True)
-			f.close()
 		except Exception as e:
 			self["list"].setText("Failed to write /tmp/epgimport.log:str" + str(e))
 		self.close(True)
@@ -729,6 +809,8 @@ class EPGImportLog(Screen):
 		self.close(False)
 
 	def clear(self):
+		self.log.logfile.write("")
+		self.log.logfile.truncate()
 		self.close(False)
 
 
@@ -753,24 +835,23 @@ def start_import(session, **kwargs):
 def main(session, **kwargs):
 	session.openWithCallback(doneConfiguring, EPGImportConfig)
 
-#def main_menu(menuid, **kwargs):
-#	if menuid == "mainmenu" and config.plugins.epgimport.showinmainmenu.getValue():
-#		return [(_("EPG Importer"), start_import, "epgimporter", 45)]
-#	else:
-#		return []
 
-
-def doneConfiguring(session, retval):
+def doneConfiguring(session, retval=False):
 	"user has closed configuration, check new values...."
-	if autoStartTimer is not None:
-		autoStartTimer.update()
+	if retval is True:
+		if autoStartTimer is not None:
+			autoStartTimer.update(clock=True)
 
 
 def doneImport(reboot=False, epgfile=None):
 	global _session, lastImportResult, BouquetChannelListList, serviceIgnoreList
 	BouquetChannelListList = None
 	serviceIgnoreList = None
-	lastImportResult = (time.time(), epgimport.eventCount)
+	#
+	timestamp = time.time()
+	formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(timestamp))
+	lastImportResult = (formatted_time, epgimport.eventCount)
+	# lastImportResult = (time.time(), epgimport.eventCount)
 	try:
 		start, count = lastImportResult
 		localtime = time.asctime(time.localtime(time.time()))
@@ -789,7 +870,7 @@ def doneImport(reboot=False, epgfile=None):
 			_session.openWithCallback(restartEnigma, MessageBox, msg, MessageBox.TYPE_YESNO, timeout=15, default=True)
 			print("[XMLTVImport] Need restart enigma2", file=log)
 	else:
-		if config.plugins.epgimport.parse_autotimer.value and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py"):
+		if config.plugins.epgimport.parse_autotimer.value and isPluginInstalled("AutoTimer"):
 			try:
 				from Plugins.Extensions.AutoTimer.plugin import autotimer
 				if autotimer is None:
@@ -809,13 +890,14 @@ def doneImport(reboot=False, epgfile=None):
 class checkDeepstandby:
 	def __init__(self, session, parse=False):
 		self.session = session
-		if parse:
-			self.FirstwaitCheck = enigma.eTimer()
-			self.FirstwaitCheck.callback.append(self.runCheckDeepstandby)
-			self.FirstwaitCheck.startLongTimer(600)
-			print("[XMLTVImport] Wait for parse autotimers 30 sec.", file=log)
-		else:
-			self.runCheckDeepstandby()
+		if config.plugins.epgimport.enabled.value:
+			if parse:
+				self.FirstwaitCheck = eTimer()
+				self.FirstwaitCheck.callback.append(self.runCheckDeepstandby)
+				self.FirstwaitCheck.startLongTimer(600)
+				print("[XMLTVImport] Wait for parse autotimers 600 sec.", file=log)
+			else:
+				self.runCheckDeepstandby()
 
 	def runCheckDeepstandby(self):
 		print("[XMLTVImport] Run check deep standby after import", file=log)
@@ -847,7 +929,6 @@ def restartEnigma(confirmed):
 	_session.open(Screens.Standby.TryQuitMainloop, 3)
 
 
-##################################
 # Autostart section
 
 class AutoStartTimer:
@@ -855,11 +936,16 @@ class AutoStartTimer:
 		self.session = session
 		self.prev_onlybouquet = config.plugins.epgimport.import_onlybouquet.value
 		self.prev_multibouquet = config.usage.multibouquet.value
-		self.timer = enigma.eTimer()
+		self.clock = config.plugins.epgimport.wakeup.value
+		self.timer = eTimer()
 		self.timer.callback.append(self.onTimer)
-		self.pauseAfterFinishImportCheck = enigma.eTimer()
+		self.onceRepeatImport = eTimer()
+		self.onceRepeatImport.callback.append(self.runImport)
+		self.pauseAfterFinishImportCheck = eTimer()
 		self.pauseAfterFinishImportCheck.callback.append(self.afterFinishImportCheck)
 		self.pauseAfterFinishImportCheck.startLongTimer(30)
+		self.container = None
+		config.misc.standbyCounter.addNotifier(self.standbyCounterChangedRunImport)
 		self.update()
 
 	def getWakeTime(self):
@@ -871,8 +957,11 @@ class AutoStartTimer:
 		else:
 			return -1
 
-	def update(self, atLeast=0):
+	def update(self, atLeast=0, clock=False):
 		self.timer.stop()
+		if clock and self.clock != config.plugins.epgimport.wakeup.value:
+			self.clock = config.plugins.epgimport.wakeup.value
+			self.onceRepeatImport.stop()
 		wake = self.getWakeTime()
 		now_t = time.time()
 		now = int(now_t)
@@ -881,8 +970,8 @@ class AutoStartTimer:
 			cur_day = int(now_day.tm_wday)
 			wakeup_day = WakeupDayOfWeek()
 			if wakeup_day == -1:
-				return -1
 				print("[XMLTVImport] wakeup day of week disabled", file=log)
+				return -1
 			if wake < now + atLeast:
 				wake += 86400 * wakeup_day
 			else:
@@ -891,8 +980,12 @@ class AutoStartTimer:
 			next = wake - now
 			self.timer.startLongTimer(next)
 		else:
+			self.onceRepeatImport.stop()
 			wake = -1
-		print("[XMLTVImport] WakeUpTime now set to", wake, "(now=%s)" % now, file=log)
+		now_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(now))
+		wake_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(wake)) if wake > 0 else "Not set"
+
+		print("[XMLTVImport] WakeUpTime now set to", wake_str, "(now=%s)" % now_str, file=log)
 		return wake
 
 	def runImport(self):
@@ -905,6 +998,27 @@ class AutoStartTimer:
 		if sources:
 			sources.reverse()
 			epgimport.sources = sources
+			if config.plugins.epgimport.execute_shell.value and config.plugins.epgimport.shell_name.value:
+				if self.container:
+					del self.container
+				self.container = eConsoleAppContainer()
+				self.container.appClosed.append(self.executeShellEnd)
+				if self.container.execute(config.plugins.epgimport.shell_name.value):
+					self.executeShellEnd(-1)
+			else:
+				startImport()
+		else:
+			self.session.open(MessageBox, _("No source file found !"), MessageBox.TYPE_INFO, timeout=5)
+
+	def executeShellEnd(self, retval):
+		if retval:
+			if self.container:
+				try:
+					self.container.appClosed.remove(self.executeShellEnd)
+				except:
+					self.container.appClosed_conn = None
+				self.container.kill()
+				self.container = None
 			startImport()
 
 	def onTimer(self):
@@ -916,6 +1030,10 @@ class AutoStartTimer:
 		atLeast = 0
 		if wake - now < 60:
 			self.runImport()
+			repeat_time = config.plugins.epgimport.repeat_import.value
+			if repeat_time:
+				self.onceRepeatImport.startLongTimer(repeat_time * 3600)
+				print("[EPGImport] start once repeat timer, wait in nours -", repeat_time, file=log)
 			atLeast = 60
 		self.update(atLeast)
 
@@ -935,8 +1053,8 @@ class AutoStartTimer:
 			cur_day = int(now_day.tm_wday)
 			wakeup_day = WakeupDayOfWeek()
 			if wakeup_day == -1:
-				return -1
 				print("[XMLTVImport] wakeup day of week disabled", file=log)
+				return -1
 			if wake_up < now:
 				wake_up += 86400 * wakeup_day
 			else:
@@ -966,18 +1084,32 @@ class AutoStartTimer:
 								print("[XMLTVImport] Run to standby after wake up for checking", file=log)
 						if not config.plugins.epgimport.deepstandby_afterimport.value:
 							config.plugins.epgimport.deepstandby_afterimport.value = True
-							self.wait_timer = enigma.eTimer()
+							self.wait_timer = eTimer()
 							self.wait_timer.timeout.get().append(self.startStandby)
 							print("[XMLTVImport] start wait_timer (10sec) for goto standby", file=log)
 							self.wait_timer.start(10000, True)
+
+	def afterStandbyRunImport(self):
+		if config.plugins.epgimport.run_after_standby.value:
+			print("[EPGImport] start import after standby", file=log)
+			self.runImport()
+
+	def standbyCounterChangedRunImport(self, configElement):
+		if Screens.Standby.inStandby:
+			try:
+				if self.afterStandbyRunImport not in Screens.Standby.inStandby.onClose:
+					Screens.Standby.inStandby.onClose.append(self.afterStandbyRunImport)
+			except:
+				print("[EPGImport] error inStandby.onClose append afterStandbyRunImport", file=log)
 
 	def startStandby(self):
 		if Screens.Standby.inStandby:
 			print("[XMLTVImport] add checking standby", file=log)
 			try:
-				Screens.Standby.inStandby.onClose.append(self.onLeaveStandby)
+				if self.onLeaveStandbyFinishImportCheck not in Screens.Standby.inStandby.onClose:
+					Screens.Standby.inStandby.onClose.append(self.onLeaveStandbyFinishImportCheck)
 			except:
-				pass
+				print("[EPGImport] error inStandby.onClose append .onLeaveStandbyFinishImportCheck")
 
 	def onLeaveStandby(self):
 		if config.plugins.epgimport.deepstandby_afterimport.value:
@@ -1007,18 +1139,19 @@ def onBootStartCheck():
 	wake = autoStartTimer.getStatus()
 	print("[XMLTVImport] now=%d wake=%d wake-now=%d" % (now, wake, wake - now), file=log)
 	if (wake < 0) or (wake - now > 600):
+		runboot = config.plugins.epgimport.runboot.value
 		on_start = False
-		if config.plugins.epgimport.runboot.value == "1":
+		if runboot == "1":
 			on_start = True
 			print("[XMLTVImport] is boot", file=log)
-		elif config.plugins.epgimport.runboot.value == "2" and not getFPWasTimerWakeup():
+		elif runboot == "2" and not getFPWasTimerWakeup():
 			on_start = True
 			print("[XMLTVImport] is manual boot", file=log)
-		elif config.plugins.epgimport.runboot.value == "3" and getFPWasTimerWakeup():
+		elif runboot == "3" and getFPWasTimerWakeup():
 			on_start = True
 			print("[XMLTVImport] is automatic boot", file=log)
 		flag = '/tmp/.EPGImportAnswerBoot'
-		if config.plugins.epgimport.runboot_restart.value and config.plugins.epgimport.runboot.value != "3":
+		if config.plugins.epgimport.runboot_restart.value and runboot != "3":
 			if os.path.exists(flag):
 				on_start = False
 				print("[XMLTVImport] not starting import - is restart enigma2", file=log)
@@ -1046,6 +1179,10 @@ def autostart(reason, session=None, **kwargs):
 	global _session
 	print("[XMLTVImport] autostart (%s) occured at" % reason, time.time(), file=log)
 	if reason == 0 and _session is None:
+		nms = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+		# log.write("[EPGImport] autostart (%s) occured at (%s)" % (reason, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+		# print("[EPGImport] autostart (%s) occured at" % reason, time.time(), file=log)
+		print("[EPGImport] autostart (%s) occured at" % reason, nms, file=log)
 		if session is not None:
 			_session = session
 			if autoStartTimer is None:
@@ -1068,12 +1205,10 @@ def autostart(reason, session=None, **kwargs):
 def getNextWakeup():
 	"returns timestamp of next time when autostart should be called"
 	if autoStartTimer:
-		if config.plugins.epgimport.deepstandby.value == 'wakeup' and autoStartTimer.getSources():
+		if config.plugins.epgimport.enabled.value and config.plugins.epgimport.deepstandby.value == 'wakeup' and autoStartTimer.getSources():
 			print("[XMLTVImport] Will wake up from deep sleep", file=log)
 			return autoStartTimer.getStatus()
 	return -1
-
-# we need this helper function to identify the descriptor
 
 
 def extensionsmenu(session, **kwargs):
@@ -1092,7 +1227,7 @@ def setExtensionsmenu(el):
 
 description = _("Automated EPG Importer")
 config.plugins.epgimport.showinextensions.addNotifier(setExtensionsmenu, initial_call=False, immediate_feedback=False)
-extDescriptor = PluginDescriptor(name=_("EPG-Importer"), description=description, where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=extensionsmenu)
+extDescriptor = PluginDescriptor(name=_("EPG import now"), description=description, where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=start_import)
 pluginlist = PluginDescriptor(name=_("EPG-Importer"), description=description, where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main)
 
 
