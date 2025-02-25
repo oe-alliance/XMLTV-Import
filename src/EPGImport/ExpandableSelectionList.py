@@ -1,9 +1,9 @@
-from Components.MenuList import MenuList
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT
+from Components.MenuList import MenuList
+from skin import fonts, parameters
 from Tools.Directories import resolveFilename, SCOPE_CURRENT_SKIN
 from Tools.LoadPixmap import LoadPixmap
 
-import skin
 
 expandableIcon = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "icons/expandable.png"))
 expandedIcon = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "icons/expanded.png"))
@@ -11,11 +11,11 @@ expandedIcon = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "icons/expanded.pn
 
 def loadSettings():
 	global cat_desc_loc, entry_desc_loc, cat_icon_loc, entry_icon_loc
-	x, y, w, h = skin.parameters.get("EPGImportSelectionListDescr", skin.parameters.get("SelectionListDescr", (25, 3, 650, 30)))
+	x, y, w, h = parameters.get("EPGImportSelectionListDescr", parameters.get("SelectionListDescr", (25, 3, 650, 30)))
 	ind = x  # Indent the entries by the same amount as the icon.
 	cat_desc_loc = (x, y, w, h)
 	entry_desc_loc = (x + ind, y, w - ind, h)
-	x, y, w, h = skin.parameters.get("EPGImportSelectionListLock", skin.parameters.get("SelectionListLock", (0, 2, 25, 24)))
+	x, y, w, h = parameters.get("EPGImportSelectionListLock", parameters.get("SelectionListLock", (0, 2, 25, 24)))
 	cat_icon_loc = (x, 0, w, y + y + h)  # The category icon is larger
 	entry_icon_loc = (x + ind, y, w, h)
 
@@ -23,7 +23,6 @@ def loadSettings():
 def category(description, isExpanded=False):
 	global cat_desc_loc, cat_icon_loc
 	icon = expandedIcon if isExpanded else expandableIcon
-
 	return [
 		(description, isExpanded, []),
 		(eListboxPythonMultiContent.TYPE_TEXT,) + cat_desc_loc + (0, RT_HALIGN_LEFT, description),
@@ -63,14 +62,14 @@ def isExpanded(cat):
 
 def isCategory(item):
 	# Return whether list enty is a Category
-	return hasattr(item[0][2], 'append')
+	return hasattr(item[0][2], "append")
 
 
 class ExpandableSelectionList(MenuList):
 	def __init__(self, tree=None, enableWrapAround=False):
-		'tree is expected to be a list of categories'
+		"tree is expected to be a list of categories"
 		MenuList.__init__(self, [], enableWrapAround, content=eListboxPythonMultiContent)
-		font = skin.fonts.get("SelectionList", ("Regular", 20, 30))
+		font = fonts.get("SelectionList", ("Regular", 20, 30))
 		self.l.setFont(0, gFont(font[0], font[1]))
 		self.l.setItemHeight(font[2])
 		self.tree = tree or []
@@ -78,13 +77,13 @@ class ExpandableSelectionList(MenuList):
 
 	def updateFlatList(self):
 		# Update the view of the items by flattening the tree
-		ls = []
+		ln = []
 		for cat in self.tree:
-			ls.append(cat)
+			ln.append(cat)
 			if isExpanded(cat):
 				for item in cat[0][2]:
-					ls.append(entry(*item))
-		self.setList(ls)
+					ln.append(entry(*item))
+		self.setList(ln)
 
 	def toggleSelection(self):
 		idx = self.getSelectedIndex()

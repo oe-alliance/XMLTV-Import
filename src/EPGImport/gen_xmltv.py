@@ -24,7 +24,7 @@ gen_categories = {
 	'Science/Nature': (0x90, 0),
 	'Sports': (0x40, 0),
 	'Talk': (0x33, 0),
-	'Unknown': (0x00, 0),
+	'Unknown': (0x00, 0)
 }
 
 
