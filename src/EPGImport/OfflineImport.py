@@ -14,7 +14,7 @@
 # 2) At the command line go to the parent directory of EPGImport:
 # 3) cd /usr/lib/enigma2/python/Plugins/Extensions
 # 4) Now run as a module from the command line:
-# 5) python -m EPGImport.OfflineImport <filename args>  e.g. python -m EPGImport.OfflineImport /etc/rytec.sources.xml (> /tmp.log)
+# 5) python -m EPGImport.OfflineImport <filename args> e.g. python -m EPGImport.OfflineImport /etc/rytec.sources.xml (> /tmp.log)
 # 6) Reinstate your renamed __init__.py
 #
 # called modules EPGImport, epgdat, epgdat_importer, log
@@ -31,6 +31,7 @@ EPGImport.HDD_EPG_DAT = "./epg.dat.new"
 class FakeEnigma:
 	def getInstance(self):
 		return self
+
 	"""
 	def load(self):
 		print("...load...")

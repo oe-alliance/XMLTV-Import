@@ -21,7 +21,7 @@ def quickptime(date_str):
 
 
 def get_time_utc(timestring, fdateparse):
-	# print "get_time_utc", timestring, format
+	# print("get_time_utc", timestring, format)
 	try:
 		values = timestring.split(" ")
 		tm = fdateparse(values[0])

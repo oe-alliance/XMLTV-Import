@@ -92,17 +92,24 @@ class EPGChannel:
 			context = iterparse(stream)
 			for event, elem in context:
 				if elem.tag == "channel":
-					id = elem.get("id")
-					if id:
-						id = id.lower()
-						ref = elem.text
-						if ref:
-							ref = str(ref)
-							if filterCallback(ref):
-								if id in self.items:
-									self.items[id].append(ref)
-								else:
-									self.items[id] = [ref]
+					channel_id = elem.get("id").lower()
+					ref = str(elem.text or '').strip()
+
+					if not channel_id or not ref:
+						continue  # Skip empty values
+					if ref:
+						if filterCallback(ref):
+							"""
+							if channel_id in self.items:
+								self.items[channel_id].append(ref)
+							else:
+								self.items[channel_id] = [ref]
+							"""
+							if channel_id in self.items:
+								self.items[channel_id].append(ref)
+								self.items[channel_id] = list(dict.fromkeys(self.items[channel_id]))  # Ensure uniqueness
+							else:
+								self.items[channel_id] = [ref]
 					elem.clear()
 		except Exception as e:
 			print(f"[EPGImport] Failed to parse {downloadedFile} Error: {e}", file=log)
