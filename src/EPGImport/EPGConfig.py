@@ -2,7 +2,7 @@ from gzip import GzipFile
 from os import fstat, listdir, remove
 from os.path import exists, getmtime, join, split
 from pickle import dump, load, HIGHEST_PROTOCOL
-from random import choice
+from secrets import choice
 from time import time
 from xml.etree.cElementTree import iterparse
 from zipfile import ZipFile

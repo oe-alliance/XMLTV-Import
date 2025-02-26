@@ -5,16 +5,16 @@
 # the contract.
 
 
+import gzip
 from os import statvfs, symlink, unlink
 from os.path import exists, getsize, join, splitext
 from requests import packages, Session
 from requests.exceptions import HTTPError, RequestException
+from secrets import choice
+from string import ascii_lowercase
+from time import localtime, mktime, time
 from twisted.internet import reactor, threads
 from twisted.internet.reactor import callInThread
-import gzip
-from random import choices, choice
-from string import ascii_lowercase
-import time
 import twisted.python.runtime
 
 from Components.config import config
@@ -91,10 +91,10 @@ def getTimeFromHourAndMinutes(hour, minute):
         raise ValueError("Minute must be between 0 and 59")
 
     # Get the current local time
-    now = time.localtime()
+    now = localtime()
 
     # Calculate the timestamp for the specified time (today with the given hour and minute)
-    begin = int(time.mktime((
+    begin = int(mktime((
         now.tm_year,     # Current year
         now.tm_mon,      # Current month
         now.tm_mday,     # Current day
@@ -194,7 +194,7 @@ class EPGImport:
         self.eventCount = 0
         if longDescUntil is None:
             # default to 7 days ahead
-            self.longDescUntil = time.time() + 24 * 3600 * 7
+            self.longDescUntil = time() + 24 * 3600 * 7
         else:
             self.longDescUntil = longDescUntil
         self.nextImport()
@@ -218,7 +218,7 @@ class EPGImport:
             self.afterDownload(filename, deleteFile=False)
 
     def urlDownload(self, sourcefile, afterDownload, downloadFail):
-        host = "".join(choices(ascii_lowercase, k=5))
+        host = "".join([choice(ascii_lowercase) for i in range(5)])
         check_mount = False
         if exists("/media/hdd"):
             with open("/proc/mounts", "r") as f:
