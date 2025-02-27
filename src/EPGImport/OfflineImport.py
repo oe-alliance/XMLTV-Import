@@ -14,11 +14,10 @@
 # 2) At the command line go to the parent directory of EPGImport:
 # 3) cd /usr/lib/enigma2/python/Plugins/Extensions
 # 4) Now run as a module from the command line:
-# 5) python -m EPGImport.OfflineImport <filename args>  e.g. python -m EPGImport.OfflineImport /etc/rytec.sources.xml (> /tmp.log)
+# 5) python -m EPGImport.OfflineImport <filename args> e.g. python -m EPGImport.OfflineImport /etc/rytec.sources.xml (> /tmp.log)
 # 6) Reinstate your renamed __init__.py
 #
 # called modules EPGImport, epgdat, epgdat_importer, log
-import os
 import sys
 import time
 from . import EPGConfig
@@ -32,10 +31,13 @@ EPGImport.HDD_EPG_DAT = "./epg.dat.new"
 class FakeEnigma:
 	def getInstance(self):
 		return self
-#	def load(self):
-#		print("...load...")
-#	def importEvents(self, *args):
-#		print(args)
+
+	"""
+	def load(self):
+		print("...load...")
+	def importEvents(self, *args):
+		print(args)
+	"""
 
 
 def importFrom(epgimport, sourceXml):
@@ -69,14 +71,16 @@ def importFrom(epgimport, sourceXml):
 	epgimport.beginImport(longDescUntil=time.time() + (5 * 24 * 3600))
 	EPGImport.reactor.run()
 
-#----------------------------------------------
+# ----------------------------------------------
 
 
 def done(reboot=False, epgfile=None):
 	EPGImport.reactor.stop()
 	print("Done, data is in", epgfile)
-	### When code arrives here, EPG data is stored in filename EPGImport.HDD_EPG_DAT
-	### So to copy it to FTP or whatever, this is the place to add that code.
+	"""
+	When code arrives here, EPG data is stored in filename EPGImport.HDD_EPG_DAT
+	So to copy it to FTP or whatever, this is the place to add that code.
+	"""
 
 
 if len(sys.argv) <= 1:

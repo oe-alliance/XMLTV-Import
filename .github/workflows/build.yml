@@ -1,0 +1,28 @@
+name: XMLTV-Import
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build:
+    name: Build XMLTV-Import
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python: ['3.10','3.11','3.12','3.13']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Build XMLTV-Import, python ${{ matrix.python }}
+        run: |
+          python -m compileall .

@@ -1,0 +1,378 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-26 15:00+0100\n"
+"PO-Revision-Date: 2025-02-26 15:00+0100\n"
+"Last-Translator: Warder <ciksa@seznam.cz>\n"
+"Language-Team: \n"
+"Language: sv_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: filtersServices.py:149
+msgid "Add Provider"
+msgstr "Pridať poskytovateľa"
+
+#: filtersServices.py:150
+msgid "Add Channel"
+msgstr "Pridať kanál"
+
+#: filtersServices.py:152
+msgid "press OK to save list"
+msgstr "stlačením tlačidla OK uložte zoznam"
+
+#: filtersServices.py:165 plugin.py:526
+msgid "Ignore services list"
+msgstr "Ignorovať zoznam služieb"
+
+#: filtersServices.py:194
+msgid "Really delete all list?"
+msgstr "Naozaj odstrániť celý zoznam?"
+
+#: filtersServices.py:227
+msgid "Delete selected"
+msgstr "Vymazať vybrané"
+
+#: filtersServices.py:228
+msgid "Delete all"
+msgstr "Zmazať všetko"
+
+#: filtersServices.py:253
+msgid "Select service to add..."
+msgstr "Vyberte položku Služba, ktorá sa má pridať..."
+
+#: filtersServices.py:261
+msgid "All services provider"
+msgstr "Všetci poskytovatelia služieb"
+
+#: filtersServices.py:280 plugin.py:527
+msgid "Select action"
+msgstr "Vybrať akciu"
+
+#: plugin.py:74
+msgid "always"
+msgstr "vždy"
+
+#: plugin.py:75
+msgid "only manual boot"
+msgstr "iba manuálne spustenie"
+
+#: plugin.py:76
+msgid "only automatic boot"
+msgstr "iba automatické spustenie"
+
+#: plugin.py:77
+msgid "never"
+msgstr "nikdy"
+
+#: plugin.py:87
+msgid "wake up and import"
+msgstr "prebudenie a import"
+
+#: plugin.py:88
+msgid "skip the import"
+msgstr "preskočiť import"
+
+#: plugin.py:99
+msgid "Press OK"
+msgstr "Stlač OK"
+
+#: plugin.py:108
+msgid "Monday"
+msgstr "Pondelok"
+
+#: plugin.py:109
+msgid "Tuesday"
+msgstr "Utorok"
+
+#: plugin.py:110
+msgid "Wednesday"
+msgstr "Streda"
+
+#: plugin.py:111
+msgid "Thursday"
+msgstr "Štvrtok"
+
+#: plugin.py:112
+msgid "Friday"
+msgstr "Piatok"
+
+#: plugin.py:113
+msgid "Saturday"
+msgstr "Sobota"
+
+#: plugin.py:114
+msgid "Sunday"
+msgstr "Nedeľa"
+
+#: plugin.py:306
+msgid "EPG Import Configuration"
+msgstr "Konfigurácia importu EPG"
+
+#: plugin.py:309 plugin.py:484
+#, python-format
+msgid "Last import: %s events"
+msgstr "Posledný import: %s udalosti"
+
+#: plugin.py:310 plugin.py:562 plugin.py:642
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: plugin.py:311 plugin.py:563 plugin.py:643 plugin.py:701
+msgid "Save"
+msgstr "Uložiť"
+
+#: plugin.py:312
+msgid "Manual"
+msgstr "Manuálna"
+
+#: plugin.py:313
+msgid "Sources"
+msgstr "Zdrojov"
+
+#: plugin.py:331
+#, fuzzy, python-format
+#| msgid ""
+#| "Importing: %s\n"
+#| "%s events"
+msgid ""
+"Importing:\n"
+"%s %s events"
+msgstr ""
+"Import: %s\n"
+"%s podujatia"
+
+#: plugin.py:368
+msgid "Automatic import EPG"
+msgstr "Automatický import EPG"
+
+#: plugin.py:369
+msgid "Automatic start time"
+msgstr "Čas automatického spustenia"
+
+#: plugin.py:370
+msgid "When in deep standby"
+msgstr "V hlbokom pohotovostnom režime"
+
+#: plugin.py:371
+msgid "Return to deep standby after import"
+msgstr "Po importe sa vráťte do hlbokého pohotovostného režimu"
+
+#: plugin.py:372
+msgid "Standby at startup"
+msgstr "Pohotovostný režim pri spustení"
+
+#: plugin.py:373
+msgid "Choice days for start import"
+msgstr "Výberové dni pre spustenie importu"
+
+#: plugin.py:374
+msgid "Start import after booting up"
+msgstr "Spustenie importu po spustení"
+
+#: plugin.py:375
+msgid "Load EPG only services in bouquets"
+msgstr "Načítajte služby EPG iba v kyticiach"
+
+#: plugin.py:376
+#, fuzzy
+#| msgid "Load EPG only for IPTV channels"
+msgid "Load EPG only for IPTV channels"
+msgstr "Načítajte EPG iba pre kanály IPTV"
+
+#: plugin.py:377
+msgid "Consider setting \"Days Profile\""
+msgstr "Zvážte nastavenie \"Profilu dní\""
+
+#: plugin.py:378
+msgid "Skip import on restart GUI"
+msgstr "Preskočiť import pri reštartovaní grafického používateľského rozhrania"
+
+#: plugin.py:379
+#, fuzzy
+#| msgid "Show \"EPGImport\" in extensions"
+msgid "Show \"EPGImport\" in extensions"
+msgstr "Zobraziť \"EPGImport\" v rozšíreniach"
+
+#: plugin.py:380
+#, fuzzy
+#| msgid "Show \"EPGImport\" in plugins"
+msgid "Show \"EPGImport\" in plugins"
+msgstr "Zobraziť \"EPGImport\" v pluginoch"
+
+#: plugin.py:382
+msgid "Load long descriptions up to X days"
+msgstr "Načítanie dlhých popisov až na X dní"
+
+#: plugin.py:383
+msgid "Run AutoTimer after import"
+msgstr "Spustenie nástroja AutoTimer po importe"
+
+#: plugin.py:384
+#, fuzzy
+#| msgid "Clearing current EPG before import"
+msgid "Delete current EPG before import"
+msgstr "Zúčtovanie aktuálneho EPG pred importom"
+
+#: plugin.py:449
+msgid "Settings saved successfully !"
+msgstr ""
+
+#: plugin.py:479
+#, python-format
+msgid "Last: %s %s, %d events"
+msgstr "Posledný: %s %s, %d udalosti"
+
+#: plugin.py:489
+msgid ""
+"EPGImport\n"
+"Import of epg data is still in progress. Please wait."
+msgstr ""
+"EPGImport\n"
+"Import epg dát stále prebieha. Prosím počkajte."
+
+#: plugin.py:499
+msgid "No active EPG sources found, nothing to do"
+msgstr "Nenašli sa žiadne aktívne zdroje EPG, nič nerobiť"
+
+#: plugin.py:504
+msgid ""
+"EPGImport\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"EPGImport\n"
+"Spustí sa import údajov EPG.\n"
+"Môže to trvať niekoľko minút.\n"
+"Je to v poriadku?"
+
+#: plugin.py:513
+msgid ""
+"EPGImport Plugin\n"
+"Failed to start:\n"
+msgstr ""
+"Doplnok EPGImport\n"
+"Nepodarilo sa spustiť:\n"
+
+#: plugin.py:526
+msgid "Show log"
+msgstr "Zobraziť záznam"
+
+#: plugin.py:564
+#, fuzzy
+#| msgid "EPG-Importer"
+msgid "Import"
+msgstr "EPG-dovozca"
+
+#: plugin.py:598
+msgid "EPG Import Sources"
+msgstr "Zdroje importu EPG"
+
+#: plugin.py:655
+msgid "Days Profile"
+msgstr "Profil dní"
+
+#: plugin.py:661
+msgid ""
+"You may not use this settings!\n"
+"At least one day a week should be included!"
+msgstr ""
+"Tieto nastavenia nesmiete použiť!\n"
+"Mal by byť zahrnutý aspoň jeden deň v týždni!"
+
+#: plugin.py:698
+msgid "Clear"
+msgstr "Vyčistiť"
+
+#: plugin.py:723
+msgid "EPG Import Log"
+msgstr "Denník importu EPG"
+
+#: plugin.py:729
+msgid "Write to /tmp/epgimport.log"
+msgstr "Napíšte na /tmp/epgimport.log"
+
+#: plugin.py:745
+msgid "Last import: "
+msgstr "Posledný import: "
+
+#: plugin.py:745
+msgid " events\n"
+msgstr " Udalosti\n"
+
+#: plugin.py:745
+msgid ""
+"\n"
+"Import of epg data will start.\n"
+"This may take a few minutes.\n"
+"Is this ok?"
+msgstr ""
+"\n"
+"Spustí sa import epg dát.\n"
+"Môže to trvať niekoľko minút.\n"
+"Je to v poriadku?"
+
+#: plugin.py:793
+#, python-format
+msgid "EPG Import finished, %d events"
+msgstr "Epg Import dokončený, %d udalosti"
+
+#: plugin.py:793
+msgid ""
+"You must restart Enigma2 to load the EPG data,\n"
+"is this OK?"
+msgstr ""
+"Ak chcete načítať údaje EPG, musíte reštartovať Enigma2,\n"
+"je to v poriadku?"
+
+#: plugin.py:1098
+msgid "Automated EPG Importer"
+msgstr "Automatizovaný stahovač EPG"
+
+#: plugin.py:1100
+#, fuzzy
+#| msgid "EPG-Importer"
+msgid "EPG-Importer Now"
+msgstr "EPG-dovozca"
+
+#: plugin.py:1101 plugin.py:1107 plugin.py:1112 plugin.py:1117 plugin.py:1122
+#: plugin.py:1130 plugin.py:1140
+#, fuzzy
+#| msgid "EPG-Importer"
+msgid "EPG-Importer"
+msgstr "EPG-dovozca"
+
+#, fuzzy
+#~| msgid "Add Channel"
+#~ msgid "all channels"
+#~ msgstr "Pridať kanál"
+
+#, fuzzy
+#~| msgid "Start import after booting up"
+#~ msgid "Start import after standby"
+#~ msgstr "Spustenie importu po spustení"
+
+#, fuzzy
+#~| msgid "Start import after booting up"
+#~ msgid "Start import after resuming from standby mode."
+#~ msgstr "Spustenie importu po spustení"
+
+#, fuzzy
+#~| msgid "EPG Import Log"
+#~ msgid "EPG Import"
+#~ msgstr "Denník importu EPG"
+
+#~ msgid "Import current source"
+#~ msgstr "Import aktuálneho zdroja"
