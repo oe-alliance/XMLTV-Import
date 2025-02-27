@@ -13,5 +13,5 @@ setup(name='enigma2-plugin-extensions-epgimport',
        packages=[pkg],
        package_data={pkg: ['*.png', 'locale/*/LC_MESSAGES/*.mo']},
        ext_modules=[dreamcrc],
-       cmdclass=setup_translate.cmdclass, # for translation
+       cmdclass=setup_translate.cmdclass,  # for translation
 )
