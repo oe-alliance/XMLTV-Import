@@ -100,19 +100,18 @@ class EPGChannel:
 
 						if not channel_id or not ref:
 							continue  # Skip empty values
-						if ref:
-							if filterCallback(ref):
-								"""
-								if channel_id in self.items:
-									self.items[channel_id].append(ref)
-								else:
-									self.items[channel_id] = [ref]
-								"""
-								if channel_id in self.items:
-									self.items[channel_id].append(ref)
-									self.items[channel_id] = list(dict.fromkeys(self.items[channel_id]))  # Ensure uniqueness
-								else:
-									self.items[channel_id] = [ref]
+						if ref and filterCallback(ref):
+							"""
+							if channel_id in self.items:
+								self.items[channel_id].append(ref)
+							else:
+								self.items[channel_id] = [ref]
+							"""
+							if channel_id in self.items:
+								self.items[channel_id].append(ref)
+								self.items[channel_id] = list(dict.fromkeys(self.items[channel_id]))  # Ensure uniqueness
+							else:
+								self.items[channel_id] = [ref]
 
 						elem.clear()
 
@@ -237,6 +236,7 @@ def storeUserSettings(filename=SETTINGS_FILE, sources=None):
 
 if __name__ == "__main__":
 	import sys
+	SETTINGS_FILE = "settings.pkl"
 	x = []
 	ln = []
 	path = "."
@@ -247,9 +247,9 @@ if __name__ == "__main__":
 		ln.append(t)
 		print(t)
 		x.append(p.description)
-	storeUserSettings("settings.pkl", [1, "twee"])
-	assert loadUserSettings("settings.pkl") == {"sources": [1, "twee"]}
-	remove("settings.pkl")
+	storeUserSettings(SETTINGS_FILE, [1, "twee"])
+	assert loadUserSettings(SETTINGS_FILE) == {"sources": [1, "twee"]}
+	remove(SETTINGS_FILE)
 	for p in enumSources(path, x):
 		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
 		assert t in ln

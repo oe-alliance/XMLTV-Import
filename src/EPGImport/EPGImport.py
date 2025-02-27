@@ -218,17 +218,18 @@ class EPGImport:
             self.afterDownload(filename, deleteFile=False)
 
     def urlDownload(self, sourcefile, afterDownload, downloadFail):
+        media_path = "/media/hdd"
         host = "".join([choice(ascii_lowercase) for i in range(5)])
         check_mount = False
-        if exists("/media/hdd"):
+        if exists(media_path):
             with open("/proc/mounts", "r") as f:
                 for line in f:
                     ln = line.split()
-                    if len(ln) > 1 and ln[1] == "/media/hdd":
+                    if len(ln) > 1 and ln[1] == media_path:
                         check_mount = True
 
         # print("[EPGImport][urlDownload]2 check_mount ", check_mount)
-        pathDefault = "/media/hdd" if check_mount else "/tmp"
+        pathDefault = media_path if check_mount else "/tmp"
         path = bigStorage(9000000, pathDefault, "/media/usb", "/media/cf")  # lets use HDD and flash as main backup media
 
         filename = join(path, host)

@@ -88,9 +88,8 @@ class FiltersList():
 		self.saveTo('/etc/epgimport/ignore.conf')
 
 	def addService(self, ref):
-		if isinstance(ref, str):
-			if ref not in self.services:
-				self.services.append(ref)
+		if isinstance(ref, str) and ref not in self.services:
+			self.services.append(ref)
 
 	def addServices(self, services):
 		if isinstance(services, list):
@@ -99,9 +98,8 @@ class FiltersList():
 					self.services.append(s)
 
 	def delService(self, ref):
-		if isinstance(ref, str):
-			if ref in self.services:
-				self.services.remove(ref)
+		if isinstance(ref, str) and ref in self.services:
+			self.services.remove(ref)
 
 	def delAll(self):
 		self.services = []

@@ -60,6 +60,7 @@ def calcDefaultStarttime():
 
 # historically located (not a problem, we want to update it)
 CONFIG_PATH = "/etc/epgimport"
+STANDBY_FLAG_FILE = "/tmp/enigmastandby"
 
 # Global variable
 autoStartTimer = None
@@ -781,9 +782,8 @@ def main(session, **kwargs):
 
 def doneConfiguring(session, retval=False):
 	"""user has closed configuration, check new values...."""
-	if retval is True:
-		if autoStartTimer is not None:
-			autoStartTimer.update()
+	if retval is True and autoStartTimer is not None:
+		autoStartTimer.update()
 
 
 def doneImport(reboot=False, epgfile=None):
@@ -858,12 +858,12 @@ def restartEnigma(confirmed):
 		# save state of enigma, so we can return to previeus state
 	if Screens.Standby.inStandby:
 		try:
-			open("/tmp/enigmastandby", "wb").close()
+			open(STANDBY_FLAG_FILE, "wb").close()
 		except:
-			print("Failed to create /tmp/enigmastandby", file=log)
+			print(f"Failed to create {STANDBY_FLAG_FILE}", file=log)
 	else:
 		try:
-			remove("/tmp/enigmastandby")
+			remove(STANDBY_FLAG_FILE)
 		except:
 			pass
 	# now reboot
@@ -968,7 +968,7 @@ class AutoStartTimer:
 
 	def afterFinishImportCheck(self):
 		if config.plugins.epgimport.deepstandby.value == "wakeup" and getFPWasTimerWakeup():
-			if exists("/tmp/enigmastandby") or exists("/tmp/.EPGImportAnswerBoot"):
+			if exists(STANDBY_FLAG_FILE) or exists("/tmp/.EPGImportAnswerBoot"):
 				print("[XMLTVImport] is restart enigma2", file=log)
 			else:
 				wake = self.getStatus()
@@ -1074,12 +1074,12 @@ def autostart(reason, session=None, **kwargs):
 			if config.plugins.epgimport.runboot.value != "4":
 				onBootStartCheck()
 		# If WE caused the reboot, put the box back in standby.
-		if exists("/tmp/enigmastandby"):
+		if exists(STANDBY_FLAG_FILE):
 			print("[XMLTVImport] Returning to standby", file=log)
 			if not Screens.Standby.inStandby:
 				Notifications.AddNotification(Screens.Standby.Standby)
 			try:
-				remove("/tmp/enigmastandby")
+				remove(STANDBY_FLAG_FILE)
 			except:
 				pass
 	else:
