@@ -14,7 +14,7 @@ try:
 	from . import dreamcrc
 	crc32_dreambox = lambda d, t: dreamcrc.crc32(d, t) & 0xffffffff
 	print("[EPGImport] using C module, yay")
-except:
+except ImportError:
 	print("[EPGImport] failed to load C implementation, sorry")
 
 	# this table is used by CRC32 routine below (used by Dreambox for
@@ -261,7 +261,8 @@ class epgdat_class:
 				# unix format (second since 1970) and already GMT corrected
 				event_time_HMS = datetime.utcfromtimestamp(event[0])  # actually YYYY-MM-DD HH:MM:SS
 				dvb_date = event_time_HMS.toordinal() - self.EPG_PROLEPTIC_ZERO_DAY  # epg.dat date is = (proleptic date - epg_zero_day)
-				event_duration_HMS = datetime.utcfromtimestamp(event[1])  # actually 1970-01-01 HH:MM:SS
+				# event_duration_HMS = datetime.utcfromtimestamp(event[1])  # actually 1970-01-01 HH:MM:SS
+				event_duration_HMS = datetime.datetime(*time.gmtime(event[1])[:6])  # actually 1970-01-01 HH:MM:SS
 				# EVENT DATA
 				# simply create an incremental ID,  starting from '1'
 				# event_id appears to be per channel, so this should be okay.

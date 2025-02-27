@@ -25,10 +25,10 @@ def get_time_utc(timestring, fdateparse):
 	try:
 		values = timestring.split(" ")
 		tm = fdateparse(values[0])
-		timeGm = timegm(tm)
-		# suppose file says +0300 => that means we have to substract 3 hours from localtime to get gmt
-		timeGm -= (3600 * int(values[1]) // 100)
-		return timeGm
+		time_gm = timegm(tm)
+		# suppose file says +0300 => that means we have to substract 3 hours from localtime to get GMT
+		time_gm -= (3600 * int(values[1]) // 100)
+		return time_gm
 	except Exception as e:
 		print(f"[XMLTVConverter] get_time_utc error:{e}")
 		return 0
@@ -36,8 +36,6 @@ def get_time_utc(timestring, fdateparse):
 
 # Preferred language should be configurable, but for now,
 # we just like Dutch better!
-
-
 def get_xml_string(elem, name):
 	r = ""
 	try:

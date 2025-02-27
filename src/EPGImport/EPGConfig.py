@@ -1,4 +1,5 @@
 from gzip import GzipFile
+import lzma
 from os import fstat, listdir, remove
 from os.path import exists, getmtime, join, split
 from pickle import dump, load, HIGHEST_PROTOCOL
@@ -6,6 +7,7 @@ from secrets import choice
 from time import time
 from xml.etree.cElementTree import iterparse
 from zipfile import ZipFile
+from collections import defaultdict
 
 from . import log
 
@@ -56,7 +58,8 @@ class EPGChannel:
 			self.urls = [filename]
 		else:
 			self.urls = urls
-		self.items = None
+		# self.items = None
+		self.items = defaultdict(set)
 		self.offset = offset
 
 	def openStream(self, filename):
@@ -66,10 +69,6 @@ class EPGChannel:
 		if filename.endswith(".gz"):
 			fd = GzipFile(fileobj=fd, mode="rb")
 		elif filename.endswith(".xz") or filename.endswith(".lzma"):
-			try:
-				import lzma
-			except ImportError:
-				from backports import lzma
 			fd = lzma.open(filename, "rb")
 		elif filename.endswith(".zip"):
 			from io import BytesIO
@@ -79,9 +78,7 @@ class EPGChannel:
 
 	def parse(self, filterCallback, downloadedFile):
 		print(f"[EPGImport] Parsing channels from '{self.name}'", file=log)
-
-		if self.items is None:
-			self.items = {}
+		self.items = defaultdict(set)
 
 		try:
 			stream = self.openStream(downloadedFile)
@@ -89,28 +86,36 @@ class EPGChannel:
 				print(f"[EPGImport] Error: Unable to open stream for {downloadedFile}", file=log)
 				return
 
-			context = iterparse(stream)
-			for event, elem in context:
-				if elem.tag == "channel":
-					channel_id = elem.get("id").lower()
-					ref = str(elem.text or '').strip()
+			# here is a problem in the List of supported formats by iterparse: crash on file corrupt
+			# _lzma.LZMAError: Input format not supported by decoder
+			supported_formats = ['.xml', '.xml.gz', '.xml.xz']  # fixed
+			# Make sure the file is in a compatible format
+			if any(downloadedFile.endswith(ext) for ext in supported_formats):
 
-					if not channel_id or not ref:
-						continue  # Skip empty values
-					if ref:
-						if filterCallback(ref):
-							"""
-							if channel_id in self.items:
-								self.items[channel_id].append(ref)
-							else:
-								self.items[channel_id] = [ref]
-							"""
-							if channel_id in self.items:
-								self.items[channel_id].append(ref)
-								self.items[channel_id] = list(dict.fromkeys(self.items[channel_id]))  # Ensure uniqueness
-							else:
-								self.items[channel_id] = [ref]
-					elem.clear()
+				context = iterparse(stream)
+				for event, elem in context:
+					if elem.tag == "channel":
+						channel_id = elem.get("id").lower()
+						ref = str(elem.text or '').strip()
+
+						if not channel_id or not ref:
+							continue  # Skip empty values
+						if ref:
+							if filterCallback(ref):
+								"""
+								if channel_id in self.items:
+									self.items[channel_id].append(ref)
+								else:
+									self.items[channel_id] = [ref]
+								"""
+								if channel_id in self.items:
+									self.items[channel_id].append(ref)
+									self.items[channel_id] = list(dict.fromkeys(self.items[channel_id]))  # Ensure uniqueness
+								else:
+									self.items[channel_id] = [ref]
+
+						elem.clear()
+
 		except Exception as e:
 			print(f"[EPGImport] Failed to parse {downloadedFile} Error: {e}", file=log)
 			import traceback
@@ -153,23 +158,11 @@ class EPGSource:
 	def __init__(self, path, elem, category=None, offset=0):
 		self.parser = elem.get("type", "gen_xmltv")
 		self.nocheck = int(elem.get("nocheck", 0))
-		"""
-		self.parser = elem.get("type")
-		nocheck = elem.get("nocheck")
-		if nocheck is None:
-			self.nocheck = 0
-		elif nocheck == "1":
-			self.nocheck = 1
-		else:
-			self.nocheck = 0
-		"""
 		self.urls = [e.text.strip() for e in elem.findall("url")]
 		self.url = choice(self.urls)
-		self.description = elem.findtext("description")
+		self.description = elem.findtext("description", self.url)
 		self.category = category
 		self.offset = offset
-		if not self.description:
-			self.description = self.url
 		self.format = elem.get("format", "xml")
 		self.channels = getChannels(path, elem.get("channels"), offset)
 

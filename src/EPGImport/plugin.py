@@ -1,6 +1,6 @@
 from os import remove
 from os.path import exists
-from time import localtime, mktime, strftime, time, asctime
+from time import localtime, mktime, strftime, strptime, time, asctime
 
 from enigma import eServiceCenter, eServiceReference, eEPGCache, eTimer, getDesktop
 
@@ -71,11 +71,11 @@ serviceIgnoreList = None
 config.plugins.epgimport = ConfigSubsection()
 config.plugins.epgimport.enabled = ConfigEnableDisable(default=False)
 config.plugins.epgimport.runboot = ConfigSelection(default="4", choices=[
-		("1", _("always")),
-		("2", _("only manual boot")),
-		("3", _("only automatic boot")),
-		("4", _("never"))
-		])
+	("1", _("always")),
+	("2", _("only manual boot")),
+	("3", _("only automatic boot")),
+	("4", _("never"))
+])
 config.plugins.epgimport.runboot_restart = ConfigYesNo(default=False)
 config.plugins.epgimport.runboot_day = ConfigYesNo(default=False)
 config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default=False)
@@ -84,9 +84,9 @@ config.plugins.epgimport.wakeup = ConfigClock(default=calcDefaultStarttime())
 config.plugins.epgimport.showinplugins = ConfigYesNo(default=IMAGEDISTRO != "openatv")
 config.plugins.epgimport.showinextensions = ConfigYesNo(default=True)
 config.plugins.epgimport.deepstandby = ConfigSelection(default="skip", choices=[
-		("wakeup", _("wake up and import")),
-		("skip", _("skip the import"))
-		])
+	("wakeup", _("wake up and import")),
+	("skip", _("skip the import"))
+])
 config.plugins.epgimport.standby_afterwakeup = ConfigYesNo(default=False)
 config.plugins.epgimport.shutdown = ConfigYesNo(default=False)
 config.plugins.epgimport.longDescDays = ConfigNumber(default=5)
@@ -210,7 +210,7 @@ def channelFilter(ref):
 	if serviceIgnoreList is None:
 		serviceIgnoreList = [getRefNum(x) for x in filtersServices.filtersServicesList.servicesList()]
 	if refnum in serviceIgnoreList:
-		print("Serviceref is in ignore list:", sref.toString(), file=log)
+		print(f"Serviceref is in ignore list:{sref.toString()}", file=log)
 		return False
 	if "%3a//" in ref.lower():
 		# print("URL detected in serviceref, not checking fake recording on serviceref:", ref, file=log)
@@ -222,7 +222,7 @@ def channelFilter(ref):
 		# -7 (errNoSourceFound) occurs when tuner is disconnected.
 		r = fakeRecResult in (0, -7)
 		return r
-	print("Invalid serviceref string:", ref, file=log)
+	print(f"Invalid serviceref string: {ref}", file=log)
 	return False
 
 
@@ -234,7 +234,7 @@ try:
 		print("[EPGImport] EPGCache instance obtained successfully.", file=log)
 	epgimport = EPGImport.EPGImport(epgcache_instance, channelFilter)
 except Exception as e:
-	print("[EPGImport] Error obtaining EPGCache instance: %s" % e, file=log)
+	print(f"[EPGImport] Error obtaining EPGCache instance: {e}", file=log)
 
 lastImportResult = None
 
@@ -244,7 +244,7 @@ def startImport():
 		EPGImport.HDD_EPG_DAT = config.misc.epgcache_filename.value
 		if config.plugins.epgimport.clear_oldepg.value and hasattr(epgimport.epgcache, "flushEPG"):
 			EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT)
-			EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT + ".backup")
+			EPGImport.unlink_if_exists(f"{EPGImport.HDD_EPG_DAT}.backup")
 			epgimport.epgcache.flushEPG()
 		epgimport.onDone = doneImport
 		epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time())
@@ -403,7 +403,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		if hasattr(eEPGCache, "flushEPG"):
 			list.append(self.cfg_clear_oldepg)
 		list.append(self.cfg_longDescDays)
-		if fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/plugin.pyo")) or fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/plugin.pyc")):
+		if isPluginInstalled("AutoTimer"):
 			try:
 				list.append(self.cfg_parse_autotimer)
 			except:
@@ -433,7 +433,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 
 	def keyGreen(self):
 		self.updateTimer.stop()
-		if self.EPG.parse_autotimer.value and (not fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/plugin.pyo")) or not fileExists(resolveFilename(SCOPE_PLUGINS, "Extensions/AutoTimer/plugin.pyc"))):
+		if self.EPG.parse_autotimer.value and not isPluginInstalled("AutoTimer"):
 			self.EPG.parse_autotimer.value = False
 		if self.EPG.shutdown.value:
 			self.EPG.standby_afterwakeup.value = False
@@ -471,13 +471,30 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		self["status"].setText(text)
 		if lastImportResult and (lastImportResult != self.lastImportResult):
 			start, count = lastImportResult
+			"""
+			## issue crash trhead
+			# try:
+				# d, t = FuzzyTime(start, inPast=True)
+			# except:
+				# # Not all images have inPast
+				# d, t = FuzzyTime(start)
+			"""
 			try:
-				d, t = FuzzyTime(start, inPast=True)
-			except:
-				# Not all images have inPast
-				d, t = FuzzyTime(start)
-			self["statusbar"].setText(_("Last: %s %s, %d events") % (d, t, count))
-			self.lastImportResult = lastImportResult
+				if isinstance(start, str):
+					start = mktime(strptime(start, "%Y-%m-%d %H:%M:%S"))
+				elif not isinstance(start, (int, float)):
+					raise ValueError("Start value is not a valid timestamp or string")
+
+				d, t = FuzzyTime(int(start), inPast=True)
+			except Exception as e:
+				print(f"[EPGImport] Error FuzzyTime: {e}")
+				try:
+					d, t = FuzzyTime(int(start))
+				except Exception as e:
+					print(f"[EPGImport] Fallback with FuzzyTime also failed: {e}")
+
+			self["statusbar"].setText(_(f"Last import: {d} {t}, {count} events"))
+		self.lastImportResult = lastImportResult
 
 	def keyInfo(self):
 		last_import = config.plugins.extra_epgimport.last_import.value
@@ -600,7 +617,7 @@ class EPGImportSources(Screen):
 	def save(self):
 		""" Make the entries unique through a set """
 		sources = list(set([item[1] for item in self["list"].enumSelected()]))
-		print("[XMLTVImport] Selected sources:", sources, file=log)
+		print(f"[XMLTVImport] Selected sources:{sources}", file=log)
 		EPGConfig.storeUserSettings(sources=sources)
 		self.close(True, sources, None)
 
@@ -615,9 +632,9 @@ class EPGImportSources(Screen):
 				item = self["list"].list[idx][0]
 				source = [item[1] or ""]
 				cfg = {"sources": source}
-				print("[XMLTVImport] Selected source: ", source, file=log)
+				print(f"[XMLTVImport] Selected source: {source}", file=log)
 			except Exception as e:
-				print("[XMLTVImport] Error at selected source:", e, file=log)
+				print(f"[XMLTVImport] Error at selected source:{e}", file=log)
 			else:
 				if cfg["sources"] != "":
 					self.close(False, None, cfg)
@@ -728,7 +745,7 @@ class EPGImportLog(Screen):
 				f.write(self.log.getvalue())
 			self.session.open(MessageBox, _("Write to /tmp/epgimport.log"), MessageBox.TYPE_INFO, timeout=5, close_on_any_key=True)
 		except Exception as e:
-			self["list"].setText("Failed to write /tmp/epgimport.log:str" + str(e))
+			self["list"].setText(f"Failed to write /tmp/epgimport.log:str{str(e)}")
 		self.close(True)
 
 	def cancel(self):
@@ -886,7 +903,6 @@ class AutoStartTimer:
 			cur_day = int(now_day.tm_wday)
 			wakeup_day = WakeupDayOfWeek()
 			if wakeup_day == -1:
-				print("[XMLTVImport] wakeup day of week disabled", file=log)
 				return -1
 			if wake < now + atLeast:
 				wake += 86400 * wakeup_day
@@ -897,7 +913,7 @@ class AutoStartTimer:
 			self.autoStartImport.startLongTimer(next)
 		else:
 			wake = -1
-		print("[XMLTVImport] WakeUpTime now set to", wake, "(now=%s)" % now, file=log)
+		print(f"[XMLTVImport] WakeUpTime now set to {wake} (now={now})", file=log)
 		return wake
 
 	def runImport(self):
@@ -915,7 +931,7 @@ class AutoStartTimer:
 	def onTimer(self):
 		self.autoStartImport.stop()
 		now = int(time())
-		print("[XMLTVImport] onTimer occured at", now, file=log)
+		print(f"[XMLTVImport] onTimer occured at {now}", file=log)
 		wake = self.getWakeTime()
 		# If we're close enough, we're okay...
 		atLeast = 0
@@ -940,7 +956,6 @@ class AutoStartTimer:
 			cur_day = int(now_day.tm_wday)
 			wakeup_day = WakeupDayOfWeek()
 			if wakeup_day == -1:
-				print("[XMLTVImport] wakeup day of week disabled", file=log)
 				return -1
 			if wake_up < now:
 				wake_up += 86400 * wakeup_day
@@ -1010,7 +1025,7 @@ def onBootStartCheck():
 	print("[XMLTVImport] onBootStartCheck", file=log)
 	now = int(time())
 	wake = autoStartTimer.getStatus()
-	print("[XMLTVImport] now=%d wake=%d wake-now=%d" % (now, wake, wake - now), file=log)
+	print(f"[XMLTVImport] now={now} wake={wake} wake-now={wake - now}", file=log)
 	if (wake < 0) or (wake - now > 600):
 		runboot = config.plugins.epgimport.runboot.value
 		on_start = False
@@ -1050,7 +1065,7 @@ def autostart(reason, session=None, **kwargs):
 	"""called with reason=1 to during shutdown, with reason=0 at startup?"""
 	global autoStartTimer
 	global _session
-	print("[XMLTVImport] autostart (%s) occured at" % reason, time(), file=log)
+	print(f"[XMLTVImport] autostart ({reason}) occured at {int(time())}", file=log)
 	if reason == 0 and _session is None:
 		if session is not None:
 			_session = session
@@ -1092,7 +1107,7 @@ def setExtensionsmenu(el):
 		else:
 			Components.PluginComponent.plugins.removePlugin(extDescriptor)
 	except Exception as e:
-		print("[EPGImport] Failed to update extensions menu:", e)
+		print(f"[EPGImport] Failed to update extensions menu:{e}")
 
 
 description = _("Automated EPG Importer")
