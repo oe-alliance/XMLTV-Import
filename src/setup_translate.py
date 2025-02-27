@@ -1,12 +1,11 @@
-# Language extension for distutils Python scripts. Based on this concept:
-# http://wiki.maemo.org/Internationalize_a_Python_application
-from distutils import cmd
-from distutils.command.build import build as _build
+from __future__ import print_function
+from setuptools import Command
+from setuptools.command.build import build as _build
 import glob
 import os
 
 
-class build_trans(cmd.Command):
+class build_trans(Command):
 	description = 'Compile .po files into .mo files'
 
 	def initialize_options(self):
@@ -29,11 +28,11 @@ class build_trans(cmd.Command):
 					for lang_domain in lang_domains:
 						lang_domain = lang_domain.rsplit('/', 1)[1]
 						dest = os.path.join(destdir, lang_domain[:-3] + 'mo')
-						print "Language compile %s -> %s" % (src, dest)
+						print("Language compile %s -> %s" % (src, dest))
 						if os.system("msgfmt '%s' -o '%s'" % (src, dest)) != 0:
-							raise Exception, "Failed to compile: " + src
+							raise Exception
 		else:
-			print "we got no domain -> no translation was compiled"
+			print("we got no domain -> no translation was compiled")
 
 
 class build(_build):

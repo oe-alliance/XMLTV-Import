@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from . import _
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
@@ -8,8 +9,11 @@ from Screens.ChannelSelection import service_types_radio, service_types_tv, Chan
 from enigma import eServiceReference, eServiceCenter, iServiceInformation
 from Components.Sources.List import List
 from Components.Label import Label
-import EPGConfig
+from . import EPGConfig
 import os
+
+from six.moves import reload_module
+
 
 OFF = 0
 EDIT_BOUQUET = 1
@@ -76,7 +80,7 @@ class FiltersList():
 	def load(self):
 		self.loadFrom('/etc/epgimport/ignore.conf')
 
-	def reload(self):
+	def reload_module(self):
 		self.services = []
 		self.load()
 
@@ -202,7 +206,7 @@ class filtersServicesSetup(Screen):
 	def keyOk(self):
 		self.RefList.save()
 		if self.RefList.services != self.prev_list:
-			self.RefList.reload()
+			self.RefList.reload_module()
 			EPGConfig.channelCache = {}
 		self.close()
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EPGImport\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-01 17:07+0100\n"
+"POT-Creation-Date: 2023-01-16 06:40+0000\n"
 "PO-Revision-Date: 2017-07-12 11:14+0300\n"
 "Last-Translator: Vytenis P. <vyteniui@gmail.com>\n"
 "Language-Team: Vytenis P. <vyteniui@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: ../plugin.py:743
+#: ../plugin.py:739
 msgid ""
 "\n"
 "Import of epg data will start.\n"
@@ -26,89 +26,89 @@ msgstr ""
 "Tai gali užtrukti keletą minučių.\n"
 "Pradėti?"
 
-#: ../plugin.py:743
+#: ../plugin.py:739
 msgid " events\n"
 msgstr " įvykiai\n"
 
-#: ../filtersServices.py:149
+#: ../filtersServices.py:153
 msgid "Add Channel"
 msgstr "Įtraukti kanalą"
 
-#: ../filtersServices.py:148
+#: ../filtersServices.py:152
 msgid "Add Provider"
 msgstr "Įtraukti teikėją"
 
-#: ../filtersServices.py:260
+#: ../filtersServices.py:264
 msgid "All services provider"
 msgstr "Visų kanalų tiekėjas"
 
-#: ../plugin.py:1099
+#: ../plugin.py:1095
 msgid "Automated EPG Importer"
 msgstr "Automatizuotas EPG importas"
 
-#: ../plugin.py:368
+#: ../plugin.py:366
 msgid "Automatic import EPG"
 msgstr "Automatinis EPG importas"
 
-#: ../plugin.py:369
+#: ../plugin.py:367
 msgid "Automatic start time"
 msgstr "Automatinio paleidimo laikas"
 
-#: ../plugin.py:311 ../plugin.py:559 ../plugin.py:639
+#: ../plugin.py:309 ../plugin.py:557 ../plugin.py:637
 msgid "Cancel"
 msgstr "Atšaukti"
 
-#: ../plugin.py:373
+#: ../plugin.py:371
 msgid "Choice days for start import"
 msgstr "Pasirinkite dienas importui"
 
-#: ../plugin.py:695
+#: ../plugin.py:693
 msgid "Clear"
 msgstr "Išvalyti"
 
-#: ../plugin.py:384
+#: ../plugin.py:382
 msgid "Clearing current EPG before import"
 msgstr "Prieš importą išvalyti esantį EPG"
 
-#: ../plugin.py:377
+#: ../plugin.py:375
 msgid "Consider setting \"Days Profile\""
 msgstr "Atsižvelgti į 'Dienų profilio' nuostatas"
 
-#: ../plugin.py:652
+#: ../plugin.py:650
 msgid "Days Profile"
 msgstr "Dienų profilis"
 
-#: ../filtersServices.py:227
+#: ../filtersServices.py:231
 msgid "Delete all"
 msgstr "šalinti viską"
 
-#: ../filtersServices.py:226
+#: ../filtersServices.py:230
 msgid "Delete selected"
 msgstr "šalinti pasirinktus"
 
-#: ../plugin.py:307
+#: ../plugin.py:305
 msgid "EPG Import Configuration"
 msgstr "EPG importas - konfigūravimas"
 
-#: ../plugin.py:720
+#: ../plugin.py:718
 msgid "EPG Import Log"
 msgstr "EPG importas - žurnalas"
 
-#: ../plugin.py:594
+#: ../plugin.py:592
 msgid "EPG Import Sources"
 msgstr "EPG importas - šaltiniai"
 
-#: ../plugin.py:794
+#: ../plugin.py:790
 #, python-format
 msgid "EPG Import finished, %d events"
 msgstr "EPG importas baigtas, %d įvykių"
 
-#: ../plugin.py:1101 ../plugin.py:1102 ../plugin.py:1108 ../plugin.py:1113
-#: ../plugin.py:1118 ../plugin.py:1123 ../plugin.py:1131 ../plugin.py:1141
+#: ../plugin.py:1097 ../plugin.py:1098 ../plugin.py:1104 ../plugin.py:1109
+#: ../plugin.py:1114 ../plugin.py:1119 ../plugin.py:1127 ../plugin.py:1137
 msgid "EPG-Importer"
 msgstr "EPG importo nuostatos"
 
-#: ../plugin.py:485
+#: ../plugin.py:483
 msgid ""
 "EPGImport\n"
 "Import of epg data is still in progress. Please wait."
@@ -116,7 +116,7 @@ msgstr ""
 "EPG importas\n"
 "EPG duomenų importas dar vyksta, palaukite..."
 
-#: ../plugin.py:500
+#: ../plugin.py:498
 msgid ""
 "EPGImport\n"
 "Import of epg data will start.\n"
@@ -128,7 +128,7 @@ msgstr ""
 "Tai gali užtrukti keletą minučių.\n"
 "Pradėti?"
 
-#: ../plugin.py:509
+#: ../plugin.py:507
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -136,19 +136,19 @@ msgstr ""
 "EPG importo įskiepis\n"
 "Nepavyko paleisti:\n"
 
-#: ../plugin.py:100
+#: ../plugin.py:105
 msgid "Friday"
 msgstr "penktadienis"
 
-#: ../filtersServices.py:164 ../plugin.py:522
+#: ../filtersServices.py:168 ../plugin.py:520
 msgid "Ignore services list"
 msgstr "Ignoruoti kanalų sąrašą"
 
-#: ../plugin.py:582
+#: ../plugin.py:580
 msgid "Import current source"
 msgstr "Importuoti šį šaltinį"
 
-#: ../plugin.py:332
+#: ../plugin.py:330
 #, python-format
 msgid ""
 "Importing: %s\n"
@@ -157,130 +157,130 @@ msgstr ""
 "Importuojama: %s\n"
 "%s įvykių"
 
-#: ../plugin.py:743
+#: ../plugin.py:739
 msgid "Last import: "
 msgstr "Paskutinis importas: "
 
-#: ../plugin.py:480
+#: ../plugin.py:478
 #, python-format
 msgid "Last import: %s events"
 msgstr "Paskutinis importas:  %s įvykių"
 
-#: ../plugin.py:475
+#: ../plugin.py:473
 #, python-format
 msgid "Last: %s %s, %d events"
 msgstr "Paskutiniai: %s %s, %d įvykiai"
 
-#: ../plugin.py:376
+#: ../plugin.py:374
 msgid "Load EPG only for IPTV channels"
 msgstr ""
 
-#: ../plugin.py:375
+#: ../plugin.py:373
 msgid "Load EPG only services in bouquets"
 msgstr "Įkelti tik kanalų iš bukietų EPG"
 
-#: ../plugin.py:382
+#: ../plugin.py:380
 msgid "Load long descriptions up to X days"
 msgstr "Ilgus aprašymus įkelti iki X dienų trukmei"
 
-#: ../plugin.py:313
+#: ../plugin.py:311
 msgid "Manual"
 msgstr "Rankinis"
 
-#: ../plugin.py:96
+#: ../plugin.py:101
 msgid "Monday"
 msgstr "pirmadienis"
 
-#: ../plugin.py:495
+#: ../plugin.py:493
 msgid "No active EPG sources found, nothing to do"
 msgstr "Aktyvių EPG šaltinių nerasta, nėra ką daryti"
 
-#: ../plugin.py:83
+#: ../plugin.py:88
 msgid "Press OK"
 msgstr "Spauskite 'OK'"
 
-#: ../filtersServices.py:193
+#: ../filtersServices.py:197
 msgid "Really delete all list?"
 msgstr "Ar tikrai ištrinti visą sąrašą?"
 
-#: ../plugin.py:371
+#: ../plugin.py:369
 msgid "Return to deep standby after import"
 msgstr "Po importo išjungti"
 
-#: ../plugin.py:383
+#: ../plugin.py:381
 msgid "Run AutoTimer after import"
 msgstr "Po importo paleisti autolaikmatį"
 
-#: ../plugin.py:101
+#: ../plugin.py:106
 msgid "Saturday"
 msgstr "šeštadienis"
 
-#: ../plugin.py:312 ../plugin.py:560 ../plugin.py:640 ../plugin.py:698
+#: ../plugin.py:310 ../plugin.py:558 ../plugin.py:638 ../plugin.py:696
 msgid "Save"
 msgstr "Išsaugoti"
 
-#: ../filtersServices.py:279 ../plugin.py:523
+#: ../filtersServices.py:283 ../plugin.py:521
 msgid "Select action"
 msgstr "Pasirinkite veiksmą"
 
-#: ../filtersServices.py:252
+#: ../filtersServices.py:256
 msgid "Select service to add..."
 msgstr ""
 
-#: ../plugin.py:379
+#: ../plugin.py:377
 msgid "Show \"EPGImport\" in extensions"
 msgstr "'EPG importą' rodyti tarp plėtinių"
 
-#: ../plugin.py:380
+#: ../plugin.py:378
 #, fuzzy
 msgid "Show \"EPGImport\" in plugins"
 msgstr "'EPG importą' rodyti tarp plėtinių"
 
-#: ../plugin.py:522
+#: ../plugin.py:520
 msgid "Show log"
 msgstr "Rodyti žurnalą"
 
-#: ../plugin.py:378
+#: ../plugin.py:376
 msgid "Skip import on restart GUI"
 msgstr "Paleidžiant iš naujo, neimportuoti"
 
-#: ../plugin.py:314
+#: ../plugin.py:312
 msgid "Sources"
 msgstr "Šaltiniai"
 
-#: ../plugin.py:372
+#: ../plugin.py:370
 msgid "Standby at startup"
 msgstr "Po paleidimo perjungti į budėjimo režimą"
 
-#: ../plugin.py:374
+#: ../plugin.py:372
 msgid "Start import after booting up"
 msgstr "Po paleidimo pradėti importą"
 
-#: ../plugin.py:102
+#: ../plugin.py:107
 msgid "Sunday"
 msgstr "sekmadienis"
 
-#: ../plugin.py:99
+#: ../plugin.py:104
 msgid "Thursday"
 msgstr "ketvirtadienis"
 
-#: ../plugin.py:97
+#: ../plugin.py:102
 msgid "Tuesday"
 msgstr "antradienis"
 
-#: ../plugin.py:98
+#: ../plugin.py:103
 msgid "Wednesday"
 msgstr "trečiadienis"
 
-#: ../plugin.py:370
+#: ../plugin.py:368
 msgid "When in deep standby"
 msgstr "Jeigu išjungtas"
 
-#: ../plugin.py:726
+#: ../plugin.py:724
 msgid "Write to /tmp/epgimport.log"
 msgstr "Rašyti į /tmp/epgimport.log"
 
-#: ../plugin.py:662
+#: ../plugin.py:660
 msgid ""
 "You may not use this settings!\n"
 "At least one day a week should be included!"
@@ -288,7 +288,7 @@ msgstr ""
 "Jūs negalite naudoti šių nustatymų!\n"
 "Turi būti įtraukta bent viena savaitės diena!"
 
-#: ../plugin.py:794
+#: ../plugin.py:790
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
@@ -296,30 +296,30 @@ msgstr ""
 "Kad įkelti EPG duomenis, aparatą reikia paleisti iš naujo.\n"
 "Paleisti  iš naujo dabar?"
 
-#: ../plugin.py:55
+#: ../plugin.py:60
 msgid "always"
 msgstr "visada"
 
-#: ../plugin.py:58
+#: ../plugin.py:63
 msgid "never"
 msgstr "niekada"
 
-#: ../plugin.py:57
+#: ../plugin.py:62
 msgid "only automatic boot"
 msgstr "tik automatiniu paleidimu"
 
-#: ../plugin.py:56
+#: ../plugin.py:61
 msgid "only manual boot"
 msgstr "tik rankiniu paleidimu"
 
-#: ../filtersServices.py:151
+#: ../filtersServices.py:155
 msgid "press OK to save list"
 msgstr ""
 
-#: ../plugin.py:72
+#: ../plugin.py:77
 msgid "skip the import"
 msgstr "atšaukti importą"
 
-#: ../plugin.py:71
+#: ../plugin.py:76
 msgid "wake up and import"
 msgstr "importui prižadinti"
