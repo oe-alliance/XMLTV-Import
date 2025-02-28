@@ -236,7 +236,7 @@ def storeUserSettings(filename=SETTINGS_FILE, sources=None):
 
 if __name__ == "__main__":
 	import sys
-	SETTINGS_FILE = "settings.pkl"
+	SETTINGS_FILE_PKL = "settings.pkl"
 	x = []
 	ln = []
 	path = "."
@@ -247,9 +247,9 @@ if __name__ == "__main__":
 		ln.append(t)
 		print(t)
 		x.append(p.description)
-	storeUserSettings(SETTINGS_FILE, [1, "twee"])
-	assert loadUserSettings(SETTINGS_FILE) == {"sources": [1, "twee"]}
-	remove(SETTINGS_FILE)
+	storeUserSettings(SETTINGS_FILE_PKL, [1, "twee"])
+	assert loadUserSettings(SETTINGS_FILE_PKL) == {"sources": [1, "twee"]}
+	remove(SETTINGS_FILE_PKL)
 	for p in enumSources(path, x):
 		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
 		assert t in ln

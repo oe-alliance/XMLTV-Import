@@ -62,7 +62,7 @@ def get_xml_rating_string(elem):
 		for node in elem.findall("rating"):
 			for val in node.findall("value"):
 				txt = val.text.replace("+", "")
-				if not r:
+				if not r and txt is not None:
 					r = txt
 	except Exception as e:
 		print(f"[XMLTVConverter] get_xml_rating_string error:{e}")

@@ -61,7 +61,7 @@ def calcDefaultStarttime():
 # historically located (not a problem, we want to update it)
 CONFIG_PATH = "/etc/epgimport"
 STANDBY_FLAG_FILE = "/tmp/enigmastandby"
-
+ANSWER_BOOT_FILE = "/tmp/.EPGImportAnswerBoot"
 # Global variable
 autoStartTimer = None
 _session = None
@@ -135,14 +135,14 @@ def getBouquetChannelList():
 	channels = []
 	serviceHandler = eServiceCenter.getInstance()
 	mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
-	altrernative = eServiceReference.isGroup
+	alternative = eServiceReference.isGroup
 	if config.usage.multibouquet.value:
 		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.tv" ORDER BY bouquet'
 		bouquet_root = eServiceReference(bouquet_rootstr)
-		list = serviceHandler.list(bouquet_root)
-		if list:
+		service_list = serviceHandler.list(bouquet_root)
+		if service_list:
 			while True:
-				s = list.getNext()
+				s = service_list.getNext()
 				if not s.valid():
 					break
 				if s.flags & eServiceReference.isDirectory:
@@ -155,10 +155,10 @@ def getBouquetChannelList():
 								if not service.valid():
 									break
 								if not (service.flags & mask):
-									if service.flags & altrernative:
-										altrernative_list = getAlternatives(service)
-										if altrernative_list:
-											for channel in altrernative_list:
+									if service.flags & alternative:
+										alternative_list = getAlternatives(service)
+										if alternative_list:
+											for channel in alternative_list:
 												refnum = getRefNum(channel)
 												if refnum and refnum not in channels:
 													channels.append(refnum)
@@ -166,6 +166,7 @@ def getBouquetChannelList():
 										refnum = getRefNum(service.toString())
 										if refnum and refnum not in channels:
 											channels.append(refnum)
+
 	else:
 		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'
 		bouquet_root = eServiceReference(bouquet_rootstr)
@@ -176,10 +177,10 @@ def getBouquetChannelList():
 				if not service.valid():
 					break
 				if not (service.flags & mask):
-					if service.flags & altrernative:
-						altrernative_list = getAlternatives(service)
-						if altrernative_list:
-							for channel in altrernative_list:
+					if service.flags & alternative:
+						alternative_list = getAlternatives(service)
+						if alternative_list:
+							for channel in alternative_list:
 								refnum = getRefNum(channel)
 								if refnum and refnum not in channels:
 									channels.append(refnum)
@@ -189,13 +190,12 @@ def getBouquetChannelList():
 							channels.append(refnum)
 	return channels
 
+
 # Filter servicerefs that this box can display by starting a fake recording.
-
-
 def channelFilter(ref):
 	if not ref:
 		return False
-	# ignore non IPTV
+	# Ignore non IPTV
 	if config.plugins.epgimport.import_onlyiptv.value and ("%3a//" not in ref.lower() or ref.startswith("1")):
 		return False
 	sref = eServiceReference(ref)
@@ -214,15 +214,13 @@ def channelFilter(ref):
 		print(f"Serviceref is in ignore list:{sref.toString()}", file=log)
 		return False
 	if "%3a//" in ref.lower():
-		# print("URL detected in serviceref, not checking fake recording on serviceref:", ref, file=log)
 		return True
 	fakeRecService = NavigationInstance.instance.recordService(sref, True)
 	if fakeRecService:
 		fakeRecResult = fakeRecService.start(True)
 		NavigationInstance.instance.stopRecordService(fakeRecService)
 		# -7 (errNoSourceFound) occurs when tuner is disconnected.
-		r = fakeRecResult in (0, -7)
-		return r
+		return fakeRecResult in (0, -7)
 	print(f"Invalid serviceref string: {ref}", file=log)
 	return False
 
@@ -459,7 +457,6 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		self.newConfig()
 
 	def keyOk(self):
-		# ConfigListScreen.keyOK(self)
 		sel = self["config"].getCurrent()[1]
 		if sel and sel == self.EPG.day_profile:
 			self.session.open(EPGImportProfile)
@@ -493,7 +490,6 @@ class EPGImportConfig(ConfigListScreen, Screen):
 					d, t = FuzzyTime(int(start))
 				except Exception as e:
 					print(f"[EPGImport] Fallback with FuzzyTime also failed: {e}")
-
 			self["statusbar"].setText(_(f"Last import: {d} {t}, {count} events"))
 		self.lastImportResult = lastImportResult
 
@@ -968,7 +964,7 @@ class AutoStartTimer:
 
 	def afterFinishImportCheck(self):
 		if config.plugins.epgimport.deepstandby.value == "wakeup" and getFPWasTimerWakeup():
-			if exists(STANDBY_FLAG_FILE) or exists("/tmp/.EPGImportAnswerBoot"):
+			if exists(STANDBY_FLAG_FILE) or exists(ANSWER_BOOT_FILE):
 				print("[XMLTVImport] is restart enigma2", file=log)
 			else:
 				wake = self.getStatus()
@@ -1038,16 +1034,15 @@ def onBootStartCheck():
 		elif runboot == "3" and getFPWasTimerWakeup():
 			on_start = True
 			print("[XMLTVImport] is automatic boot", file=log)
-		flag = "/tmp/.EPGImportAnswerBoot"
 		if config.plugins.epgimport.runboot_restart.value and runboot != "3":
-			if exists(flag):
+			if exists(ANSWER_BOOT_FILE):
 				on_start = False
 				print("[XMLTVImport] not starting import - is restart enigma2", file=log)
 			else:
 				try:
-					open(flag, "wb").close()
+					open(ANSWER_BOOT_FILE, "wb").close()
 				except:
-					print("Failed to create /tmp/.EPGImportAnswerBoot", file=log)
+					print(f"Failed to create {ANSWER_BOOT_FILE}", file=log)
 		if config.plugins.epgimport.runboot_day.value:
 			now = localtime()
 			cur_day = int(now.tm_wday)
