@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-16 06:40+0000\n"
-"PO-Revision-Date: 2024-09-20 17:30+0300\n"
+"PO-Revision-Date: 2025-03-02 08:38+0200\n"
 "Last-Translator: Orlandox\n"
 "Language-Team: tomppaa, Orlandox\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: ../plugin.py:739
 msgid ""
@@ -71,8 +71,8 @@ msgid "Clear"
 msgstr "Tyhjennä"
 
 #: ../plugin.py:382
-msgid "Clearing current EPG before import"
-msgstr "Tyhjennä nykyinen EPG ennen latausta"
+msgid "Delete current EPG before import"
+msgstr "Poista nykyinen EPG ennen latausta"
 
 #: ../plugin.py:375
 msgid "Consider setting \"Days Profile\""
