@@ -75,8 +75,8 @@ msgid "Clearing current EPG before import"
 msgstr "Vymazání aktuálního EPG před importem"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
-msgstr "Zvažte nastavení \"Profil dnů\""
+msgid "Consider setting 'Days Profile'"
+msgstr "Zvažte nastavení 'Profil dnů'"
 
 #: ../plugin.py:650
 msgid "Days Profile"
@@ -232,12 +232,12 @@ msgid "Select service to add..."
 msgstr "Vyberte službu, kterou chcete přidat..."
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Zobrazit \"EPGImport\" v rozšířeních"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Zobrazit 'EPGImport' v rozšířeních"
 
 #: ../plugin.py:378
-msgid "Show \"EPGImport\" in plugins"
-msgstr "Zobrazit \"EPGImport\" v pluginech"
+msgid "Show 'EPGImport' in plugins"
+msgstr "Zobrazit 'EPGImport' v pluginech"
 
 #: ../plugin.py:520
 msgid "Show log"

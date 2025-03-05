@@ -75,8 +75,8 @@ msgid "Clearing current EPG before import"
 msgstr "Tyhjennä nykyinen EPG ennen latausta"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
-msgstr "Harkitse asetusta \"Valitse päivät\""
+msgid "Consider setting 'Days Profile'"
+msgstr "Harkitse asetusta 'Valitse päivät'"
 
 #: ../plugin.py:650
 msgid "Days Profile"
@@ -232,12 +232,12 @@ msgid "Select service to add..."
 msgstr "Valitse lisättävä kanava..."
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Näytä \"EPG lataus\" laajennusvalikossa"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Näytä 'EPG lataus' laajennusvalikossa"
 
 #: ../plugin.py:378
-msgid "Show \"EPGImport\" in plugins"
-msgstr "Näytä \"EPG lataus\" lisäosissa"
+msgid "Show 'EPGImport' in plugins"
+msgstr "Näytä 'EPG lataus' lisäosissa"
 
 #: ../plugin.py:520
 msgid "Show log"

@@ -71,8 +71,8 @@ msgid "Clearing current EPG before import"
 msgstr "Aktiivse EPG eemaldamine enne importi"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
-msgstr "Seadista \"päevade profiil\""
+msgid "Consider setting 'Days Profile'"
+msgstr "Seadista 'päevade profiil'"
 
 #: ../plugin.py:650
 msgid "Days Profile"
@@ -228,13 +228,13 @@ msgid "Select service to add..."
 msgstr ""
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Kuva \"EPG import\" laienduste menüüs"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Kuva 'EPG import' laienduste menüüs"
 
 #: ../plugin.py:378
 #, fuzzy
-msgid "Show \"EPGImport\" in plugins"
-msgstr "Kuva \"EPG import\" laienduste menüüs"
+msgid "Show 'EPGImport' in plugins"
+msgstr "Kuva 'EPG import' laienduste menüüs"
 
 #: ../plugin.py:520
 msgid "Show log"

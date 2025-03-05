@@ -75,8 +75,8 @@ msgid "Clearing current EPG before import"
 msgstr "Az aktuális EPG törlése importálás előtt"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
-msgstr "Legyen beállítva a \"Napi profil\""
+msgid "Consider setting 'Days Profile'"
+msgstr "Legyen beállítva a 'Napi profil'"
 
 #: ../plugin.py:650
 msgid "Days Profile"
@@ -232,11 +232,11 @@ msgid "Select service to add..."
 msgstr "Válassza ki a hozzáadni kívánt szolgáltatást..."
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Az \"EPGImport\" megjelenítése a bővítményekben"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Az 'EPGImport' megjelenítése a bővítményekben"
 
 #: ../plugin.py:378
-msgid "Show \"EPGImport\" in plugins"
+msgid "Show 'EPGImport' in plugins"
 msgstr "Az „EPGImport” megjelenítése a bővítményekben"
 
 #: ../plugin.py:520

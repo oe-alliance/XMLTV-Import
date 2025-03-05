@@ -72,7 +72,7 @@ msgid "Clearing current EPG before import"
 msgstr ""
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
+msgid "Consider setting 'Days Profile'"
 msgstr ""
 
 #: ../plugin.py:650
@@ -232,12 +232,12 @@ msgstr ""
 
 #: ../plugin.py:377
 #, fuzzy
-msgid "Show \"EPGImport\" in extensions"
+msgid "Show 'EPGImport' in extensions"
 msgstr "عرض الملحقات"
 
 #: ../plugin.py:378
 #, fuzzy
-msgid "Show \"EPGImport\" in plugins"
+msgid "Show 'EPGImport' in plugins"
 msgstr "عرض متصفح البلج إنز"
 
 #: ../plugin.py:520

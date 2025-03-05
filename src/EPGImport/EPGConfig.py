@@ -54,11 +54,7 @@ class EPGChannel:
 	def __init__(self, filename, urls=None, offset=0):
 		self.mtime = None
 		self.name = filename
-		if urls is None:
-			self.urls = [filename]
-		else:
-			self.urls = urls
-		# self.items = None
+		self.urls = [filename] if urls is None else urls
 		self.items = defaultdict(set)
 		self.offset = offset
 
@@ -91,28 +87,19 @@ class EPGChannel:
 			supported_formats = ['.xml', '.xml.gz', '.xml.xz']  # fixed
 			# Make sure the file is in a compatible format
 			if any(downloadedFile.endswith(ext) for ext in supported_formats):
-
 				context = iterparse(stream)
 				for event, elem in context:
 					if elem.tag == "channel":
 						channel_id = elem.get("id").lower()
 						ref = str(elem.text or '').strip()
-
 						if not channel_id or not ref:
 							continue  # Skip empty values
 						if ref and filterCallback(ref):
-							"""
-							if channel_id in self.items:
-								self.items[channel_id].append(ref)
-							else:
-								self.items[channel_id] = [ref]
-							"""
 							if channel_id in self.items:
 								self.items[channel_id].append(ref)
 								self.items[channel_id] = list(dict.fromkeys(self.items[channel_id]))  # Ensure uniqueness
 							else:
 								self.items[channel_id] = [ref]
-
 						elem.clear()
 
 		except Exception as e:
@@ -161,6 +148,8 @@ class EPGSource:
 		self.url = choice(self.urls)
 		self.description = elem.findtext("description", self.url)
 		self.category = category
+		if not self.description:
+			self.description = self.url
 		self.offset = offset
 		self.format = elem.get("format", "xml")
 		self.channels = getChannels(path, elem.get("channels"), offset)

@@ -75,7 +75,7 @@ msgid "Clearing current EPG before import"
 msgstr "EPG vor dem Import löschen"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
+msgid "Consider setting 'Days Profile'"
 msgstr "Ausgewählte Tage berücksichtigen"
 
 #: ../plugin.py:650
@@ -232,12 +232,12 @@ msgid "Select service to add..."
 msgstr "Wähle Sender zum Hinzufügen…"
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "\"EPG-Import\" in Erweiterungen anzeigen"
+msgid "Show 'EPGImport' in extensions"
+msgstr "EPG-Import in Erweiterungen anzeigen"
 
 #: ../plugin.py:378
-msgid "Show \"EPGImport\" in plugins"
-msgstr "\"EPG-Import\" im PluginBrowser anzeigen"
+msgid "Show 'EPGImport' in plugins"
+msgstr "EPG-Import im PluginBrowser anzeigen"
 
 #: ../plugin.py:520
 msgid "Show log"

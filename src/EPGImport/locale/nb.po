@@ -185,7 +185,7 @@ msgid "Load EPG only for IPTV channels"
 msgstr ""
 
 #: plugin.py:377
-msgid "Consider setting \"Days Profile\""
+msgid "Consider setting 'Days Profile'"
 msgstr ""
 
 #: plugin.py:378
@@ -193,11 +193,11 @@ msgid "Skip import on restart GUI"
 msgstr ""
 
 #: plugin.py:379
-msgid "Show \"EPGImport\" in extensions"
+msgid "Show 'EPGImport' in extensions"
 msgstr ""
 
 #: plugin.py:380
-msgid "Show \"EPGImport\" in plugins"
+msgid "Show 'EPGImport' in plugins"
 msgstr ""
 
 #: plugin.py:382

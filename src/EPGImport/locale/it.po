@@ -88,8 +88,8 @@ msgid "Delete current EPG before import"
 msgstr "Cancella EPG corrente prima dell’importazione"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
-msgstr "Considera l'impostazione \"Profilo giorni\""
+msgid "Consider setting 'Days Profile'"
+msgstr "Considera l'impostazione 'Profilo giorni'"
 
 #: ../plugin.py:650
 msgid "Days Profile"
@@ -246,12 +246,12 @@ msgid "Select service to add..."
 msgstr "Seleziona il canale da aggiungere..."
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Mostra \"EPGImport\" nelle estensioni"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Mostra 'EPGImport' nelle estensioni"
 
 #: ../plugin.py:378
-msgid "Show \"EPGImport\" in plugins"
-msgstr "Mostra \"EPGImport\" nei plugins"
+msgid "Show 'EPGImport' in plugins"
+msgstr "Mostra 'EPGImport' nei plugins"
 
 #: ../plugin.py:520
 msgid "Show log"

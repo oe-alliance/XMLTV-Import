@@ -70,8 +70,8 @@ msgid "Clearing current EPG before import"
 msgstr "导入前清除当前EPG "
 
 #: ../plugin.py:377
-msgid "Consider setting \"Days Profile\""
-msgstr "通过设置 \"每天扼要介绍 \" "
+msgid "Consider setting 'Days Profile'"
+msgstr "通过设置 '每天扼要介绍 ' "
 
 #: ../plugin.py:652
 msgid "Days Profile"
@@ -227,11 +227,11 @@ msgid "Select service to add..."
 msgstr ""
 
 #: ../plugin.py:379
-msgid "Show \"EPGImport\" in extensions"
+msgid "Show 'EPGImport' in extensions"
 msgstr "在扩展栏中显示'EPG导入' "
 
 #: ../plugin.py:380
-msgid "Show \"EPGImport\" in plugins"
+msgid "Show 'EPGImport' in plugins"
 msgstr "在插件中显示'EPG导入'"
 
 #: ../plugin.py:522

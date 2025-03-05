@@ -71,8 +71,8 @@ msgid "Clearing current EPG before import"
 msgstr "Clearing current EPG before import"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
-msgstr "Consider setting \"Days Profile\""
+msgid "Consider setting 'Days Profile'"
+msgstr "Consider setting 'Days Profile'"
 
 #: ../plugin.py:650
 msgid "Days Profile"
@@ -228,13 +228,13 @@ msgid "Select service to add..."
 msgstr ""
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Show \"EPGImport\" in extensions"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Show 'EPGImport' in extensions"
 
 #: ../plugin.py:378
 #, fuzzy
-msgid "Show \"EPGImport\" in plugins"
-msgstr "Show \"EPGImport\" in extensions"
+msgid "Show 'EPGImport' in plugins"
+msgstr "Show 'EPGImport' in extensions"
 
 #: ../plugin.py:520
 msgid "Show log"

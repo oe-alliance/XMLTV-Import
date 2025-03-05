@@ -69,8 +69,8 @@ msgid "Clearing current EPG before import"
 msgstr "Καθαρισμός τρέχοντος EPG πριν την εισαγωγή"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
-msgstr "Θυμηθείτε να ορίσετε το \"Προφίλ Ημερών\""
+msgid "Consider setting 'Days Profile'"
+msgstr "Θυμηθείτε να ορίσετε το 'Προφίλ Ημερών'"
 
 #: ../plugin.py:650
 msgid "Days Profile"
@@ -226,13 +226,13 @@ msgid "Select service to add..."
 msgstr ""
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Εμφάνιση της \"Εισαγωγής EPG\" στις επεκτάσεις"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Εμφάνιση της 'Εισαγωγής EPG' στις επεκτάσεις"
 
 #: ../plugin.py:378
 #, fuzzy
-msgid "Show \"EPGImport\" in plugins"
-msgstr "Εμφάνιση της \"Εισαγωγής EPG\" στις επεκτάσεις"
+msgid "Show 'EPGImport' in plugins"
+msgstr "Εμφάνιση της 'Εισαγωγής EPG' στις επεκτάσεις"
 
 #: ../plugin.py:520
 msgid "Show log"

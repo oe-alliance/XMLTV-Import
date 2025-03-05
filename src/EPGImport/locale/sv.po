@@ -192,8 +192,8 @@ msgid "Load EPG only for IPTV channels"
 msgstr "Načítajte EPG iba pre kanály IPTV"
 
 #: plugin.py:377
-msgid "Consider setting \"Days Profile\""
-msgstr "Zvážte nastavenie \"Profilu dní\""
+msgid "Consider setting 'Days Profile'"
+msgstr "Zvážte nastavenie 'Profilu dní'"
 
 #: plugin.py:378
 msgid "Skip import on restart GUI"
@@ -201,15 +201,15 @@ msgstr "Preskočiť import pri reštartovaní grafického používateľského ro
 
 #: plugin.py:379
 #, fuzzy
-#| msgid "Show \"EPGImport\" in extensions"
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Zobraziť \"EPGImport\" v rozšíreniach"
+#| msgid "Show 'EPGImport' in extensions"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Zobraziť 'EPGImport' v rozšíreniach"
 
 #: plugin.py:380
 #, fuzzy
-#| msgid "Show \"EPGImport\" in plugins"
-msgid "Show \"EPGImport\" in plugins"
-msgstr "Zobraziť \"EPGImport\" v pluginoch"
+#| msgid "Show 'EPGImport' in plugins"
+msgid "Show 'EPGImport' in plugins"
+msgstr "Zobraziť 'EPGImport' v pluginoch"
 
 #: plugin.py:382
 msgid "Load long descriptions up to X days"

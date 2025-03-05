@@ -71,7 +71,7 @@ msgid "Clearing current EPG before import"
 msgstr "içe aktarmadan önce mevcut e-rehber verisini temizle"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
+msgid "Consider setting 'Days Profile'"
 msgstr "seçtiğim çalışma günlerini dikkate al"
 
 #: ../plugin.py:650
@@ -228,12 +228,12 @@ msgid "Select service to add..."
 msgstr "eklenecek kanalı seçiniz"
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
+msgid "Show 'EPGImport' in extensions"
 msgstr "uygulamalar listesinde göster"
 
 #: ../plugin.py:378
 #, fuzzy
-msgid "Show \"EPGImport\" in plugins"
+msgid "Show 'EPGImport' in plugins"
 msgstr "uygulamalar listesinde göster"
 
 #: ../plugin.py:520

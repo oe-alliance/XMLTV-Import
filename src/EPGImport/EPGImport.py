@@ -28,11 +28,10 @@ if config.misc.epgcache_filename.value:
 else:
 	config.misc.epgcache_filename.setValue(HDD_EPG_DAT)
 PARSERS = {"xmltv": "gen_xmltv", "genxmltv": "gen_xmltv"}
-# sslverify = False
 
 
 def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None, *args, **kwargs):
-	# print("[EPGImport][threadGetPage] url, file, args, kwargs", url, "   ", file, "	", args, "	 ", kwargs)
+	# print("[EPGImport][threadGetPage] url, file, args, kwargs", url, "   ", file, "   ", args, "   ", kwargs)
 	try:
 		s = Session()
 		s.headers = {}
@@ -58,7 +57,7 @@ def threadGetPage(url=None, file=None, urlheaders=None, success=None, fail=None,
 
 	except HTTPError as httperror:
 		print("EPGImport][threadGetPage] Http error: ", httperror)
-		fail(httperror)	 # E0602 undefined name "error"
+		fail(httperror)  # E0602 undefined name "error"
 
 	except RequestException as error:
 		print("[EPGImport][threadGetPage] error: ", error)
@@ -94,15 +93,15 @@ def getTimeFromHourAndMinutes(hour, minute):
 
 	# Calculate the timestamp for the specified time (today with the given hour and minute)
 	begin = int(mktime((
-		now.tm_year,	 # Current year
-		now.tm_mon,		 # Current month
-		now.tm_mday,	 # Current day
-		hour,			 # Specified hour
-		minute,			 # Specified minute
-		0,				 # Seconds (set to 0)
-		now.tm_wday,	 # Day of the week
-		now.tm_yday,	 # Day of the year
-		now.tm_isdst	 # Daylight saving time (DST)
+		now.tm_year,     # Current year
+		now.tm_mon,      # Current month
+		now.tm_mday,     # Current day
+		hour,            # Specified hour
+		minute,          # Specified minute
+		0,               # Seconds (set to 0)
+		now.tm_wday,     # Day of the week
+		now.tm_yday,     # Day of the year
+		now.tm_isdst     # Daylight saving time (DST)
 	)))
 
 	return begin
@@ -150,14 +149,14 @@ class OudeisImporter:
 			except Exception as e:
 				import traceback
 				traceback.print_exc()
-				print("[EPGImport][importEvents] ### importEvents exception:", e)
+				print(f"[EPGImport][OudeisImporter][importEvents] ### importEvents exception: {e}")
 
 
 def unlink_if_exists(filename):
 	try:
 		unlink(filename)
 	except Exception as e:
-		print(f"[EPGImport] warning: Could not remove '{filename}' intermediate", repr(e))
+		print(f"[EPGImport] warning: Could not remove '{filename}' intermediate {repr(e)}")
 
 
 class EPGImport:
@@ -269,7 +268,6 @@ class EPGImport:
 		if filename.endswith(".gz"):
 			self.fd = gzip.open(filename, "rb")
 			try:  # read a bit to make sure it's a gzip file
-				# file_content = self.fd.peek(1)  # file_content ???
 				self.fd.read(10)
 				self.fd.seek(0, 0)
 			except gzip.BadGzipFile as e:
@@ -289,7 +287,6 @@ class EPGImport:
 				from backports import lzma
 			self.fd = lzma.open(filename, "rb")
 			try:  # read a bit to make sure it's an xz file
-				# file_content = self.fd.peek(1)  # file_content ???
 				self.fd.read(10)
 				self.fd.seek(0, 0)
 			except lzma.LZMAError as e:
@@ -313,7 +310,7 @@ class EPGImport:
 				print(f"[EPGImport][afterDownload] warning: Could not remove '{filename}' intermediate", e)
 
 		self.channelFiles = self.source.channels.downloadables()
-		# print("[EPGImport][afterDownload] self.source, self.channelFiles", self.source, "	  ", self.channelFiles)
+		# print("[EPGImport][afterDownload] self.source, self.channelFiles", self.source, "   ", self.channelFiles)
 		if not self.channelFiles:
 			self.afterChannelDownload(None, None)
 		else:
@@ -362,7 +359,7 @@ class EPGImport:
 		if self.channelFiles:
 			filename = choice(self.channelFiles)
 			self.channelFiles.remove(filename)
-			print(f"[EPGImport][channelDownloadFail] retry	alternative download channel - new url filename {filename}")
+			print(f"[EPGImport][channelDownloadFail] retry alternative download channel - new url filename {filename}")
 			self.urlDownload(filename, self.afterChannelDownload, self.channelDownloadFail)
 		else:
 			print("[EPGImport][channelDownloadFail] no more alternatives for channels")
@@ -375,7 +372,7 @@ class EPGImport:
 
 	def readEpgDatFile(self, filename, deleteFile=False):
 		if not hasattr(self.epgcache, "load"):
-			print("[EPGImport] Cannot load EPG.DAT files on unpatched enigma. Need CrossEPG patch.")
+			print("[EPGImport][readEpgDatFile] Cannot load EPG.DAT files on unpatched enigma. Need CrossEPG patch.")
 			return
 
 		unlink_if_exists(HDD_EPG_DAT)
@@ -394,13 +391,13 @@ class EPGImport:
 			elif filename != HDD_EPG_DAT:
 				symlink(filename, HDD_EPG_DAT)
 
-			print(f"[EPGImport] Importing {HDD_EPG_DAT}")
+			print(f"[EPGImport][readEpgDatFile] Importing {HDD_EPG_DAT}")
 			self.epgcache.load()
 
 			if deleteFile:
 				unlink_if_exists(filename)
 		except Exception as e:
-			print(f"[EPGImport] Failed to import {filename}:", e)
+			print(f"[EPGImport][readEpgDatFile] Failed to import {filename}: {e}")
 
 	def fileno(self):
 		if self.fd is not None:
@@ -426,13 +423,12 @@ class EPGImport:
 			try:
 				unlink_if_exists(filename)
 			except Exception as e:
-				print(f"[EPGImport] warning: Could not remove '{filename}' intermediate %s" % e)
+				print(f"[EPGImport][doThreadRead] warning: Could not remove '{filename}' intermediate {e}")
 		return
 
 	def doRead(self):
 		"""called from reactor to read some data"""
 		try:
-			# returns tuple (ref, data) or None when nothing available yet.
 			data = next(self.iterator)
 			if data is not None:
 				self.eventCount += 1

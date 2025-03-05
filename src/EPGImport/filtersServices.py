@@ -8,8 +8,9 @@ from Screens.ChannelSelection import service_types_radio, service_types_tv, Chan
 from enigma import eServiceReference, eServiceCenter
 from Components.Sources.List import List
 from Components.Label import Label
+from os.path import isdir
+from os import system
 from . import EPGConfig
-import os
 
 
 OFF = 0
@@ -19,8 +20,8 @@ EDIT_ALTERNATIVES = 2
 
 def getProviderName(ref):
 	typestr = ref.getData(0) in (2, 10) and service_types_radio or service_types_tv
-	pos = typestr.rfind(':')
-	rootstr = '%s (channelID == %08x%04x%04x) && %s FROM PROVIDERS ORDER BY name' % (typestr[:pos + 1], ref.getUnsignedData(4), ref.getUnsignedData(2), ref.getUnsignedData(3), typestr[pos + 1:])
+	pos = typestr.rfind(":")
+	rootstr = "%s (channelID == %08x%04x%04x) && %s FROM PROVIDERS ORDER BY name" % (typestr[:pos + 1], ref.getUnsignedData(4), ref.getUnsignedData(2), ref.getUnsignedData(3), typestr[pos + 1:])
 	provider_root = eServiceReference(rootstr)
 	serviceHandler = eServiceCenter.getInstance()
 	providerlist = serviceHandler.list(provider_root)
@@ -39,7 +40,7 @@ def getProviderName(ref):
 						if service == ref:
 							info = serviceHandler.info(provider)
 							return info and info.getName(provider) or "Unknown"
-	return ''
+	return ""
 
 
 class FiltersList():
@@ -49,33 +50,29 @@ class FiltersList():
 
 	def loadFrom(self, filename):
 		try:
-			cfg = open(filename, 'r')
-		except:
-			return
-		while True:
-			line = cfg.readline()
-			if not line:
-				break
-			if line[0] in '#;\n':
-				continue
-			ref = line.strip()
-			if ref not in self.services:
-				self.services.append(ref)
-		cfg.close()
+			with open(filename, "r") as cfg:
+				for line in cfg:
+					if line[0] in "#;\n":
+						continue
+					ref = line.strip()
+					if ref not in self.services:
+						self.services.append(ref)
+		except Exception as e:
+			print(f"Error loading from {filename}: {e}")
 
 	def saveTo(self, filename):
 		try:
-			if not os.path.isdir('/etc/epgimport'):
-				os.system('mkdir /etc/epgimport')
-			cfg = open(filename, 'w')
+			if not isdir("/etc/epgimport"):
+				system("mkdir /etc/epgimport")
+			cfg = open(filename, "w")
 		except:
 			return
 		for ref in self.services:
-			cfg.write('%s\n' % (ref))
+			cfg.write("%s\n" % (ref))
 		cfg.close()
 
 	def load(self):
-		self.loadFrom('/etc/epgimport/ignore.conf')
+		self.loadFrom("/etc/epgimport/ignore.conf")
 
 	def reload_module(self):
 		self.services = []
@@ -85,7 +82,7 @@ class FiltersList():
 		return self.services
 
 	def save(self):
-		self.saveTo('/etc/epgimport/ignore.conf')
+		self.saveTo("/etc/epgimport/ignore.conf")
 
 	def addService(self, ref):
 		if isinstance(ref, str) and ref not in self.services:
@@ -157,9 +154,10 @@ class filtersServicesSetup(Screen):
 				"red": self.keyRed,
 				"green": self.keyGreen,
 				"yellow": self.keyYellow,
-				"blue": self.keyBlue,
-			}, -1)
-
+				"blue": self.keyBlue
+			},
+			-1
+		)
 		self.setTitle(_("Ignore services list"))
 
 	def keyRed(self):
@@ -181,8 +179,8 @@ class filtersServicesSetup(Screen):
 			if isinstance(ref, list):
 				self.RefList.addServices(ref)
 			else:
-				refstr = ':'.join(ref.toString().split(':')[:11])
-				if any(x in refstr for x in ('1:0:', '4097:0:', '5001:0:', '5002:0:')):
+				refstr = ":".join(ref.toString().split(":")[:11])
+				if any(x in refstr for x in ("1:0:", "4097:0:", "5001:0:", "5002:0:")):
 					self.RefList.addService(refstr)
 			self.updateList()
 			self.updateButtons()
@@ -213,7 +211,7 @@ class filtersServicesSetup(Screen):
 	def updateList(self):
 		self.list = []
 		for service in self.RefList.servicesList():
-			if '1:0:' in service:
+			if any(x in service for x in ("1:0:", "4097:0:", "5001:0:", "5002:0:")):
 				provname = getProviderName(eServiceReference(service))
 				servname = ServiceReference(service).getServiceName() or "N/A"
 				self.list.append((servname, provname, service))
@@ -255,7 +253,7 @@ class filtersServicesSelection(ChannelSelectionBase):
 	def channelSelected(self):
 		ref = self.getCurrentSelection()
 		if self.providers and (ref.flags & 7) == 7:
-			if 'provider' in ref.toString():
+			if "provider" in ref.toString():
 				menu = [(_("All services provider"), "providerlist")]
 
 				def addAction(choice):
@@ -269,7 +267,7 @@ class filtersServicesSelection(ChannelSelectionBase):
 									service = servicelist.getNext()
 									if not service.valid():
 										break
-									refstr = ':'.join(service.toString().split(':')[:11])
+									refstr = ":".join(service.toString().split(":")[:11])
 									providerlist.append((refstr))
 								if providerlist:
 									self.close(providerlist)
@@ -280,7 +278,7 @@ class filtersServicesSelection(ChannelSelectionBase):
 				self.enterPath(ref)
 		elif (ref.flags & 7) == 7:
 			self.enterPath(ref)
-		elif 'provider' not in ref.toString() and not self.providers and not (ref.flags & (64 | 128)) and '%3a//' not in ref.toString():
+		elif "provider" not in ref.toString() and not self.providers and not (ref.flags & (64 | 128)) and "%3a//" not in ref.toString():
 			if ref.valid():
 				self.close(ref)
 

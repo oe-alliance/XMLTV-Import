@@ -72,7 +72,7 @@ msgid "Clearing current EPG before import"
 msgstr "Verwijder EPG voor de import"
 
 #: ../plugin.py:375
-msgid "Consider setting \"Days Profile\""
+msgid "Consider setting 'Days Profile'"
 msgstr "Overweeg dagen in te stellen"
 
 #: ../plugin.py:650
@@ -229,12 +229,12 @@ msgid "Select service to add..."
 msgstr "Kies het kanaal dat toegevoegd moet worden..."
 
 #: ../plugin.py:377
-msgid "Show \"EPGImport\" in extensions"
-msgstr "Toon \"EPG importeur\" in extensions"
+msgid "Show 'EPGImport' in extensions"
+msgstr "Toon 'EPG importeur' in extensions"
 
 #: ../plugin.py:378
-msgid "Show \"EPGImport\" in plugins"
-msgstr "Toon \"EPG importeur\" in plugins"
+msgid "Show 'EPGImport' in plugins"
+msgstr "Toon 'EPG importeur' in plugins"
 
 #: ../plugin.py:520
 msgid "Show log"

@@ -11,7 +11,7 @@ setup(name='enigma2-plugin-extensions-epgimport',
        description='C implementation of Dream CRC32 algorithm',
        package_dir={pkg: 'EPGImport'},
        packages=[pkg],
-       package_data={pkg: ['*.png', 'locale/*/LC_MESSAGES/*.mo']},
+       package_data={pkg: ['*.png', '*.xml', 'locale/*/LC_MESSAGES/*.mo']},
        ext_modules=[dreamcrc],
        cmdclass=setup_translate.cmdclass,  # for translation
 )

@@ -4,9 +4,11 @@
 # Lots of stuff removed by Mike Looijmans
 # Updated for python3 by TwolDE & Huevos with testing input by Thawtes
 
-import os
-import struct
 from datetime import datetime
+from os import unlink
+from os.path import exists, join
+from struct import Struct, pack
+from time import gmtime
 # EpgDatV8 = os.path.isfile("/etc/image-version") and "distro=openvix" in open("/etc/image-version").read()
 EpgDatV8 = True
 
@@ -149,25 +151,25 @@ class epgdat_class:
 
 	def __init__(self, tmp_path, lamedb_path, epgdat_path):
 		self.EPGDAT_FILENAME = epgdat_path
-		self.EPGDAT_TMP_FILENAME = os.path.join(tmp_path, self.EPGDAT_TMP_FILENAME)
+		self.EPGDAT_TMP_FILENAME = join(tmp_path, self.EPGDAT_TMP_FILENAME)
 		self.EPG_TMP_FD = open(self.EPGDAT_TMP_FILENAME, "wb")
 		self.LAMEDB = lamedb_path
-		self.s_B = struct.Struct("B")
-		self.s_BB = struct.Struct("BB")
-		self.s_BBB = struct.Struct("BBB")
-		self.s_b_HH = struct.Struct(">HH")
-		self.s_I = struct.Struct(self.LB_ENDIAN + "I")
-		self.s_II = struct.Struct(self.LB_ENDIAN + "II")
-		self.s_IIII = struct.Struct(self.LB_ENDIAN + "IIII")
-		self.s_B3sHBB = struct.Struct("B3sHBB")
-		self.s_B3sBBB = struct.Struct("B3sBBB")
-		self.s_3sBB = struct.Struct("3sBB")
+		self.s_B = Struct("B")
+		self.s_BB = Struct("BB")
+		self.s_BBB = Struct("BBB")
+		self.s_b_HH = Struct(">HH")
+		self.s_I = Struct(self.LB_ENDIAN + "I")
+		self.s_II = Struct(self.LB_ENDIAN + "II")
+		self.s_IIII = Struct(self.LB_ENDIAN + "IIII")
+		self.s_B3sHBB = Struct("B3sHBB")
+		self.s_B3sBBB = Struct("B3sBBB")
+		self.s_3sBB = Struct("3sBB")
 
 	def set_endian(self, endian):
 		self.LB_ENDIAN = endian
-		self.s_I = struct.Struct(self.LB_ENDIAN + "I")
-		self.s_II = struct.Struct(self.LB_ENDIAN + "II")
-		self.s_IIII = struct.Struct(self.LB_ENDIAN + "IIII")
+		self.s_I = Struct(self.LB_ENDIAN + "I")
+		self.s_II = Struct(self.LB_ENDIAN + "II")
+		self.s_IIII = Struct(self.LB_ENDIAN + "IIII")
 
 	def set_excludedsid(self, exsidlist):
 		self.EXCLUDED_SID = exsidlist
@@ -262,7 +264,7 @@ class epgdat_class:
 				event_time_HMS = datetime.utcfromtimestamp(event[0])  # actually YYYY-MM-DD HH:MM:SS
 				dvb_date = event_time_HMS.toordinal() - self.EPG_PROLEPTIC_ZERO_DAY  # epg.dat date is = (proleptic date - epg_zero_day)
 				# event_duration_HMS = datetime.utcfromtimestamp(event[1])  # actually 1970-01-01 HH:MM:SS
-				event_duration_HMS = datetime.datetime(*time.gmtime(event[1])[:6])  # actually 1970-01-01 HH:MM:SS
+				event_duration_HMS = datetime.datetime(*gmtime(event[1])[:6])  # actually 1970-01-01 HH:MM:SS
 				# EVENT DATA
 				# simply create an incremental ID,  starting from '1'
 				# event_id appears to be per channel, so this should be okay.
@@ -284,9 +286,9 @@ class epgdat_class:
 			epgdat_fd = open(self.EPGDAT_FILENAME, "wb")
 			# HEADER 1
 			if EpgDatV8:
-				pack_1 = struct.pack(self.LB_ENDIAN + "I13sI", 0x98765432, b'ENIGMA_EPG_V8', int(self.EPG_HEADER1_channel_count))
+				pack_1 = pack(self.LB_ENDIAN + "I13sI", 0x98765432, b'ENIGMA_EPG_V8', int(self.EPG_HEADER1_channel_count))
 			else:
-				pack_1 = struct.pack(self.LB_ENDIAN + "I13sI", 0x98765432, b'ENIGMA_EPG_V7', int(self.EPG_HEADER1_channel_count))
+				pack_1 = pack(self.LB_ENDIAN + "I13sI", 0x98765432, b'ENIGMA_EPG_V7', int(self.EPG_HEADER1_channel_count))
 			epgdat_fd.write(pack_1)
 			# write first EPG.DAT section
 			EPG_TMP_FD = open(self.EPGDAT_TMP_FILENAME, "rb")
@@ -308,5 +310,5 @@ class epgdat_class:
 				epgdat_fd.write(pack_4 + temp_crc_data[0])  # packed (crc, packed data) & crc
 			epgdat_fd.close()
 		# *** cleanup **
-		if os.path.exists(self.EPGDAT_TMP_FILENAME):
-			os.unlink(self.EPGDAT_TMP_FILENAME)
+		if exists(self.EPGDAT_TMP_FILENAME):
+			unlink(self.EPGDAT_TMP_FILENAME)
