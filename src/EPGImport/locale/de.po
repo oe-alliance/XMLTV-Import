@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-16 06:40+0000\n"
+"POT-Creation-Date: 2025-03-08 20:28+0100\n"
 "PO-Revision-Date: 2025-02-26 17:59+0100\n"
 "Last-Translator: jbleyel\n"
 "Language-Team: none\n"
@@ -18,7 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.5\n"
 
-#: ../plugin.py:739
 msgid ""
 "\n"
 "Import of epg data will start.\n"
@@ -30,89 +29,78 @@ msgstr ""
 "wird bis zu einigen Minuten dauern.\n"
 "Ist das OK?"
 
-#: ../plugin.py:739
 msgid " events\n"
 msgstr " Ereignisse\n"
 
-#: ../filtersServices.py:153
 msgid "Add Channel"
 msgstr "Sender hinzufügen"
 
-#: ../filtersServices.py:152
 msgid "Add Provider"
 msgstr "Senderkette hinzufügen"
 
-#: ../filtersServices.py:264
 msgid "All services provider"
 msgstr "Alle Senderketten"
 
-#: ../plugin.py:1095
 msgid "Automated EPG Importer"
 msgstr "Automatisierter EPG-Import"
 
-#: ../plugin.py:366
+#, fuzzy
 msgid "Automatic import EPG"
-msgstr "EPG automatisch importieren"
+msgstr "Automatisierter EPG-Import"
 
-#: ../plugin.py:367
 msgid "Automatic start time"
-msgstr "Startzeit"
+msgstr ""
 
-#: ../plugin.py:309 ../plugin.py:557 ../plugin.py:637
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../plugin.py:371
 msgid "Choice days for start import"
-msgstr "Nur an bestimmten Tagen importieren"
+msgstr ""
 
-#: ../plugin.py:693
 msgid "Clear"
 msgstr "Löschen"
 
-#: ../plugin.py:382
-msgid "Clearing current EPG before import"
-msgstr "EPG vor dem Import löschen"
-
-#: ../plugin.py:375
 msgid "Consider setting 'Days Profile'"
-msgstr "Ausgewählte Tage berücksichtigen"
+msgstr ""
 
-#: ../plugin.py:650
 msgid "Days Profile"
 msgstr "Import an bestimmten Tagen"
 
-#: ../filtersServices.py:231
 msgid "Delete all"
 msgstr "Alle löschen"
 
-#: ../filtersServices.py:230
+msgid "Delete current EPG before import"
+msgstr ""
+
 msgid "Delete selected"
 msgstr "Ausgewählte löschen"
 
-#: ../plugin.py:305
+msgid ""
+"Do you want to update Source now?\n"
+"\n"
+"Wait for the import successful message!"
+msgstr ""
+
 msgid "EPG Import Configuration"
 msgstr "EPG-Import-Konfiguration"
 
-#: ../plugin.py:718
 msgid "EPG Import Log"
 msgstr "EPG-Import-Log"
 
-#: ../plugin.py:592
 msgid "EPG Import Sources"
 msgstr "EPG-Import-Quellen"
 
-#: ../plugin.py:790
 #, python-format
 msgid "EPG Import finished, %d events"
 msgstr "EPG-Import abgeschlossen, %d Ereignisse"
 
-#: ../plugin.py:1097 ../plugin.py:1098 ../plugin.py:1104 ../plugin.py:1109
-#: ../plugin.py:1114 ../plugin.py:1119 ../plugin.py:1127 ../plugin.py:1137
 msgid "EPG-Importer"
 msgstr "EPG-Importer"
 
-#: ../plugin.py:483
+#, fuzzy
+msgid "EPG-Importer Now"
+msgstr "EPG-Importer"
+
 msgid ""
 "EPGImport\n"
 "Import of epg data is still in progress. Please wait."
@@ -120,7 +108,6 @@ msgstr ""
 "EPGImport\n"
 "Import der EPG-Daten läuft noch. Bitte warten."
 
-#: ../plugin.py:498
 msgid ""
 "EPGImport\n"
 "Import of epg data will start.\n"
@@ -132,7 +119,6 @@ msgstr ""
 "wird bis zu einigen Minuten dauern.\n"
 "Ist das OK?"
 
-#: ../plugin.py:507
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -140,150 +126,137 @@ msgstr ""
 "EPGImport Plugin\n"
 "Nicht gestartet:\n"
 
-#: ../plugin.py:105
 msgid "Friday"
 msgstr "Freitag"
 
-#: ../filtersServices.py:168 ../plugin.py:520
+msgid "Hours after which the import is repeated"
+msgstr ""
+
 msgid "Ignore services list"
 msgstr "Liste der zu überspringenden Sender"
 
-#: ../plugin.py:580
-msgid "Import current source"
-msgstr "Aktuelle Quelle importieren"
+#, fuzzy
+msgid "Import"
+msgstr "EPG-Importer"
 
-#: ../plugin.py:330
-#, python-format
+msgid "Import failed with error: {}"
+msgstr ""
+
+msgid "Import from Git"
+msgstr ""
+
+#, fuzzy, python-format
 msgid ""
-"Importing: %s\n"
-"%s events"
+"Importing:\n"
+"%s %s events"
 msgstr ""
 "Importiere: %s\n"
 "%s Ereignisse"
 
-#: ../plugin.py:739
 msgid "Last import: "
 msgstr "Letzter Import: "
 
-#: ../plugin.py:478
 #, python-format
 msgid "Last import: %s events"
 msgstr "Letzter Import: %s Ereignisse"
 
-#: ../plugin.py:473
-#, python-format
-msgid "Last: %s %s, %d events"
-msgstr "Letzte: %s %s, %d Ereignisse"
-
-#: ../plugin.py:374
 msgid "Load EPG only for IPTV channels"
-msgstr "EPG nur für IPTV Sender aktualisieren"
+msgstr ""
 
-#: ../plugin.py:373
 msgid "Load EPG only services in bouquets"
-msgstr "EPG nur für Sender aus Favoritenlisten aktualisieren"
+msgstr ""
 
-#: ../plugin.py:380
 msgid "Load long descriptions up to X days"
-msgstr "Lade lange Beschreibungen bis zu X Tage"
+msgstr ""
 
-#: ../plugin.py:311
 msgid "Manual"
 msgstr "Manuell"
 
-#: ../plugin.py:101
 msgid "Monday"
 msgstr "Montag"
 
-#: ../plugin.py:493
 msgid "No active EPG sources found, nothing to do"
 msgstr "Keine aktiven EPG-Quellen gefunden, nichts zu tun"
 
-#: ../plugin.py:88
 msgid "Press OK"
 msgstr "OK drücken"
 
-#: ../filtersServices.py:197
 msgid "Really delete all list?"
 msgstr "Wirklich die gesamte Liste löschen?"
 
-#: ../plugin.py:369
 msgid "Return to deep standby after import"
-msgstr "Nach Import in den Tiefschlaf zurückkehren"
+msgstr ""
 
-#: ../plugin.py:381
 msgid "Run AutoTimer after import"
-msgstr "Nach Import AutoTimer starten"
+msgstr ""
 
-#: ../plugin.py:106
 msgid "Saturday"
 msgstr "Samstag"
 
-#: ../plugin.py:310 ../plugin.py:558 ../plugin.py:638 ../plugin.py:696
 msgid "Save"
 msgstr "Sichern"
 
-#: ../filtersServices.py:283 ../plugin.py:521
 msgid "Select action"
 msgstr "Aktion auswählen"
 
-#: ../filtersServices.py:256
 msgid "Select service to add..."
 msgstr "Wähle Sender zum Hinzufügen…"
 
-#: ../plugin.py:377
 msgid "Show 'EPGImport' in extensions"
-msgstr "EPG-Import in Erweiterungen anzeigen"
+msgstr ""
 
-#: ../plugin.py:378
 msgid "Show 'EPGImport' in plugins"
-msgstr "EPG-Import im PluginBrowser anzeigen"
+msgstr ""
 
-#: ../plugin.py:520
 msgid "Show log"
 msgstr "Log anzeigen"
 
-#: ../plugin.py:376
 msgid "Skip import on restart GUI"
-msgstr "Import bei GUI-Neustart überspringen"
+msgstr ""
 
-#: ../plugin.py:312
+#, fuzzy
+msgid "Source EPG"
+msgstr "Quellen"
+
 msgid "Sources"
 msgstr "Quellen"
 
-#: ../plugin.py:370
+msgid "Sources saved successfully!"
+msgstr ""
+
+msgid "Specify the source for EPG."
+msgstr ""
+
 msgid "Standby at startup"
-msgstr "Standby beim Start"
+msgstr ""
 
-#: ../plugin.py:372
 msgid "Start import after booting up"
-msgstr "Import nach dem Booten starten"
+msgstr ""
 
-#: ../plugin.py:107
+msgid "Start import after standby"
+msgstr ""
+
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: ../plugin.py:104
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: ../plugin.py:102
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: ../plugin.py:103
+msgid "Update Aborted!"
+msgstr ""
+
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: ../plugin.py:368
 msgid "When in deep standby"
-msgstr "Wenn ausgeschaltet"
+msgstr ""
 
-#: ../plugin.py:724
 msgid "Write to /tmp/epgimport.log"
 msgstr "Nach /tmp/EPGimport.log schreiben"
 
-#: ../plugin.py:660
 msgid ""
 "You may not use this settings!\n"
 "At least one day a week should be included!"
@@ -291,7 +264,6 @@ msgstr ""
 "Sie können diese Einstellung nicht nutzen!\n"
 "Mindestens ein Tag muß ausgewählt sein!"
 
-#: ../plugin.py:790
 msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
@@ -299,30 +271,23 @@ msgstr ""
 "Sie müssen Enigma2 neu starten, um die EPG-Daten zu laden\n"
 "Ist das ok?"
 
-#: ../plugin.py:60
 msgid "always"
 msgstr "immer"
 
-#: ../plugin.py:63
 msgid "never"
 msgstr "niemals"
 
-#: ../plugin.py:62
 msgid "only automatic boot"
 msgstr "Nur bei automatischem Neustart"
 
-#: ../plugin.py:61
 msgid "only manual boot"
 msgstr "Nur bei manuellem Neustart"
 
-#: ../filtersServices.py:155
 msgid "press OK to save list"
 msgstr "OK Drücken zum Speichern der Liste"
 
-#: ../plugin.py:77
 msgid "skip the import"
 msgstr "Import überspringen"
 
-#: ../plugin.py:76
 msgid "wake up and import"
 msgstr "Aufwachen und importieren"
