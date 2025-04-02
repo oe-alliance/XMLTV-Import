@@ -422,7 +422,7 @@ class EPGImportSources(Screen):
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("Save"))
 		self["key_yellow"] = Button(_("Import"))
-		self["key_blue"] = Button(_("Import from Git"))
+		self["key_blue"] = Button(_("Update Sources"))
 		self.tree = []
 		self.giturl = SOURCE_LINKS.get(config.plugins.epgimport.extra_source.value)
 
