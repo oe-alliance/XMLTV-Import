@@ -37,6 +37,7 @@ class epgdatclass:
 			else:
 				desc = program[4]
 			self.epg.add_event(program[0], program[1], program[2], desc)
+			# self.epg.add_event(program[0], program[1], program[2], desc, program[6])
 
 	def commitService(self):
 		if self.services is not None:

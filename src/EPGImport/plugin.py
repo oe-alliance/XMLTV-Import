@@ -2,7 +2,7 @@ from os import remove
 from os.path import exists
 from time import localtime, mktime, strftime, strptime, time, asctime
 
-from enigma import eServiceCenter, eServiceReference, eEPGCache, eTimer, getDesktop
+from enigma import eServiceCenter, eServiceReference, eEPGCache, eTimer
 
 # for localized messages
 from . import _
@@ -62,7 +62,8 @@ autoStartTimer = None
 _session = None
 BouquetChannelListList = None
 serviceIgnoreList = None
-
+filterCounter = 0
+isFilterRunning = 0
 IMAGEDISTRO = BoxInfo.getItem("distro")
 
 SOURCE_LINKS = {
@@ -113,6 +114,7 @@ config.plugins.epgimport.parse_autotimer = ConfigYesNo(default=False)
 config.plugins.epgimport.import_onlybouquet = ConfigYesNo(default=False)
 config.plugins.epgimport.import_onlyiptv = ConfigYesNo(default=False)
 config.plugins.epgimport.clear_oldepg = ConfigYesNo(default=False)
+config.plugins.epgimport.filter_custom_channel = ConfigYesNo(default=True)
 config.plugins.epgimport.day_profile = ConfigSelection(choices=[("1", _("Press OK"))], default="1")
 config.plugins.extra_epgimport = ConfigSubsection()
 config.plugins.extra_epgimport.last_import = ConfigText(default="0")
@@ -149,6 +151,8 @@ def getRefNum(ref):
 
 def getBouquetChannelList():
 	channels = []
+	global isFilterRunning, filterCounter
+	isFilterRunning = 1
 	serviceHandler = eServiceCenter.getInstance()
 	mask = (eServiceReference.isMarker | eServiceReference.isDirectory)
 	alternative = eServiceReference.isGroup
@@ -168,6 +172,7 @@ def getBouquetChannelList():
 						if clist:
 							while True:
 								service = clist.getNext()
+								filterCounter += 1
 								if not service.valid():
 									break
 								if not (service.flags & mask):
@@ -182,7 +187,6 @@ def getBouquetChannelList():
 										refnum = getRefNum(service.toString())
 										if refnum and refnum not in channels:
 											channels.append(refnum)
-
 	else:
 		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'
 		bouquet_root = eServiceReference(bouquet_rootstr)
@@ -190,6 +194,7 @@ def getBouquetChannelList():
 		if services is not None:
 			while True:
 				service = services.getNext()
+				filterCounter += 1
 				if not service.valid():
 					break
 				if not (service.flags & mask):
@@ -204,10 +209,13 @@ def getBouquetChannelList():
 						refnum = getRefNum(service.toString())
 						if refnum and refnum not in channels:
 							channels.append(refnum)
+	isFilterRunning = 0
 	return channels
 
 
 # Filter servicerefs that this box can display by starting a fake recording.
+
+
 def channelFilter(ref):
 	if not ref:
 		return False
@@ -252,25 +260,23 @@ try:
 except Exception as e:
 	print(f"[EPGImport] Error obtaining EPGCache instance: {e}", file=log)
 
+
 lastImportResult = None
 
 
 def startImport():
-	if not epgimport.isImportRunning():
-		EPGImport.HDD_EPG_DAT = config.misc.epgcache_filename.value
-		if config.plugins.epgimport.clear_oldepg.value and hasattr(epgimport.epgcache, "flushEPG"):
-			EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT)
-			EPGImport.unlink_if_exists(f"{EPGImport.HDD_EPG_DAT}.backup")
-			epgimport.epgcache.flushEPG()
-		epgimport.onDone = doneImport
-		epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time())
-	else:
-		print("[startImport] Already running, won't start again")
+	EPGImport.HDD_EPG_DAT = config.misc.epgcache_filename.value
+	if config.plugins.epgimport.clear_oldepg.value and hasattr(epgimport.epgcache, "flushEPG"):
+		EPGImport.unlink_if_exists(EPGImport.HDD_EPG_DAT)
+		EPGImport.unlink_if_exists(f"{EPGImport.HDD_EPG_DAT}.backup")
+		epgimport.epgcache.flushEPG()
+	epgimport.onDone = doneImport
+	epgimport.beginImport(longDescUntil=config.plugins.epgimport.longDescDays.value * 24 * 3600 + time())
 
 
-##################################
+# #################################
 # Configuration GUI
-HD = True if getDesktop(0).size().width() >= 1280 else False
+# FHD = True if getDesktop(0).size().width() >= 1280 else False
 
 
 class EPGImportConfig(Setup):
@@ -279,6 +285,7 @@ class EPGImportConfig(Setup):
 		Setup.__init__(self, session, "EPGImportConfig", plugin="Extensions/EPGImport", PluginLanguageDomain="EPGImport")
 		self.setTitle(_("EPG Import Configuration"))
 		self.skinName = "Setup"
+		# self.updateStatus()
 		self.setFootnote(_("Last import: %s events") % config.plugins.extra_epgimport.last_import.value)
 		self["key_yellow"] = StaticText(_("Manual"))
 		self["key_blue"] = StaticText(_("Sources"))
@@ -289,19 +296,22 @@ class EPGImportConfig(Setup):
 			"info": self.keyInfo
 		}, -1)
 		self.lastImportResult = None
-		self.importStatusTemplate = _("Importing:\n%s %s events")
+		self.filterStatusTemplate = _("Filtering: %s Please wait!")
+		self.importStatusTemplate = _("Importing: %s %s events")
 		self.updateTimer = eTimer()
 		self.updateTimer.callback.append(self.updateStatus)
-		self.updateTimer.start(2000)
-		self.updateStatus()
+		self.updateTimer.start(1000)
 
 	def updateStatus(self):
 		text = ""
-		if epgimport.isImportRunning():
+		global isFilterRunning, filterCounter
+		if isFilterRunning == 1:
+			text = self.filterStatusTemplate % (str(filterCounter))
+		elif epgimport.isImportRunning():
 			src = epgimport.source
 			text = self.importStatusTemplate % (src.description, epgimport.eventCount)
 		self.setFootnote(text)
-		if lastImportResult and (lastImportResult != self.lastImportResult):
+		if lastImportResult:  # and (lastImportResult != self.lastImportResult):
 			start, count = lastImportResult
 			try:
 				if isinstance(start, str):
@@ -318,11 +328,18 @@ class EPGImportConfig(Setup):
 					print(f"[EPGImport] Fallback with FuzzyTime also failed: {e}")
 			last_import = f"{d} {t}, {count}"
 			self.setFootnote(_("Last import: %s events") % last_import)
-		self.lastImportResult = lastImportResult
+			self.lastImportResult = lastImportResult
 
 	def keyInfo(self):
 		last_import = config.plugins.extra_epgimport.last_import.value
-		self.session.open(MessageBox, _("Last import: %s events") % last_import, type=MessageBox.TYPE_INFO)
+		msg = _("Last import: %s events") % last_import
+		self.session.open(
+			MessageBox,
+			msg,
+			type=MessageBox.TYPE_INFO,
+			timeout=10,
+			close_on_any_key=True
+		)
 
 	def showLog(self):
 		self.session.open(EPGImportLog)
@@ -342,8 +359,16 @@ class EPGImportConfig(Setup):
 	def doimport(self, one_source=None):
 		if epgimport.isImportRunning():
 			print("[XMLTVImport] Already running, won't start again", file=log)
-			self.session.open(MessageBox, _("EPGImport\nImport of epg data is still in progress. Please wait."), MessageBox.TYPE_ERROR, timeout=10, close_on_any_key=True)
+			msg = _("EPGImport\nImport of epg data is still in progress. Please wait.")
+			self.session.open(
+				MessageBox,
+				msg,
+				MessageBox.TYPE_ERROR,
+				timeout=10,
+				close_on_any_key=True
+			)
 			return
+
 		if config.plugins.epgimport.import_onlybouquet.isChanged() or (autoStartTimer is not None and autoStartTimer.prev_multibouquet != config.usage.multibouquet.value):
 			EPGConfig.channelCache = {}
 		if one_source is None:
@@ -352,12 +377,27 @@ class EPGImportConfig(Setup):
 			cfg = one_source
 		sources = [s for s in EPGConfig.enumSources(CONFIG_PATH, filter=cfg["sources"])]
 		if not sources:
-			self.session.open(MessageBox, _("No active EPG sources found, nothing to do"), MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
+			msg = _("No active EPG sources found, nothing to do")
+			self.session.open(
+				MessageBox,
+				msg,
+				type=MessageBox.TYPE_INFO,
+				timeout=10,
+				close_on_any_key=True
+			)
 			return
 		# make it a stack, first on top.
 		sources.reverse()
 		epgimport.sources = sources
-		self.session.openWithCallback(self.do_import_callback, MessageBox, _("EPGImport\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?"), MessageBox.TYPE_YESNO, timeout=15, default=True)
+		msg = _("EPGImport\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?")
+		self.session.openWithCallback(
+			self.do_import_callback,
+			MessageBox,
+			msg,
+			MessageBox.TYPE_YESNO,
+			timeout=15,
+			default=True
+		)
 
 	def do_import_callback(self, confirmed):
 		if not confirmed:
@@ -366,7 +406,15 @@ class EPGImportConfig(Setup):
 			startImport()
 		except Exception as e:
 			print(f"[XMLTVImport] Error at start:{e}", file=log)
-			self.session.open(MessageBox, _("EPGImport Plugin\nFailed to start:\n") + str(e), MessageBox.TYPE_ERROR, timeout=15, close_on_any_key=True)
+			msg = _("EPGImport Plugin\nFailed to start:\n!") + str(e)
+			self.session.open(
+				MessageBox,
+				msg,
+				MessageBox.TYPE_ERROR,
+				timeout=15,
+				close_on_any_key=True
+			)
+
 		self.updateStatus()
 
 	def dosources(self):
@@ -465,7 +513,8 @@ class EPGImportSources(Screen):
 			self.install_update,
 			MessageBox,
 			_("Do you want to update Source now?\n\nWait for the import successful message!"),
-			MessageBox.TYPE_YESNO
+			MessageBox.TYPE_YESNO,
+			timeout=15
 		)
 
 	def install_update(self, answer=False):
@@ -478,7 +527,8 @@ class EPGImportSources(Screen):
 					MessageBox,
 					_("Import failed with error: {}").format(e),
 					MessageBox.TYPE_ERROR,
-					timeout=5
+					timeout=10,
+					close_on_any_key=True
 				)
 				return
 
@@ -489,7 +539,7 @@ class EPGImportSources(Screen):
 				MessageBox,
 				_("Update Aborted!"),
 				MessageBox.TYPE_INFO,
-				timeout=3
+				timeout=10
 			)
 
 	def refresh_tree(self):
@@ -499,7 +549,7 @@ class EPGImportSources(Screen):
 		self.tree = []
 		cat = None
 		for x in EPGConfig.enumSources(CONFIG_PATH, filter=None, categories=True):
-			if hasattr(x, 'description'):
+			if hasattr(x, "description"):
 				sel = (filter is None) or (x.description in filter)
 				entry = (x.description, x.description, sel)
 				if cat is None:
@@ -518,7 +568,13 @@ class EPGImportSources(Screen):
 		else:
 			self["key_yellow"].hide()
 		# Set the updated tree in the list
-		self.session.open(MessageBox, _("Sources saved successfully!"), MessageBox.TYPE_INFO, timeout=5)
+		msg = _("Sources saved successfully!")
+		self.session.open(
+			MessageBox,
+			msg,
+			MessageBox.TYPE_INFO,
+			timeout=10
+		)
 		self.cancel()
 
 	def save(self):
@@ -561,11 +617,12 @@ class EPGImportProfile(Setup):
 
 	def keySave(self):
 		if all(not config.plugins.extra_epgimport.day_import[i].value for i in range(7)):
+			msg = _("You may not use this settings!\nAt least one day a week should be included!")
 			self.session.open(
 				MessageBox,
-				_("You may not use this settings!\nAt least one day a week should be included!"),
+				msg,
 				MessageBox.TYPE_INFO,
-				timeout=6
+				timeout=10
 			)
 			return
 		Setup.keySave(self)
@@ -623,7 +680,13 @@ class EPGImportLog(Screen):
 		try:
 			with open("/tmp/epgimport.log", "w") as f:
 				f.write(self.log.getvalue())
-			self.session.open(MessageBox, _("Write to /tmp/epgimport.log"), MessageBox.TYPE_INFO, timeout=5, close_on_any_key=True)
+			msg = _("Write to /tmp/epgimport.log")
+			self.session.open(
+				MessageBox,
+				msg,
+				MessageBox.TYPE_INFO,
+				timeout=10
+			)
 		except Exception as e:
 			self["list"].setText(f"Failed to write /tmp/epgimport.log:str{str(e)}")
 		self.close(True)
@@ -639,7 +702,14 @@ class EPGImportLog(Screen):
 
 class EPGImportDownloader(MessageBox):
 	def __init__(self, session):
-		MessageBox.__init__(self, session, _("Last import: ") + config.plugins.extra_epgimport.last_import.value + _(" events\n") + _("\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?"), MessageBox.TYPE_YESNO)
+		MessageBox.__init__(
+			self,
+			session,
+			_("Last import: ") + config.plugins.extra_epgimport.last_import.value + _(" events\n") +
+			_("\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?"),
+			MessageBox.TYPE_YESNO,
+			timeout=15
+		)
 		self.skinName = "MessageBox"
 
 
@@ -669,16 +739,29 @@ def doneImport(reboot=False, epgfile=None):
 	global _session, lastImportResult, BouquetChannelListList, serviceIgnoreList
 	BouquetChannelListList = None
 	serviceIgnoreList = None
+
+	import logging
+	# Configurazione base del logging
+	logging.basicConfig(level=logging.DEBUG)
+	if epgfile is None:
+		logging.warning("EPG file not provided, proceeding without file.")
+	else:
+		logging.info(f"Import EPG file: {epgfile}")
+
 	timestamp = time()
 	formatted_time = strftime("%Y-%m-%d %H:%M:%S", localtime(timestamp))
+	# Log dei risultati dell'importazione
+	logging.info(f"Import completed at {formatted_time}")
 	lastImportResult = (formatted_time, epgimport.eventCount)
 	try:
-		start, count = lastImportResult
-		current_time = asctime(localtime(time()))
-		lastimport = "%s, %d" % (current_time, count)
-		config.plugins.extra_epgimport.last_import.value = lastimport
-		config.plugins.extra_epgimport.last_import.save()
-		print("[XMLTVImport] Save last import date and count event", file=log)
+		if lastImportResult:  # and (lastImportResult != lastImportResult):
+			print(f"doneImport lastimport== {lastImportResult}")
+			start, count = lastImportResult
+			current_time = asctime(localtime(time()))
+			lastimport = "%s, %d" % (current_time, count)
+			config.plugins.extra_epgimport.last_import.value = lastimport
+			config.plugins.extra_epgimport.last_import.save()
+			print("[XMLTVImport] Save last import date and count event", file=log)
 	except:
 		print("[XMLTVImport] Error to save last import date and count event", file=log)
 	if reboot:
@@ -687,7 +770,14 @@ def doneImport(reboot=False, epgfile=None):
 			restartEnigma(True)
 		else:
 			msg = _("EPG Import finished, %d events") % epgimport.eventCount + "\n" + _("You must restart Enigma2 to load the EPG data,\nis this OK?")
-			_session.openWithCallback(restartEnigma, MessageBox, msg, MessageBox.TYPE_YESNO, timeout=15, default=True)
+			_session.openWithCallback(
+				restartEnigma,
+				MessageBox,
+				msg,
+				MessageBox.TYPE_YESNO,
+				timeout=15,
+				default=True
+			)
 			print("[XMLTVImport] Need restart enigma2", file=log)
 	else:
 		if config.plugins.epgimport.parse_autotimer.value and isPluginInstalled("AutoTimer"):
@@ -815,6 +905,13 @@ class AutoStartTimer:
 			sources.reverse()
 			epgimport.sources = sources
 			startImport()
+		else:
+			self.session.open(
+				MessageBox,
+				_("No source file found !"),
+				MessageBox.TYPE_INFO,
+				timeout=10
+			)
 
 	def onTimer(self):
 		self.autoStartImport.stop()

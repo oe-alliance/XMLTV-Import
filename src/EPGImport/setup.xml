@@ -29,6 +29,7 @@
 		<item level="1" text="Load EPG only services in bouquets" description="Load EPG only services in bouquets">config.plugins.epgimport.import_onlybouquet</item>
 		<item level="1" text="Load EPG only for IPTV channels" description="Load EPG only for IPTV channels">config.plugins.epgimport.import_onlyiptv</item>
 		<item level="1" text="Delete current EPG before import" description="Delete current EPG before import">config.plugins.epgimport.clear_oldepg</item>
+		<item level="1" text="Also apply 'channel id' filtering on custom.channels.xml" description="If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file.">config.plugins.epgimport.filter_custom_channel</item>		
 		<item level="1" text="Start import after standby" description="Start import after standby">config.plugins.epgimport.run_after_standby</item>
 		<item level="1" text="Load long descriptions up to X days" description="Load long descriptions up to X days">config.plugins.epgimport.longDescDays</item>
 		<if conditional="self.hasAutoTimer">

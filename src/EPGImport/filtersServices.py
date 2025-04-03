@@ -8,14 +8,15 @@ from Screens.ChannelSelection import service_types_radio, service_types_tv, Chan
 from enigma import eServiceReference, eServiceCenter
 from Components.Sources.List import List
 from Components.Label import Label
-from os.path import isdir
-from os import system
+from os.path import isdir, join
+from os import mkdir
 from . import EPGConfig
 
 
 OFF = 0
 EDIT_BOUQUET = 1
 EDIT_ALTERNATIVES = 2
+SOURCE_PATH = "/etc/epgimport"
 
 
 def getProviderName(ref):
@@ -62,8 +63,8 @@ class FiltersList():
 
 	def saveTo(self, filename):
 		try:
-			if not isdir("/etc/epgimport"):
-				system("mkdir /etc/epgimport")
+			if not isdir(SOURCE_PATH):
+				mkdir(SOURCE_PATH)
 			cfg = open(filename, "w")
 		except:
 			return
@@ -72,7 +73,7 @@ class FiltersList():
 		cfg.close()
 
 	def load(self):
-		self.loadFrom("/etc/epgimport/ignore.conf")
+		self.loadFrom(join(SOURCE_PATH, "ignore.conf"))
 
 	def reload_module(self):
 		self.services = []
@@ -82,7 +83,7 @@ class FiltersList():
 		return self.services
 
 	def save(self):
-		self.saveTo("/etc/epgimport/ignore.conf")
+		self.saveTo(join(SOURCE_PATH, "ignore.conf"))
 
 	def addService(self, ref):
 		if isinstance(ref, str) and ref not in self.services:
@@ -110,7 +111,7 @@ class filtersServicesSetup(Screen):
 	skin = """
 	<screen name="filtersServicesSetup" position="center,center" size="680,470" title="Ignore services list">
 		<ePixmap position="0,390" size="140,40" pixmap="skin_default/buttons/red.png" alphatest="on" />
-		<ePixmap position="170,390"  size="140,40" pixmap="skin_default/buttons/green.png"  alphatest="on" />
+		<ePixmap position="170,390" size="140,40" pixmap="skin_default/buttons/green.png"  alphatest="on" />
 		<ePixmap position="340,390" size="140,40" pixmap="skin_default/buttons/yellow.png" alphatest="on" />
 		<ePixmap position="510,390" size="140,40" pixmap="skin_default/buttons/blue.png" alphatest="on" />
 		<widget name="key_red" position="0,390" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />

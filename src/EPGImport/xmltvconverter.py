@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+import six
 from xml.etree.cElementTree import iterparse
+# from xml.sax.saxutils import unescape
 from calendar import timegm
 from time import strptime, struct_time
 from . import log
@@ -20,17 +23,21 @@ def quickptime(date_str):
 	)
 
 
+# fixed Lululla
+# 16:15:49.9138 [XMLTVConverter] get_time_utc error:unsupported operand type(s) for //: 'str' and 'int'
 def get_time_utc(timestring, fdateparse):
-	# print("get_time_utc", timestring, format)
 	try:
-		values = timestring.split(" ")
+		values = timestring.split(' ')
 		tm = fdateparse(values[0])
 		time_gm = timegm(tm)
-		# suppose file says +0300 => that means we have to substract 3 hours from localtime to get GMT
-		time_gm -= (3600 * int(values[1]) // 100)
+		if len(values) > 1:
+			timezone_offset_str = values[1]  # +0100
+			# Extract the numeric part of the time zone
+			timezone_offset = int(timezone_offset_str[:3])  # Extract the first 3 characters (+01)
+			time_gm -= (timezone_offset * 3600)
 		return time_gm
 	except Exception as e:
-		print(f"[XMLTVConverter] get_time_utc error:{e}")
+		print(f"[XMLTVConverter] get_time_utc error: {e}")
 		return 0
 
 
@@ -42,7 +49,7 @@ def get_xml_string(elem, name):
 		for node in elem.findall(name):
 			txt = node.text
 			lang = node.get("lang", None)
-			if not r and txt is not None:
+			if not r:
 				r = txt
 			elif lang == "nl":
 				r = txt
@@ -53,20 +60,105 @@ def get_xml_string(elem, name):
 	# Note that the default xml.sax.saxutils.unescape() function don't unescape
 	# some characters and we have to manually add them to the entities dictionary.
 	"""
-	return r.decode() if isinstance(r, bytes) else r
+	"""
+	r = unescape(r, entities={
+		r"&apos;": r"'",
+		r"&quot;": r'"',
+		r"&#124;": r"|",
+		r"&nbsp;": r" ",
+		r"&#91;": r"[",
+		r"&#93;": r"]",
+	})
+	"""
+	return six.ensure_str(r)
 
 
-def get_xml_rating_string(elem):
+"""
+def get_xml_language(elem, name):
 	r = ""
 	try:
-		for node in elem.findall("rating"):
+		for node in elem.findall("lang"):
 			for val in node.findall("value"):
 				txt = val.text.replace("+", "")
-				if not r and txt is not None:
+				if not r:
 					r = txt
 	except Exception as e:
-		print(f"[XMLTVConverter] get_xml_rating_string error:{e}")
-	return r.decode() if isinstance(r, bytes) else r
+		print("[XMLTVConverter] get_xml_rating_string error:", e)
+	return six.ensure_str(r)
+"""
+
+""" check if it is possible to insert the language map """
+
+
+def get_xml_language(elem, name):
+	r = ""
+	lang_map = {
+		"ar": "ara",  # Arabic
+		"az": "aze",  # Azerbaijani
+		"bg": "bul",  # Bulgarian
+		"bn": "ben",  # Bengali
+		"bs": "bos",  # Bosnian
+		"cs": "ces",  # Czech (ISO 639-2/T), "cze" is bibliographic
+		"da": "dan",  # Danish
+		"de": "deu",  # German
+		"dk": "dan",  # Danish (non standard)
+		"el": "gre",  # Greek (bibliographic), "ell" (terminologic ISO 639-2/T)
+		"en": "eng",  # English
+		"es": "spa",  # Spanish
+		"et": "est",  # Estonian
+		"fa": "per",  # Persian (bibliographic), "fas" for ISO 639-2/T
+		"fi": "fin",  # Finnish
+		"fr": "fra",  # French
+		"he": "heb",  # Hebrew
+		"hi": "hin",  # Hindi
+		"hr": "hrv",  # Croatian
+		"hu": "hun",  # Hungarian
+		"hy": "hye",  # Armenian (ISO 639-2/T), "arm" is bibliographic
+		"id": "ind",  # Indonesian
+		"is": "isl",  # Icelandic (ISO 639-2/T), "ice" is bibliographic
+		"it": "ita",  # Italian
+		"ja": "jpn",  # Japanese
+		"ka": "kat",  # Georgian (ISO 639-2/T), "geo" is bibliographic
+		"ko": "kor",  # Korean
+		"lb": "ltz",  # Luxembourgish
+		"lt": "lit",  # Lithuanian
+		"lv": "lav",  # Latvian
+		"mk": "mkd",  # Macedonian (ISO 639-2/T), "mac" is bibliographic
+		"ml": "mal",  # Malayalam
+		"ms": "msa",  # Malay
+		"mt": "mlt",  # Maltese
+		"nb": "nob",  # Norwegian Bokmål
+		"nl": "nld",  # Dutch (new ISO) - "dut" is old ISO 639-2/B
+		"nn": "nno",  # Norwegian Nynorsk
+		"no": "nor",  # Norwegian
+		"pl": "pol",  # Polish
+		"pt": "por",  # Portuguese
+		"ro": "ron",  # Romanian (ron is ISO 639-2/T) "rum" is bibliographic
+		"ru": "rus",  # Russian
+		"se": "sme",  # Northern Sami
+		"sk": "slk",  # Slovak (ISO 639-2/T), "slo" is bibliographic
+		"sl": "slv",  # Slovenian
+		"sq": "sqi",  # Albanian (ISO 639-2/T), "alb" is bibliographic
+		"sr": "srp",  # Serbian
+		"sv": "swe",  # Swedish
+		"ta": "tam",  # Tamil
+		"te": "tel",  # Telugu
+		"th": "tha",  # Thai
+		"tr": "tur",  # Turkish
+		"uk": "ukr",  # Ukrainian
+		"ur": "urd",  # Urdu
+		"vi": "vie",  # Vietnamese
+		"zh": "chi",  # Chinese (bibliographic), "zho" for ISO 639-2/T
+	}
+	try:
+		for node in elem.findall(name):
+			lang = node.get("lang", None)
+			if not r:
+				# use mapping dictionary instead of if-elif
+				r = lang_map.get(lang, "eng")
+	except Exception as e:
+		print("[XMLTVConverter] get_xml_string error:{}".format(e))
+	return six.ensure_str(r)
 
 
 def enumerateProgrammes(fp):
@@ -81,6 +173,7 @@ def enumerateProgrammes(fp):
 				elem.clear()
 		except Exception as e:
 			print(f"[XMLTVConverter] enumerateProgrammes error:{e}")
+			break
 
 
 class XMLTVConverter:
@@ -94,10 +187,17 @@ class XMLTVConverter:
 		self.offset = offset
 		print(f"[XMLTVConverter] Using a custom time offset of {offset}")
 
+	"""
+		FIXED LULULLA
+		self.storage.importEvents(r, (d,))
+		SystemError: <built-in function eEPGCache_importEvents> returned a result with an exception set
+		TypeError: 'bytes' object cannot be interpreted as an integer
+	"""
+
 	def enumFile(self, fileobj):
 		print("[XMLTVConverter] Enumerating event information", file=log)
 		lastUnknown = None
-		# there is nothing no enumerate if there are no channels loaded
+		# There is nothing no enumerate if there are no channels loaded
 		if not self.channels:
 			return
 		for elem in enumerateProgrammes(fileobj):
@@ -107,7 +207,7 @@ class XMLTVConverter:
 				if lastUnknown != channel:
 					print(f"Unknown channel: {channel}", file=log)
 					lastUnknown = channel
-				# return a None object to give up time to the reactor.
+				# Return a None object to give up time to the reactor.
 				yield None
 				continue
 			try:
@@ -115,45 +215,73 @@ class XMLTVConverter:
 				start = get_time_utc(elem.get("start"), self.dateParser) + self.offset
 				stop = get_time_utc(elem.get("stop"), self.dateParser) + self.offset
 				title = get_xml_string(elem, "title")
+				"""
+				# try:
+					# language = get_xml_language(elem)
+					# # hardcode country as ENG since there is no handling for parental certification systems per country yet
+					# # also we support currently only number like values like "12+" since the epgcache works only with bytes right now
+					# language = [("eng", int(language) - 3)]
+				# except:
+					# language = None
+				"""
+				try:  # edit lululla: add map with language
+					# hardcode country as ENG since there is no handling for parental certification systems per country yet
+					# also we support currently only number like values like "12+" since the epgcache works only with bytes right now
+					lang_code = get_xml_language(elem, "title") or get_xml_language(elem, "desc") or "eng"
+					language = [(lang_code, int(lang_code) - 3)]
+				except:
+					language = None
+
+				# # Ensure start and stop are integers
+				if not isinstance(start, int) or not isinstance(stop, int):
+					print(f"[XMLTVConverter] Invalid start/stop time format: start={start}, stop={stop}", file=log)
+					continue  # Skip this entry if start/stop are not integers
+
+				# Check duration to ensure it's a number
+				duration = stop - start
+				if not isinstance(duration, int):
+					print(f"[XMLTVConverter] Invalid duration format: {duration}", file=log)
+					continue  # Skip this entry if duration is not an integer
+
 				# try/except for EPG XML files with program entries containing <sub-title ... />
 				try:
 					subtitle = get_xml_string(elem, "sub-title")
 				except:
 					subtitle = ""
+
 				# try/except for EPG XML files with program entries containing <desc ... />
 				try:
 					description = get_xml_string(elem, "desc")
 				except:
 					description = ""
 				category = get_xml_string(elem, "category")
-				cat_nr = self.get_category(category, stop - start)
-
-				try:
-					rating_str = get_xml_rating_string(elem)
-					# hardcode country as ENG since there is no handling for parental certification systems per country yet
-					# also we support currently only number like values like "12+" since the epgcache works only with bytes right now
-					rating = [("eng", int(rating_str) - 3)]
-				except:
-					rating = None
-
-				# data_tuple = (data.start, data.duration, data.title, data.short_description, data.long_description, data.type)
+				if not category:  # Check if category is empty
+					category = "Unknown"  # Assign a default category if empty
+				cat_nr = self.get_category(category, duration)
+				# Debugging the types of variables before passing them to yield
+				# print(f"[XMLTVConverter] start: {start} (type: {type(start)}), stop: {stop} (type: {type(stop)}), duration: {duration} (type: {type(duration)}), title: {title} (type: {type(title)}), category: {category} (type: {type(category)})", file=log)
 				if not stop or not start or (stop <= start):
-					print(f"[XMLTVConverter] Bad start/stop time: {elem.get('start')} ({start}) - {elem.get('stop')} ({stop}) [{title}]")
-				if rating:
-					yield (services, (start, stop - start, title, subtitle, description, cat_nr, 0, rating))
+					print(f"[XMLTVConverter] Bad start/stop time: {elem.get('start')} ({start}) - {elem.get('stop')} ({stop}) [{title}]", file=log)
+				if language:
+					yield (services, (start, stop - start, title, subtitle, description, cat_nr, 0, language))
 				else:
 					yield (services, (start, stop - start, title, subtitle, description, cat_nr))
+
 			except Exception as e:
 				print(f"[XMLTVConverter] parsing event error: {e}")
 
+	# edit for add new category in dictionary
 	def get_category(self, cat, duration):
 		if (not cat) or (not isinstance(cat, type("str"))):
 			return 0
-		if cat in self.categories:
-			category = self.categories[cat]
-			if len(category) > 1:
-				if duration > 60 * category[1]:
-					return category[0]
-			elif len(category) > 0:
-				return category
+		categories = cat.split(',')
+		for category in categories:
+			category = category.strip()
+			if category in self.categories:
+				category_value = self.categories[category]
+				if len(category_value) > 1:
+					if duration > 60 * category_value[1]:
+						return category_value[0]
+				elif len(category_value) > 0:
+					return category_value[0]
 		return 0

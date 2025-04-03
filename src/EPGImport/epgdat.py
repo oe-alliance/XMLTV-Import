@@ -14,15 +14,20 @@ EpgDatV8 = True
 
 try:
 	from . import dreamcrc
-	crc32_dreambox = lambda d, t: dreamcrc.crc32(d, t) & 0xffffffff
+
+	def crc32_dreambox(d, t):
+		return dreamcrc.crc32(d, t) & 0xFFFFFFFF
+
+	# crc32_dreambox = lambda d, t: dreamcrc.crc32(d, t) & 0xffffffff
 	print("[EPGImport] using C module, yay")
 except ImportError:
 	print("[EPGImport] failed to load C implementation, sorry")
-
-	# this table is used by CRC32 routine below (used by Dreambox for
-	# computing REF DESC value).
-	# The original DM routine is a modified CRC32 standard routine,
-	# so cannot use Python standard binascii.crc32()
+	"""
+	this table is used by CRC32 routine below (used by Dreambox for
+	computing REF DESC value).
+	The original DM routine is a modified CRC32 standard routine,
+	so cannot use Python standard binascii.crc32()
+	"""
 	CRCTABLE = (
 		0x00000000, 0x04C11DB7, 0x09823B6E, 0x0D4326D9,
 		0x130476DC, 0x17C56B6B, 0x1A864DB2, 0x1E475005,
@@ -89,19 +94,28 @@ except ImportError:
 		0xAFB010B1, 0xAB710D06, 0xA6322BDF, 0xA2F33668,
 		0xBCB4666D, 0xB8757BDA, 0xB5365D03, 0xB1F740B4
 	)
+	"""
 	# CRC32 in Dreambox/DVB way (see CRCTABLE comment above)
 	# "crcdata" is the description string
 	# "crctype" is the description type (1 byte 0x4d or 0x4e)
 	# !!!!!!!!! IT'S VERY TIME CONSUMING !!!!!!!!!
-
 	def crc32_dreambox(crcdata, crctype, crctable=CRCTABLE):
 		# ML Optimized: local CRCTABLE (locals are faster), remove self, remove code that has no effect, faster loop
-		# crc=0x00000000
-		# crc=((crc << 8 ) & 0xffffff00) ^ crctable[((crc >> 24) ^ crctype) & 0x000000ff]
-		crc = crctable[crctype & 0x000000ff]
+		#crc=0x00000000L
+		#crc=((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ crctype) & 0x000000ffL ]
+		crc = crctable[crctype & 0x000000ffL]
+		crc = ((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ len(crcdata)) & 0x000000ffL]
+		for d in crcdata:
+			crc=((crc << 8 ) & 0xffffff00L) ^ crctable[((crc >> 24) ^ ord(d)) & 0x000000ffL]
+		return crc
+	"""
+	# mod lululla
+	def crc32_dreambox(crcdata, crctype, crctable=CRCTABLE):
+		# Optimized CRC calculation for Dreambox
+		crc = crctable[crctype & 0x000000ff]  # Inizializzazione del valore CRC
 		crc = ((crc << 8) & 0xffffff00) ^ crctable[((crc >> 24) ^ len(crcdata)) & 0x000000ff]
 		for d in crcdata:
-			crc = ((crc << 8) & 0xffffff00) ^ crctable[((crc >> 24) ^ d) & 0x000000ff]
+			crc = ((crc << 8) & 0xffffff00) ^ crctable[((crc >> 24) ^ ord(d)) & 0x000000ff]
 		return crc
 
 
@@ -211,7 +225,10 @@ class epgdat_class:
 			# prepare and write CHANNEL INFO record
 			ssid = service.split(":")
 			# write CHANNEL INFO record (sid, onid, tsid, eventcount)
-			self.EPG_TMP_FD.write(self.s_IIII.pack(int(ssid[3], 16), int(ssid[5], 16), int(ssid[4], 16), int(len(self.events))))
+			self.EPG_TMP_FD.write(self.s_IIII.pack(
+				int(ssid[3], 16), int(ssid[5], 16),
+				int(ssid[4], 16), len(self.events)
+			))
 			self.EPG_HEADER1_channel_count += 1
 			# event_dict.keys() are numeric so indexing is possibile
 			# key is the same thing as counter and is more simple to manage last-1 item

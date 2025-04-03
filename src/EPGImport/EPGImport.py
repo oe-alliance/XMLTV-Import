@@ -16,6 +16,7 @@ from twisted.internet import reactor, threads
 from twisted.internet.reactor import callInThread
 import twisted.python.runtime
 
+import lzma
 from Components.config import config
 
 
@@ -246,7 +247,6 @@ class EPGImport:
 	def afterDownload(self, filename, deleteFile=False):
 		# print("[EPGImport][afterDownload] filename", filename)
 		if not exists(filename):
-			print(f"[EPGImport][afterDownload] File not found: {filename}")
 			self.downloadFail("File not exists")
 			return
 		try:
@@ -281,10 +281,6 @@ class EPGImport:
 				return
 
 		elif filename.endswith(".xz") or filename.endswith(".lzma"):
-			try:
-				import lzma
-			except ImportError:
-				from backports import lzma
 			self.fd = lzma.open(filename, "rb")
 			try:  # read a bit to make sure it's an xz file
 				self.fd.read(10)
@@ -310,20 +306,18 @@ class EPGImport:
 				print(f"[EPGImport][afterDownload] warning: Could not remove '{filename}' intermediate", e)
 
 		self.channelFiles = self.source.channels.downloadables()
-		# print("[EPGImport][afterDownload] self.source, self.channelFiles", self.source, "   ", self.channelFiles)
 		if not self.channelFiles:
 			self.afterChannelDownload(None, None)
 		else:
 			filename = choice(self.channelFiles)
 			self.channelFiles.remove(filename)
-			# print("[EPGImport][afterDownload] download Channels ...filename", filename)
 			self.urlDownload(filename, self.afterChannelDownload, self.channelDownloadFail)
 		return
 
 	def downloadFail(self, failure):
 		print(f"[EPGImport][downloadFail] download failed: {failure}")
-		# if self.source.url in self.source.urls:  # use this ;)
-		self.source.urls.remove(self.source.url)
+		if self.source.url in self.source.urls:
+			self.source.urls.remove(self.source.url)
 		if self.source.urls:
 			print("[EPGImport][downloadFail] Attempting alternative URL for Basic")
 			self.source.url = choice(self.source.urls)
@@ -358,7 +352,8 @@ class EPGImport:
 		print(f"[EPGImport][channelDownloadFail] download channel failed: {failure}")
 		if self.channelFiles:
 			filename = choice(self.channelFiles)
-			self.channelFiles.remove(filename)
+			if filename in self.channelFiles:
+				self.channelFiles.remove(filename)
 			print(f"[EPGImport][channelDownloadFail] retry alternative download channel - new url filename {filename}")
 			self.urlDownload(filename, self.afterChannelDownload, self.channelDownloadFail)
 		else:
@@ -380,10 +375,10 @@ class EPGImport:
 		try:
 			if filename.endswith(".gz"):
 				print(f"[EPGImport] Uncompressing {filename}")
-				import shutil
+				from shutil import copyfileobj
 				fd = gzip.open(filename, "rb")
 				epgdat = open(HDD_EPG_DAT, "wb")
-				shutil.copyfileobj(fd, epgdat)
+				copyfileobj(fd, epgdat)
 				del fd
 				epgdat.close()
 				del epgdat
@@ -406,18 +401,36 @@ class EPGImport:
 			return
 
 	def doThreadRead(self, filename):
-		"""This is used on PLi with threading"""
 		for data in self.createIterator(filename):
 			if data is not None:
 				self.eventCount += 1
 				r, d = data
-				if d[0] > self.longDescUntil:
-					# Remove long description (save RAM memory)
-					d = d[:4] + ("",) + d[5:]
-				try:
-					self.storage.importEvents(r, (d,))
-				except Exception as e:
-					print(f"[EPGImport][doThreadRead] ### importEvents exception: {e}")
+				if len(d) >= 5:
+					if d[0] > self.longDescUntil:
+						d = d[:4] + ("",) + d[5:]
+
+					# for i, item in enumerate(d):
+						# print(f"[EPGImport][doThreadRead] ### Checking item {i}: {item}, type: {type(item)}")
+
+					d = tuple(
+						int(item) if isinstance(item, (str, bytes)) and self.is_numeric(item) else  # Converte in intero se numerico
+						(item.decode('utf-8') if isinstance(item, bytes) else item)  # Decodifica i bytes in stringhe
+						for item in d
+					)
+
+					# # Debug: stampa la tupla d dopo le modifiche
+					# print(f"[EPGImport][doThreadRead] ### Final Event data: {d}")
+
+					try:
+						self.storage.importEvents(r, (d,))
+					except Exception as e:
+						print(f"[EPGImport][doThreadRead] ### importEvents exception: {e}")
+						# print(f"[EPGImport][doThreadRead] ### Event data: {r}, {d}")
+						print("[EPGImport][doThreadRead] ### Stack trace:")
+						import traceback
+						traceback.print_exc()  # Stampa lo stack trace per diagnosticare meglio
+				else:
+					print("[EPGImport][doThreadRead] ### Invalid data tuple length, skipping event.")
 		print("[EPGImport][doThreadRead] ### thread is ready ### Events:", self.eventCount)
 		if filename:
 			try:
@@ -425,6 +438,14 @@ class EPGImport:
 			except Exception as e:
 				print(f"[EPGImport][doThreadRead] warning: Could not remove '{filename}' intermediate {e}")
 		return
+
+	def is_numeric(self, value):
+		"""Check if integer value"""
+		try:
+			int(value)
+			return True
+		except ValueError:
+			return False
 
 	def doRead(self):
 		"""called from reactor to read some data"""
