@@ -18,7 +18,7 @@
 				<item level="1" text="Hours after which the import is repeated" description="Hours after which the import is repeated">config.plugins.epgimport.repeat_import</item>
 			</if>
 		</if>
-		<item level="1" text="Source EPG" description="Specify the source for EPG.">config.plugins.epgimport.extra_source</item>
+		<item level="1" text="Source files provider" description="Choose the provider for updatng the EPG source files.">config.plugins.epgimport.extra_source</item>
 		<item level="1" text="Start import after booting up" description="Start import after booting up">config.plugins.epgimport.runboot</item>
 		<if conditional="config.plugins.epgimport.runboot.value != '4'">
 			<item level="1" text="Consider setting 'Days Profile'" description="Consider setting 'Days Profile'">config.plugins.epgimport.runboot_day</item>
