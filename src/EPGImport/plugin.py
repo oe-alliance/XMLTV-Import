@@ -115,7 +115,7 @@ config.plugins.epgimport.import_onlybouquet = ConfigYesNo(default=False)
 config.plugins.epgimport.import_onlyiptv = ConfigYesNo(default=False)
 config.plugins.epgimport.clear_oldepg = ConfigYesNo(default=False)
 config.plugins.epgimport.filter_custom_channel = ConfigYesNo(default=True)
-config.plugins.epgimport.day_profile = ConfigSelection(choices=[("1", _("Press OK"))], default="1")
+config.plugins.epgimport.day_profile = NoSave(ConfigSelection(choices=[("1", _("Press OK"))], default="1"))
 config.plugins.extra_epgimport = ConfigSubsection()
 config.plugins.extra_epgimport.last_import = ConfigText(default="0")
 config.plugins.extra_epgimport.day_import = ConfigSubDict()
@@ -444,6 +444,12 @@ class EPGImportConfig(Setup):
 		if config.plugins.epgimport.import_onlybouquet.isChanged() or (autoStartTimer is not None and autoStartTimer.prev_multibouquet != config.usage.multibouquet.value):
 			EPGConfig.channelCache = {}
 		Setup.keySave(self)
+
+	def keySelect(self):
+		if self.getCurrentItem() == config.plugins.epgimport.day_profile:
+			self.session.open(EPGImportProfile)
+		else:
+			Setup.keySelect(self)
 
 
 class EPGImportSources(Screen):
