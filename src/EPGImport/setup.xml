@@ -7,7 +7,7 @@
 		<if conditional="config.plugins.epgimport.enabled.value">
 			<item level="1" text="Automatic start time" description="Automatic start time">config.plugins.epgimport.wakeup</item>
 			<item level="1" text="When in deep standby" description="When in deep standby">config.plugins.epgimport.deepstandby</item>
-			<item level="1" text="Choice days for start import" description="Choice days for start import">config.plugins.epgimport.day_profile</item>
+			<item level="1" text="Choose days to import" description="Press OK to choose on which days to import">config.plugins.epgimport.day_profile</item>
 			<if conditional="config.plugins.epgimport.deepstandby.value == 'wakeup'">
 				<item level="1" text="Return to deep standby after import" description="Return to deep standby after import">config.plugins.epgimport.shutdown</item>
 				<if conditional="not config.plugins.epgimport.shutdown.value">
