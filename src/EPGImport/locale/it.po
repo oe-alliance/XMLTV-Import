@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Italian Translation EPGImport Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:55+0200\n"
+"POT-Creation-Date: 2025-04-04 16:19+0100\n"
 "PO-Revision-Date: 2025-02-03 17:06+0100\n"
 "Last-Translator: madhouse\n"
 "Language-Team: egami-team\n"
@@ -93,6 +93,9 @@ msgstr ""
 
 msgid "Delete selected"
 msgstr "Rimuovi selezionato"
+
+msgid "Display a shortcut 'EPG import now' in the extension menu. This menu entry will immediately start the EPG update process when selected."
+msgstr ""
 
 msgid ""
 "Do you want to update Source now?\n"
@@ -232,7 +235,7 @@ msgid "Select service to add..."
 msgstr "Seleziona il canale da aggiungere..."
 
 #, fuzzy
-msgid "Show 'EPG-Importer Now' in extensions"
+msgid "Show 'EPG import now' in extensions"
 msgstr "EPG-Importer"
 
 msgid "Show 'EPGImport' in plugins"

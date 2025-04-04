@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:55+0200\n"
+"POT-Creation-Date: 2025-04-04 16:19+0100\n"
 "PO-Revision-Date: 2018-12-08 11:44+0300\n"
 "Last-Translator: mosad - مساعد الجعيد <abo-mishal@hotmail.com>\n"
 "Language-Team: mosad - مساعد الجعيد\n"
@@ -75,6 +75,9 @@ msgid "Delete current EPG before import"
 msgstr ""
 
 msgid "Delete selected"
+msgstr ""
+
+msgid "Display a shortcut 'EPG import now' in the extension menu. This menu entry will immediately start the EPG update process when selected."
 msgstr ""
 
 msgid ""
@@ -215,7 +218,7 @@ msgid "Select service to add..."
 msgstr ""
 
 #, fuzzy
-msgid "Show 'EPG-Importer Now' in extensions"
+msgid "Show 'EPG import now' in extensions"
 msgstr "إستيراد دليل البرامج الإلكترونية"
 
 msgid "Show 'EPGImport' in plugins"

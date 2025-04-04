@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:55+0200\n"
+"POT-Creation-Date: 2025-04-04 16:19+0100\n"
 "PO-Revision-Date: 2025-03-07 16:53+0200\n"
 "Last-Translator: Orlandox\n"
 "Language-Team: tomppaa, Orlandox\n"
@@ -80,6 +80,9 @@ msgstr "Tyhjennä nykyinen EPG ennen latausta"
 
 msgid "Delete selected"
 msgstr "Poista valittu"
+
+msgid "Display a shortcut 'EPG import now' in the extension menu. This menu entry will immediately start the EPG update process when selected."
+msgstr ""
 
 msgid ""
 "Do you want to update Source now?\n"
@@ -219,7 +222,7 @@ msgid "Select service to add..."
 msgstr "Valitse lisättävä kanava..."
 
 #, fuzzy
-msgid "Show 'EPG-Importer Now' in extensions"
+msgid "Show 'EPG import now' in extensions"
 msgstr "Näytä 'EPG lataus' laajennusvalikossa"
 
 msgid "Show 'EPGImport' in plugins"
