@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 20:28+0100\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rob van der Does <RobvanderDoes@Gmail.com>\n"
 "Language-Team: \n"
@@ -38,6 +38,9 @@ msgstr "Provider toevoegen"
 msgid "All services provider"
 msgstr "Alle zender providers"
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "Automatische EPG Importeur"
 
@@ -51,7 +54,10 @@ msgstr ""
 msgid "Cancel"
 msgstr "Annuleer"
 
-msgid "Choice days for start import"
+msgid "Choose days to import"
+msgstr ""
+
+msgid "Choose the provider for updatng the EPG source files."
 msgstr ""
 
 msgid "Clear"
@@ -116,6 +122,7 @@ msgstr ""
 "Dit kan een paar minuten duren.\n"
 "Is dit ok?"
 
+#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -123,10 +130,17 @@ msgstr ""
 "EPGImporteur Plugin\n"
 "Starten mislukt:\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr "Vrijdag"
 
 msgid "Hours after which the import is repeated"
+msgstr ""
+
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
 msgstr ""
 
 msgid "Ignore services list"
@@ -139,13 +153,8 @@ msgstr "EPG importeur"
 msgid "Import failed with error: {}"
 msgstr ""
 
-msgid "Import from Git"
-msgstr ""
-
 #, fuzzy, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
+msgid "Importing: %s %s events"
 msgstr ""
 "Importeert: %s\n"
 "%s programma's"
@@ -175,8 +184,14 @@ msgstr "Maandag"
 msgid "No active EPG sources found, nothing to do"
 msgstr "Geen actieve bronnen gevonden; niets te doen"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
 msgstr "Druk op OK"
+
+msgid "Press OK to choose on which days to import"
+msgstr ""
 
 msgid "Really delete all list?"
 msgstr "Alle lijsten wissen?"
@@ -199,8 +214,9 @@ msgstr "Kies actie"
 msgid "Select service to add..."
 msgstr "Kies het kanaal dat toegevoegd moet worden..."
 
-msgid "Show 'EPGImport' in extensions"
-msgstr ""
+#, fuzzy
+msgid "Show 'EPG-Importer Now' in extensions"
+msgstr "EPG importeur"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr ""
@@ -212,16 +228,13 @@ msgid "Skip import on restart GUI"
 msgstr ""
 
 #, fuzzy
-msgid "Source EPG"
-msgstr "Bronnen"
+msgid "Source files provider"
+msgstr "Alle zender providers"
 
 msgid "Sources"
 msgstr "Bronnen"
 
 msgid "Sources saved successfully!"
-msgstr ""
-
-msgid "Specify the source for EPG."
 msgstr ""
 
 msgid "Standby at startup"
@@ -244,6 +257,10 @@ msgstr "Dinsdag"
 
 msgid "Update Aborted!"
 msgstr ""
+
+#, fuzzy
+msgid "Update Sources"
+msgstr "Bronnen"
 
 msgid "Wednesday"
 msgstr "Woensdag"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 20:28+0100\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
 "PO-Revision-Date: 2018-01-27 14:51+0800\n"
 "Last-Translator: 孤独之剑 <haotzyy1970@163.com>\n"
 "Language-Team: none\n"
@@ -36,6 +36,9 @@ msgstr "添加供应商 "
 msgid "All services provider"
 msgstr "所有的服务供应商"
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "自动EPG导入 "
 
@@ -49,7 +52,10 @@ msgstr ""
 msgid "Cancel"
 msgstr "取消 "
 
-msgid "Choice days for start import"
+msgid "Choose days to import"
+msgstr ""
+
+msgid "Choose the provider for updatng the EPG source files."
 msgstr ""
 
 msgid "Clear"
@@ -114,6 +120,7 @@ msgstr ""
 "这可能需要几分钟时间.\n"
 "现在开始吗?"
 
+#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -121,10 +128,17 @@ msgstr ""
 "EPG导入插件\n"
 "启动失败:\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr "星期五 "
 
 msgid "Hours after which the import is repeated"
+msgstr ""
+
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
 msgstr ""
 
 msgid "Ignore services list"
@@ -137,13 +151,8 @@ msgstr "EPG节目预告"
 msgid "Import failed with error: {}"
 msgstr ""
 
-msgid "Import from Git"
-msgstr ""
-
 #, fuzzy, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
+msgid "Importing: %s %s events"
 msgstr ""
 "导入: %s\n"
 "%s 字节 "
@@ -173,8 +182,14 @@ msgstr "星期一"
 msgid "No active EPG sources found, nothing to do"
 msgstr "没有发现有效的EPG源"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
 msgstr "按OK键"
+
+msgid "Press OK to choose on which days to import"
+msgstr ""
 
 msgid "Really delete all list?"
 msgstr "真的删除所有列表？"
@@ -197,8 +212,9 @@ msgstr "选择操作 "
 msgid "Select service to add..."
 msgstr ""
 
-msgid "Show 'EPGImport' in extensions"
-msgstr ""
+#, fuzzy
+msgid "Show 'EPG-Importer Now' in extensions"
+msgstr "EPG节目预告"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr ""
@@ -210,16 +226,13 @@ msgid "Skip import on restart GUI"
 msgstr ""
 
 #, fuzzy
-msgid "Source EPG"
-msgstr "来源 "
+msgid "Source files provider"
+msgstr "所有的服务供应商"
 
 msgid "Sources"
 msgstr "来源 "
 
 msgid "Sources saved successfully!"
-msgstr ""
-
-msgid "Specify the source for EPG."
 msgstr ""
 
 msgid "Standby at startup"
@@ -242,6 +255,10 @@ msgstr "星期二 "
 
 msgid "Update Aborted!"
 msgstr ""
+
+#, fuzzy
+msgid "Update Sources"
+msgstr "来源 "
 
 msgid "Wednesday"
 msgstr "星期三 "

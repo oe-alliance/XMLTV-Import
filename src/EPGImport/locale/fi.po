@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-07 16:16+0200\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
 "PO-Revision-Date: 2025-03-07 16:53+0200\n"
 "Last-Translator: Orlandox\n"
 "Language-Team: tomppaa, Orlandox\n"
@@ -41,6 +41,9 @@ msgstr "Lisää Palveluntarjoaja"
 msgid "All services provider"
 msgstr "Kaikki palveluntarjoajat"
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "Automatisoitu EPG lataus"
 
@@ -53,8 +56,12 @@ msgstr "Automaattinen alkamisaika"
 msgid "Cancel"
 msgstr "Poistu"
 
-msgid "Choice days for start import"
+#, fuzzy
+msgid "Choose days to import"
 msgstr "Valitse EPG tietojen latauspäivät"
+
+msgid "Choose the provider for updatng the EPG source files."
+msgstr ""
 
 msgid "Clear"
 msgstr "Tyhjennä"
@@ -120,6 +127,7 @@ msgstr ""
 "Tämä voi kestää muutaman minuutin.\n"
 "Haluatko ladata nyt?"
 
+#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -127,11 +135,18 @@ msgstr ""
 "EPG lataus -lisäosa\n"
 "Aloitus epäonnistui:\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr "Perjantai"
 
 msgid "Hours after which the import is repeated"
 msgstr "Tunnit, jonka jälkeen tuonti toistetaan"
+
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
+msgstr ""
 
 msgid "Ignore services list"
 msgstr "Ohitettavien kanavien lista"
@@ -142,13 +157,8 @@ msgstr "EPG lataus"
 msgid "Import failed with error: {}"
 msgstr "Tuonti epäonnistui virheellä: {}"
 
-msgid "Import from Git"
-msgstr "Tuo Git:stä"
-
-#, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
+#, fuzzy, python-format
+msgid "Importing: %s %s events"
 msgstr ""
 "Lataa:\n"
 "%s %s tapahtumaa"
@@ -178,8 +188,14 @@ msgstr "Maanantai"
 msgid "No active EPG sources found, nothing to do"
 msgstr "Aktiivisia EPG lähteitä ei löytynyt, mitään ei tehty"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
 msgstr "Paina OK"
+
+msgid "Press OK to choose on which days to import"
+msgstr ""
 
 msgid "Really delete all list?"
 msgstr "Haluatko varmasti poistaa kaikki listalta?"
@@ -202,7 +218,8 @@ msgstr "Valitse toiminto"
 msgid "Select service to add..."
 msgstr "Valitse lisättävä kanava..."
 
-msgid "Show 'EPGImport' in extensions"
+#, fuzzy
+msgid "Show 'EPG-Importer Now' in extensions"
 msgstr "Näytä 'EPG lataus' laajennusvalikossa"
 
 msgid "Show 'EPGImport' in plugins"
@@ -214,17 +231,15 @@ msgstr "Näytä loki"
 msgid "Skip import on restart GUI"
 msgstr "Ohita lataus Enigma2:n uudelleenkäynnistyksessä"
 
-msgid "Source EPG"
-msgstr "EPG:n lähteet"
+#, fuzzy
+msgid "Source files provider"
+msgstr "Kaikki palveluntarjoajat"
 
 msgid "Sources"
 msgstr "Lähteet"
 
 msgid "Sources saved successfully!"
 msgstr "Lähteet tallennettu onnistuneesti!"
-
-msgid "Specify the source for EPG."
-msgstr "Määritä EPG:n lähde."
 
 msgid "Standby at startup"
 msgstr "Valmiustilassa lataus"
@@ -245,6 +260,10 @@ msgid "Tuesday"
 msgstr "Tiistai"
 
 msgid "Update Aborted!"
+msgstr "Päivitys keskeytetty!"
+
+#, fuzzy
+msgid "Update Sources"
 msgstr "Päivitys keskeytetty!"
 
 msgid "Wednesday"

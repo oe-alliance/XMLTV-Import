@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 20:28+0100\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
 "PO-Revision-Date: 2018-12-08 11:44+0300\n"
 "Last-Translator: mosad - مساعد الجعيد <abo-mishal@hotmail.com>\n"
 "Language-Team: mosad - مساعد الجعيد\n"
@@ -37,6 +37,9 @@ msgstr ""
 msgid "All services provider"
 msgstr ""
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "إستيراد دليل البرامج الإلكترونية الآلي"
 
@@ -50,7 +53,10 @@ msgstr ""
 msgid "Cancel"
 msgstr "إلغاء"
 
-msgid "Choice days for start import"
+msgid "Choose days to import"
+msgstr ""
+
+msgid "Choose the provider for updatng the EPG source files."
 msgstr ""
 
 msgid "Clear"
@@ -117,6 +123,7 @@ msgstr ""
 "قد يستغرق بضع دقائق\n"
 "فهل أنت موافق؟"
 
+#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -125,10 +132,17 @@ msgstr ""
 "فشل في البدء:\n"
 "\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr ""
 
 msgid "Hours after which the import is repeated"
+msgstr ""
+
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
 msgstr ""
 
 msgid "Ignore services list"
@@ -141,13 +155,8 @@ msgstr "إستيراد دليل البرامج الإلكترونية"
 msgid "Import failed with error: {}"
 msgstr ""
 
-msgid "Import from Git"
-msgstr ""
-
 #, fuzzy, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
+msgid "Importing: %s %s events"
 msgstr "إنتهاء إستيراد دليل البرامج الإلكترونية, %d والأحداث"
 
 msgid "Last import: "
@@ -175,7 +184,13 @@ msgstr ""
 msgid "No active EPG sources found, nothing to do"
 msgstr "لا توجد مصادر لدليل البرامج الإلكترونية مفعلة، علىك أن تفعل شيئا"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
+msgstr ""
+
+msgid "Press OK to choose on which days to import"
 msgstr ""
 
 msgid "Really delete all list?"
@@ -199,8 +214,9 @@ msgstr ""
 msgid "Select service to add..."
 msgstr ""
 
-msgid "Show 'EPGImport' in extensions"
-msgstr ""
+#, fuzzy
+msgid "Show 'EPG-Importer Now' in extensions"
+msgstr "إستيراد دليل البرامج الإلكترونية"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr ""
@@ -211,17 +227,13 @@ msgstr ""
 msgid "Skip import on restart GUI"
 msgstr ""
 
-#, fuzzy
-msgid "Source EPG"
-msgstr "المصادر"
+msgid "Source files provider"
+msgstr ""
 
 msgid "Sources"
 msgstr "المصادر"
 
 msgid "Sources saved successfully!"
-msgstr ""
-
-msgid "Specify the source for EPG."
 msgstr ""
 
 msgid "Standby at startup"
@@ -244,6 +256,10 @@ msgstr ""
 
 msgid "Update Aborted!"
 msgstr ""
+
+#, fuzzy
+msgid "Update Sources"
+msgstr "المصادر"
 
 msgid "Wednesday"
 msgstr ""

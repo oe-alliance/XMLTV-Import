@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 20:28+0100\n"
-"PO-Revision-Date: 2025-02-26 17:59+0100\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
+"PO-Revision-Date: 2025-04-04 16:55+0200\n"
 "Last-Translator: jbleyel\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -41,10 +41,12 @@ msgstr "Senderkette hinzufügen"
 msgid "All services provider"
 msgstr "Alle Senderketten"
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "Automatisierter EPG-Import"
 
-#, fuzzy
 msgid "Automatic import EPG"
 msgstr "Automatisierter EPG-Import"
 
@@ -54,7 +56,10 @@ msgstr ""
 msgid "Cancel"
 msgstr "Abbrechen"
 
-msgid "Choice days for start import"
+msgid "Choose days to import"
+msgstr ""
+
+msgid "Choose the provider for updatng the EPG source files."
 msgstr ""
 
 msgid "Clear"
@@ -97,9 +102,8 @@ msgstr "EPG-Import abgeschlossen, %d Ereignisse"
 msgid "EPG-Importer"
 msgstr "EPG-Importer"
 
-#, fuzzy
 msgid "EPG-Importer Now"
-msgstr "EPG-Importer"
+msgstr "EPG-Importer Jetzt"
 
 msgid ""
 "EPGImport\n"
@@ -126,32 +130,31 @@ msgstr ""
 "EPGImport Plugin\n"
 "Nicht gestartet:\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr "Freitag"
 
 msgid "Hours after which the import is repeated"
 msgstr ""
 
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
+msgstr ""
+
 msgid "Ignore services list"
 msgstr "Liste der zu überspringenden Sender"
 
-#, fuzzy
 msgid "Import"
-msgstr "EPG-Importer"
+msgstr "Import"
 
 msgid "Import failed with error: {}"
 msgstr ""
 
-msgid "Import from Git"
-msgstr ""
-
-#, fuzzy, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
-msgstr ""
-"Importiere: %s\n"
-"%s Ereignisse"
+#, python-format
+msgid "Importing: %s %s events"
+msgstr "Importiere: %s %s Ereignisse"
 
 msgid "Last import: "
 msgstr "Letzter Import: "
@@ -178,8 +181,14 @@ msgstr "Montag"
 msgid "No active EPG sources found, nothing to do"
 msgstr "Keine aktiven EPG-Quellen gefunden, nichts zu tun"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
 msgstr "OK drücken"
+
+msgid "Press OK to choose on which days to import"
+msgstr ""
 
 msgid "Really delete all list?"
 msgstr "Wirklich die gesamte Liste löschen?"
@@ -202,8 +211,8 @@ msgstr "Aktion auswählen"
 msgid "Select service to add..."
 msgstr "Wähle Sender zum Hinzufügen…"
 
-msgid "Show 'EPGImport' in extensions"
-msgstr ""
+msgid "Show 'EPG-Importer Now' in extensions"
+msgstr "Zeige ‚EPG-Importer’ in Erweiterungen"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr ""
@@ -214,17 +223,13 @@ msgstr "Log anzeigen"
 msgid "Skip import on restart GUI"
 msgstr ""
 
-#, fuzzy
-msgid "Source EPG"
-msgstr "Quellen"
+msgid "Source files provider"
+msgstr "Provider Quelldateien"
 
 msgid "Sources"
 msgstr "Quellen"
 
 msgid "Sources saved successfully!"
-msgstr ""
-
-msgid "Specify the source for EPG."
 msgstr ""
 
 msgid "Standby at startup"
@@ -247,6 +252,9 @@ msgstr "Dienstag"
 
 msgid "Update Aborted!"
 msgstr ""
+
+msgid "Update Sources"
+msgstr "Update Quellen"
 
 msgid "Wednesday"
 msgstr "Mittwoch"

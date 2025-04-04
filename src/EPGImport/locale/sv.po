@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 20:28+0100\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
 "PO-Revision-Date: 2025-02-26 15:00+0100\n"
 "Last-Translator: Warder <ciksa@seznam.cz>\n"
 "Language-Team: \n"
@@ -43,6 +43,9 @@ msgstr "Pridať poskytovateľa"
 msgid "All services provider"
 msgstr "Všetci poskytovatelia služieb"
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "Automatizovaný stahovač EPG"
 
@@ -56,7 +59,10 @@ msgstr ""
 msgid "Cancel"
 msgstr "Zrušiť"
 
-msgid "Choice days for start import"
+msgid "Choose days to import"
+msgstr ""
+
+msgid "Choose the provider for updatng the EPG source files."
 msgstr ""
 
 msgid "Clear"
@@ -122,6 +128,7 @@ msgstr ""
 "Môže to trvať niekoľko minút.\n"
 "Je to v poriadku?"
 
+#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -129,10 +136,17 @@ msgstr ""
 "Doplnok EPGImport\n"
 "Nepodarilo sa spustiť:\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr "Piatok"
 
 msgid "Hours after which the import is repeated"
+msgstr ""
+
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
 msgstr ""
 
 msgid "Ignore services list"
@@ -145,13 +159,8 @@ msgstr "EPG-dovozca"
 msgid "Import failed with error: {}"
 msgstr ""
 
-msgid "Import from Git"
-msgstr ""
-
 #, fuzzy, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
+msgid "Importing: %s %s events"
 msgstr ""
 "Import: %s\n"
 "%s podujatia"
@@ -181,8 +190,14 @@ msgstr "Pondelok"
 msgid "No active EPG sources found, nothing to do"
 msgstr "Nenašli sa žiadne aktívne zdroje EPG, nič nerobiť"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
 msgstr "Stlač OK"
+
+msgid "Press OK to choose on which days to import"
+msgstr ""
 
 msgid "Really delete all list?"
 msgstr "Naozaj odstrániť celý zoznam?"
@@ -205,8 +220,9 @@ msgstr "Vybrať akciu"
 msgid "Select service to add..."
 msgstr "Vyberte položku Služba, ktorá sa má pridať..."
 
-msgid "Show 'EPGImport' in extensions"
-msgstr ""
+#, fuzzy
+msgid "Show 'EPG-Importer Now' in extensions"
+msgstr "EPG-dovozca"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr ""
@@ -218,16 +234,13 @@ msgid "Skip import on restart GUI"
 msgstr ""
 
 #, fuzzy
-msgid "Source EPG"
-msgstr "Zdrojov"
+msgid "Source files provider"
+msgstr "Všetci poskytovatelia služieb"
 
 msgid "Sources"
 msgstr "Zdrojov"
 
 msgid "Sources saved successfully!"
-msgstr ""
-
-msgid "Specify the source for EPG."
 msgstr ""
 
 msgid "Standby at startup"
@@ -250,6 +263,10 @@ msgstr "Utorok"
 
 msgid "Update Aborted!"
 msgstr ""
+
+#, fuzzy
+msgid "Update Sources"
+msgstr "Zdrojov"
 
 msgid "Wednesday"
 msgstr "Streda"

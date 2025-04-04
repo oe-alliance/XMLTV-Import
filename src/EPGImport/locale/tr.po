@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oe-alliance / XMLTV-Import\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 20:28+0100\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
 "PO-Revision-Date: 2018-08-10 04:14+0300\n"
 "Last-Translator: TM2TURK | by thawtes <thawtes@gmail.com>\n"
 "Language-Team: TM2TURK | by thawtes <thawtes@gmail.com>\n"
@@ -37,6 +37,9 @@ msgstr "Platform Ekle"
 msgid "All services provider"
 msgstr "Platformdaki Tüm Kanalları Ekle"
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "harici e-rehber verilerini sisteminize aktarın"
 
@@ -50,7 +53,10 @@ msgstr ""
 msgid "Cancel"
 msgstr "Vazgeç"
 
-msgid "Choice days for start import"
+msgid "Choose days to import"
+msgstr ""
+
+msgid "Choose the provider for updatng the EPG source files."
 msgstr ""
 
 msgid "Clear"
@@ -115,6 +121,7 @@ msgstr ""
 "bu işlem biraz zaman alabilir\n"
 "işlemi başlatmak istiyor musunuz ?"
 
+#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -122,10 +129,17 @@ msgstr ""
 "E-Rehber Yükleyici Uygulaması\n"
 "Başlatılamadı:\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr "cuma"
 
 msgid "Hours after which the import is repeated"
+msgstr ""
+
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
 msgstr ""
 
 msgid "Ignore services list"
@@ -138,13 +152,8 @@ msgstr "E-Rehber Yükleyici"
 msgid "Import failed with error: {}"
 msgstr ""
 
-msgid "Import from Git"
-msgstr ""
-
 #, fuzzy, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
+msgid "Importing: %s %s events"
 msgstr ""
 "Yükleniyor : %s\n"
 "%s adet program bilgisi içe aktarılıyor ..."
@@ -174,8 +183,14 @@ msgstr "pazartesi"
 msgid "No active EPG sources found, nothing to do"
 msgstr "etkinleştirilmiş e-rehber veri kaynağı bulunamadı"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
 msgstr "ok tuşuna basınız"
+
+msgid "Press OK to choose on which days to import"
+msgstr ""
 
 msgid "Really delete all list?"
 msgstr "listede olanların hepsini silmek istiyor musunuz ?"
@@ -198,8 +213,9 @@ msgstr "Seçiminizi Yapın"
 msgid "Select service to add..."
 msgstr "eklenecek kanalı seçiniz"
 
-msgid "Show 'EPGImport' in extensions"
-msgstr ""
+#, fuzzy
+msgid "Show 'EPG-Importer Now' in extensions"
+msgstr "E-Rehber Yükleyici"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr ""
@@ -211,16 +227,13 @@ msgid "Skip import on restart GUI"
 msgstr ""
 
 #, fuzzy
-msgid "Source EPG"
-msgstr "Kaynaklar"
+msgid "Source files provider"
+msgstr "Platformdaki Tüm Kanalları Ekle"
 
 msgid "Sources"
 msgstr "Kaynaklar"
 
 msgid "Sources saved successfully!"
-msgstr ""
-
-msgid "Specify the source for EPG."
 msgstr ""
 
 msgid "Standby at startup"
@@ -243,6 +256,10 @@ msgstr "salı"
 
 msgid "Update Aborted!"
 msgstr ""
+
+#, fuzzy
+msgid "Update Sources"
+msgstr "Kaynaklar"
 
 msgid "Wednesday"
 msgstr "çarşamba"

@@ -406,7 +406,7 @@ class EPGImportConfig(Setup):
 			startImport()
 		except Exception as e:
 			print(f"[XMLTVImport] Error at start:{e}", file=log)
-			msg = _("EPGImport Plugin\nFailed to start:\n!") + str(e)
+			msg = _("EPGImport Plugin\nFailed to start:\n") + str(e)
 			self.session.open(
 				MessageBox,
 				msg,

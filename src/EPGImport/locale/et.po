@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XMTV-Impoter for Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 20:28+0100\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
 "PO-Revision-Date: 2017-08-07 15:39+0300\n"
 "Last-Translator: rimas\n"
 "Language-Team: rimas\n"
@@ -37,6 +37,9 @@ msgstr "Lisa levitaja"
 msgid "All services provider"
 msgstr "Levitaja kõigile kanalitele"
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "Automaatne EPG import"
 
@@ -50,7 +53,10 @@ msgstr ""
 msgid "Cancel"
 msgstr "Tühista"
 
-msgid "Choice days for start import"
+msgid "Choose days to import"
+msgstr ""
+
+msgid "Choose the provider for updatng the EPG source files."
 msgstr ""
 
 msgid "Clear"
@@ -115,6 +121,7 @@ msgstr ""
 "See võib kesta mõne minuti\n"
 "Kas see sobib?"
 
+#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -122,10 +129,17 @@ msgstr ""
 "EPGImport\n"
 "Käivitamine nurjus:\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr "Reede"
 
 msgid "Hours after which the import is repeated"
+msgstr ""
+
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
 msgstr ""
 
 msgid "Ignore services list"
@@ -138,13 +152,8 @@ msgstr "EPG import"
 msgid "Import failed with error: {}"
 msgstr ""
 
-msgid "Import from Git"
-msgstr ""
-
 #, fuzzy, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
+msgid "Importing: %s %s events"
 msgstr ""
 "Import: %s\n"
 "%s saadet"
@@ -174,8 +183,14 @@ msgstr "Esmaspäev"
 msgid "No active EPG sources found, nothing to do"
 msgstr "EPG allikad on määramata. Midagi ei saa teha"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
 msgstr "Vajuta OK"
+
+msgid "Press OK to choose on which days to import"
+msgstr ""
 
 msgid "Really delete all list?"
 msgstr "Kas kustutada kogu nimekiri?"
@@ -198,8 +213,9 @@ msgstr "Vali tegevus"
 msgid "Select service to add..."
 msgstr ""
 
-msgid "Show 'EPGImport' in extensions"
-msgstr ""
+#, fuzzy
+msgid "Show 'EPG-Importer Now' in extensions"
+msgstr "EPG import"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr ""
@@ -211,16 +227,13 @@ msgid "Skip import on restart GUI"
 msgstr ""
 
 #, fuzzy
-msgid "Source EPG"
-msgstr "Allikad"
+msgid "Source files provider"
+msgstr "Levitaja kõigile kanalitele"
 
 msgid "Sources"
 msgstr "Allikad"
 
 msgid "Sources saved successfully!"
-msgstr ""
-
-msgid "Specify the source for EPG."
 msgstr ""
 
 msgid "Standby at startup"
@@ -243,6 +256,10 @@ msgstr "Teisipäev"
 
 msgid "Update Aborted!"
 msgstr ""
+
+#, fuzzy
+msgid "Update Sources"
+msgstr "Allikad"
 
 msgid "Wednesday"
 msgstr "Kolmapäev"

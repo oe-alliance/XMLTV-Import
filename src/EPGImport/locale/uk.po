@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-08 20:28+0100\n"
+"POT-Creation-Date: 2025-04-04 16:55+0200\n"
 "PO-Revision-Date: 2020-01-19 15:12+0300\n"
 "Last-Translator: kvinto <badsystem@ukr.net>\n"
 "Language-Team: kvinto\n"
@@ -35,6 +35,9 @@ msgstr ""
 msgid "All services provider"
 msgstr ""
 
+msgid "Also apply 'channel id' filtering on custom.channels.xml"
+msgstr ""
+
 msgid "Automated EPG Importer"
 msgstr "Автозавантаження ЕПГ"
 
@@ -48,7 +51,10 @@ msgstr ""
 msgid "Cancel"
 msgstr "Скасувати"
 
-msgid "Choice days for start import"
+msgid "Choose days to import"
+msgstr ""
+
+msgid "Choose the provider for updatng the EPG source files."
 msgstr ""
 
 msgid "Clear"
@@ -114,6 +120,7 @@ msgstr ""
 "Це може заняти декілька хвилин.\n"
 "Це Вас задовільняє?"
 
+#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -121,10 +128,17 @@ msgstr ""
 "Завантаження ЕПГ\n"
 "Помилка старту:\n"
 
+#, python-format
+msgid "Filtering: %s Please wait!"
+msgstr ""
+
 msgid "Friday"
 msgstr "П’ятниця"
 
 msgid "Hours after which the import is repeated"
+msgstr ""
+
+msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
 msgstr ""
 
 msgid "Ignore services list"
@@ -137,13 +151,8 @@ msgstr "Завантажувач ЕПГ"
 msgid "Import failed with error: {}"
 msgstr ""
 
-msgid "Import from Git"
-msgstr ""
-
 #, fuzzy, python-format
-msgid ""
-"Importing:\n"
-"%s %s events"
+msgid "Importing: %s %s events"
 msgstr ""
 "Завантаження: %s\n"
 "%s передач"
@@ -173,8 +182,14 @@ msgstr "Понеділок"
 msgid "No active EPG sources found, nothing to do"
 msgstr "Не знайдено активних ЕПГ джерел"
 
+msgid "No source file found !"
+msgstr ""
+
 msgid "Press OK"
 msgstr "Натисніть ОК"
+
+msgid "Press OK to choose on which days to import"
+msgstr ""
 
 msgid "Really delete all list?"
 msgstr ""
@@ -197,8 +212,9 @@ msgstr ""
 msgid "Select service to add..."
 msgstr ""
 
-msgid "Show 'EPGImport' in extensions"
-msgstr ""
+#, fuzzy
+msgid "Show 'EPG-Importer Now' in extensions"
+msgstr "Завантажувач ЕПГ"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr ""
@@ -209,17 +225,13 @@ msgstr "Показати лог"
 msgid "Skip import on restart GUI"
 msgstr ""
 
-#, fuzzy
-msgid "Source EPG"
-msgstr "Джерела"
+msgid "Source files provider"
+msgstr ""
 
 msgid "Sources"
 msgstr "Джерела"
 
 msgid "Sources saved successfully!"
-msgstr ""
-
-msgid "Specify the source for EPG."
 msgstr ""
 
 msgid "Standby at startup"
@@ -242,6 +254,10 @@ msgstr "Вівторок"
 
 msgid "Update Aborted!"
 msgstr ""
+
+#, fuzzy
+msgid "Update Sources"
+msgstr "Джерела"
 
 msgid "Wednesday"
 msgstr "Середа"
