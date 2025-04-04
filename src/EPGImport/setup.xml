@@ -35,7 +35,7 @@
 		<if conditional="self.hasAutoTimer">
 			<item level="1" text="Run AutoTimer after import" description="Run AutoTimer after import">config.plugins.epgimport.parse_autotimer</item>
 		</if>
-		<item level="1" text="Show 'EPGImport' in extensions" description="Show 'EPGImport' in extensions">config.plugins.epgimport.showinextensions</item>
+		<item level="1" text="Show 'EPG-Importer Now' in extensions" description="Show 'EPG-Importer Now' in extensions">config.plugins.epgimport.showinextensions</item>
 		<item level="1" text="Show 'EPGImport' in plugins" description="Show 'EPGImport' in plugins">config.plugins.epgimport.showinplugins</item>
 	</setup>
 </setupxml>
