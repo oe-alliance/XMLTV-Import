@@ -99,7 +99,7 @@ config.plugins.epgimport.deepstandby = ConfigSelection(
 	]
 )
 config.plugins.epgimport.extra_source = ConfigSelection(
-	default="1",
+	default="0",
 	choices=[
 		("0", "Doglover3920"),
 		("1", "Lululla")
