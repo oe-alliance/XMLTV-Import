@@ -4,25 +4,28 @@ import time
 import calendar
 import six
 from . import log
-#from pprint import pprint
-from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
+# from pprint import pprint
+from xml.etree.cElementTree import iterparse
 
 # %Y%m%d%H%M%S
 
 
+# PEP8
 def quickptime(str):
-	return time.struct_time((int(str[0:4]), int(str[4:6]), int(str[6:8]),
-				 int(str[8:10]), int(str[10:12]), 0,
-				 -1, -1, 0))
+	return time.struct_time((
+		int(str[0:4]), int(str[4:6]), int(str[6:8]),
+		int(str[8:10]), int(str[10:12]), 0,
+		-1, -1, 0
+	))
 
 
 def get_time_utc(timestring, fdateparse):
-	#print "get_time_utc", timestring, format
+	# print "get_time_utc", timestring, format
 	try:
 		values = timestring.split(' ')
 		tm = fdateparse(values[0])
 		timegm = calendar.timegm(tm)
-		#suppose file says +0300 => that means we have to substract 3 hours from localtime to get gmt
+		# suppose file says +0300 => that means we have to substract 3 hours from localtime to get gmt
 		timegm -= (3600 * int(values[1]) // 100)
 		return timegm
 	except Exception as e:
@@ -33,6 +36,7 @@ def get_time_utc(timestring, fdateparse):
 # we just like Dutch better!
 
 
+"""
 def get_xml_string(elem, name):
 	r = ''
 	try:
@@ -47,6 +51,23 @@ def get_xml_string(elem, name):
 		print("[XMLTVConverter] get_xml_string error:", e)
 	# Now returning UTF-8 by default, the epgdat/oudeis must be adjusted to make this work.
 	return six.ensure_str(r)
+"""
+
+
+def get_xml_string(elem, name):
+	r = ''
+	try:
+		for node in elem.findall(name):
+			txt = node.text or ""
+			lang = node.get("lang", None)
+			if not r:
+				r = txt
+			elif lang == "nl":
+				r = txt
+	except Exception as e:
+		print("[XMLTVConverter] get_xml_string error:", e)
+	return six.ensure_str(r)
+
 
 def get_xml_rating_string(elem):
 	r = ''
@@ -59,6 +80,7 @@ def get_xml_rating_string(elem):
 	except Exception as e:
 		print("[XMLTVConverter] get_xml_rating_string error:", e)
 	return six.ensure_str(r)
+
 
 def enumerateProgrammes(fp):
 	"""Enumerates programme ElementTree nodes from file object 'fp'"""
@@ -91,7 +113,7 @@ class XMLTVConverter:
 		for elem in enumerateProgrammes(fileobj):
 			channel = elem.get('channel')
 			channel = channel.lower()
-			if not channel in self.channels:
+			if channel not in self.channels:
 				if lastUnknown != channel:
 					print("Unknown channel: ", channel, file=log)
 					lastUnknown = channel
@@ -120,7 +142,7 @@ class XMLTVConverter:
 					rating_str = get_xml_rating_string(elem)
 					# hardcode country as ENG since there is no handling for parental certification systems per country yet
 					# also we support currently only number like values like "12+" since the epgcache works only with bytes right now
-					rating = [("eng", int(rating_str)-3)]
+					rating = [("eng", int(rating_str) - 3)]
 				except:
 					rating = None
 
