@@ -14,16 +14,16 @@ import time
 import enigma
 
 try:
-    from Components.SystemInfo import BoxInfo
-    IMAGEDISTRO = BoxInfo.getItem("distro")
+	from Components.SystemInfo import BoxInfo
+	IMAGEDISTRO = BoxInfo.getItem("distro")
 except:
-    from boxbranding import getImageDistro
-    IMAGEDISTRO = getImageDistro()
+	from boxbranding import getImageDistro
+	IMAGEDISTRO = getImageDistro()
 
 # Config
 from Components.ActionMap import ActionMap
 from Components.Button import Button
-from Components.config import config, configfile, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry, ConfigText, ConfigSelection, ConfigNumber, ConfigSubDict, NoSave
+from Components.config import config, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, getConfigListEntry, ConfigText, ConfigSelection, ConfigNumber, ConfigSubDict, NoSave
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 import Components.PluginComponent
@@ -61,15 +61,15 @@ def calcDefaultStarttime():
 	return (5 * 60 * 60) + offset
 
 
-#Set default configuration
+# Set default configuration
 config.plugins.epgimport = ConfigSubsection()
 config.plugins.epgimport.enabled = ConfigEnableDisable(default=False)
 config.plugins.epgimport.runboot = ConfigSelection(default="4", choices=[
-		("1", _("always")),
-		("2", _("only manual boot")),
-		("3", _("only automatic boot")),
-		("4", _("never"))
-		])
+	("1", _("always")),
+	("2", _("only manual boot")),
+	("3", _("only automatic boot")),
+	("4", _("never"))
+])
 config.plugins.epgimport.runboot_restart = ConfigYesNo(default=False)
 config.plugins.epgimport.runboot_day = ConfigYesNo(default=False)
 config.plugins.epgimport.wakeupsleep = ConfigEnableDisable(default=False)
@@ -78,13 +78,13 @@ config.plugins.epgimport.wakeup = ConfigClock(default=calcDefaultStarttime())
 config.plugins.epgimport.showinplugins = ConfigYesNo(default=IMAGEDISTRO != "openatv")
 config.plugins.epgimport.showinextensions = ConfigYesNo(default=True)
 config.plugins.epgimport.deepstandby = ConfigSelection(default="skip", choices=[
-		("wakeup", _("wake up and import")),
-		("skip", _("skip the import"))
-		])
+	("wakeup", _("wake up and import")),
+	("skip", _("skip the import"))
+])
 config.plugins.epgimport.standby_afterwakeup = ConfigYesNo(default=False)
 config.plugins.epgimport.shutdown = ConfigYesNo(default=False)
 config.plugins.epgimport.longDescDays = ConfigNumber(default=5)
-#config.plugins.epgimport.showinmainmenu = ConfigYesNo(default = False)
+# config.plugins.epgimport.showinmainmenu = ConfigYesNo(default = False)
 config.plugins.epgimport.deepstandby_afterimport = NoSave(ConfigYesNo(default=False))
 config.plugins.epgimport.parse_autotimer = ConfigYesNo(default=False)
 config.plugins.epgimport.import_onlybouquet = ConfigYesNo(default=False)
@@ -106,7 +106,7 @@ weekdays = [
 	_("Friday"),
 	_("Saturday"),
 	_("Sunday"),
-	]
+]
 
 # historically located (not a problem, we want to update it)
 CONFIG_PATH = '/etc/epgimport'
@@ -126,11 +126,11 @@ def getAlternatives(service):
 
 
 def getRefNum(ref):
-    ref = ref.split(':')[3:7]
-    try:
-        return int(ref[0], 16) << 48 | int(ref[1], 16) << 32 | int(ref[2], 16) << 16 | int(ref[3], 16) >> 16
-    except:
-        return
+	ref = ref.split(':')[3:7]
+	try:
+		return int(ref[0], 16) << 48 | int(ref[1], 16) << 32 | int(ref[2], 16) << 16 | int(ref[3], 16) >> 16
+	except:
+		return
 
 
 def getBouquetChannelList():
@@ -172,7 +172,7 @@ def getBouquetChannelList():
 		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'
 		bouquet_root = enigma.eServiceReference(bouquet_rootstr)
 		services = serviceHandler.list(bouquet_root)
-		if not services is None:
+		if services is not None:
 			while True:
 				service = services.getNext()
 				if not service.valid():
@@ -224,8 +224,8 @@ def channelFilter(ref):
 		NavigationInstance.instance.stopRecordService(fakeRecService)
 		# -7 (errNoSourceFound) occurs when tuner is disconnected.
 		r = fakeRecResult in (0, -7)
-		#if not r:
-		#	print>>log, "Rejected (%d): %s" % (fakeRecResult, ref)
+		# if not r:
+		#   print>>log, "Rejected (%d): %s" % (fakeRecResult, ref)
 		return r
 	print("Invalid serviceref string:", ref, file=log)
 	return False
@@ -377,7 +377,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		self.cfg_runboot_restart = getConfigListEntry(_("Skip import on restart GUI"), self.EPG.runboot_restart)
 		self.cfg_showinextensions = getConfigListEntry(_("Show \"EPGImport\" in extensions"), self.EPG.showinextensions)
 		self.cfg_showinplugins = getConfigListEntry(_("Show \"EPGImport\" in plugins"), self.EPG.showinplugins)
-#		self.cfg_showinmainmenu = getConfigListEntry(_("Show \"EPG Importer\" in main menu"), self.EPG.showinmainmenu)
+#       self.cfg_showinmainmenu = getConfigListEntry(_("Show \"EPG Importer\" in main menu"), self.EPG.showinmainmenu)
 		self.cfg_longDescDays = getConfigListEntry(_("Load long descriptions up to X days"), self.EPG.longDescDays)
 		self.cfg_parse_autotimer = getConfigListEntry(_("Run AutoTimer after import"), self.EPG.parse_autotimer)
 		self.cfg_clear_oldepg = getConfigListEntry(_("Delete current EPG before import"), config.plugins.epgimport.clear_oldepg)
@@ -406,7 +406,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		list.append(self.cfg_longDescDays)
 		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py"):
 			try:
-				from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
+				# from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
 				list.append(self.cfg_parse_autotimer)
 			except:
 				print("[XMLTVImport] AutoTimer Plugin not installed", file=log)
@@ -560,19 +560,21 @@ class EPGImportSources(Screen):
 		tree = []
 		cat = None
 		for x in EPGConfig.enumSources(CONFIG_PATH, filter=None, categories=True):
-			if hasattr(x, 'description'):
+			if hasattr(x, "description"):
 				sel = (filter is None) or (x.description in filter)
 				entry = (x.description, x.description, sel)
 				if cat is None:
-					# If no category defined, use a default one.
 					cat = ExpandableSelectionList.category("[.]")
-					tree.append(cat)
-				cat[0][2].append(entry)
+					if not any(cat[0][0] == c[0][0] for c in self.tree):
+						self.tree.append(cat)
+				if not any(entry[0] == e[0] for e in cat[0][2]):
+					cat[0][2].append(entry)
 				if sel:
 					ExpandableSelectionList.expand(cat, True)
 			else:
 				cat = ExpandableSelectionList.category(x)
-				tree.append(cat)
+				if not any(cat[0][0] == c[0][0] for c in self.tree):
+					self.tree.append(cat)
 		self["list"] = ExpandableSelectionList.ExpandableSelectionList(tree, enableWrapAround=True)
 		if tree:
 			self["key_yellow"] = Button(_("Import current source"))
@@ -753,11 +755,11 @@ def start_import(session, **kwargs):
 def main(session, **kwargs):
 	session.openWithCallback(doneConfiguring, EPGImportConfig)
 
-#def main_menu(menuid, **kwargs):
-#	if menuid == "mainmenu" and config.plugins.epgimport.showinmainmenu.getValue():
-#		return [(_("EPG Importer"), start_import, "epgimporter", 45)]
-#	else:
-#		return []
+# def main_menu(menuid, **kwargs):
+#   if menuid == "mainmenu" and config.plugins.epgimport.showinmainmenu.getValue():
+#       return [(_("EPG Importer"), start_import, "epgimporter", 45)]
+#   else:
+#       return []
 
 
 def doneConfiguring(session, retval):
