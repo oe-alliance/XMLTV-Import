@@ -67,20 +67,20 @@ isFilterRunning = 0
 IMAGEDISTRO = BoxInfo.getItem("distro")
 
 SOURCE_LINKS = {
-	"0": "https://github.com/doglover3920/EPGimport-Sources/archive/refs/heads/main.tar.gz",
-	"1": "https://github.com/Belfagor2005/EPGimport-Sources/archive/refs/heads/main.tar.gz"
+	0: "https://github.com/doglover3920/EPGimport-Sources/archive/refs/heads/main.tar.gz",
+	1: "https://github.com/Belfagor2005/EPGimport-Sources/archive/refs/heads/main.tar.gz"
 }
 
 # Set default configuration
 config.plugins.epgimport = ConfigSubsection()
 config.plugins.epgimport.enabled = ConfigEnableDisable(default=False)
 config.plugins.epgimport.runboot = ConfigSelection(
-	default="4",
+	default=4,
 	choices=[
-		("1", _("always")),
-		("2", _("only manual boot")),
-		("3", _("only automatic boot")),
-		("4", _("never"))
+		(1, _("always")),
+		(2, _("only manual boot")),
+		(3, _("only automatic boot")),
+		(4, _("never"))
 	]
 )
 config.plugins.epgimport.repeat_import = ConfigInteger(default=0, limits=(0, 23))
@@ -99,10 +99,10 @@ config.plugins.epgimport.deepstandby = ConfigSelection(
 	]
 )
 config.plugins.epgimport.extra_source = ConfigSelection(
-	default="0",
+	default=0,
 	choices=[
-		("0", "Doglover3920"),
-		("1", "Lululla")
+		(0, "Doglover3920"),
+		(1, "Lululla")
 	]
 )
 config.plugins.epgimport.standby_afterwakeup = ConfigYesNo(default=False)
@@ -484,19 +484,21 @@ class EPGImportSources(Screen):
 		filter = cfg["sources"]
 		cat = None
 		for x in EPGConfig.enumSources(CONFIG_PATH, filter=None, categories=True):
-			if hasattr(x, 'description'):
+			if hasattr(x, "description"):
 				sel = (filter is None) or (x.description in filter)
 				entry = (x.description, x.description, sel)
 				if cat is None:
-					# If no category defined, use a default one.
 					cat = ExpandableSelectionList.category("[.]")
-					self.tree.append(cat)
-				cat[0][2].append(entry)
+					if not any(cat[0][0] == c[0][0] for c in self.tree):
+						self.tree.append(cat)
+				if not any(entry[0] == e[0] for e in cat[0][2]):
+					cat[0][2].append(entry)
 				if sel:
 					ExpandableSelectionList.expand(cat, True)
 			else:
 				cat = ExpandableSelectionList.category(x)
-				self.tree.append(cat)
+				if not any(cat[0][0] == c[0][0] for c in self.tree):
+					self.tree.append(cat)
 		self["list"] = ExpandableSelectionList.ExpandableSelectionList(self.tree, enableWrapAround=True)
 		if self.tree:
 			self["key_yellow"].show()
@@ -1038,16 +1040,16 @@ def onBootStartCheck():
 	if (wake < 0) or (wake - now > 600):
 		runboot = config.plugins.epgimport.runboot.value
 		on_start = False
-		if runboot == "1":
+		if runboot == 1:
 			on_start = True
 			print("[XMLTVImport] is boot", file=log)
-		elif runboot == "2" and not getFPWasTimerWakeup():
+		elif runboot == 2 and not getFPWasTimerWakeup():
 			on_start = True
 			print("[XMLTVImport] is manual boot", file=log)
-		elif runboot == "3" and getFPWasTimerWakeup():
+		elif runboot == 3 and getFPWasTimerWakeup():
 			on_start = True
 			print("[XMLTVImport] is automatic boot", file=log)
-		if config.plugins.epgimport.runboot_restart.value and runboot != "3":
+		if config.plugins.epgimport.runboot_restart.value and runboot != 3:
 			if exists(ANSWER_BOOT_FILE):
 				on_start = False
 				print("[XMLTVImport] not starting import - is restart enigma2", file=log)
@@ -1079,7 +1081,7 @@ def autostart(reason, session=None, **kwargs):
 			_session = session
 			if autoStartTimer is None:
 				autoStartTimer = AutoStartTimer(session)
-			if config.plugins.epgimport.runboot.value != "4":
+			if config.plugins.epgimport.runboot.value != 4:
 				onBootStartCheck()
 		# If WE caused the reboot, put the box back in standby.
 		if exists(STANDBY_FLAG_FILE):
