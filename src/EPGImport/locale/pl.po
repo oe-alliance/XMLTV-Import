@@ -152,8 +152,8 @@ msgstr "Jeżeli ta opcja jest włączona, reguły filtrowania zdefiniowane w pli
 msgid "Ignore services list"
 msgstr "Lista usług ignorowanych"
 
-msgid "EPG-Import"
-msgstr "EPG-Import"
+msgid "Import"
+msgstr "Importuj bieżące źródło"
 
 msgid "Import failed with error: {}"
 msgstr "Import nie powiódł się z powodu błędu: {}"
