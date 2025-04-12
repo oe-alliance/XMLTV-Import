@@ -67,7 +67,7 @@ isFilterRunning = 0
 IMAGEDISTRO = BoxInfo.getItem("distro")
 
 SOURCE_LINKS = {
-	0: "https://github.com/doglover3920/EPGimport-Sources/archive/refs/heads/main.tar.gz",
+	0: "https://github.com/OE-Alliance/EPGimport-Sources/archive/refs/heads/main.tar.gz",
 	1: "https://github.com/Belfagor2005/EPGimport-Sources/archive/refs/heads/main.tar.gz"
 }
 
@@ -98,13 +98,15 @@ config.plugins.epgimport.deepstandby = ConfigSelection(
 		("skip", _("skip the import"))
 	]
 )
+
 config.plugins.epgimport.extra_source = ConfigSelection(
-	default=0,
-	choices=[
-		(0, "Doglover3920"),
-		(1, "Lululla")
-	]
+    default=0,
+    choices=[
+        (0, "OE-Alliance"),
+        (1, "Lululla")
+    ]
 )
+
 config.plugins.epgimport.standby_afterwakeup = ConfigYesNo(default=False)
 config.plugins.epgimport.run_after_standby = ConfigYesNo(default=False)
 config.plugins.epgimport.shutdown = ConfigYesNo(default=False)
