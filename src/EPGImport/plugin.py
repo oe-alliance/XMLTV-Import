@@ -1095,19 +1095,16 @@ def autostart(reason, session=None, **kwargs):
 			except:
 				pass
 
-		checkFile = join(CONFIG_PATH, "tar.flag")
 		sourcesFile = "/etc/epgimport.tar.gz"
 		if not exists(CONFIG_PATH):
 			makedirs(CONFIG_PATH)
 
-		if exists(sourcesFile) or exists(checkFile):
+		if exists(sourcesFile):
 			try:
 				import tarfile
 				with tarfile.open(sourcesFile, 'r:gz') as tar:
 					tar.extractall(path=CONFIG_PATH)
 				remove(sourcesFile)
-				with open(checkFile, "w") as fd:
-					fd.write("")
 			except Exception as e:
 				print(f"[XMLTVImport] Error extract sources {e}", file=log)
 
