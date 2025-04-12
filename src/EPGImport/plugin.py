@@ -1,5 +1,5 @@
-from os import remove
-from os.path import exists
+from os import makedirs, remove
+from os.path import exists, join
 from time import localtime, mktime, strftime, strptime, time, asctime
 
 from enigma import eServiceCenter, eServiceReference, eEPGCache, eTimer
@@ -1092,6 +1092,23 @@ def autostart(reason, session=None, **kwargs):
 				remove(STANDBY_FLAG_FILE)
 			except:
 				pass
+
+		checkFile = join(CONFIG_PATH, "tar.flag")
+		sourcesFile = "/etc/epgimport.tar.gz"
+		if not exists(CONFIG_PATH):
+			makedirs(CONFIG_PATH)
+
+		if exists(sourcesFile) or exists(checkFile):
+			try:
+				import tarfile
+				with tarfile.open(sourcesFile, 'r:gz') as tar:
+					tar.extractall(path=CONFIG_PATH)
+				remove(sourcesFile)
+				with open(checkFile, "w") as fd:
+					fd.write("")
+			except Exception as e:
+				print(f"[XMLTVImport] Error extract sources {e}", file=log)
+
 	else:
 		print("[XMLTVImport] Stop", file=log)
 
