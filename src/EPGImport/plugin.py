@@ -67,7 +67,7 @@ isFilterRunning = 0
 IMAGEDISTRO = BoxInfo.getItem("distro")
 
 SOURCE_LINKS = {
-	0: "https://github.com/OE-Alliance/EPGimport-Sources/archive/refs/heads/main.tar.gz",
+	0: "https://github.com/oe-alliance/EPGimport-Sources/archive/refs/heads/main.tar.gz",
 	1: "https://github.com/Belfagor2005/EPGimport-Sources/archive/refs/heads/main.tar.gz"
 }
 
