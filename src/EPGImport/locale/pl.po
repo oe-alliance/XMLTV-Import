@@ -42,7 +42,7 @@ msgid "All services provider"
 msgstr "Wszyscy dostawcy usług"
 
 msgid "Also apply 'channel id' filtering on custom.channels.xml"
-msgstr "Zastosuj również filtrowanie „identyfikator kanału” w pliku custom.channels.xml"
+msgstr "Zastosuj również filtr 'ID kanału' w pliku custom.channels.xml"
 
 msgid "Automated EPG Importer"
 msgstr "Automatyczny importer EPG"
@@ -66,7 +66,7 @@ msgid "Clear"
 msgstr "Wyczyść"
 
 msgid "Consider setting 'Days Profile'"
-msgstr "Rozważ ustawienie „Profilu dni”"
+msgstr "Rozważ ustawienie 'Profilu dni'"
 
 msgid "Days Profile"
 msgstr "Profil dni"
@@ -81,7 +81,7 @@ msgid "Delete selected"
 msgstr "Usuń wybrane"
 
 msgid "Display a shortcut 'EPG import now' in the extension menu. This menu entry will immediately start the EPG update process when selected."
-msgstr "Wyświetl skrót „Importuj teraz EPG” w menu rozszerzeń. Ten wpis menu natychmiast rozpocznie proces aktualizacji EPG po wybraniu."
+msgstr "Wyświetl skrót 'Importuj teraz EPG' w menu rozszerzeń. Ten wpis menu natychmiast rozpocznie proces aktualizacji EPG po wybraniu."
 
 msgid ""
 "Do you want to update Source now?\n"
@@ -218,10 +218,10 @@ msgid "Select service to add..."
 msgstr "Wybierz usługę, którą chcesz dodać..."
 
 msgid "Show 'EPG import now' in extensions"
-msgstr "Pokaż „Importuj teraz EPG” w rozszerzeniach"
+msgstr "Pokaż 'Importuj teraz EPG' w rozszerzeniach"
 
 msgid "Show 'EPGImport' in plugins"
-msgstr "Pokaż „EPGImport” we wtyczkach"
+msgstr "Pokaż 'EPGImport' we wtyczkach"
 
 msgid "Show log"
 msgstr "Pokaż log"
@@ -286,22 +286,22 @@ msgstr ""
 "czy to w porządku?"
 
 msgid "always"
-msgstr "zawsze"
+msgstr "Zawsze"
 
 msgid "never"
-msgstr "nigdy"
+msgstr "Nigdy"
 
 msgid "only automatic boot"
-msgstr "tylko automatyczny rozruch"
+msgstr "Tylko automatyczny rozruch"
 
 msgid "only manual boot"
-msgstr "tylko ręczny rozruch"
+msgstr "Tylko ręczny rozruch"
 
 msgid "press OK to save list"
-msgstr "naciśnij OK, aby zapisać listę"
+msgstr "Naciśnij OK, aby zapisać listę"
 
 msgid "skip the import"
-msgstr "pomiń import"
+msgstr "Pomiń import"
 
 msgid "wake up and import"
-msgstr "uruchom i importuj"
+msgstr "Uruchom i importuj"
