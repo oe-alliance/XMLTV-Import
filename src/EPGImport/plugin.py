@@ -519,19 +519,18 @@ class EPGImportSources(Screen):
 		self.setTitle(_("EPG Import Sources"))
 
 	def git_import(self):
-		self.session.openWithCallback(
-			self.install_update,
-			MessageBox,
-			_("Do you want to update Source now?\n\nWait for the import successful message!"),
-			MessageBox.TYPE_YESNO,
-			timeout=15
-		)
+		choiceList = [
+			(_("No"), 0),
+			(_("Yes"), 1),
+			(_("Yes - and clear existing"), 2)
+		]
+		self.session.openWithCallback(self.install_update, MessageBox, text=_("Do you want to update Source now?\n\nWait for the import successful message!"), list=choiceList, timeout=15)
 
 	def install_update(self, answer=False):
 		if answer:
 			try:
 				from . import import_source
-				import_source.main(self.giturl)
+				import_source.main(self.giturl, removeExisting=answer == 2)
 			except Exception as e:
 				self.session.open(
 					MessageBox,
@@ -543,14 +542,6 @@ class EPGImportSources(Screen):
 				return
 
 			self.refresh_tree()
-
-		else:
-			self.session.open(
-				MessageBox,
-				_("Update Aborted!"),
-				MessageBox.TYPE_INFO,
-				timeout=10
-			)
 
 	def refresh_tree(self):
 		print("Refreshing tree...")
