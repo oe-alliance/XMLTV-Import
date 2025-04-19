@@ -9,22 +9,21 @@
 # Info corvoboys.org
 """
 
-from os import listdir, makedirs, chdir, remove, walk, sync
-from os.path import join, isdir, exists
-from shutil import rmtree, copyfileobj, copytree, copy2
-import tarfile
-import urllib.request
+from os import chdir, listdir, makedirs, remove, sync
+from os.path import dirname, join
+from shutil import rmtree, copyfileobj, copy2
 import ssl
+import tarfile
+from urllib.request import urlopen
 
 
 def url_open(url, context):
-	return urllib.request.urlopen(url, context=context)
+	return urlopen(url, context=context)
 
 
-def main(url):
-	TMPSources = "/var/volatile/tmp/EPGimport-Sources-main"
+def main(url, removeExisting=False):
+	TMPSources = "/tmp/EPGImport-Sources"
 	dest_dir = "/etc/epgimport"
-	SETTINGS_FILE = "/etc/enigma2/epgimport.conf"
 
 	makedirs(TMPSources, exist_ok=True)
 	makedirs(dest_dir, exist_ok=True)
@@ -45,37 +44,28 @@ def main(url):
 		if response:
 			response.close()
 
-	# Remove existing files in dest_dir before extracting
-	for item in listdir(dest_dir):
-		item_path = join(dest_dir, item)
-		if isdir(item_path):
-			rmtree(item_path, ignore_errors=True)
-		else:
-			remove(item_path)
+	extracted_dir = "EPGImport-Sources-main"
 
 	try:
 		with tarfile.open(tarball, "r:gz") as tar:
-			for member in tar.getmembers():
-				tar.extract(member, path=TMPSources)
+			for file in tar.getmembers():
+				if file.isfile() and file.name.endswith(".xml"):
+					extracted_dir = dirname(file.path)
+					tar.extract(file, path=TMPSources, filter="data")
 	except tarfile.TarError:
 		print("Error extracting tar file")
 		return
 
-	extracted_dir = join(TMPSources, "EPGimport-Sources-main")
+	extracted_dir = join(TMPSources, extracted_dir)
 
-	for root, _, files in walk(extracted_dir):
-		for file in files:
-			if file.endswith(".bb"):
-				remove(join(root, file))
+	if removeExisting:
+		for item in listdir(dest_dir):
+			if item.endswith(".xml"):
+				remove(join(dest_dir, item))
 
 	for item in listdir(extracted_dir):
 		src_item = join(extracted_dir, item)
-		if isdir(src_item):
-			copytree(src_item, join(dest_dir, item), dirs_exist_ok=True)
-		else:
-			copy2(src_item, dest_dir)
+		copy2(src_item, dest_dir)
 
 	rmtree(TMPSources, ignore_errors=True)
-	if exists(SETTINGS_FILE):
-		remove(SETTINGS_FILE)
 	sync()
