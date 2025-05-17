@@ -18,7 +18,7 @@
 				<item level="1" text="Hours after which the import is repeated" description="Hours after which the import is repeated">config.plugins.epgimport.repeat_import</item>
 			</if>
 		</if>
-		<item level="1" text="Source files provider" description="Choose the provider for updatng the EPG source files.">config.plugins.epgimport.extra_source</item>
+		<item level="1" text="Source files provider" description="Choose the provider for updating the EPG source files.">config.plugins.epgimport.extra_source</item>
 		<item level="1" text="Start import after booting up" description="Start import after booting up">config.plugins.epgimport.runboot</item>
 		<if conditional="config.plugins.epgimport.runboot.value != '4'">
 			<item level="1" text="Consider setting 'Days Profile'" description="Consider setting 'Days Profile'">config.plugins.epgimport.runboot_day</item>
@@ -29,7 +29,7 @@
 		<item level="1" text="Load EPG only services in bouquets" description="Load EPG only services in bouquets">config.plugins.epgimport.import_onlybouquet</item>
 		<item level="1" text="Load EPG only for IPTV channels" description="Load EPG only for IPTV channels">config.plugins.epgimport.import_onlyiptv</item>
 		<item level="1" text="Delete current EPG before import" description="Delete current EPG before import">config.plugins.epgimport.clear_oldepg</item>
-		<item level="1" text="Also apply 'channel id' filtering on custom.channels.xml" description="If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file.">config.plugins.epgimport.filter_custom_channel</item>		
+		<item level="1" text="Also apply 'channel id' filtering on custom.channels.xml" description="If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file.">config.plugins.epgimport.filter_custom_channel</item>
 		<item level="1" text="Start import after standby" description="Start import after standby">config.plugins.epgimport.run_after_standby</item>
 		<item level="1" text="Load long descriptions up to X days" description="Load long descriptions up to X days">config.plugins.epgimport.longDescDays</item>
 		<if conditional="self.hasAutoTimer">
