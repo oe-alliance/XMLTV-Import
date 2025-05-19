@@ -59,7 +59,7 @@ msgstr "Anuluj"
 msgid "Choose days to import"
 msgstr "Wybierz dni dla importowania"
 
-msgid "Choose the provider for updatng the EPG source files."
+msgid "Choose the provider for updating the EPG source files."
 msgstr "Wybierz dostawcę aktualizacji plików źródłowych EPG."
 
 msgid "Clear"

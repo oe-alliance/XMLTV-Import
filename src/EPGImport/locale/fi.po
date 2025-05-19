@@ -60,7 +60,7 @@ msgstr "Poistu"
 msgid "Choose days to import"
 msgstr "Valitse EPG tietojen latauspäivät"
 
-msgid "Choose the provider for updatng the EPG source files."
+msgid "Choose the provider for updating the EPG source files."
 msgstr ""
 
 msgid "Clear"
