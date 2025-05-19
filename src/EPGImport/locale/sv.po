@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2025-02-26 15:00+0100\n"
 "Last-Translator: Warder <ciksa@seznam.cz>\n"
 "Language-Team: \n"
@@ -190,6 +190,9 @@ msgstr "Manuálna"
 msgid "Monday"
 msgstr "Pondelok"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Nenašli sa žiadne aktívne zdroje EPG, nič nerobiť"
 
@@ -264,9 +267,6 @@ msgstr "Štvrtok"
 msgid "Tuesday"
 msgstr "Utorok"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Zdrojov"
@@ -279,6 +279,12 @@ msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Napíšte na /tmp/epgimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

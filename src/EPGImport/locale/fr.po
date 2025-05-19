@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2017-07-04 15:47+0200\n"
 "Last-Translator: demosat\n"
 "Language-Team: LANGUAGE <dummy@dummy.fr>\n"
@@ -181,6 +181,9 @@ msgstr "Manuel"
 msgid "Monday"
 msgstr "Lundi"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Aucune source EPG sélectionnée, rien à faire"
 
@@ -254,9 +257,6 @@ msgstr "Jeudi"
 msgid "Tuesday"
 msgstr "Mardi"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Sources"
@@ -269,6 +269,12 @@ msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Écrire dans /tmp/epgimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

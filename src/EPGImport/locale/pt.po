@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: nunigaia\n"
 "Language-Team: BH Team\n"
@@ -187,6 +187,9 @@ msgstr "Manual"
 msgid "Monday"
 msgstr "Segunda feira"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Não existem fontes de EPG ativas, nada a fazer"
 
@@ -261,9 +264,6 @@ msgstr "Quinta Feira"
 msgid "Tuesday"
 msgstr "Terça Feira"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Fontes"
@@ -277,6 +277,12 @@ msgstr ""
 #, fuzzy
 msgid "Write to /tmp/epgimport.log"
 msgstr "Escrever em /tmp/EPGimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

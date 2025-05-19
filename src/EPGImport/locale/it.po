@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Italian Translation EPGImport Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2025-05-17 17:06+0100\n"
 "Last-Translator: madhouse\n"
 "Language-Team: egami-team\n"
@@ -201,6 +201,9 @@ msgstr "Manuale"
 msgid "Monday"
 msgstr "Lunedì"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Fonti EPG attive non trovate: nessuna operazione svolta"
 
@@ -275,9 +278,6 @@ msgstr "Giovedì"
 msgid "Tuesday"
 msgstr "Martedì"
 
-msgid "Update Aborted!"
-msgstr "Aggiornamento interrotto!"
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Aggiorna Sorgenti"
@@ -290,6 +290,12 @@ msgstr "Quando è in standby profondo"
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Scrittura in /tmp/epgimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

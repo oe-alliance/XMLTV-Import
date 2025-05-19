@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EPGImport\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2017-07-12 11:14+0300\n"
 "Last-Translator: Vytenis P. <vyteniui@gmail.com>\n"
 "Language-Team: Vytenis P. <vyteniui@gmail.com>\n"
@@ -183,6 +183,9 @@ msgstr "Rankinis"
 msgid "Monday"
 msgstr "pirmadienis"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Aktyvių EPG šaltinių nerasta, nėra ką daryti"
 
@@ -257,9 +260,6 @@ msgstr "ketvirtadienis"
 msgid "Tuesday"
 msgstr "antradienis"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Šaltiniai"
@@ -272,6 +272,12 @@ msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Rašyti į /tmp/epgimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

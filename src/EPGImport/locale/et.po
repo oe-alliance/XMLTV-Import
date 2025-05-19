@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XMTV-Impoter for Enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2017-08-07 15:39+0300\n"
 "Last-Translator: rimas\n"
 "Language-Team: rimas\n"
@@ -183,6 +183,9 @@ msgstr "Käsitsi"
 msgid "Monday"
 msgstr "Esmaspäev"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "EPG allikad on määramata. Midagi ei saa teha"
 
@@ -257,9 +260,6 @@ msgstr "Neljapäev"
 msgid "Tuesday"
 msgstr "Teisipäev"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Allikad"
@@ -272,6 +272,12 @@ msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Kirjuta /tmp/epgimport.log  faili"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EPG Import\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: MCelliot_g <mcelliot_g@hotmail.com>\n"
 "Language-Team: \n"
@@ -181,6 +181,9 @@ msgstr "Χειροκίνητα"
 msgid "Monday"
 msgstr "Δευτέρα"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Δεν βρέθηκαν ενεργές πηγές EPG, καμία ενέργεια"
 
@@ -255,9 +258,6 @@ msgstr "Πέμπτη"
 msgid "Tuesday"
 msgstr "Τρίτη"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Πηγές"
@@ -270,6 +270,12 @@ msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Εγγραφή στο /tmp/EPGimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

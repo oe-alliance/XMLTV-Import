@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2025-03-07 16:53+0200\n"
 "Last-Translator: Orlandox\n"
 "Language-Team: tomppaa, Orlandox\n"
@@ -188,6 +188,9 @@ msgstr "Lataa nyt"
 msgid "Monday"
 msgstr "Maanantai"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Aktiivisia EPG lähteitä ei löytynyt, mitään ei tehty"
 
@@ -262,9 +265,6 @@ msgstr "Torstai"
 msgid "Tuesday"
 msgstr "Tiistai"
 
-msgid "Update Aborted!"
-msgstr "Päivitys keskeytetty!"
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Päivitys keskeytetty!"
@@ -277,6 +277,12 @@ msgstr "Virransäästötilassa EPG lataus"
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Kirjoita /tmp/EPGimport.log:iin"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

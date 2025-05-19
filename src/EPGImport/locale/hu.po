@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2025-02-26 07:00+0100\n"
 "Last-Translator: Warder <ciksa@seznam.cz>\n"
 "Language-Team: \n"
@@ -187,6 +187,9 @@ msgstr "Kézi"
 msgid "Monday"
 msgstr "Hétfő"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Nincs aktív EPG műsorforrás, nincs mit csinálni"
 
@@ -261,9 +264,6 @@ msgstr "Csütörtök"
 msgid "Tuesday"
 msgstr "Kedd"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Források"
@@ -276,6 +276,12 @@ msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Írás a /tmp/epgimport.log fájlba"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2025-02-26 14:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -171,6 +171,9 @@ msgstr ""
 msgid "Monday"
 msgstr ""
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr ""
 
@@ -243,9 +246,6 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
-msgid "Update Aborted!"
-msgstr ""
-
 msgid "Update Sources"
 msgstr ""
 
@@ -256,6 +256,12 @@ msgid "When in deep standby"
 msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
 msgstr ""
 
 msgid ""

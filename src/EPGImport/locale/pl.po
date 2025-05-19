@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2025-05-1 20:50+0100\n"
 "Last-Translator: pololoko111 <sat-4-all.com>\n"
 "Language-Team: \n"
@@ -184,6 +184,9 @@ msgstr "Ręcznie"
 msgid "Monday"
 msgstr "Poniedziałek"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Nie znaleziono aktywnych źródeł EPG, nic do zrobienia"
 
@@ -256,9 +259,6 @@ msgstr "Czwartek"
 msgid "Tuesday"
 msgstr "Wtorek"
 
-msgid "Update Aborted!"
-msgstr "Aktualizacja przerwana!"
-
 msgid "Update Sources"
 msgstr "Aktualizuj źródła"
 
@@ -270,6 +270,12 @@ msgstr "W trybie głębokiego czuwania"
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Zapisz w /tmp/epgimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

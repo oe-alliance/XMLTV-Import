@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2020-01-19 15:12+0300\n"
 "Last-Translator: kvinto <badsystem@ukr.net>\n"
 "Language-Team: kvinto\n"
@@ -182,6 +182,9 @@ msgstr "Вручну"
 msgid "Monday"
 msgstr "Понеділок"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "Не знайдено активних ЕПГ джерел"
 
@@ -255,9 +258,6 @@ msgstr "Четвер"
 msgid "Tuesday"
 msgstr "Вівторок"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Джерела"
@@ -270,6 +270,12 @@ msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "Записати в /tmp/epgimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

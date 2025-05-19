@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2017-07-04 15:47+0200\n"
 "Last-Translator: Javier Sayago <admin@lonasdigital.com>\n"
 "Language-Team: OpenLD\n"
@@ -187,6 +187,9 @@ msgstr "Manual"
 msgid "Monday"
 msgstr "Lunes"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "No se encontraron fuentes de EPG activas, nada que hacer"
 
@@ -261,9 +264,6 @@ msgstr "Jueves"
 msgid "Tuesday"
 msgstr "Martes"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Fuentes"
@@ -277,6 +277,12 @@ msgstr ""
 #, fuzzy
 msgid "Write to /tmp/epgimport.log"
 msgstr "Escribir en /tmp/EPGimport.log"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oe-alliance / XMLTV-Import\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2018-08-10 04:14+0300\n"
 "Last-Translator: TM2TURK | by thawtes <thawtes@gmail.com>\n"
 "Language-Team: TM2TURK | by thawtes <thawtes@gmail.com>\n"
@@ -183,6 +183,9 @@ msgstr "Başlat"
 msgid "Monday"
 msgstr "pazartesi"
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "etkinleştirilmiş e-rehber veri kaynağı bulunamadı"
 
@@ -257,9 +260,6 @@ msgstr "perşembe"
 msgid "Tuesday"
 msgstr "salı"
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "Kaynaklar"
@@ -272,6 +272,12 @@ msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
 msgstr "/tmp/epgimport.log dosyasına yaz"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
+msgstr ""
 
 msgid ""
 "You may not use this settings!\n"

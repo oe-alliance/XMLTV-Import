@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plugins 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 16:19+0100\n"
+"POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: 2018-12-08 11:44+0300\n"
 "Last-Translator: mosad - مساعد الجعيد <abo-mishal@hotmail.com>\n"
 "Language-Team: mosad - مساعد الجعيد\n"
@@ -184,6 +184,9 @@ msgstr "يدوي"
 msgid "Monday"
 msgstr ""
 
+msgid "No"
+msgstr ""
+
 msgid "No active EPG sources found, nothing to do"
 msgstr "لا توجد مصادر لدليل البرامج الإلكترونية مفعلة، علىك أن تفعل شيئا"
 
@@ -257,9 +260,6 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
-msgid "Update Aborted!"
-msgstr ""
-
 #, fuzzy
 msgid "Update Sources"
 msgstr "المصادر"
@@ -271,6 +271,12 @@ msgid "When in deep standby"
 msgstr ""
 
 msgid "Write to /tmp/epgimport.log"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Yes - and clear existing"
 msgstr ""
 
 msgid ""
