@@ -173,7 +173,7 @@ msgid "Load EPG only for IPTV channels"
 msgstr "Załaduj EPG tylko dla kanałów IPTV"
 
 msgid "Load EPG only services in bouquets"
-msgstr "Załaduj tylko usługi EPG w bukietach"
+msgstr "Załaduj EPG tylko w listach kanałów"
 
 msgid "Load long descriptions up to X days"
 msgstr "Załaduj długie opisy do X dni"
@@ -185,10 +185,10 @@ msgid "Monday"
 msgstr "Poniedziałek"
 
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 msgid "No active EPG sources found, nothing to do"
-msgstr "Nie znaleziono aktywnych źródeł EPG, nic do zrobienia"
+msgstr "Nie znaleziono aktywnych źródeł EPG"
 
 msgid "No source file found !"
 msgstr "Nie znaleziono pliku źródłowego!"
@@ -272,10 +272,10 @@ msgid "Write to /tmp/epgimport.log"
 msgstr "Zapisz w /tmp/epgimport.log"
 
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 msgid "Yes - and clear existing"
-msgstr ""
+msgstr "Tak - i wyczyść istniejące"
 
 msgid ""
 "You may not use this settings!\n"
