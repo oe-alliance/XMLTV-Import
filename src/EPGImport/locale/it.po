@@ -60,7 +60,6 @@ msgstr "Applica anche il filtro 'id canale' su custom.channels.xml"
 msgid "Automated EPG Importer"
 msgstr "Importazione EPG automatizzata"
 
-#, fuzzy
 msgid "Automatic import EPG"
 msgstr "Importazione EPG automatica"
 
@@ -122,7 +121,6 @@ msgstr "Importazione EPG completata, %d eventi"
 msgid "EPG-Importer"
 msgstr "EPG-Importer"
 
-#, fuzzy
 msgid "EPG-Importer Now"
 msgstr "EPG-Importer Ora"
 
@@ -144,7 +142,6 @@ msgstr ""
 "Questo processo potrebbe richiedere qualche minuto\n"
 "Procedo?"
 
-#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -168,7 +165,6 @@ msgstr "Se abilitata, le regole del filtro definite in /etc/epgimport/channel_id
 msgid "Ignore services list"
 msgstr "Ignora l'elenco canali"
 
-#, fuzzy
 msgid "Import"
 msgstr "Importa"
 
@@ -237,7 +233,6 @@ msgstr "Selezionare azione"
 msgid "Select service to add..."
 msgstr "Seleziona il canale da aggiungere..."
 
-#, fuzzy
 msgid "Show 'EPG import now' in extensions"
 msgstr "Mostra 'EPG import ora' nelle estensioni"
 
@@ -250,7 +245,6 @@ msgstr "Mostra il log"
 msgid "Skip import on restart GUI"
 msgstr "Salta l'importazione al riavvio della GUI"
 
-#, fuzzy
 msgid "Source files provider"
 msgstr "File sorgenti dei provider"
 
@@ -278,7 +272,6 @@ msgstr "Giovedì"
 msgid "Tuesday"
 msgstr "Martedì"
 
-#, fuzzy
 msgid "Update Sources"
 msgstr "Aggiorna Sorgenti"
 
