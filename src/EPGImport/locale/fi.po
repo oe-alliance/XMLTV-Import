@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-19 10:37+0100\n"
-"PO-Revision-Date: 2025-03-07 16:53+0200\n"
+"PO-Revision-Date: 2025-06-07 08:53+0300\n"
 "Last-Translator: Orlandox\n"
 "Language-Team: tomppaa, Orlandox\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 msgid ""
 "\n"
@@ -42,7 +42,7 @@ msgid "All services provider"
 msgstr "Kaikki palveluntarjoajat"
 
 msgid "Also apply 'channel id' filtering on custom.channels.xml"
-msgstr ""
+msgstr "Käytä 'channel id' -suodatusta myös custom.channels.xml:n"
 
 msgid "Automated EPG Importer"
 msgstr "Automatisoitu EPG lataus"
@@ -56,12 +56,11 @@ msgstr "Automaattinen alkamisaika"
 msgid "Cancel"
 msgstr "Poistu"
 
-#, fuzzy
 msgid "Choose days to import"
 msgstr "Valitse EPG tietojen latauspäivät"
 
 msgid "Choose the provider for updating the EPG source files."
-msgstr ""
+msgstr "Valitse palveluntarjoaja EPG-lähdetiedostojen päivittämistä varten."
 
 msgid "Clear"
 msgstr "Tyhjennä"
@@ -82,7 +81,7 @@ msgid "Delete selected"
 msgstr "Poista valittu"
 
 msgid "Display a shortcut 'EPG import now' in the extension menu. This menu entry will immediately start the EPG update process when selected."
-msgstr ""
+msgstr "Näytä kuvake 'EPG lataus nyt' laajennukset-valikossa. Tämä valikkokohta käynnistää EPG-päivitysprosessin välittömästi, kun se valitaan."
 
 msgid ""
 "Do you want to update Source now?\n"
@@ -130,7 +129,6 @@ msgstr ""
 "Tämä voi kestää muutaman minuutin.\n"
 "Haluatko ladata nyt?"
 
-#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
@@ -140,16 +138,16 @@ msgstr ""
 
 #, python-format
 msgid "Filtering: %s Please wait!"
-msgstr ""
+msgstr "Suodatus: %s Odota!"
 
 msgid "Friday"
 msgstr "Perjantai"
 
 msgid "Hours after which the import is repeated"
-msgstr "Tunnit, jonka jälkeen tuonti toistetaan"
+msgstr "Tunnit, jonka jälkeen lataus toistetaan"
 
 msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
-msgstr ""
+msgstr "Jos käytössä, /etc/epgimport/channel_id_filter.conf-tiedostossa määritettyjä suodatussääntöjä sovelletaan myös /etc/epgimport/custom.channels.xml-tiedostossa."
 
 msgid "Ignore services list"
 msgstr "Ohitettavien kanavien lista"
@@ -160,11 +158,9 @@ msgstr "EPG lataus"
 msgid "Import failed with error: {}"
 msgstr "Tuonti epäonnistui virheellä: {}"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Importing: %s %s events"
-msgstr ""
-"Lataa:\n"
-"%s %s tapahtumaa"
+msgstr "Lataa: %s %s tapahtumaa"
 
 msgid "Last import: "
 msgstr "Viimeisin lataus: "
@@ -189,19 +185,19 @@ msgid "Monday"
 msgstr "Maanantai"
 
 msgid "No"
-msgstr ""
+msgstr "Ei"
 
 msgid "No active EPG sources found, nothing to do"
 msgstr "Aktiivisia EPG lähteitä ei löytynyt, mitään ei tehty"
 
 msgid "No source file found !"
-msgstr ""
+msgstr "Lähdetiedostoa ei löytynyt !"
 
 msgid "Press OK"
 msgstr "Paina OK"
 
 msgid "Press OK to choose on which days to import"
-msgstr ""
+msgstr "Paina OK valitaksesi, minä päivinä ladataan"
 
 msgid "Really delete all list?"
 msgstr "Haluatko varmasti poistaa kaikki listalta?"
@@ -224,9 +220,8 @@ msgstr "Valitse toiminto"
 msgid "Select service to add..."
 msgstr "Valitse lisättävä kanava..."
 
-#, fuzzy
 msgid "Show 'EPG import now' in extensions"
-msgstr "Näytä 'EPG lataus' laajennusvalikossa"
+msgstr "Näytä 'EPG lataus nyt' laajennukset-valikossa"
 
 msgid "Show 'EPGImport' in plugins"
 msgstr "Näytä 'EPG lataus' lisäosissa"
@@ -237,9 +232,8 @@ msgstr "Näytä loki"
 msgid "Skip import on restart GUI"
 msgstr "Ohita lataus Enigma2:n uudelleenkäynnistyksessä"
 
-#, fuzzy
 msgid "Source files provider"
-msgstr "Kaikki palveluntarjoajat"
+msgstr "Lähdetiedostojen palveluntarjoaja"
 
 msgid "Sources"
 msgstr "Lähteet"
@@ -265,9 +259,8 @@ msgstr "Torstai"
 msgid "Tuesday"
 msgstr "Tiistai"
 
-#, fuzzy
 msgid "Update Sources"
-msgstr "Päivitys keskeytetty!"
+msgstr "Päivitä lähteet"
 
 msgid "Wednesday"
 msgstr "Keskiviikko"
@@ -279,10 +272,10 @@ msgid "Write to /tmp/epgimport.log"
 msgstr "Kirjoita /tmp/EPGimport.log:iin"
 
 msgid "Yes"
-msgstr ""
+msgstr "Kyllä"
 
 msgid "Yes - and clear existing"
-msgstr ""
+msgstr "Kyllä - ja tyhjennä olemassa olevat"
 
 msgid ""
 "You may not use this settings!\n"
