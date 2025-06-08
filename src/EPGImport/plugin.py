@@ -252,12 +252,17 @@ def startImport():
 
 ##################################
 # Configuration GUI
+
 HD = False
 try:
-	if enigma.getDesktop(0).size().width() >= 1280:
-		HD = True
-except:
-	pass
+    if enigma.getDesktop(0).size().width() >= 1280:
+        HD = True
+except AttributeError as e:
+    print(f"Error: {e}", file=log)
+except Exception as e:
+    print(f"Unexpected error: {e}", file=log)
+
+    pass
 
 
 class EPGImportConfig(ConfigListScreen, Screen):
