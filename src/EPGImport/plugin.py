@@ -117,6 +117,7 @@ autoStartTimer = None
 _session = None
 BouquetChannelListList = None
 serviceIgnoreList = None
+AUTOTIMER_PLUGIN_PATH = "/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py"
 
 
 def getAlternatives(service):
@@ -390,7 +391,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		self.cfg_showinplugins = getConfigListEntry(_("Show \"EPGImport\" in plugins"), self.EPG.showinplugins)
 #       self.cfg_showinmainmenu = getConfigListEntry(_("Show \"EPG Importer\" in main menu"), self.EPG.showinmainmenu)
 		self.cfg_longDescDays = getConfigListEntry(_("Load long descriptions up to X days"), self.EPG.longDescDays)
-		self.cfg_parse_autotimer = getConfigListEntry(_("Run AutoTimer after import"), self.EPG.parse_autotimer)
+		self.autotimer_config_entry = getConfigListEntry(_("Run AutoTimer after import"), self.EPG.parse_autotimer)
 		self.cfg_clear_oldepg = getConfigListEntry(_("Delete current EPG before import"), config.plugins.epgimport.clear_oldepg)
 
 	def createSetup(self):
@@ -415,10 +416,10 @@ class EPGImportConfig(ConfigListScreen, Screen):
 		if hasattr(enigma.eEPGCache, 'flushEPG'):
 			list.append(self.cfg_clear_oldepg)
 		list.append(self.cfg_longDescDays)
-		if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py"):
+		if fileExists(AUTOTIMER_PLUGIN_PATH):
 			try:
 				# from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
-				list.append(self.cfg_parse_autotimer)
+				list.append(self.autotimer_config_entry)
 			except:
 				print("[XMLTVImport] AutoTimer Plugin not installed", file=log)
 		self["config"].list = list
@@ -443,7 +444,7 @@ class EPGImportConfig(ConfigListScreen, Screen):
 
 	def keyGreen(self):
 		self.updateTimer.stop()
-		if not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py") and self.EPG.parse_autotimer.value:
+		if not fileExists(AUTOTIMER_PLUGIN_PATH) and self.EPG.parse_autotimer.value:
 			self.EPG.parse_autotimer.value = False
 		if self.EPG.shutdown.value:
 			self.EPG.standby_afterwakeup.value = False
@@ -802,7 +803,7 @@ def doneImport(reboot=False, epgfile=None):
 			_session.openWithCallback(restartEnigma, MessageBox, msg, MessageBox.TYPE_YESNO, timeout=15, default=True)
 			print("[XMLTVImport] Need restart enigma2", file=log)
 	else:
-		if config.plugins.epgimport.parse_autotimer.value and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py"):
+		if config.plugins.epgimport.parse_autotimer.value and fileExists(AUTOTIMER_PLUGIN_PATH):
 			try:
 				from Plugins.Extensions.AutoTimer.plugin import autotimer
 				if autotimer is None:
