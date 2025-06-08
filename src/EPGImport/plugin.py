@@ -118,7 +118,7 @@ _session = None
 BouquetChannelListList = None
 serviceIgnoreList = None
 AUTOTIMER_PLUGIN_PATH = "/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py"
-
+ENIGMA_STBY = "/tmp/enigmastandby"
 
 def getAlternatives(service):
 	if not service:
@@ -852,12 +852,12 @@ def restartEnigma(confirmed):
 		# save state of enigma, so we can return to previeus state
 	if Screens.Standby.inStandby:
 		try:
-			open('/tmp/enigmastandby', 'wb').close()
+			open(ENIGMA_STBY, 'wb').close()
 		except:
 			print("Failed to create /tmp/enigmastandby", file=log)
 	else:
 		try:
-			os.remove("/tmp/enigmastandby")
+			os.remove(ENIGMA_STBY)
 		except:
 			pass
 	# now reboot
@@ -965,7 +965,7 @@ class AutoStartTimer:
 
 	def afterFinishImportCheck(self):
 		if config.plugins.epgimport.deepstandby.value == 'wakeup' and getFPWasTimerWakeup():
-			if os.path.exists("/tmp/enigmastandby") or os.path.exists("/tmp/.EPGImportAnswerBoot"):
+			if os.path.exists(ENIGMA_STBY) or os.path.exists("/tmp/.EPGImportAnswerBoot"):
 				print("[XMLTVImport] is restart enigma2", file=log)
 			else:
 				wake = self.getStatus()
@@ -1070,12 +1070,12 @@ def autostart(reason, session=None, **kwargs):
 			if config.plugins.epgimport.runboot.value != "4":
 				onBootStartCheck()
 		# If WE caused the reboot, put the box back in standby.
-		if os.path.exists("/tmp/enigmastandby"):
+		if os.path.exists(ENIGMA_STBY):
 			print("[XMLTVImport] Returning to standby", file=log)
 			if not Screens.Standby.inStandby:
 				Notifications.AddNotification(Screens.Standby.Standby)
 			try:
-				os.remove("/tmp/enigmastandby")
+				os.remove(ENIGMA_STBY)
 			except:
 				pass
 	else:
