@@ -423,8 +423,8 @@ class EPGImportConfig(ConfigListScreen, Screen):
         if fileExists(AUTOTIMER_PLUGIN_PATH):
             try:
                 list.append(self.autotimer_config_entry)
-            except:
-                print("[XMLTVImport] AutoTimer Plugin not installed", file=log)
+            except Exception as e:
+                print("[XMLTVImport] AutoTimer Plugin not installed {e}", file=log)
 
         self["config"].list = list
         self["config"].l.setList(list)
