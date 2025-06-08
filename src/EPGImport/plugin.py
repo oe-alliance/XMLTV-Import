@@ -16,7 +16,7 @@ import enigma
 try:
 	from Components.SystemInfo import BoxInfo
 	IMAGEDISTRO = BoxInfo.getItem("distro")
-except:
+except ImportError:
 	from boxbranding import getImageDistro
 	IMAGEDISTRO = getImageDistro()
 
@@ -56,7 +56,8 @@ def calcDefaultStarttime():
 	try:
 		# Use the last MAC byte as time offset (half-minute intervals)
 		offset = lastMACbyte() * 30
-	except:
+	except Exception as e:
+		print(e)
 		offset = 7680
 	return (5 * 60 * 60) + offset
 
@@ -134,62 +135,65 @@ def getRefNum(ref):
 
 
 def getBouquetChannelList():
-	channels = []
-	serviceHandler = enigma.eServiceCenter.getInstance()
-	mask = (enigma.eServiceReference.isMarker | enigma.eServiceReference.isDirectory)
-	altrernative = enigma.eServiceReference.isGroup
-	if config.usage.multibouquet.value:
-		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.tv" ORDER BY bouquet'
-		bouquet_root = enigma.eServiceReference(bouquet_rootstr)
-		list = serviceHandler.list(bouquet_root)
-		if list:
-			while True:
-				s = list.getNext()
-				if not s.valid():
-					break
-				if s.flags & enigma.eServiceReference.isDirectory:
-					info = serviceHandler.info(s)
-					if info:
-						clist = serviceHandler.list(s)
-						if clist:
-							while True:
-								service = clist.getNext()
-								if not service.valid():
-									break
-								if not (service.flags & mask):
-									if service.flags & altrernative:
-										altrernative_list = getAlternatives(service)
-										if altrernative_list:
-											for channel in altrernative_list:
-												refnum = getRefNum(channel)
-												if refnum and refnum not in channels:
-													channels.append(refnum)
-									else:
-										refnum = getRefNum(service.toString())
-										if refnum and refnum not in channels:
-											channels.append(refnum)
-	else:
-		bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'
-		bouquet_root = enigma.eServiceReference(bouquet_rootstr)
-		services = serviceHandler.list(bouquet_root)
-		if services is not None:
-			while True:
-				service = services.getNext()
-				if not service.valid():
-					break
-				if not (service.flags & mask):
-					if service.flags & altrernative:
-						altrernative_list = getAlternatives(service)
-						if altrernative_list:
-							for channel in altrernative_list:
-								refnum = getRefNum(channel)
-								if refnum and refnum not in channels:
-									channels.append(refnum)
-					else:
-						refnum = getRefNum(service.toString())
-						if refnum and refnum not in channels:
-							channels.append(refnum)
-	return channels
+    channels = []
+    serviceHandler = enigma.eServiceCenter.getInstance()
+    mask = (enigma.eServiceReference.isMarker | enigma.eServiceReference.isDirectory)
+    alternative = enigma.eServiceReference.isGroup  # Ho corretto anche il typo "altrernative" in "alternative"
+    
+    if config.usage.multibouquet.value:
+        bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.tv" ORDER BY bouquet'
+        bouquet_root = enigma.eServiceReference(bouquet_rootstr)
+        service_list = serviceHandler.list(bouquet_root)  # Rinominato da 'list' a 'service_list'
+        
+        if service_list:
+            while True:
+                s = service_list.getNext()
+                if not s.valid():
+                    break
+                if s.flags & enigma.eServiceReference.isDirectory:
+                    info = serviceHandler.info(s)
+                    if info:
+                        clist = serviceHandler.list(s)
+                        if clist:
+                            while True:
+                                service = clist.getNext()
+                                if not service.valid():
+                                    break
+                                if not (service.flags & mask):
+                                    if service.flags & alternative:
+                                        alternative_list = getAlternatives(service)  # Corretto il nome variabile
+                                        if alternative_list:  # Corretto il nome variabile
+                                            for channel in alternative_list:  # Corretto il nome variabile
+                                                refnum = getRefNum(channel)
+                                                if refnum and refnum not in channels:
+                                                    channels.append(refnum)
+                                    else:
+                                        refnum = getRefNum(service.toString())
+                                        if refnum and refnum not in channels:
+                                            channels.append(refnum)
+    else:
+        bouquet_rootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'
+        bouquet_root = enigma.eServiceReference(bouquet_rootstr)
+        services = serviceHandler.list(bouquet_root)
+        
+        if services is not None:
+            while True:
+                service = services.getNext()
+                if not service.valid():
+                    break
+                if not (service.flags & mask):
+                    if service.flags & alternative:
+                        alternative_list = getAlternatives(service)
+                        if alternative_list:
+                            for channel in alternative_list:
+                                refnum = getRefNum(channel)
+                                if refnum and refnum not in channels:
+                                    channels.append(refnum)
+                    else:
+                        refnum = getRefNum(service.toString())
+                        if refnum and refnum not in channels:
+                            channels.append(refnum)
+    return channels
 
 # Filter servicerefs that this box can display by starting a fake recording.
 
