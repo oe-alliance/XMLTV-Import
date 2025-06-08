@@ -880,13 +880,17 @@ class AutoStartTimer:
 		self.update()
 
 	def getWakeTime(self):
-		if config.plugins.epgimport.enabled.value:
-			clock = config.plugins.epgimport.wakeup.value
-			nowt = time.time()
-			now = time.localtime(nowt)
-			return int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday, clock[0], clock[1], lastMACbyte() // 5, 0, now.tm_yday, now.tm_isdst)))
-		else:
+		if not config.plugins.epgimport.enabled.value:
 			return -1
+
+		clock = config.plugins.epgimport.wakeup.value
+		now = time.localtime(time.time())
+		return int(time.mktime((
+			now.tm_year, now.tm_mon, now.tm_mday,
+			clock[0], clock[1],
+			lastMACbyte() // 5, 0,
+			now.tm_yday, now.tm_isdst
+		)))
 
 	def update(self, atLeast=0):
 		self.timer.stop()
