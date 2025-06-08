@@ -411,8 +411,16 @@ class EPGImportConfig(ConfigListScreen, Screen):
 				list.append(self.cfg_runboot_restart)
 		list.append(self.cfg_showinextensions)
 		list.append(self.cfg_showinplugins)
-		list.append(self.cfg_import_onlybouquet)
-		list.append(self.cfg_import_onlyiptv)
+		
+		try:
+			list.append(self.cfg_import_onlybouquet)
+		except SomeSpecificException as e:
+			print(f"Error adding cfg_import_onlybouquet: {e}", file=log)
+		try:
+			list.append(self.cfg_import_onlyiptv)
+		except SomeSpecificException as e:
+			print(f"Error adding cfg_import_onlyiptv: {e}", file=log)
+
 		if hasattr(enigma.eEPGCache, 'flushEPG'):
 			list.append(self.cfg_clear_oldepg)
 		list.append(self.cfg_longDescDays)
@@ -662,15 +670,10 @@ class EPGImportProfile(ConfigListScreen, Screen):
 		self.setTitle(_("Days Profile"))
 
 	def save(self):
-		if not config.plugins.extra_epgimport.day_import[0].value:
-			if not config.plugins.extra_epgimport.day_import[1].value:
-				if not config.plugins.extra_epgimport.day_import[2].value:
-					if not config.plugins.extra_epgimport.day_import[3].value:
-						if not config.plugins.extra_epgimport.day_import[4].value:
-							if not config.plugins.extra_epgimport.day_import[5].value:
-								if not config.plugins.extra_epgimport.day_import[6].value:
-									self.session.open(MessageBox, _("You may not use this settings!\nAt least one day a week should be included!"), MessageBox.TYPE_INFO, timeout=6)
-									return
+		if not any(config.plugins.extra_epgimport.day_import[i].value for i in range(7)):
+			self.session.open(MessageBox, _("You may not use this settings!\nAt least one day a week should be included!"), MessageBox.TYPE_INFO, timeout=6)
+			return
+
 		for x in self["config"].list:
 			x[1].save()
 		self.close()
