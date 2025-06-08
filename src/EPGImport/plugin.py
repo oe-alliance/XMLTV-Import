@@ -885,8 +885,8 @@ class AutoStartTimer:
 			cur_day = int(now_day.tm_wday)
 			wakeup_day = WakeupDayOfWeek()
 			if wakeup_day == -1:
-				return -1
 				print("[XMLTVImport] wakeup day of week disabled", file=log)
+				return -1
 			if wake < now + atLeast:
 				wake += 86400 * wakeup_day
 			else:
@@ -939,8 +939,8 @@ class AutoStartTimer:
 			cur_day = int(now_day.tm_wday)
 			wakeup_day = WakeupDayOfWeek()
 			if wakeup_day == -1:
-				return -1
 				print("[XMLTVImport] wakeup day of week disabled", file=log)
+				return -1
 			if wake_up < now:
 				wake_up += 86400 * wakeup_day
 			else:
