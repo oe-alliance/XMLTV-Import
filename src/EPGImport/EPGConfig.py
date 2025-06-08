@@ -1,11 +1,12 @@
 # -*- coding: UTF-8 -*-
 from __future__ import absolute_import
 from __future__ import print_function
-import os
+from os import listdir, fstat, remove
+from os.path import split, join, getmtime, exists
 from . import log
-from xml.etree.cElementTree import ElementTree, Element, SubElement, tostring, iterparse
+from xml.etree.cElementTree import iterparse
 import gzip
-import time
+from time import time
 import random
 import six
 
@@ -27,14 +28,14 @@ def getChannels(path, name, offset):
 	global channelCache
 	if name in channelCache:
 		return channelCache[name]
-	dirname, filename = os.path.split(path)
+	dirname, filename = split(path)
 	if name:
 		if isLocalFile(name):
-			channelfile = os.path.join(dirname, name)
+			channelfile = join(dirname, name)
 		else:
 			channelfile = name
 	else:
-		channelfile = os.path.join(dirname, filename.split('.', 1)[0] + '.channels.xml')
+		channelfile = join(dirname, filename.split('.', 1)[0] + '.channels.xml')
 	try:
 		return channelCache[channelfile]
 	except KeyError:
@@ -57,7 +58,7 @@ class EPGChannel:
 
 	def openStream(self, filename):
 		fd = open(filename, 'rb')
-		if not os.fstat(fd.fileno()).st_size:
+		if not fstat(fd.fileno()).st_size:
 			raise Exception("File is empty")
 		if filename.endswith('.gz'):
 			fd = gzip.GzipFile(fileobj=fd, mode='rb')
@@ -96,14 +97,14 @@ class EPGChannel:
 		customFile = '/etc/epgimport/custom.channels.xml'
 		# Always read custom file since we don't know when it was last updated
 		# and we don't have multiple download from server problem since it is always a local file.
-		if os.path.exists(customFile):
+		if exists(customFile):
 			print("[EPGImport] Parsing channels from '%s'" % customFile, file=log)
 			self.parse(filterCallback, customFile)
 		if downloadedFile is not None:
-			self.mtime = time.time()
+			self.mtime = time()
 			return self.parse(filterCallback, downloadedFile)
 		elif (len(self.urls) == 1) and isLocalFile(self.urls[0]):
-			mtime = os.path.getmtime(self.urls[0])
+			mtime = getmtime(self.urls[0])
 			if (not self.mtime) or (self.mtime < mtime):
 				self.parse(filterCallback, self.urls[0])
 				self.mtime = mtime
@@ -113,7 +114,7 @@ class EPGChannel:
 			return None
 		else:
 			# Check at most once a day
-			now = time.time()
+			now = time()
 			if (not self.mtime) or (self.mtime + 86400 < now):
 				return self.urls
 		return None
@@ -126,7 +127,7 @@ class EPGSource:
 	def __init__(self, path, elem, category=None, offset=0):
 		self.parser = elem.get('type')
 		nocheck = elem.get('nocheck')
-		if nocheck == None:
+		if nocheck is None:
 			self.nocheck = 0
 		elif nocheck == "1":
 			self.nocheck = 1
@@ -174,9 +175,9 @@ def enumSourcesFile(sourcefile, filter=None, categories=False):
 
 def enumSources(path, filter=None, categories=False):
 	try:
-		for sourcefile in os.listdir(path):
+		for sourcefile in listdir(path):
 			if sourcefile.endswith('.sources.xml'):
-				sourcefile = os.path.join(path, sourcefile)
+				sourcefile = join(path, sourcefile)
 				try:
 					for s in enumSourcesFile(sourcefile, filter, categories):
 						yield s
@@ -213,7 +214,7 @@ if __name__ == '__main__':
 		x.append(p.description)
 	storeUserSettings('settings.pkl', [1, "twee"])
 	assert loadUserSettings('settings.pkl') == {"sources": [1, "twee"]}
-	os.remove('settings.pkl')
+	remove('settings.pkl')
 	for p in enumSources(path, x):
 		t = (p.description, p.urls, p.parser, p.format, p.channels, p.nocheck)
 		assert t in l
