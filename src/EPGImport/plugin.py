@@ -322,17 +322,19 @@ class EPGImportConfig(ConfigListScreen, Screen):
 			"log": self.keyInfo,
 			"contextMenu": self.openMenu,
 		}, -1)
-		ConfigListScreen.__init__(self, [], session=self.session)
+		# Initialize templates BEFORE first updateStatus call
+		# self.filterStatusTemplate = _("Filtering: %s Please wait!")
+		self.importStatusTemplate = _("Importing: %s %s events")
 		self.lastImportResult = None
 		self.onChangedEntry = []
+		ConfigListScreen.__init__(self, [], session=self.session)
+		self.updateStatus()  # Now safe to call
+		self.updateTimer = enigma.eTimer()
+		self.updateTimer.callback.append(self.updateStatus)
+		self.updateTimer.start(1000)
 		self.prev_onlybouquet = config.plugins.epgimport.import_onlybouquet.value
 		self.initConfig()
 		self.createSetup()
-		self.importStatusTemplate = _("Importing: %s\n%s events")
-		self.updateTimer = enigma.eTimer()
-		self.updateTimer.callback.append(self.updateStatus)
-		self.updateTimer.start(2000)
-		self.updateStatus()
 		self.onLayoutFinish.append(self.__layoutFinished)
 
 	# for summary:
