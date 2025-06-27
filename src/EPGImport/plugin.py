@@ -309,10 +309,12 @@ class EPGImportConfig(Setup):
 		global isFilterRunning, filterCounter
 		if isFilterRunning == 1:
 			text = self.filterStatusTemplate % (str(filterCounter))
+			self.setFootnote(text)
 		elif epgimport.isImportRunning():
 			src = epgimport.source
 			text = self.importStatusTemplate % (src.description, epgimport.eventCount)
-		self.setFootnote(text)
+			self.setFootnote(text)
+			return
 		if lastImportResult:  # and (lastImportResult != self.lastImportResult):
 			start, count = lastImportResult
 			try:
@@ -457,15 +459,19 @@ class EPGImportConfig(Setup):
 class EPGImportSources(Screen):
 	"Pick sources from config"
 	skin = """
-		<screen name="EPGImportSources" position="center,center" size="560,400" title="EPG Import Sources" >
-			<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="green"  position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap name="yellow" position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<ePixmap name="blue"   position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-			<widget name="key_red" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
-			<widget name="key_green" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
-			<widget name="key_yellow" position="280,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
-			<widget name="key_blue" position="420,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+		<screen name="EPGImportSources" position="center,center" size="560,400" resolution="1280,720" title="EPG Import Sources" >
+			<widget name="key_red" render="Pixmap" position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on"/>
+			<widget name="key_green" render="Pixmap" position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on"/>
+			<widget name="key_yellow" render="Pixmap" position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on">
+				<convert type="ConditionalShowHide" />
+			</widget>
+			<widget name="key_blue" render="Pixmap" position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on">
+				<convert type="ConditionalShowHide" />
+			</widget>
+			<widget source="key_red" render="Label" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+			<widget source="key_yellow" render="Label" position="280,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+			<widget source="key_blue" render="Label" position="420,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
 			<ePixmap alphatest="on" pixmap="skin_default/icons/clock.png" position="480,383" size="14,14" zPosition="3"/>
 			<widget font="Regular;18" halign="left" position="505,380" render="Label" size="55,20" source="global.CurrentTime" transparent="1" valign="center" zPosition="3">
 				<convert type="ClockToText">Default</convert>
@@ -475,10 +481,10 @@ class EPGImportSources(Screen):
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self["key_red"] = Button(_("Cancel"))
-		self["key_green"] = Button(_("Save"))
-		self["key_yellow"] = Button(_("Import"))
-		self["key_blue"] = Button(_("Update Sources"))
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("Save"))
+		self["key_yellow"] = StaticText(_("Import"))
+		self["key_blue"] = StaticText(_("Update Sources"))
 		self.tree = []
 		self.giturl = SOURCE_LINKS.get(config.plugins.epgimport.extra_source.value)
 
@@ -502,10 +508,7 @@ class EPGImportSources(Screen):
 				if not any(cat[0][0] == c[0][0] for c in self.tree):
 					self.tree.append(cat)
 		self["list"] = ExpandableSelectionList.ExpandableSelectionList(self.tree, enableWrapAround=True)
-		if self.tree:
-			self["key_yellow"].show()
-		else:
-			self["key_yellow"].hide()
+		self["key_yellow"].setText(_("Import") if self.tree else "")
 
 		self["setupActions"] = ActionMap(["SetupActions", "ColorActions"], {
 			"red": self.cancel,
@@ -564,10 +567,7 @@ class EPGImportSources(Screen):
 				self.tree.append(cat)
 		self["list"].setList(self.tree)
 		# Show or hide the yellow key based on the tree content
-		if self.tree:
-			self["key_yellow"].show()
-		else:
-			self["key_yellow"].hide()
+		self["key_yellow"].setText(_("Import") if self.tree else "")
 		# Set the updated tree in the list
 		msg = _("Sources saved successfully!")
 		self.session.open(
@@ -631,15 +631,11 @@ class EPGImportProfile(Setup):
 
 class EPGImportLog(Screen):
 	skin = """
-		<screen position="center,center" size="560,400" title="EPG Import Log" >
-			<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
-			<ePixmap name="green"  position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
-			<ePixmap name="yellow" position="280,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/yellow.png" transparent="1" alphatest="on" />
-			<ePixmap name="blue"   position="420,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/blue.png" transparent="1" alphatest="on" />
-			<widget name="key_red" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
-			<widget name="key_green" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
-			<widget name="key_yellow" position="280,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
-			<widget name="key_blue" position="420,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;20" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+		<screen position="center,center" size="560,400" resolution="1280,720" title="EPG Import Log" >
+			<widget name="key_red" render="Pixmap" position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on"/>
+			<widget name="key_green" render="Pixmap" position="140,0" zPosition="2" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on"/>
+			<widget source="key_red" render="Label" position="0,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
+			<widget source="key_green" render="Label" position="140,0" size="140,40" valign="center" halign="center" zPosition="4"  foregroundColor="white" font="Regular;17" transparent="1" shadowColor="background" shadowOffset="-2,-2" />
 			<ePixmap alphatest="on" pixmap="skin_default/icons/clock.png" position="480,383" size="14,14" zPosition="3"/>
 			<widget font="Regular;18" halign="left" position="505,380" render="Label" size="55,20" source="global.CurrentTime" transparent="1" valign="center" zPosition="3">
 				<convert type="ClockToText">Default</convert>
@@ -651,17 +647,13 @@ class EPGImportLog(Screen):
 		self.session = session
 		Screen.__init__(self, session)
 		self.log = log
-		self["key_red"] = Button(_("Clear"))
-		self["key_green"] = Button()
-		self["key_yellow"] = Button()
-		self["key_blue"] = Button(_("Save"))
+		self["key_red"] = StaticText(_("Clear"))
+		self["key_green"] = StaticText(_("Save"))
 		self["list"] = ScrollLabel(self.log.getvalue())
 		self["actions"] = ActionMap(["DirectionActions", "OkCancelActions", "ColorActions", "MenuActions"], {
 			"red": self.clear,
 			"green": self.cancel,
-			"yellow": self.cancel,
 			"save": self.save,
-			"blue": self.save,
 			"cancel": self.cancel,
 			"ok": self.cancel,
 			"left": self["list"].pageUp,
@@ -701,29 +693,17 @@ class EPGImportLog(Screen):
 		self.close(False)
 
 
-class EPGImportDownloader(MessageBox):
-	def __init__(self, session):
-		MessageBox.__init__(
-			self,
-			session,
-			_("Last import: ") + config.plugins.extra_epgimport.last_import.value + _(" events\n") +
-			_("\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?"),
-			MessageBox.TYPE_YESNO,
-			timeout=15
-		)
-		self.skinName = "MessageBox"
-
-
-def msgClosed(ret):
-	global autoStartTimer
-	if ret:
-		if autoStartTimer is not None and not epgimport.isImportRunning():
+def start_import(session, **kwargs):
+	def msgClosed(ret):
+		if ret:
 			print("[XMLTVImport] Run manual starting import", file=log)
 			autoStartTimer.runImport()
-
-
-def start_import(session, **kwargs):
-	session.openWithCallback(msgClosed, EPGImportDownloader)
+	if epgimport.isImportRunning():
+		msg = _("EPGImport\nImport of epg data is still in progress. Please wait.")
+		session.open(MessageBox, msg, MessageBox.TYPE_ERROR, timeout=10, close_on_any_key=True)
+	else:
+		msg = _("Last import: ") + config.plugins.extra_epgimport.last_import.value + _(" events\n") + _("\nImport of epg data will start.\nThis may take a few minutes.\nIs this ok?")
+		session.openWithCallback(msgClosed, MessageBox, msg, MessageBox.TYPE_YESNO, timeout=15)
 
 
 def main(session, **kwargs):
@@ -1069,7 +1049,7 @@ def autostart(reason, session=None, **kwargs):
 	global autoStartTimer
 	global _session
 	print(f"[XMLTVImport] autostart ({reason}) occured at {int(time())}", file=log)
-	if reason == 0 and _session is None:
+	if reason == 0:  # and _session is None:
 		if session is not None:
 			_session = session
 			if autoStartTimer is None:
@@ -1161,10 +1141,11 @@ def Plugins(**kwargs):
 		PluginDescriptor(
 			name=_("EPG-Importer"),
 			description=description,
-			where=[
-				PluginDescriptor.WHERE_AUTOSTART,
-				PluginDescriptor.WHERE_SESSIONSTART
-			],
+			where=PluginDescriptor.WHERE_SESSIONSTART,
+#			where=[
+#				PluginDescriptor.WHERE_AUTOSTART,
+#				PluginDescriptor.WHERE_SESSIONSTART
+#			],
 			fnc=autostart,
 			wakeupfnc=getNextWakeup
 		),
