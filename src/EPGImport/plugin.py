@@ -1,5 +1,5 @@
 from os import makedirs, remove
-from os.path import exists, join
+from os.path import exists
 from time import localtime, mktime, strftime, strptime, time, asctime
 
 from enigma import eServiceCenter, eServiceReference, eEPGCache, eTimer
@@ -18,7 +18,6 @@ from Components.SystemInfo import BoxInfo
 
 # Config
 from Components.ActionMap import ActionMap
-from Components.Button import Button
 from Components.config import config, ConfigEnableDisable, ConfigSubsection, ConfigYesNo, ConfigClock, ConfigText, ConfigInteger, ConfigSelection, ConfigNumber, ConfigSubDict, NoSave
 import Components.PluginComponent
 from Components.ScrollLabel import ScrollLabel
@@ -100,11 +99,11 @@ config.plugins.epgimport.deepstandby = ConfigSelection(
 )
 
 config.plugins.epgimport.extra_source = ConfigSelection(
-    default=0,
-    choices=[
-        (0, "OE-Alliance"),
-        (1, "Lululla")
-    ]
+	default=0,
+	choices=[
+		(0, "OE-Alliance"),
+		(1, "Lululla")
+	]
 )
 
 config.plugins.epgimport.standby_afterwakeup = ConfigYesNo(default=False)
@@ -306,7 +305,7 @@ class EPGImportConfig(Setup):
 
 	def updateStatus(self):
 		text = ""
-		global isFilterRunning, filterCounter
+		# global isFilterRunning, filterCounter
 		if isFilterRunning == 1:
 			text = self.filterStatusTemplate % (str(filterCounter))
 			self.setFootnote(text)
@@ -717,7 +716,7 @@ def doneConfiguring(*retVal):
 
 
 def doneImport(reboot=False, epgfile=None):
-	global _session, lastImportResult, BouquetChannelListList, serviceIgnoreList
+	global lastImportResult, BouquetChannelListList, serviceIgnoreList
 	BouquetChannelListList = None
 	serviceIgnoreList = None
 
@@ -1005,7 +1004,6 @@ def WakeupDayOfWeek():
 
 
 def onBootStartCheck():
-	global autoStartTimer
 	print("[XMLTVImport] onBootStartCheck", file=log)
 	now = int(time())
 	wake = autoStartTimer.getStatus()
@@ -1142,10 +1140,6 @@ def Plugins(**kwargs):
 			name=_("EPG-Importer"),
 			description=description,
 			where=PluginDescriptor.WHERE_SESSIONSTART,
-#			where=[
-#				PluginDescriptor.WHERE_AUTOSTART,
-#				PluginDescriptor.WHERE_SESSIONSTART
-#			],
 			fnc=autostart,
 			wakeupfnc=getNextWakeup
 		),

@@ -38,7 +38,7 @@ def get_time_utc(timestring, fdateparse):
 		return time_gm
 	except Exception as e:
 		print(f"[XMLTVConverter] get_time_utc error: {e}")
-		return 0
+		return None
 
 
 # Preferred language should be configurable, but for now,
@@ -173,7 +173,7 @@ def enumerateProgrammes(fp):
 				elem.clear()
 		except Exception as e:
 			print(f"[XMLTVConverter] enumerateProgrammes error:{e}")
-			break
+			# break not correct.. block cycle
 
 
 class XMLTVConverter:
@@ -212,8 +212,15 @@ class XMLTVConverter:
 				continue
 			try:
 				services = self.channels[channel]
-				start = get_time_utc(elem.get("start"), self.dateParser) + self.offset
-				stop = get_time_utc(elem.get("stop"), self.dateParser) + self.offset
+				start = get_time_utc(elem.get("start"), self.dateParser)  # + self.offset
+				stop = get_time_utc(elem.get("stop"), self.dateParser)  # + self.offset
+				# Ensure start and stop are not None before performing any operations
+				if start is None or stop is None:
+					print("[XMLTVConverter] Invalid start/stop time: start={}, stop={}".format(start, stop), file=log)
+					continue  # Skip this entry if start/stop are None
+
+				start += self.offset
+				stop += self.offset
 				title = get_xml_string(elem, "title")
 				"""
 				# try:
