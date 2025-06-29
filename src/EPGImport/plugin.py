@@ -291,6 +291,7 @@ class EPGImportConfig(Setup):
 		self.setFootnote(_("Last import: %s events") % config.plugins.extra_epgimport.last_import.value)
 		self["key_yellow"] = StaticText(_("Manual"))
 		self["key_blue"] = StaticText(_("Sources"))
+		self["key_info"] = StaticText(_("INFO"))
 		self["colorActions"] = ActionMap(["ColorActions", "MenuActions", "InfoActions"], {
 			"yellow": self.doimport,
 			"blue": self.dosources,
@@ -454,6 +455,10 @@ class EPGImportConfig(Setup):
 			self.session.open(EPGImportProfile)
 		else:
 			Setup.keySelect(self)
+
+	def handleInputHelpers(self):
+		Setup.handleInputHelpers(self)
+		self["key_menu"].setText(_("MENU"))  # force permanent display of key_menu
 
 
 class EPGImportSources(Screen):
