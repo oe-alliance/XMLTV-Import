@@ -100,11 +100,11 @@ config.plugins.epgimport.deepstandby = ConfigSelection(
 )
 
 config.plugins.epgimport.extra_source = ConfigSelection(
-    default=0,
-    choices=[
-        (0, "OE-Alliance"),
-        (1, "Lululla")
-    ]
+	default=0,
+	choices=[
+		(0, "OE-Alliance"),
+		(1, "Lululla")
+	]
 )
 
 config.plugins.epgimport.standby_afterwakeup = ConfigYesNo(default=False)
