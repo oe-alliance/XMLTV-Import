@@ -458,7 +458,10 @@ class EPGImportConfig(Setup):
 
 	def handleInputHelpers(self):
 		Setup.handleInputHelpers(self)
-		self["key_menu"].setText(_("MENU"))  # force permanent display of key_menu
+		try:
+			self["key_menu"].setText(_("MENU"))  # force permanent display of key_menu
+		except:
+			pass
 
 
 class EPGImportSources(Screen):
