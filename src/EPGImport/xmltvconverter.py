@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import six
 from xml.etree.cElementTree import iterparse
 # from xml.sax.saxutils import unescape
 from calendar import timegm
@@ -70,7 +69,7 @@ def get_xml_string(elem, name):
 		r"&#93;": r"]",
 	})
 	"""
-	return six.ensure_str(r)
+	return r.decode() if isinstance(r, bytes) else r
 
 
 """
@@ -84,7 +83,7 @@ def get_xml_language(elem, name):
 					r = txt
 	except Exception as e:
 		print("[XMLTVConverter] get_xml_rating_string error:", e)
-	return six.ensure_str(r)
+	return r.decode() if isinstance(r, bytes) else r
 """
 
 """ check if it is possible to insert the language map """
@@ -158,7 +157,20 @@ def get_xml_language(elem, name):
 				r = lang_map.get(lang, "eng")
 	except Exception as e:
 		print("[XMLTVConverter] get_xml_string error:{}".format(e))
-	return six.ensure_str(r)
+	return r.decode() if isinstance(r, bytes) else r
+
+
+def get_xml_rating_string(elem):
+	r = ""
+	try:
+		for node in elem.findall("rating"):
+			for val in node.findall("value"):
+				txt = val.text.replace("+", "")
+				if not r and txt is not None:
+					r = txt
+	except Exception as e:
+		print(f"[XMLTVConverter] get_xml_rating_string error:{e}")
+	return r.decode() if isinstance(r, bytes) else r
 
 
 def enumerateProgrammes(fp):
@@ -173,7 +185,6 @@ def enumerateProgrammes(fp):
 				elem.clear()
 		except Exception as e:
 			print(f"[XMLTVConverter] enumerateProgrammes error:{e}")
-			break
 
 
 class XMLTVConverter:
@@ -258,12 +269,19 @@ class XMLTVConverter:
 				if not category:  # Check if category is empty
 					category = "Unknown"  # Assign a default category if empty
 				cat_nr = self.get_category(category, duration)
+				try:
+					rating_str = get_xml_rating_string(elem)
+					# hardcode country as ENG since there is no handling for parental certification systems per country yet
+					# also we support currently only number like values like "12+" since the epgcache works only with bytes right now
+					rating = [("eng", int(rating_str) - 3)]
+				except:
+					rating = None
 				# Debugging the types of variables before passing them to yield
 				# print(f"[XMLTVConverter] start: {start} (type: {type(start)}), stop: {stop} (type: {type(stop)}), duration: {duration} (type: {type(duration)}), title: {title} (type: {type(title)}), category: {category} (type: {type(category)})", file=log)
 				if not stop or not start or (stop <= start):
 					print(f"[XMLTVConverter] Bad start/stop time: {elem.get('start')} ({start}) - {elem.get('stop')} ({stop}) [{title}]", file=log)
-				if language:
-					yield (services, (start, stop - start, title, subtitle, description, cat_nr, 0, language))
+				if rating:
+					yield (services, (start, stop - start, title, subtitle, description, cat_nr, 0, rating))
 				else:
 					yield (services, (start, stop - start, title, subtitle, description, cat_nr))
 
