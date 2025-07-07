@@ -458,10 +458,8 @@ class EPGImportConfig(Setup):
 
 	def handleInputHelpers(self):
 		Setup.handleInputHelpers(self)
-		try:
+		if "key_menu" in self:  # sanity for distros without key_menu in ConfigList
 			self["key_menu"].setText(_("MENU"))  # force permanent display of key_menu
-		except:
-			pass
 
 
 class EPGImportSources(Screen):
