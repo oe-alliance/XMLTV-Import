@@ -280,6 +280,7 @@ class XMLTVConverter:
 				# print(f"[XMLTVConverter] start: {start} (type: {type(start)}), stop: {stop} (type: {type(stop)}), duration: {duration} (type: {type(duration)}), title: {title} (type: {type(title)}), category: {category} (type: {type(category)})", file=log)
 				if not stop or not start or (stop <= start):
 					print(f"[XMLTVConverter] Bad start/stop time: {elem.get('start')} ({start}) - {elem.get('stop')} ({stop}) [{title}]", file=log)
+
 				if rating:
 					yield (services, (start, stop - start, title, subtitle, description, cat_nr, 0, rating))
 				else:
@@ -295,11 +296,10 @@ class XMLTVConverter:
 		categories = cat.split(',')
 		for category in categories:
 			category = category.strip()
-			if category in self.categories:
-				category_value = self.categories[category]
-				if len(category_value) > 1:
-					if duration > 60 * category_value[1]:
-						return category_value[0]
-				elif len(category_value) > 0:
+			category_value = self.categories.get(category, 0)
+			if category_value:
+				if isinstance(category_value, tuple) and duration > 60:
 					return category_value[0]
+				else:
+					return category_value
 		return 0
