@@ -658,8 +658,7 @@ class EPGImportLog(Screen):
 		self["list"] = ScrollLabel(self.log.getvalue())
 		self["actions"] = ActionMap(["DirectionActions", "OkCancelActions", "ColorActions", "MenuActions"], {
 			"red": self.clear,
-			"green": self.cancel,
-			"save": self.save,
+			"green": self.save,
 			"cancel": self.cancel,
 			"ok": self.cancel,
 			"left": self["list"].pageUp,
