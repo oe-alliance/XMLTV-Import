@@ -37,7 +37,7 @@ def get_time_utc(timestring, fdateparse):
 		return time_gm
 	except Exception as e:
 		print(f"[XMLTVConverter] get_time_utc error: {e}")
-		return 0
+		return None  # Return None instead of 0 to better handle the error in the calling function
 
 
 # Preferred language should be configurable, but for now,
@@ -208,7 +208,7 @@ class XMLTVConverter:
 	def enumFile(self, fileobj):
 		print("[XMLTVConverter] Enumerating event information", file=log)
 		lastUnknown = None
-		# There is nothing no enumerate if there are no channels loaded
+		# There is nothing to enumerate if there are no channels loaded
 		if not self.channels:
 			return
 		for elem in enumerateProgrammes(fileobj):
@@ -216,7 +216,7 @@ class XMLTVConverter:
 			channel = channel.lower()
 			if channel not in self.channels:
 				if lastUnknown != channel:
-					print(f"Unknown channel: {channel}", file=log)
+					print(f"[XMLTVConverter] Unknown channel: {channel}", file=log)
 					lastUnknown = channel
 				# Return a None object to give up time to the reactor.
 				yield None
@@ -245,8 +245,12 @@ class XMLTVConverter:
 
 				# # Ensure start and stop are integers
 				if not isinstance(start, int) or not isinstance(stop, int):
-					print(f"[XMLTVConverter] Invalid start/stop time format: start={start}, stop={stop}", file=log)
+					print(f"[XMLTVConverter] Skipping event with invalid timing: {title} (start: {elem.get('start')}, stop: {elem.get('stop')})", file=log)
 					continue  # Skip this entry if start/stop are not integers
+
+				if not stop or not start or (stop <= start):
+					print(f"[XMLTVConverter] Skipping bad start/stop time: {elem.get('start')} ({start}) - {elem.get('stop')} ({stop}) [{title}]", file=log)
+					continue  # Skip this entry entirely
 
 				# Check duration to ensure it's a number
 				duration = stop - start
@@ -278,9 +282,6 @@ class XMLTVConverter:
 					rating = None
 				# Debugging the types of variables before passing them to yield
 				# print(f"[XMLTVConverter] start: {start} (type: {type(start)}), stop: {stop} (type: {type(stop)}), duration: {duration} (type: {type(duration)}), title: {title} (type: {type(title)}), category: {category} (type: {type(category)})", file=log)
-				if not stop or not start or (stop <= start):
-					print(f"[XMLTVConverter] Bad start/stop time: {elem.get('start')} ({start}) - {elem.get('stop')} ({stop}) [{title}]", file=log)
-
 				if rating:
 					yield (services, (start, stop - start, title, subtitle, description, cat_nr, 0, rating))
 				else:
@@ -291,7 +292,7 @@ class XMLTVConverter:
 
 	# edit for add new category in dictionary
 	def get_category(self, cat, duration):
-		if (not cat) or (not isinstance(cat, type("str"))):
+		if not cat or not isinstance(cat, str):
 			return 0
 		categories = cat.split(',')
 		for category in categories:
