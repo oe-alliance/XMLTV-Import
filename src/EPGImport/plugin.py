@@ -1079,7 +1079,7 @@ def autostart(reason, session=None, **kwargs):
 			try:
 				import tarfile
 				with tarfile.open(sourcesFile, 'r:gz') as tar:
-					tar.extractall(path=CONFIG_PATH)
+					tar.extractall(path=CONFIG_PATH, filter="data")
 				remove(sourcesFile)
 			except Exception as e:
 				print(f"[XMLTVImport] Error extract sources {e}", file=log)
