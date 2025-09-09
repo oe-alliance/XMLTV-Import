@@ -1,4 +1,3 @@
-from . import _
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
@@ -10,6 +9,8 @@ from Components.Sources.List import List
 from Components.Label import Label
 from os.path import isdir, join
 from os import mkdir
+from . import log
+from . import _
 from . import EPGConfig
 
 
@@ -48,6 +49,7 @@ class FiltersList():
 	def __init__(self):
 		self.services = []
 		self.load()
+		print("[filtersServices] INFO: init..", file=log)
 
 	def loadFrom(self, filename):
 		try:
@@ -59,7 +61,7 @@ class FiltersList():
 					if ref not in self.services:
 						self.services.append(ref)
 		except Exception as e:
-			print(f"Error loading from {filename}: {e}")
+			print(f"[filtersServices] Error loading from {filename}: {e}", file=log)
 
 	def saveTo(self, filename):
 		try:
@@ -159,6 +161,7 @@ class filtersServicesSetup(Screen):
 			},
 			-1
 		)
+		print("[filtersServices] filtersServicesSetup Init...", file=log)
 		self.setTitle(_("Ignore services list"))
 
 	def keyRed(self):
