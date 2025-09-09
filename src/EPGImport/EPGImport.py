@@ -401,43 +401,47 @@ class EPGImport:
 			return
 
 	def doThreadRead(self, filename):
-		for data in self.createIterator(filename):
-			if data is not None:
-				self.eventCount += 1
-				r, d = data
-				if len(d) >= 5:
-					if d[0] > self.longDescUntil:
-						d = d[:4] + ("",) + d[5:]
+		try:
+			for data in self.createIterator(filename):
+				if data is not None:
+					self.eventCount += 1
+					r, d = data
+					if len(d) >= 5:
+						if d[0] > self.longDescUntil:
+							d = d[:4] + ("",) + d[5:]
 
-					# for i, item in enumerate(d):
-						# print(f"[EPGImport][doThreadRead] ### Checking item {i}: {item}, type: {type(item)}")
+						# for i, item in enumerate(d):
+							# print(f"[EPGImport][doThreadRead] ### Checking item {i}: {item}, type: {type(item)}")
 
-					d = tuple(
-						int(item) if isinstance(item, (str, bytes)) and self.is_numeric(item) else  # Converte in intero se numerico
-						(item.decode('utf-8') if isinstance(item, bytes) else item)  # Decodifica i bytes in stringhe
-						for item in d
-					)
+						d = tuple(
+							int(item) if isinstance(item, (str, bytes)) and self.is_numeric(item) else  # Converte in intero se numerico
+							(item.decode('utf-8') if isinstance(item, bytes) else item)  # Decodifica i bytes in stringhe
+							for item in d
+						)
 
-					# # Debug: stampa la tupla d dopo le modifiche
-					# print(f"[EPGImport][doThreadRead] ### Final Event data: {d}")
+						try:
+							self.storage.importEvents(r, (d,))
+						except Exception as e:
+							print(f"[EPGImport][doThreadRead] ### importEvents exception: {e}")
+							# print(f"[EPGImport][doThreadRead] ### Event data: {r}, {d}")
+							print("[EPGImport][doThreadRead] ### Stack trace:")
+							import traceback
+							traceback.print_exc()  # Stampa lo stack trace per diagnosticare meglio
+					else:
+						print("[EPGImport][doThreadRead] ### Invalid data tuple length, skipping event.")
+		except Exception as e:
+			print(f"### Exception in doThreadRead: {e}")
+			import traceback
+			traceback.print_exc()
 
-					try:
-						self.storage.importEvents(r, (d,))
-					except Exception as e:
-						print(f"[EPGImport][doThreadRead] ### importEvents exception: {e}")
-						# print(f"[EPGImport][doThreadRead] ### Event data: {r}, {d}")
-						print("[EPGImport][doThreadRead] ### Stack trace:")
-						import traceback
-						traceback.print_exc()  # Stampa lo stack trace per diagnosticare meglio
-				else:
-					print("[EPGImport][doThreadRead] ### Invalid data tuple length, skipping event.")
-		print("[EPGImport][doThreadRead] ### thread is ready ### Events:", self.eventCount)
-		if filename:
-			try:
-				unlink_if_exists(filename)
-			except Exception as e:
-				print(f"[EPGImport][doThreadRead] warning: Could not remove '{filename}' intermediate {e}")
-		return
+		finally:
+			if filename:
+				try:
+					unlink_if_exists(filename)
+				except Exception as e:
+					print(f"[EPGImport][doThreadRead] warning: Could not remove '{filename}' intermediate {e}")
+			print("[EPGImport][doThreadRead] ### thread is ready ### Events:", self.eventCount)
+			return
 
 	def is_numeric(self, value):
 		"""Check if integer value"""
