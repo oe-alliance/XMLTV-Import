@@ -129,9 +129,10 @@ def bigStorage(minFree, default, *candidates):
 				if free > minFree:
 					return candidate
 			except Exception as e:
-				print(f"[EPGImport][bigStorage] Failed to stat {default}:", e)
+				print(f"[EPGImport][bigStorage] Failed to stat {candidate}:", e)
 				continue
-	raise Exception("[EPGImport][bigStorage] Insufficient storage for download")
+	print("[EPGImport][bigStorage] Insufficient storage for download")
+	return None
 
 
 class OudeisImporter:
@@ -230,6 +231,8 @@ class EPGImport:
 		# print("[EPGImport][urlDownload]2 check_mount ", check_mount)
 		pathDefault = media_path if check_mount else "/tmp"
 		path = bigStorage(9000000, pathDefault, "/media/usb", "/media/cf")  # lets use HDD and flash as main backup media
+		if not path:
+			path = "/tmp"
 		filename = join(path, host)
 		ext = splitext(sourcefile)[1]
 		# Keep sensible extension, in particular the compression type
