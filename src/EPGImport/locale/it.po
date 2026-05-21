@@ -1,35 +1,16 @@
-# Italian translations for EPGIMPORT
-# Copyright (C) 2012 THE plugins'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the plugins package.
-# Automatically generated, 2012.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: Italian Translation EPGImport Enigma2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-19 10:37+0100\n"
-"PO-Revision-Date: 2025-05-17 17:06+0100\n"
-"Last-Translator: madhouse\n"
-"Language-Team: egami-team\n"
-"Language: it_IT\n"
+"Project-Id-Version: EPG IMPORT\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-05-08 18:28+0200\n"
+"Last-Translator: blu8\n"
+"Language-Team: openBH insanity wilmac\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: EPGConfig.py\n"
-"X-Poedit-SearchPath-1: epgdat.py\n"
-"X-Poedit-SearchPath-2: epgdat_importer.py\n"
-"X-Poedit-SearchPath-3: EPGImport.py\n"
-"X-Poedit-SearchPath-4: ExpandableSelectionList.py\n"
-"X-Poedit-SearchPath-5: filtersServices.py\n"
-"X-Poedit-SearchPath-6: gen_xmltv.py\n"
-"X-Poedit-SearchPath-7: log.py\n"
-"X-Poedit-SearchPath-8: OfflineImport.py\n"
-"X-Poedit-SearchPath-9: plugin.py\n"
-"X-Poedit-SearchPath-10: xmltvconverter.py\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-SourceCharset: ISO-8859-1\n"
 
 msgid ""
 "\n"
@@ -38,9 +19,9 @@ msgid ""
 "Is this ok?"
 msgstr ""
 "\n"
-"Eseguo importazione dati EPG.\n"
-"Questo processo potrebbe richiedere qualche minuto\n"
-"Procedo?"
+"L'importazione dei dati EPG verrà avviata.\n"
+"L'operazione potrebbe richiedere alcuni minuti.\n"
+"Procedere?"
 
 msgid " events\n"
 msgstr " eventi\n"
@@ -49,87 +30,89 @@ msgid "Add Channel"
 msgstr "Aggiungi canale"
 
 msgid "Add Provider"
-msgstr "Aggiungi provider"
+msgstr "Aggiungi fornitore"
 
 msgid "All services provider"
-msgstr "Tutti i canali di ogni provider"
+msgstr ""
+"Tutti i fornitori\n"
+" dei servizi"
 
 msgid "Also apply 'channel id' filtering on custom.channels.xml"
-msgstr "Applica anche il filtro 'id canale' su custom.channels.xml"
+msgstr "Applica il filtro 'channel id' anche su custom.channels.xml"
 
 msgid "Automated EPG Importer"
-msgstr "Importazione EPG automatizzata"
+msgstr "Modulo di importazione EPG automatico"
 
 msgid "Automatic import EPG"
-msgstr "Importazione EPG automatica"
+msgstr "Modulo di importazione automatico EPG"
 
 msgid "Automatic start time"
-msgstr "Orario di inizio automatico"
+msgstr "Orario di avvio automatico"
 
 msgid "Cancel"
 msgstr "Annulla"
 
 msgid "Choose days to import"
-msgstr "Scegli i giorni per importare"
+msgstr "Selezionare i giorni per l'importazione"
 
 msgid "Choose the provider for updating the EPG source files."
-msgstr "Scegli il provider per l'aggiornamento dei file sorgente EPG."
+msgstr "Selezionare il fornitore per aggiornare il sorgente EPG."
 
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Pulisci"
 
 msgid "Consider setting 'Days Profile'"
-msgstr "Considerare l'impostazione del 'Profilo dei Giorni'"
+msgstr "Considerare le impostazioni profili giornalieri"
 
 msgid "Days Profile"
-msgstr "Profilo dei giorni"
+msgstr "Profili giornalieri"
 
 msgid "Delete all"
-msgstr "Cancella tutto"
+msgstr "Eliminare tutto"
 
 msgid "Delete current EPG before import"
-msgstr "Elimina l'EPG corrente prima dell'importazione"
+msgstr "Eliminare gli EPG in uso prima dell'importazione"
 
 msgid "Delete selected"
-msgstr "Rimuovi selezionato"
+msgstr "Eliminare selezionati"
 
 msgid "Display a shortcut 'EPG import now' in the extension menu. This menu entry will immediately start the EPG update process when selected."
-msgstr "Visualizza la scorciatoia 'Importa EPG ora' nel menu delle estensioni. Questa voce di menu avvierà immediatamente il processo di aggiornamento dell'EPG se selezionata."
+msgstr "Mostra una scorciatoia 'EPG Import DOWNLOAD IMMEDIATO' nelle estensioni. Il collegamento avvierà immediatamente l'aggiornamento."
 
 msgid ""
 "Do you want to update Source now?\n"
 "\n"
 "Wait for the import successful message!"
 msgstr ""
-"Vuoi aggiornare la fonte adesso?\n"
+"Vuoi aggiornare i sorgenti adesso?\n"
 "\n"
-"Attendi il messaggio di avvenuta importazione!"
+"Attendere il messaggio di importazione completata!"
 
 msgid "EPG Import Configuration"
-msgstr "Configurazione di EPG Import"
+msgstr "Configurazione EPG Import"
 
 msgid "EPG Import Log"
-msgstr "Registro importazione EPG"
+msgstr "Registro EPG Import"
 
 msgid "EPG Import Sources"
 msgstr "Sorgenti EPG Import"
 
 #, python-format
 msgid "EPG Import finished, %d events"
-msgstr "Importazione EPG completata, %d eventi"
+msgstr "Importazione EPG completata: %d eventi"
 
 msgid "EPG-Importer"
 msgstr "EPG-Importer"
 
 msgid "EPG-Importer Now"
-msgstr "EPG-Importer Ora"
+msgstr "EPG-Import: DOWNLOAD IMMEDIATO"
 
 msgid ""
 "EPGImport\n"
 "Import of epg data is still in progress. Please wait."
 msgstr ""
-"EPG-Import\n"
-"Importazione dati EPG in corso. Attendere prego."
+"EPGImport\n"
+"L'importazione dei dati EPG è ancora in corso. Attendere."
 
 msgid ""
 "EPGImport\n"
@@ -137,10 +120,10 @@ msgid ""
 "This may take a few minutes.\n"
 "Is this ok?"
 msgstr ""
-"EPG-Import\n"
-"Eseguo importazione dati EPG.\n"
-"Questo processo potrebbe richiedere qualche minuto\n"
-"Procedo?"
+"EPG Import\n"
+"L'importazione dei dati EPG sta per iniziare.\n"
+"Potrebbero essere necessari alcuni minuti.\n"
+"Procedere?"
 
 msgid ""
 "EPGImport Plugin\n"
@@ -149,74 +132,72 @@ msgstr ""
 "Plugin EPG-Import\n"
 "Avvio fallito:\n"
 
-#, python-format
 msgid "Filtering: %s Please wait!"
-msgstr "Filtro: %s Attendi!"
+msgstr "Filtro: %s Attendere!"
 
 msgid "Friday"
 msgstr "Venerdì"
 
 msgid "Hours after which the import is repeated"
-msgstr "Ore dopo le quali l'importazione viene ripetuta"
+msgstr "Intervallo di importazione (ore)"
 
 msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
-msgstr "Se abilitata, le regole del filtro definite in /etc/epgimport/channel_id_filter.conf verranno applicate anche al file /etc/epgimport/custom.channels.xml."
+msgstr "Se abilitato, le regole filtro verranno applicate anche a custom.channels.xml."
 
 msgid "Ignore services list"
-msgstr "Ignora l'elenco canali"
+msgstr "Ignora elenco servizi"
 
 msgid "Import"
 msgstr "Importa"
 
 msgid "Import failed with error: {}"
-msgstr "Importazione non riuscita con errore: {}"
+msgstr "Importazione fallita con errore: {}"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Importing: %s %s events"
 msgstr "Importazione: %s %s eventi"
 
 msgid "Last import: "
 msgstr "Ultima importazione: "
 
-#, python-format
 msgid "Last import: %s events"
-msgstr "Ultima importazione: %s canali"
+msgstr "Ultima importazione: %s eventi"
 
 msgid "Load EPG only for IPTV channels"
-msgstr "Carica EPG solo per i canali IPTV"
+msgstr "Limitare il download EPG esclusivamente ai canali IPTV"
 
 msgid "Load EPG only services in bouquets"
-msgstr "Carica solo i servizi EPG nei bouquet"
+msgstr "Limitare il download EPG esclusivamente ai servizi nei bouquet"
 
 msgid "Load long descriptions up to X days"
-msgstr "Carica descrizioni lunghe fino a X giorni"
+msgstr "Abilitare il caricamento delle descrizioni estese per n. giorni"
 
 msgid "Manual"
-msgstr "Manuale"
+msgstr "Download"
 
 msgid "Monday"
 msgstr "Lunedì"
 
 msgid "No"
-msgstr ""
+msgstr "No"
 
 msgid "No active EPG sources found, nothing to do"
 msgstr "Fonti EPG attive non trovate: nessuna operazione svolta"
 
 msgid "No source file found !"
-msgstr "Nessun file sorgente trovato!"
+msgstr "Nessun file sorgente trovato !"
 
 msgid "Press OK"
-msgstr "Premere OK"
+msgstr "Premi OK"
 
 msgid "Press OK to choose on which days to import"
-msgstr "Premere OK per scegliere in quali giorni importare"
+msgstr "Premi OK per selezionare i giorni di importazione"
 
 msgid "Really delete all list?"
-msgstr "Sicuro di eliminare tutta la lista?"
+msgstr "Eliminare tutta la lista?"
 
 msgid "Return to deep standby after import"
-msgstr "Ritorna in modalità standby profondo dopo l'importazione"
+msgstr "Torna in deep standby dopo l'importazione"
 
 msgid "Run AutoTimer after import"
 msgstr "Esegui AutoTimer dopo l'importazione"
@@ -228,40 +209,40 @@ msgid "Save"
 msgstr "Salva"
 
 msgid "Select action"
-msgstr "Selezionare azione"
+msgstr "Seleziona azione"
 
 msgid "Select service to add..."
 msgstr "Seleziona il canale da aggiungere..."
 
 msgid "Show 'EPG import now' in extensions"
-msgstr "Mostra 'EPG import ora' nelle estensioni"
+msgstr "Mostra EPG import DOWNLOAD IMMEDIATO nelle estensioni"
 
 msgid "Show 'EPGImport' in plugins"
-msgstr "Mostra 'EPGImport' nei plugin"
+msgstr "Mostra EPGImport nei plugin"
 
 msgid "Show log"
-msgstr "Mostra il log"
+msgstr "Mostra il registro"
 
 msgid "Skip import on restart GUI"
-msgstr "Salta l'importazione al riavvio della GUI"
+msgstr "Salta l'importazione al riavvio GUI"
 
 msgid "Source files provider"
-msgstr "File sorgenti dei provider"
+msgstr "Fornitore dei file sorgente"
 
 msgid "Sources"
 msgstr "Sorgenti"
 
 msgid "Sources saved successfully!"
-msgstr "Fonti salvate con successo!"
+msgstr "Sorgenti salvate con successo!"
 
 msgid "Standby at startup"
 msgstr "Standby all'avvio"
 
 msgid "Start import after booting up"
-msgstr "Avvia l'importazione dopo l'avvio"
+msgstr "Inizia l'importazione dopo l'avvio"
 
 msgid "Start import after standby"
-msgstr "Avvia l'importazione dopo lo standby"
+msgstr "Inizia l'importazione dopo lo standby"
 
 msgid "Sunday"
 msgstr "Domenica"
@@ -273,22 +254,22 @@ msgid "Tuesday"
 msgstr "Martedì"
 
 msgid "Update Sources"
-msgstr "Aggiorna Sorgenti"
+msgstr "Aggiorna sorgenti"
 
 msgid "Wednesday"
 msgstr "Mercoledì"
 
 msgid "When in deep standby"
-msgstr "Quando è in standby profondo"
+msgstr "In modalità deep standby"
 
 msgid "Write to /tmp/epgimport.log"
-msgstr "Scrittura in /tmp/epgimport.log"
+msgstr "Scrivi su /tmp/epgimport.log"
 
 msgid "Yes"
-msgstr ""
+msgstr "Sì"
 
 msgid "Yes - and clear existing"
-msgstr ""
+msgstr "Sì - e cancella esistenti"
 
 msgid ""
 "You may not use this settings!\n"
@@ -301,8 +282,8 @@ msgid ""
 "You must restart Enigma2 to load the EPG data,\n"
 "is this OK?"
 msgstr ""
-"Richiesto il riavvio del sistema per caricare i dati EPG:\n"
-"Procedo?"
+"È necessario riavviare Enigma2 per caricare i dati EPG.\n"
+"Procedere?"
 
 msgid "always"
 msgstr "sempre"
@@ -317,10 +298,10 @@ msgid "only manual boot"
 msgstr "solo avvio manuale"
 
 msgid "press OK to save list"
-msgstr "premi OK per salvare la lista"
+msgstr "premi OK per salvare"
 
 msgid "skip the import"
 msgstr "salta l'importazione"
 
 msgid "wake up and import"
-msgstr "sveglia e importa"
+msgstr "riattiva e importa"
