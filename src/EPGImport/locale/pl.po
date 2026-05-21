@@ -106,7 +106,7 @@ msgid "EPG Import finished, %d events"
 msgstr "Zakończono importowanie EPG, %d wydarzenia"
 
 msgid "EPG-Importer"
-msgstr "Ustawienia imortera EPG"
+msgstr "Ustawienia importera EPG"
 
 msgid "EPG-Importer Now"
 msgstr "Importuj teraz EPG"
