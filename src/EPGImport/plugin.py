@@ -1,8 +1,8 @@
 from os import makedirs, remove
 from os.path import exists, join
-from time import localtime, mktime, strftime, strptime, time, asctime
+from time import asctime, localtime, mktime, strftime, strptime, time
 
-from enigma import eServiceCenter, eServiceReference, eEPGCache, eTimer
+from enigma import eEPGCache, eServiceCenter, eServiceReference, eTimer
 
 # for localized messages
 from . import _
@@ -29,9 +29,9 @@ from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from Screens.Setup import Setup
 import Screens.Standby
-from Tools import Notifications
 from Tools.Directories import isPluginInstalled
 from Tools.FuzzyDate import FuzzyTime
+from Tools.Notifications import AddNotification
 from Tools.StbHardware import getFPWasTimerWakeup
 
 import NavigationInstance
@@ -892,12 +892,8 @@ class AutoStartTimer:
 			epgimport.sources = sources
 			startImport()
 		else:
-			self.session.open(
-				MessageBox,
-				_("No source file found !"),
-				MessageBox.TYPE_INFO,
-				timeout=10
-			)
+			# Standby onClose runs before the previous screen is ready to open a dialog.
+			AddNotification(MessageBox, _("No source file found !"), MessageBox.TYPE_INFO, timeout=10)
 
 	def onTimer(self):
 		self.autoStartImport.stop()
@@ -952,12 +948,12 @@ class AutoStartTimer:
 				if 0 < wake - now <= 60 * 5:
 					if config.plugins.epgimport.standby_afterwakeup.value:
 						if not Screens.Standby.inStandby:
-							Notifications.AddNotification(Screens.Standby.Standby)
+							AddNotification(Screens.Standby.Standby)
 							print("[XMLTVImport] Run to standby after wake up", file=log)
 					if config.plugins.epgimport.shutdown.value:
 						if not config.plugins.epgimport.standby_afterwakeup.value:
 							if not Screens.Standby.inStandby:
-								Notifications.AddNotification(Screens.Standby.Standby)
+								AddNotification(Screens.Standby.Standby)
 								print("[XMLTVImport] Run to standby after wake up for checking", file=log)
 						if not config.plugins.epgimport.deepstandby_afterimport.value:
 							config.plugins.epgimport.deepstandby_afterimport.value = True
@@ -1065,7 +1061,7 @@ def autostart(reason, session=None, **kwargs):
 		if exists(STANDBY_FLAG_FILE):
 			print("[XMLTVImport] Returning to standby", file=log)
 			if not Screens.Standby.inStandby:
-				Notifications.AddNotification(Screens.Standby.Standby)
+				AddNotification(Screens.Standby.Standby)
 			try:
 				remove(STANDBY_FLAG_FILE)
 			except:
