@@ -4,14 +4,14 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-19 10:37+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Rob van der Does <RobvanderDoes@Gmail.com>\n"
+"Last-Translator: Snoete>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.10\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -22,12 +22,12 @@ msgid ""
 "Is this ok?"
 msgstr ""
 "\n"
-"Import van epg-data begint.\n"
+"Import van EPG-data begint.\n"
 "Dit kan een paar minuten duren\n"
-"Is dit ok?"
+"Is dat OK?"
 
 msgid " events\n"
-msgstr " programma's\n"
+msgstr "Programma's\n"
 
 msgid "Add Channel"
 msgstr "Zender toevoegen"
@@ -39,32 +39,31 @@ msgid "All services provider"
 msgstr "Alle zender providers"
 
 msgid "Also apply 'channel id' filtering on custom.channels.xml"
-msgstr ""
+msgstr "Ook custom.channels.xml filteren op zender-ID"
 
 msgid "Automated EPG Importer"
-msgstr "Automatische EPG Importeur"
+msgstr "Automatische EPG-Import"
 
-#, fuzzy
 msgid "Automatic import EPG"
-msgstr "Automatische EPG Importeur"
+msgstr "Automatische EPG Importeren"
 
 msgid "Automatic start time"
-msgstr ""
+msgstr "Automatische starttijd van de EPG import"
 
 msgid "Cancel"
 msgstr "Annuleer"
 
 msgid "Choose days to import"
-msgstr ""
+msgstr "Selecteer de dagen om te importeren"
 
 msgid "Choose the provider for updating the EPG source files."
-msgstr ""
+msgstr "Selecteer de provider voor het updaten van EPG bron bestanden."
 
 msgid "Clear"
 msgstr "Verwijder"
 
 msgid "Consider setting 'Days Profile'"
-msgstr ""
+msgstr "Overweeg het instellen van een 'Dagenprofiel'"
 
 msgid "Days Profile"
 msgstr "Dagenprofiel"
@@ -73,45 +72,47 @@ msgid "Delete all"
 msgstr "Alles verwijderen"
 
 msgid "Delete current EPG before import"
-msgstr ""
+msgstr "Wis de huidige EPG vóór het importeren"
 
 msgid "Delete selected"
 msgstr "Geselecteerde verwijderen"
 
 msgid "Display a shortcut 'EPG import now' in the extension menu. This menu entry will immediately start the EPG update process when selected."
-msgstr ""
+msgstr "Toon 'Importeer de EPG nu' in het extensionsmenu (BLAUW-lang). Via deze snelkoppeling kunt u direct starten met het importeren van de EPG."
 
 msgid ""
 "Do you want to update Source now?\n"
 "\n"
 "Wait for the import successful message!"
 msgstr ""
+"Wilt u de bronnen nu updaten?\n"
+"\n"
+"Wacht op de melding 'Bronnen update gelukt'!"
 
 msgid "EPG Import Configuration"
-msgstr "EPG import configuratie"
+msgstr "EPG-Import configuratie"
 
 msgid "EPG Import Log"
-msgstr "EPG Import log"
+msgstr "EPG-Import log"
 
 msgid "EPG Import Sources"
-msgstr "EPG Import bronnen"
+msgstr "EPG-Import bronnen"
 
 #, python-format
 msgid "EPG Import finished, %d events"
 msgstr "EPG Import gereed, %d programma's"
 
 msgid "EPG-Importer"
-msgstr "EPG importeur"
+msgstr "EPG-Import"
 
-#, fuzzy
 msgid "EPG-Importer Now"
-msgstr "EPG importeur"
+msgstr "Nu de EPG importeren"
 
 msgid ""
 "EPGImport\n"
 "Import of epg data is still in progress. Please wait."
 msgstr ""
-"EPGImport\n"
+"EPG-Import\n"
 "Import van epg-data is nog bezig. Even wachten."
 
 msgid ""
@@ -120,47 +121,43 @@ msgid ""
 "This may take a few minutes.\n"
 "Is this ok?"
 msgstr ""
-"EPGImport\n"
+"EPG-Import\n"
 "Import van epg-data begint.\n"
 "Dit kan een paar minuten duren.\n"
 "Is dit ok?"
 
-#, fuzzy
 msgid ""
 "EPGImport Plugin\n"
 "Failed to start:\n"
 msgstr ""
-"EPGImporteur Plugin\n"
+"EPG-Import Plugin\n"
 "Starten mislukt:\n"
 
 #, python-format
 msgid "Filtering: %s Please wait!"
-msgstr ""
+msgstr "Wordt gefilterd: %s Een moment geduld!"
 
 msgid "Friday"
 msgstr "Vrijdag"
 
 msgid "Hours after which the import is repeated"
-msgstr ""
+msgstr "Uren waarna de import wordt herhaald"
 
 msgid "If enabled, the filter rules defined into /etc/epgimport/channel_id_filter.conf will also be applied on your /etc/epgimport/custom.channels.xml file."
-msgstr ""
+msgstr "Wanneer geactiveerd, dan worden de filterregels gedefinieerd in /etc/epgimport/channel_id_filter.conf ook toegepast in het /etc/epgimport/custom.channels.xml bestand."
 
 msgid "Ignore services list"
 msgstr "Negeer zenderlijst"
 
-#, fuzzy
 msgid "Import"
-msgstr "EPG importeur"
+msgstr "Import"
 
 msgid "Import failed with error: {}"
-msgstr ""
+msgstr "Import mislukt met fout: {}"
 
-#, fuzzy, python-format
+#, python-format
 msgid "Importing: %s %s events"
-msgstr ""
-"Importeert: %s\n"
-"%s programma's"
+msgstr "Importeert: %s %s programma's"
 
 msgid "Last import: "
 msgstr "Laatste import: "
@@ -170,13 +167,13 @@ msgid "Last import: %s events"
 msgstr "Laatste import: %s programma's"
 
 msgid "Load EPG only for IPTV channels"
-msgstr ""
+msgstr "Alleen EPG laden voor IPTV kanalen"
 
 msgid "Load EPG only services in bouquets"
-msgstr ""
+msgstr "Laad alleen EPG van zenders in Favorietenlijsten"
 
 msgid "Load long descriptions up to X days"
-msgstr ""
+msgstr "Uitgebreide beschrijvingen importeren tot en met 'X'dagen"
 
 msgid "Manual"
 msgstr "Handmatig"
@@ -185,28 +182,28 @@ msgid "Monday"
 msgstr "Maandag"
 
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 msgid "No active EPG sources found, nothing to do"
-msgstr "Geen actieve bronnen gevonden; niets te doen"
+msgstr "Geen actieve bronnen gevonden, kan niets doen"
 
 msgid "No source file found !"
-msgstr ""
+msgstr "Geen bron gevonden!"
 
 msgid "Press OK"
 msgstr "Druk op OK"
 
 msgid "Press OK to choose on which days to import"
-msgstr ""
+msgstr "Selecteer de dagen waarop de EPG geïmporteerd moet worden"
 
 msgid "Really delete all list?"
 msgstr "Alle lijsten wissen?"
 
 msgid "Return to deep standby after import"
-msgstr ""
+msgstr "Terug naar deep stand-by na de import"
 
 msgid "Run AutoTimer after import"
-msgstr ""
+msgstr "AutoTimer starten na de Import"
 
 msgid "Saturday"
 msgstr "Zaterdag"
@@ -220,37 +217,35 @@ msgstr "Kies actie"
 msgid "Select service to add..."
 msgstr "Kies het kanaal dat toegevoegd moet worden..."
 
-#, fuzzy
 msgid "Show 'EPG import now' in extensions"
-msgstr "EPG importeur"
+msgstr "Toon 'Importeer de EPG nu' in het Extensionsmenu (BLAUW-lang)"
 
 msgid "Show 'EPGImport' in plugins"
-msgstr ""
+msgstr "EPG-Import in Plugin Browser tonen"
 
 msgid "Show log"
 msgstr "Toon log"
 
 msgid "Skip import on restart GUI"
-msgstr ""
+msgstr "Na herstart GUI import overslaan"
 
-#, fuzzy
 msgid "Source files provider"
-msgstr "Alle zender providers"
+msgstr "Provider van bronbestanden"
 
 msgid "Sources"
 msgstr "Bronnen"
 
 msgid "Sources saved successfully!"
-msgstr ""
+msgstr "Bronnen update gelukt!"
 
 msgid "Standby at startup"
-msgstr ""
+msgstr "Stand-by na het opstarten"
 
 msgid "Start import after booting up"
-msgstr ""
+msgstr "Start import na het opstarten"
 
 msgid "Start import after standby"
-msgstr ""
+msgstr "Start import na stand-by"
 
 msgid "Sunday"
 msgstr "Zondag"
@@ -261,24 +256,23 @@ msgstr "Donderdag"
 msgid "Tuesday"
 msgstr "Dinsdag"
 
-#, fuzzy
 msgid "Update Sources"
-msgstr "Bronnen"
+msgstr "Update Bronnen"
 
 msgid "Wednesday"
 msgstr "Woensdag"
 
 msgid "When in deep standby"
-msgstr ""
+msgstr "Wanneer in deep stand-by"
 
 msgid "Write to /tmp/epgimport.log"
-msgstr "Schrijf naar /tmp/EPGimport.log"
+msgstr "Schrijf naar /tmp/epgimport.log"
 
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 msgid "Yes - and clear existing"
-msgstr ""
+msgstr "Ja - en wis de bestaande"
 
 msgid ""
 "You may not use this settings!\n"
@@ -295,22 +289,22 @@ msgstr ""
 "Is dit OK?"
 
 msgid "always"
-msgstr "altijd"
+msgstr "Altijd"
 
 msgid "never"
-msgstr "nooit"
+msgstr "Nooit"
 
 msgid "only automatic boot"
-msgstr "alleen na automatische boot"
+msgstr "Alleen na een automatische herstart"
 
 msgid "only manual boot"
-msgstr "alleen na handmatige boot"
+msgstr "Alleen na een handmatige herstart"
 
 msgid "press OK to save list"
-msgstr "druk op OK om de lijst op te slaan"
+msgstr "Druk op OK om de lijst op te slaan"
 
 msgid "skip the import"
-msgstr "sla import over"
+msgstr "Sla de import over"
 
 msgid "wake up and import"
-msgstr "wordt wakker en importeer"
+msgstr "Ontwaken en importeren"
